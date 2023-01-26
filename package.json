@@ -4,5 +4,10 @@
   "main": "index.js",
   "repository": "https://github.com/msdio/Tamago.git",
   "author": "Team Tamago",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "next": "^13.1.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
 }
