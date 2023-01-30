@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="com.project.Tamago" target="11" />
+      <module name="com.project.Tamago.main" target="11" />
+      <module name="com.project.Tamago.test" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
