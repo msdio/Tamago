@@ -10,6 +10,5 @@
         <module name="com.project.Tamago.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="11" />
   </component>
 </project>
