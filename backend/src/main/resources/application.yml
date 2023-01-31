@@ -15,3 +15,9 @@ spring:
   jpa:
     database:
     database-platform:
+    hibernate:
+      ddl-auto:
+    show-sql:
+    properties:
+      hibernate:
+        format_sql:
