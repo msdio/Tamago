@@ -1,6 +1,7 @@
 package com.project.Tamago.domain;
 
 import com.project.Tamago.util.converter.RoleConverter;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -12,10 +13,10 @@ import javax.validation.constraints.Size;
 
 @Entity
 @DynamicInsert
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class User {
+public class User extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
