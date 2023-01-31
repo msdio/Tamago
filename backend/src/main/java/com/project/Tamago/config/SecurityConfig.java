@@ -17,11 +17,11 @@ public class SecurityConfig {
     public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
 
         http
-                .csrf().disable() // 세션 사용 안 하므로
+                .csrf().disable()
                 .formLogin().disable()
                 .httpBasic().disable();
         http
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션 사용 안함
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http
                 .authorizeRequests()
                 // swagger
@@ -34,8 +34,7 @@ public class SecurityConfig {
                 .antMatchers("/health").permitAll()
                 .and()
                 .authorizeRequests()
-                .anyRequest().permitAll(); // 일단 다 열어놨습니다
-        // .antMatchers("/").permitAll()
+                .anyRequest().permitAll();
 
         return http.build();
     }
