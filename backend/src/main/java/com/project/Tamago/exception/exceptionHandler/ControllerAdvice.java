@@ -22,9 +22,10 @@ public class ControllerAdvice {
 		return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), exception.getMessage(), false);
 	}
 
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(Exception.class)
 	public ErrorMessage exceptionHandler(Exception exception) {
-		return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), "예상하지 못한 오류가 발생하였습니다.", false);
+		exception.printStackTrace();
+		return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), "예상하지 못한 오류가 발생하였습니다. 서버에 문의해주세요", false);
 	}
 }
