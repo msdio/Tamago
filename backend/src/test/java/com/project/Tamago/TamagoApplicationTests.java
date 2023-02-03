@@ -39,8 +39,8 @@ class TamagoApplicationTests {
 				.contentType(MediaType.APPLICATION_JSON)
 			)
 			.andExpect(status().is4xxClientError())
-			.andExpect(jsonPath("$.code", notNullValue()))
-			.andExpect(jsonPath("$.message", notNullValue()))
+			.andExpect(jsonPath("$.status", notNullValue()))
+			.andExpect(jsonPath("$.description", notNullValue()))
 			.andDo(print());
 	}
 
@@ -50,8 +50,8 @@ class TamagoApplicationTests {
 				.contentType(MediaType.APPLICATION_JSON)
 			)
 			.andExpect(status().is5xxServerError())
-			.andExpect(jsonPath("$.code", notNullValue()))
-			.andExpect(jsonPath("$.message", notNullValue()))
+			.andExpect(jsonPath("$.status", notNullValue()))
+			.andExpect(jsonPath("$.description", notNullValue()))
 			.andDo(print());
 	}
 
