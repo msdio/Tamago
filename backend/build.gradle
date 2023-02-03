@@ -30,6 +30,7 @@ dependencies {
 	implementation ('io.springfox:springfox-boot-starter:3.0.0')
 
 	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 
