@@ -1,16 +1,16 @@
 package com.project.Tamago.exception;
 
-public class UserException extends RuntimeException{
+public class CustomException extends RuntimeException{
 
-	public UserException() {
+	public CustomException() {
 		super();
 	}
 
-	public UserException(String message) {
+	public CustomException(String message) {
 		super(message);
 	}
 
-	public UserException(String message, Throwable cause) {
+	public CustomException(String message, Throwable cause) {
 		super(message, cause);
 	}
 }
