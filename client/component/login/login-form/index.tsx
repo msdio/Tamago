@@ -1,23 +1,13 @@
 import { Input, Flex, Checkbox, Button, Text, FormControl, FormLabel } from '@chakra-ui/react';
 import Image from 'next/image';
+import LoginEmailForm from './login-email-form';
 import LoginPasswordForm from './password';
 
 // NOTE : form 을 더 분리해야 할지는 후에 로직을 만들면서 생각해볼 것 같습니다.
 function LoginForm() {
   return (
     <>
-      <FormControl>
-        <FormLabel fontSize='15px' fontWeight={700}>
-          이메일
-        </FormLabel>
-        <Input
-          type='email'
-          placeholder='이메일 주소를 입력해 주세요.'
-          border={'.6px solid #BFBFBF'}
-          focusBorderColor='tamago.500'
-          h='59px'
-        />
-      </FormControl>
+      <LoginEmailForm />
       <LoginPasswordForm />
       <Flex justifyContent='space-between'>
         <Checkbox defaultChecked colorScheme='tamago'>
