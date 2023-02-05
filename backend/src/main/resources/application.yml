@@ -21,3 +21,12 @@ spring:
     properties:
       hibernate:
         format_sql:
+
+jwt:
+  secret:
+    access:
+    refresh:
+  time:
+    access:
+    refresh:
+
