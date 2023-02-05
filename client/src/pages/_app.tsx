@@ -1,10 +1,17 @@
-import React from 'react';
 import type { AppProps } from 'next/app';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+
+const theme = extendTheme({
+  colors: {
+    tamago: {
+      500: '#FF5C00', // basic color
+    },
+  },
+});
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <Component {...pageProps} />
     </ChakraProvider>
   );
