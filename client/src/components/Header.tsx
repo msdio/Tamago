@@ -1,7 +1,23 @@
-import { HStack, Flex, Heading, Text, Button } from '@chakra-ui/react';
+import { HStack, Flex, Heading, Text, Button, Spacer } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 import Fonts from '../../public/fonts/GangwonEduPower';
 
 export function Header() {
+  const [isLogin, setIsLogin] = useState(false);
+  const router = useRouter();
+
+  const handleClick: React.MouseEventHandler = (e) => {
+    const eventTarget = e.target as HTMLElement;
+    switch (eventTarget.innerHTML) {
+      case '회원가입':
+        router.push('/signup');
+        break;
+      case '로그인':
+        router.push('/');
+    }
+  };
+
   return (
     <>
       <Fonts />
@@ -15,14 +31,30 @@ export function Header() {
           <Text>글등록</Text>
           <Text>프로필</Text>
         </HStack>
-        <HStack spacing='12.91px' fontSize='14px' lineHeight='17px'>
-          <Button w='95.54px' h='35.29px' border='0.516456px solid #BFBFBF' borderRadius='4.3038px' bg='white'>
-            <Text>회원가입</Text>
-          </Button>
-          <Button w='95.54px' h='35.29px' border='0.516456px solid #BFBFBF' borderRadius='4.3038px' bg='white'>
-            <Text>로그인</Text>
-          </Button>
-        </HStack>
+        {!isLogin && (
+          <HStack spacing='12.91px' fontSize='14px' lineHeight='17px'>
+            <Button
+              w='95.54px'
+              h='35.29px'
+              border='0.516456px solid #BFBFBF'
+              borderRadius='4.3038px'
+              bg='white'
+              onClick={handleClick}
+            >
+              <Text>회원가입</Text>
+            </Button>
+            <Button
+              w='95.54px'
+              h='35.29px'
+              border='0.516456px solid #BFBFBF'
+              borderRadius='4.3038px'
+              bg='white'
+              onClick={handleClick}
+            >
+              <Text>로그인</Text>
+            </Button>
+          </HStack>
+        )}
       </Flex>
     </>
   );
