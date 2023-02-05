@@ -23,7 +23,10 @@ spring:
         format_sql:
 
 jwt:
-  secret:
+  private:
+    access:
+    refresh:
+  public:
     access:
     refresh:
   time:

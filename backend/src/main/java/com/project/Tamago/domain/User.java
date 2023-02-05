@@ -1,5 +1,6 @@
 package com.project.Tamago.domain;
 
+import com.project.Tamago.util.constant.Role;
 import com.project.Tamago.util.converter.RoleConverter;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

@@ -1,7 +1,6 @@
-package com.project.Tamago.domain;
+package com.project.Tamago.util.constant;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
 

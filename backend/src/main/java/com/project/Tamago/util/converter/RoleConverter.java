@@ -1,10 +1,9 @@
 package com.project.Tamago.util.converter;
 
-import com.project.Tamago.domain.Role;
+import com.project.Tamago.util.constant.Role;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
-import java.util.Arrays;
 
 @Converter
 public class RoleConverter implements AttributeConverter<Role, String> {
