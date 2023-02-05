@@ -1,6 +1,7 @@
 import { Input, Flex, Checkbox, Button, Text, FormControl, FormLabel } from '@chakra-ui/react';
 import Image from 'next/image';
 
+// NOTE : form 을 더 분리해야 할지는 후에 로직을 만들면서 생각해볼 것 같습니다.
 function LoginForm() {
   return (
     <>
