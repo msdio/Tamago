@@ -4,7 +4,15 @@ import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 const theme = extendTheme({
   colors: {
     tamago: {
-      500: '#FF5C00', // basic color
+      100: '#fffaf8', // hover 등
+      200: '#ff7a29',
+      300: '#ff701e',
+      400: '#ff6611',
+      500: '#FF8A65', // basic color
+      600: '#f35200',
+      700: '#e74800',
+      800: '#dc3d00',
+      900: '#d23400',
     },
   },
 });
