@@ -13,6 +13,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final CorsConfig corsConfig;
+
     @Bean
     public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
 
@@ -22,6 +24,8 @@ public class SecurityConfig {
                 .httpBasic().disable();
         http
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http
+                .addFilter(corsConfig.corsFilter());
         http
                 .authorizeRequests()
                 // swagger
