@@ -1,13 +1,17 @@
 package com.project.Tamago.exception.exceptionHandler;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
 public class ErrorMessage {
 
-	private int code;
-	private String message;
-	private boolean isSuccess;
+	private int status;
+	private String code;
+	private String description;
+
+	ErrorMessage(ErrorCode errorCode) {
+		this.status = errorCode.getStatus();
+		this.code = errorCode.getCode();
+		this.description = errorCode.getDescription();
+	}
 }
