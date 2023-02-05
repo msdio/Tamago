@@ -2,7 +2,7 @@ import { Box, Flex, HStack, Spacer, Text } from '@chakra-ui/react';
 
 export function Footer() {
   return (
-    <Box as='footer' w='100%' h='235px' minW='1100px' pos='absolute' bottom='0'>
+    <Box as='footer' w='100%' h='235px' minW='1100px'>
       <Flex
         direction='column'
         w='100%'

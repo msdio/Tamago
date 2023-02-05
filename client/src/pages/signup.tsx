@@ -9,6 +9,9 @@ export default function SignupPage() {
         </Heading>
         <Divider />
         <Input placeholder='이메일'></Input>
+        <Input placeholder='비밀번호'></Input>
+        <Input placeholder='비밀번호 확인'></Input>
+        <Input placeholder='닉네임'></Input>
       </VStack>
     </Box>
   );
