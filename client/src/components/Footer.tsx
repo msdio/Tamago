@@ -1,8 +1,8 @@
-import { Container, Flex, HStack, Spacer, Stack, Text, VStack } from '@chakra-ui/react';
+import { Box, Flex, HStack, Spacer, Text } from '@chakra-ui/react';
 
 export function Footer() {
   return (
-    <Container as='footer' h='235px' margin='0' padding='0' maxW='100%' minW='1100px'>
+    <Box as='footer' w='100%' h='235px' minW='1100px'>
       <Flex
         direction='column'
         w='100%'
@@ -34,6 +34,6 @@ export function Footer() {
         </HStack>
         <Spacer />
       </Flex>
-    </Container>
+    </Box>
   );
 }

@@ -1,5 +1,8 @@
 import { Global } from '@emotion/react';
 
+/**
+ * 강원교육서체에 대한 출처 표기를 어딘가 해야 됨
+ */
 const Fonts = () => (
   <Global
     styles={`
