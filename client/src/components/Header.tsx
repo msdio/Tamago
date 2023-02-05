@@ -7,17 +7,6 @@ export function Header() {
   const [isLogin, setIsLogin] = useState(false);
   const router = useRouter();
 
-  const handleClick: React.MouseEventHandler = (e) => {
-    const eventTarget = e.target as HTMLElement;
-    switch (eventTarget.innerHTML) {
-      case '회원가입':
-        router.push('/signup');
-        break;
-      case '로그인':
-        router.push('/');
-    }
-  };
-
   return (
     <>
       <Fonts />
@@ -39,9 +28,11 @@ export function Header() {
               border='0.516456px solid #BFBFBF'
               borderRadius='4.3038px'
               bg='white'
-              onClick={handleClick}
+              onClick={() => {
+                router.push('/signup');
+              }}
             >
-              <Text>회원가입</Text>
+              회원가입
             </Button>
             <Button
               w='95.54px'
@@ -49,9 +40,11 @@ export function Header() {
               border='0.516456px solid #BFBFBF'
               borderRadius='4.3038px'
               bg='white'
-              onClick={handleClick}
+              onClick={() => {
+                router.push('/');
+              }}
             >
-              <Text>로그인</Text>
+              로그인
             </Button>
           </HStack>
         )}

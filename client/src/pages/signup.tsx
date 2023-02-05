@@ -1,4 +1,4 @@
-import { Box, Center, Container, Divider, Heading, Input, VStack } from '@chakra-ui/react';
+import { Box, Divider, Heading, Input, VStack } from '@chakra-ui/react';
 
 export default function SignupPage() {
   return (
