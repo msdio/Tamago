@@ -1,5 +1,6 @@
 import { Input, Flex, Checkbox, Button, Text, FormControl, FormLabel } from '@chakra-ui/react';
 import Image from 'next/image';
+import LoginPasswordForm from './password';
 
 // NOTE : form 을 더 분리해야 할지는 후에 로직을 만들면서 생각해볼 것 같습니다.
 function LoginForm() {
@@ -17,19 +18,7 @@ function LoginForm() {
           h='59px'
         />
       </FormControl>
-      <FormControl>
-        <FormLabel fontSize='15px' fontWeight={700}>
-          비밀번호
-        </FormLabel>
-        <Input
-          type='password'
-          placeholder='8-12자 영문 + 숫자를 포함하여 입력해 주세요.'
-          border={'.6px solid #BFBFBF'}
-          colorScheme='tamago'
-          focusBorderColor='tamago.500'
-          h='59px'
-        />
-      </FormControl>
+      <LoginPasswordForm />
       <Flex justifyContent='space-between'>
         <Checkbox defaultChecked colorScheme='tamago'>
           아이디 저장
