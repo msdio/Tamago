@@ -1,23 +1,32 @@
-import { useState } from 'react';
-import { Box, Button, FormControl, FormLabel, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
+import { ChangeEvent, useState } from 'react';
 import Image from 'next/image';
+import { Box, FormControl, FormErrorMessage, FormLabel, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
 
 function LoginPasswordForm() {
   const [show, setShow] = useState(false);
+  const [input, setInput] = useState('');
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
+  };
+
+  // TODO : error 처리 필요
+  const isError = input === 'error';
 
   const handleShowClick = () => {
-    console.log('handleShowClick: ');
     setShow(!show);
   };
 
   return (
-    <FormControl>
+    <FormControl isInvalid={isError}>
       <FormLabel fontSize='15px' fontWeight={700}>
         비밀번호
       </FormLabel>
       <InputGroup>
         <Input
           type={show ? 'text' : 'password'}
+          value={input}
+          onChange={handleInputChange}
           placeholder='8-12자 영문 + 숫자를 포함하여 입력해 주세요.'
           border={'.6px solid #BFBFBF'}
           colorScheme='tamago'
@@ -35,6 +44,7 @@ function LoginPasswordForm() {
           </Box>
         </InputRightElement>
       </InputGroup>
+      {<FormErrorMessage>8-12자 영문 + 숫자를 포함하여 입력해 주세요.</FormErrorMessage>}
     </FormControl>
   );
 }
