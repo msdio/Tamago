@@ -49,6 +49,7 @@ function LoginTab({ children }: { children: string }) {
       borderBottom='5px solid #fff'
       padding={0}
       marginRight={6}
+      fontSize='22px'
     >
       {children}
     </Tab>
@@ -58,7 +59,7 @@ function LoginTab({ children }: { children: string }) {
 function TabPanelWrapper({ children }: { children: ReactNode }) {
   return (
     <TabPanel px={0}>
-      <Flex flexDirection='column' gap={4} maxW='486px' w='486px' h={'600px'} p={0}>
+      <Flex flexDirection='column' gap='31px' maxW='486px' w='486px' h={'600px'} p={0} pt='50px'>
         {children}
       </Flex>
     </TabPanel>
