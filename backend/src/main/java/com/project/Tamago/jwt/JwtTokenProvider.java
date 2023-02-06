@@ -1,5 +1,6 @@
 package com.project.Tamago.jwt;
 
+import com.project.Tamago.exception.CustomException;
 import com.project.Tamago.util.constant.KeyType;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -18,6 +19,8 @@ import javax.annotation.PostConstruct;
 import java.security.*;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
 
 @Slf4j
 @Component
@@ -120,21 +123,16 @@ public class JwtTokenProvider {
                     .parserBuilder().setSigningKey(publicKeys.get(type)).build()
                     .parseClaimsJws(token);
             return true;
-        } catch (ExpiredJwtException e) {
-            log.error("Expired JWT token.");
-            log.trace("Expired JWT token trace: {}", e);
-        } catch (MalformedJwtException e) {
-            log.error("Invalid JWT token.");
-            log.trace("Invalid JWT token trace: {}", e);
-        } catch (UnsupportedJwtException e) {
-            log.error("Unsupported JWT token.");
-            log.trace("Unsupported JWT token trace: {}", e);
         } catch (SignatureException e) {
-            log.error("Invalid JWT signature.");
-            log.trace("Invalid JWT signature trace: {}", e);
+            throw new CustomException(INVALID_SIGNATURE);
+        } catch (MalformedJwtException e) {
+            throw new CustomException(INVALID_JWT);
+        } catch (ExpiredJwtException e) {
+            throw new CustomException(EXPIRED_JWT);
+        } catch (UnsupportedJwtException e) {
+            throw new CustomException(UNSUPPORTED_JWT);
         } catch (IllegalArgumentException e) {
             log.error("JWT token compact of handler are invalid.");
-            log.trace("JWT token compact of handler are invalid trace: {}", e);
         }
         return false;
     }
