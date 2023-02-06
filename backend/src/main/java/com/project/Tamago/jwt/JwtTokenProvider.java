@@ -79,12 +79,13 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public Authentication getAuthenticationFromToken(KeyType type, String token) {
+    public Authentication getAuthentication(String token) {
         Claims claims = Jwts.parserBuilder()
-                .setSigningKey(publicKeys.get(type))
+                .setSigningKey(publicKeys.get(KeyType.ACCESS))
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
+
         Collection<? extends GrantedAuthority> authorities =
                 Arrays.stream(claims.get(AUTHORITIES_KEY, String.class).split(","))
                         .map(SimpleGrantedAuthority::new)

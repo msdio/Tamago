@@ -18,8 +18,9 @@ public class ControllerAdvice {
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(CustomException.class)
-	public ErrorMessage userExceptionHandler(CustomException exception) {
-		return new ErrorMessage(ErrorCode.CUSTOM_PROBLEM);
+	public ErrorMessage customExceptionHandler(CustomException exception) {
+		ErrorCode errorCode = exception.getErrorCode();
+		return new ErrorMessage(errorCode);
 	}
 
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
