@@ -106,6 +106,10 @@ public class JwtTokenProvider {
 		return validateToken(KeyType.ACCESS, accessToken);
 	}
 
+	public String resolveToken(HttpServletRequest request) {
+		return request.getHeader(AUTHORIZATION_HEADER);
+	}
+
 	private KeyPair generateRSAKeyPair() {
 		try {
 			KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
@@ -151,9 +155,5 @@ public class JwtTokenProvider {
 			log.error("JWT token compact of handler are invalid.");
 		}
 		return false;
-	}
-
-	public String resolveToken(HttpServletRequest request) {
-		return request.getHeader(AUTHORIZATION_HEADER);
 	}
 }
