@@ -13,9 +13,7 @@ import com.project.Tamago.exception.CustomException;
 
 @ExtendWith(SpringExtension.class)
 class JwtAuthorizationFilterTest {
-
-	private JwtAuthorizationFilter filter;
-
+	
 	@Mock
 	private JwtTokenProvider jwtTokenProvider;
 	private final String INVALID_TOKEN = "invalidToken";
