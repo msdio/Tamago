@@ -10,7 +10,7 @@ export function Header() {
   return (
     <>
       <Fonts />
-      <Flex as='header' direction='row' h='88px' borderBottom='0.6px solid #BFBFBF' p='0 120px 0 120px' minW='1100px'>
+      <Flex as='header' direction='row' h='88px' borderBottom='0.6px solid #BFBFBF' p='0 120px' minW='1100px'>
         <Heading fontSize='26px' lineHeight='88px' fontFamily='GangwonEduPower' letterSpacing='.05em'>
           Tamago
         </Heading>
