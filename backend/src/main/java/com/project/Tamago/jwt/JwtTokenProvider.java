@@ -65,35 +65,12 @@ public class JwtTokenProvider {
 		expireTimes.put(KeyType.REFRESH, refreshTokenExpireTime);
 	}
 
-	private KeyPair generateRSAKeyPair() {
-		try {
-			KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
-			generator.initialize(2048, new SecureRandom());
-			return generator.generateKeyPair();
-		} catch (NoSuchAlgorithmException e) {
-			throw new IllegalStateException("Failed to generate RSA key pair", e);
-		}
-	}
-
 	public String createAccessToken(Authentication authentication) {
 		return createBuilder(KeyType.ACCESS, authentication);
 	}
 
 	public String createRefreshToken(Authentication authentication) {
 		return createBuilder(KeyType.REFRESH, authentication);
-	}
-
-	private String createBuilder(KeyType type, Authentication authentication) {
-		String authorities = authentication.getAuthorities().stream()
-			.map(GrantedAuthority::getAuthority)
-			.collect(Collectors.joining(","));
-
-		return Jwts.builder()
-			.setSubject(authentication.getName())
-			.claim(AUTHORITIES_KEY, authorities)
-			.setExpiration(new Date(new Date().getTime() + expireTimes.get(type)))
-			.signWith(privateKeys.get(type), SignatureAlgorithm.RS256)
-			.compact();
 	}
 
 	public Authentication getAuthentication(String token) {
@@ -127,8 +104,31 @@ public class JwtTokenProvider {
 		return validateToken(KeyType.ACCESS, accessToken);
 	}
 
+	private KeyPair generateRSAKeyPair() {
+		try {
+			KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
+			generator.initialize(2048, new SecureRandom());
+			return generator.generateKeyPair();
+		} catch (NoSuchAlgorithmException e) {
+			throw new IllegalStateException("Failed to generate RSA key pair", e);
+		}
+	}
+
 	public boolean validateRefreshToken(String refreshToken) throws IllegalArgumentException {
 		return validateToken(KeyType.REFRESH, refreshToken);
+	}
+
+	private String createBuilder(KeyType type, Authentication authentication) {
+		String authorities = authentication.getAuthorities().stream()
+			.map(GrantedAuthority::getAuthority)
+			.collect(Collectors.joining(","));
+
+		return Jwts.builder()
+			.setSubject(authentication.getName())
+			.claim(AUTHORITIES_KEY, authorities)
+			.setExpiration(new Date(new Date().getTime() + expireTimes.get(type)))
+			.signWith(privateKeys.get(type), SignatureAlgorithm.RS256)
+			.compact();
 	}
 
 	private boolean validateToken(KeyType type, String token) {
