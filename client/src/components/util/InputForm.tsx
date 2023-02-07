@@ -3,6 +3,7 @@ import { ChangeEvent } from 'react';
 import { DEFAULT_INPUT_THEME, FontBorderTheme } from '../../constants/theme';
 
 interface InputProps {
+  name: string;
   value: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   type?: string;
@@ -15,6 +16,7 @@ interface InputProps {
 }
 
 export default function InputForm({
+  name,
   value,
   onChange,
   type,
@@ -30,6 +32,7 @@ export default function InputForm({
   return (
     <Flex direction='column'>
       <Input
+        name={name}
         type={type}
         w={w}
         h={h}
