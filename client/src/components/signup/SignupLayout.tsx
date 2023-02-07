@@ -5,7 +5,7 @@ interface SignupLayoutProps {
   children: ReactNode;
 }
 
-export default function Layout({ children }: SignupLayoutProps) {
+export default function SignupLayout({ children }: SignupLayoutProps) {
   return (
     <Flex as='main' direction='column' w='486px' m='171px auto 288px auto'>
       <Heading fontSize='28px' fontWeight='700' textAlign='center' mb='56px'>

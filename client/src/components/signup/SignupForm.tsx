@@ -4,7 +4,13 @@ import { EMAIL_BUTTON_THEME } from '../../constants/theme';
 import InputForm from '../util/InputForm';
 import SubmitButton from '../util/SubmitButton';
 
-export default function Form() {
+export default function SignupForm() {
+  const [signupInputs, setSignupInputs] = useState({
+    name: '',
+    email: '',
+    password: '',
+    verifyPassword: '',
+  });
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

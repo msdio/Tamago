@@ -1,7 +1,7 @@
 import { Box, Button, Checkbox, Divider, Flex, FormControl, Img, Text } from '@chakra-ui/react';
 // import CustomCheckbox from '../util/Checkbox';
 
-export default function Tos() {
+export default function SignupTos() {
   return (
     <Flex direction='column' w='full' gap='26px'>
       <Box w='full'>
