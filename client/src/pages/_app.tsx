@@ -18,16 +18,31 @@ const theme = extendTheme({
   styles: {
     global: {
       'html, body': {
+        h: 'full',
+        m: '0',
+        p: '0',
         fontFamily: 'Pretendard',
-        margin: '0',
-        padding: '0',
-        height: '100%',
       },
+      // footer 바닥에 붙어있게 하기 위한 css
       '#__next': {
-        height: '100%',
+        h: 'full',
         display: 'flex',
         flexDirection: 'column',
+        fontFamily: 'Pretendard',
       },
+    },
+  },
+  colors: {
+    tamago: {
+      100: '#fffaf8', // hover 등
+      200: '#ff7a29',
+      300: '#ff701e',
+      400: '#ff6611',
+      500: '#FF8A65', // basic color
+      600: '#f35200',
+      700: '#e74800',
+      800: '#dc3d00',
+      900: '#d23400',
     },
   },
 });
