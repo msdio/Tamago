@@ -12,6 +12,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.project.Tamago.jwt.JwtAuthorizationFilter;
 import com.project.Tamago.jwt.JwtTokenProvider;
 import com.project.Tamago.jwt.handler.CustomAccessDeniedHandler;
+import com.project.Tamago.jwt.handler.CustomAuthenticationEntryPointHandler;
 
 import lombok.RequiredArgsConstructor;
 
@@ -39,7 +40,8 @@ public class SecurityConfig {
 		http
 			.addFilter(corsConfig.corsFilter())
 			.exceptionHandling()
-			.accessDeniedHandler(new CustomAccessDeniedHandler()); // 인가 예외 처리
+			.authenticationEntryPoint(new CustomAuthenticationEntryPointHandler())
+			.accessDeniedHandler(new CustomAccessDeniedHandler());
 		http
 			.authorizeRequests()
 			// swagger
