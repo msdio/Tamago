@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,6 +43,7 @@ import lombok.extern.slf4j.Slf4j;
 public class JwtTokenProvider {
 
 	private static final String AUTHORITIES_KEY = "auth";
+	public static final String AUTHORIZATION_HEADER = "Authorization";
 	private final Map<KeyType, Key> privateKeys = new EnumMap<>(KeyType.class);
 	private final Map<KeyType, Key> publicKeys = new EnumMap<>(KeyType.class);
 	private final Map<KeyType, Long> expireTimes = new EnumMap<>(KeyType.class);
@@ -149,5 +151,9 @@ public class JwtTokenProvider {
 			log.error("JWT token compact of handler are invalid.");
 		}
 		return false;
+	}
+
+	public String resolveToken(HttpServletRequest request) {
+		return request.getHeader(AUTHORIZATION_HEADER);
 	}
 }

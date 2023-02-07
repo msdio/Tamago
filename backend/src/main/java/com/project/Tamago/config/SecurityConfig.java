@@ -7,6 +7,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.project.Tamago.jwt.JwtAuthorizationFilter;
+import com.project.Tamago.jwt.JwtTokenProvider;
+import com.project.Tamago.jwt.handler.CustomAccessDeniedHandler;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,10 +22,14 @@ public class SecurityConfig {
 
 	private final CorsConfig corsConfig;
 	private final RedisTemplate<String, Object> redisTemplate;
+	private final JwtTokenProvider jwtTokenProvider;
 
 	@Bean
 	public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
 
+		http
+			.addFilterBefore(new JwtAuthorizationFilter(jwtTokenProvider, redisTemplate),
+				UsernamePasswordAuthenticationFilter.class);
 		http
 			.csrf().disable()
 			.formLogin().disable()
@@ -28,7 +37,9 @@ public class SecurityConfig {
 		http
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http
-			.addFilter(corsConfig.corsFilter());
+			.addFilter(corsConfig.corsFilter())
+			.exceptionHandling()
+			.accessDeniedHandler(new CustomAccessDeniedHandler()); // 인가 예외 처리
 		http
 			.authorizeRequests()
 			// swagger
@@ -41,7 +52,7 @@ public class SecurityConfig {
 			.antMatchers("/health").permitAll()
 			.and()
 			.authorizeRequests()
-			.anyRequest().permitAll();
+			.anyRequest().authenticated();
 
 		return http.build();
 	}
