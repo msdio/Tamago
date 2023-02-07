@@ -1,5 +1,7 @@
 package com.project.Tamago.exception.exceptionHandler;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.project.Tamago.exception.CustomException;
 
+@Slf4j
 @RestControllerAdvice
 public class ControllerAdvice {
 
@@ -18,8 +21,10 @@ public class ControllerAdvice {
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(CustomException.class)
-	public ErrorMessage userExceptionHandler(CustomException exception) {
-		return new ErrorMessage(ErrorCode.CUSTOM_PROBLEM);
+	public ErrorMessage customExceptionHandler(CustomException exception) {
+		ErrorCode errorCode = exception.getErrorCode();
+		log.error(errorCode.getDescription());
+		return new ErrorMessage(errorCode);
 	}
 
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
