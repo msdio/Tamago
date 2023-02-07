@@ -1,4 +1,4 @@
-import { Flex, FormLabel } from '@chakra-ui/react';
+import { Flex, FormLabel, Text } from '@chakra-ui/react';
 import { ChangeEvent, useState } from 'react';
 import { EMAIL_BUTTON_THEME } from '../../constants/theme';
 import InputForm from '../util/InputForm';
@@ -75,6 +75,34 @@ export default function SignupForm() {
       <SubmitButton type='submit' colorScheme='tamago'>
         회원가입
       </SubmitButton>
+      <Text
+        fontSize='15px'
+        fontWeight='700'
+        color='#BFBFBF'
+        display='flex'
+        alignItems='center'
+        m='41px 0px'
+        _before={{
+          content: '""',
+          flexGrow: 1,
+          bg: '#BFBFBF',
+          h: '0.6px',
+          fontSize: '0px',
+          lineHeight: '0px',
+          marginRight: '22px',
+        }}
+        _after={{
+          content: '""',
+          flexGrow: 1,
+          bg: '#BFBFBF',
+          h: '0.6px',
+          fontSize: '0px',
+          lineHeight: '0px',
+          marginLeft: '22px',
+        }}
+      >
+        OR
+      </Text>
     </Flex>
   );
 }
