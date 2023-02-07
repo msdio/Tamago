@@ -13,7 +13,6 @@ public class TestController {
 
 	@GetMapping("/test")
 	public String test(@RequestParam String str) {
-		System.out.println("hi");
 		if (str.contains("Illegal")) {
 			throw new IllegalArgumentException();
 		} else if (str.contains("user")) {

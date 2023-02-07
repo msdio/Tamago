@@ -40,7 +40,7 @@ public class CustomAuthenticationEntryPointHandler implements AuthenticationEntr
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		response.setContentType("application/json;charset=UTF-8");
 		response.getWriter().write("{" + "\"code\":\"" + errorCode.getCode() + "\","
-			+ "\"message\":\"" + errorCode.getDescription() + "\"}");
+			+ "\"description\":\"" + errorCode.getDescription() + "\"}");
 		response.getWriter().flush();
 	}
 }

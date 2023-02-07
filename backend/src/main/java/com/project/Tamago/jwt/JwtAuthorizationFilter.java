@@ -29,7 +29,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 		throws IOException, ServletException {
-
 		String token = jwtTokenProvider.resolveToken(request);
 
 		if (!StringUtils.hasText(token)) {
@@ -39,7 +38,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 		}
 		try {
 			if (jwtTokenProvider.validateAccessToken(token)) {
-
 				String isLogout = (String)redisTemplate.opsForValue().get(token);
 				if (ObjectUtils.isEmpty(isLogout)) {
 

@@ -46,6 +46,7 @@ public class SecurityConfig {
 			.authorizeRequests()
 			// swagger
 			.antMatchers("/auth/**").permitAll()
+			.antMatchers("/test/**").permitAll()
 			.antMatchers("/swagger-ui/**").permitAll()
 			.antMatchers("/swagger-ui.html").permitAll()
 			.antMatchers("/swagger/**").permitAll()
