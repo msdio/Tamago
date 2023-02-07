@@ -1,6 +1,8 @@
-import { Button, Flex, FormLabel } from '@chakra-ui/react';
+import { Flex, FormLabel } from '@chakra-ui/react';
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import { EMAIL_BUTTON_THEME } from '../../constants/theme';
 import InputForm from '../util/InputForm';
+import SubmitButton from '../util/SubmitButton';
 
 export default function Form() {
   const [name, setName] = useState('');
@@ -20,7 +22,7 @@ export default function Form() {
         <FormLabel fontSize='15px' fontWeight='700'>
           이름
         </FormLabel>
-        <InputForm h='59px' placeholder='이름을 입력해 주세요.' value={name} onChange={handleInputChange(setName)} />
+        <InputForm placeholder='이름을 입력해 주세요.' value={name} onChange={handleInputChange(setName)} />
       </Flex>
       <Flex direction='column' gap='8px' mb='37px'>
         <FormLabel fontSize='15px' fontWeight='700'>
@@ -29,7 +31,6 @@ export default function Form() {
         <Flex gap='13px'>
           <InputForm
             w='351px'
-            h='59px'
             type='email'
             placeholder='이메일을 입력해 주세요.'
             regex={/^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/}
@@ -37,17 +38,9 @@ export default function Form() {
             value={email}
             onChange={handleInputChange(setEmail)}
           />
-          <Button
-            w='122px'
-            h='59px'
-            fontSize='15px'
-            fontWeight='400'
-            bg='#F5F5F5'
-            color='#808080'
-            border='0.6px solid #BFBFBF'
-          >
+          <SubmitButton w='122px' colorScheme='emailButton' theme={EMAIL_BUTTON_THEME}>
             중복 확인
-          </Button>
+          </SubmitButton>
         </Flex>
       </Flex>
       <Flex direction='column' gap='8px' mb='41px'>
@@ -57,7 +50,6 @@ export default function Form() {
         <Flex direction='column' gap='16px'>
           <InputForm
             type='password'
-            h='59px'
             placeholder='8-12자 영문 + 숫자를 포함하여 입력해 주세요.'
             regex={/^(?=.*[A-Za-z])(?=.*\d).{8,12}$/}
             errorMessage='8-12자 영문, 숫자를 사용해 주세요.'
@@ -66,7 +58,6 @@ export default function Form() {
           />
           <InputForm
             type='password'
-            h='59px'
             placeholder='비밀번호를 한 번 더 입력해 주세요.'
             regex={new RegExp(`^${password}$`)}
             errorMessage='비밀번호가 일치하지 않습니다.'
@@ -75,9 +66,9 @@ export default function Form() {
           />
         </Flex>
       </Flex>
-      <Button type='submit' w='full' h='59px' fontSize='17px' fontWeight='700' colorScheme='tamago'>
+      <SubmitButton type='submit' colorScheme='tamago'>
         회원가입
-      </Button>
+      </SubmitButton>
     </Flex>
   );
 }

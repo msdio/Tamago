@@ -1,5 +1,6 @@
 import { Flex, Input, Text } from '@chakra-ui/react';
 import { ChangeEvent } from 'react';
+import { DEFAULT_INPUT_THEME, FontBorderTheme } from '../../constants/theme';
 
 interface InputProps {
   value: string;
@@ -10,11 +11,7 @@ interface InputProps {
   placeholder?: string;
   errorMessage?: string;
   regex: RegExp;
-  border: string;
-  borderColor: string;
-  borderRadius: string;
-  fontSize: string;
-  fontWeight: string;
+  theme: FontBorderTheme;
 }
 
 export default function InputForm({
@@ -26,11 +23,7 @@ export default function InputForm({
   placeholder,
   regex,
   errorMessage,
-  border,
-  borderColor,
-  borderRadius,
-  fontSize,
-  fontWeight,
+  theme,
 }: InputProps) {
   const isError = value !== '' && !regex.test(value);
 
@@ -41,18 +34,19 @@ export default function InputForm({
         w={w}
         h={h}
         placeholder={placeholder}
-        border={border}
-        borderColor={isError ? '#FF8A65' : borderColor}
-        borderRadius={borderRadius}
-        fontSize={fontSize}
-        fontWeight={fontWeight}
+        fontFamily={theme.fontFamily}
+        fontSize={theme.fontSize}
+        fontWeight={theme.fontWeight}
+        border={theme.border}
+        borderColor={isError ? '#FF8A65' : theme.borderColor}
+        borderRadius={theme.borderRadius}
         value={value}
         onChange={onChange}
         variant='unstyled'
         p='24px 21px 24px 21px'
       />
       {errorMessage && isError ? (
-        <Text fontSize={fontSize} fontWeight={fontWeight} color='#FF0000' mt='17'>
+        <Text fontSize={theme.fontSize} fontWeight={theme.fontWeight} color='#FF0000' mt='17'>
           {errorMessage}
         </Text>
       ) : null}
@@ -61,10 +55,8 @@ export default function InputForm({
 }
 
 InputForm.defaultProps = {
+  w: 'full',
+  h: '59px',
   regex: /./,
-  border: '0.6px solid',
-  borderColor: '#BFBFBF',
-  borderRadius: '5px',
-  fontSize: '15px',
-  fontWeight: '400',
+  theme: DEFAULT_INPUT_THEME,
 };
