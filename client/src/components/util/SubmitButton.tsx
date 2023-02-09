@@ -6,13 +6,21 @@ interface SubmitButtonProps {
   children?: string;
   onClick?: MouseEventHandler;
   type?: 'button' | 'submit' | 'reset' | undefined;
+  colorScheme?: string;
   w?: string;
   h?: string;
-  theme: FontBorderTheme;
-  colorScheme?: string;
+  theme?: FontBorderTheme;
 }
 
-export default function SubmitButton({ children, onClick, type, w, h, theme, colorScheme }: SubmitButtonProps) {
+export default function SubmitButton({
+  children,
+  onClick,
+  type,
+  colorScheme,
+  w = 'full',
+  h = '59px',
+  theme = DEFAULT_BUTTON_THEME,
+}: SubmitButtonProps) {
   return (
     <Button
       onClick={onClick}
@@ -32,9 +40,3 @@ export default function SubmitButton({ children, onClick, type, w, h, theme, col
     </Button>
   );
 }
-
-SubmitButton.defaultProps = {
-  w: 'full',
-  h: '59px',
-  theme: DEFAULT_BUTTON_THEME,
-};

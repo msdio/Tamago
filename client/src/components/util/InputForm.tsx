@@ -3,29 +3,29 @@ import { ChangeEvent } from 'react';
 import { DEFAULT_INPUT_THEME, FontBorderTheme } from '../../constants/theme';
 
 interface InputProps {
-  name: string;
   value: string;
+  type: string;
+  name: string;
+  theme?: FontBorderTheme;
+  regex?: RegExp;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  type?: string;
   w?: string;
   h?: string;
   placeholder?: string;
   errorMessage?: string;
-  regex: RegExp;
-  theme: FontBorderTheme;
 }
 
 export default function InputForm({
-  name,
   value,
-  onChange,
   type,
-  w,
-  h,
+  name,
+  onChange,
+  regex = /./,
+  theme = DEFAULT_INPUT_THEME,
+  w = 'full',
+  h = '59px',
   placeholder,
-  regex,
   errorMessage,
-  theme,
 }: InputProps) {
   const isError = value !== '' && !regex.test(value);
 
@@ -46,7 +46,7 @@ export default function InputForm({
         value={value}
         onChange={onChange}
         variant='unstyled'
-        p='24px 21px 24px 21px'
+        p='24px 21px'
       />
       {errorMessage && isError ? (
         <Text fontSize={theme.fontSize} fontWeight={theme.fontWeight} color='#FF0000' mt='17'>
@@ -56,10 +56,3 @@ export default function InputForm({
     </Flex>
   );
 }
-
-InputForm.defaultProps = {
-  w: 'full',
-  h: '59px',
-  regex: /./,
-  theme: DEFAULT_INPUT_THEME,
-};
