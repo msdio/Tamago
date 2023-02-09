@@ -1,3 +1,4 @@
+import { buttonTheme } from '@/styles/Button';
 import { extendTheme, StyleConfig } from '@chakra-ui/react';
 
 export interface FontBorderTheme {
@@ -43,15 +44,36 @@ export const DEFAULT_INPUT_THEME: FontBorderTheme = {
 type ColorProperty = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 type ColorType = Record<ColorProperty, string>;
 
+/**
+ * 100: button outline bg,
+ * 200: button outline hover bg,
+ * 500: disable, basic
+ * 600: outline button text color,
+ * 700: button pressed,
+ */
 const colors: Record<string, ColorType> = {
   tamago: {
-    100: '#fffaf8', // hover 등
-    200: '#ff7a29',
+    100: '#ffffff',
+    200: '#fffaf8',
     300: '#ff701e',
-    400: '#ff6611',
-    500: '#FF8A65', // basic color
-    600: '#FF7A3C',
+    400: '#FF8A65',
+    500: '#FF8A65', //basic
+    600: '#FF8A65',
     700: '#FF6A3C',
+    800: '#FF6A3C',
+    900: '#FF6A3C',
+  },
+  secondary: {
+    100: '#F5F5F5', // fill
+    200: '#F5F5F5',
+    300: '#F5F5F5',
+    400: '#BFBFBF',
+    500: '#BFBFBF', // disable
+    600: '#808080',
+    700: '#808080',
+    800: '#808080',
+    900: '#808080', // text
+  },
   // NOTE: 삭제?
   tamago_gray: {
     100: '#fffaf8', // hover 등
@@ -67,41 +89,7 @@ const colors: Record<string, ColorType> = {
 };
 
 const components: Record<string, StyleConfig> = {
-  Button: {
-    defaultProps: {
-      colorScheme: 'tamago',
-    },
-    sizes: {
-      lg: {
-        fontsize: '18px',
-        padding: '16px 20px',
-        width: '490px',
-        height: '60px',
-      },
-      md: {
-        fontsize: '18px',
-        fontWeight: 'bold',
-        padding: '16px 20px',
-        width: '236px',
-        height: '60px',
-      },
-      sm: {
-        fontsize: '18px',
-        fontWeight: 'medium',
-        padding: '16px 20px',
-        width: '122px',
-        height: '60px',
-      },
-      // login?
-      xs: {
-        fontsize: '18px',
-        fontWeight: 'medium',
-        padding: '16px 20px',
-        width: '96px',
-        height: '36px',
-      },
-    },
-  },
+  Button: buttonTheme,
 };
 
 const theme = extendTheme({
