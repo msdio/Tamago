@@ -58,11 +58,35 @@ const basicVariant = defineStyle((props) => {
   };
 });
 
+const outlineVariant = defineStyle((props) => {
+  const { colorScheme: c } = props;
+  return {
+    bg: `${c}.100`,
+    color: `${c}.600`,
+    border: '0.6px solid',
+
+    _hover: {
+      bg: `${c}.200`,
+      _disabled: {
+        bg: 'secondary.500',
+      },
+    },
+    _active: {
+      bg: `${c}.200`,
+    },
+    _disabled: {
+      bg: 'secondary.500',
+      border: '0.6px solid',
+      borderColor: 'secondary.500',
+    },
+  };
+});
+
 export const buttonTheme = defineStyleConfig({
-  baseStyle,
   sizes,
   variants: {
     base: basicVariant,
+    outline: outlineVariant,
   },
   defaultProps: {
     colorScheme: 'tamago',

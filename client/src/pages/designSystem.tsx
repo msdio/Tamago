@@ -13,11 +13,14 @@ function designSystem() {
           Line _ md
         </Button>
 
-        <Button size='sm' colorScheme='secondary'>
+        <Button size='sm' colorScheme='secondary' variant='outline'>
           Check _ sm{' '}
         </Button>
-        <Button size='xs' colorScheme='secondary'>
-          log in{' '}
+
+        {/* NOTE: header이외에 login은 계속 쓰인다면 theme에 추가 
+        -> color schema값이 없으면 똑같이 동작, white, black을 넣어도 마찬가지*/}
+        <Button size='xs' colorScheme='' variant='outline'>
+          log in
         </Button>
       </Flex>
     </VStack>
