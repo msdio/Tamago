@@ -44,7 +44,7 @@ const theme = extendTheme({
       800: '#dc3d00',
       900: '#d23400',
     },
-    emailButton: {
+    gray: {
       100: '#fffaf8', // hover 등
       200: '#ff7a29',
       300: '#ff701e',

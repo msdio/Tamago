@@ -4,8 +4,8 @@ import { DEFAULT_INPUT_THEME, FontBorderTheme } from '../../constants/theme';
 
 interface InputProps {
   value: string;
-  type: string;
   name: string;
+  type?: string;
   theme?: FontBorderTheme;
   regex?: RegExp;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;

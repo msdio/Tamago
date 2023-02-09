@@ -42,7 +42,7 @@ export default function SignupForm() {
             value={email}
             onChange={handleInputChange}
           />
-          <SubmitButton w='122px' colorScheme='emailButton' theme={EMAIL_BUTTON_THEME}>
+          <SubmitButton w='122px' colorScheme='gray' theme={EMAIL_BUTTON_THEME}>
             중복 확인
           </SubmitButton>
         </Flex>
