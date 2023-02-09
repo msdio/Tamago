@@ -29,13 +29,19 @@ dependencies {
 	// Swagger
 	implementation ('io.springfox:springfox-boot-starter:3.0.0')
 
+	// jwt
+	implementation('io.jsonwebtoken:jjwt-api:0.11.5')
+	implementation('io.jsonwebtoken:jjwt-impl:0.11.5')
+	implementation('io.jsonwebtoken:jjwt-jackson:0.11.5')
+
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 
+	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'com.mysql:mysql-connector-j'
 }
 
 tasks.named('test') {
