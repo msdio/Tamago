@@ -52,9 +52,18 @@ const colors: Record<string, ColorType> = {
     500: '#FF8A65', // basic color
     600: '#FF7A3C',
     700: '#FF6A3C',
+  // NOTE: 삭제?
+  tamago_gray: {
+    100: '#fffaf8', // hover 등
+    200: '#ff7a29',
+    300: '#ff701e',
+    400: '#ff6611',
+    500: '#F5F5F5', // basic color
+    600: '#F5F5F5', // hover?
+    700: '#F5F5F5', // click?
     800: '#dc3d00',
     900: '#d23400',
-  }, 
+  },
 };
 
 const components: Record<string, StyleConfig> = {
@@ -96,6 +105,23 @@ const components: Record<string, StyleConfig> = {
 };
 
 const theme = extendTheme({
+  styles: {
+    global: {
+      'html, body': {
+        h: 'full',
+        m: '0',
+        p: '0',
+        fontFamily: 'Pretendard',
+      },
+      // footer 바닥에 붙어있게 하기 위한 css
+      '#__next': {
+        h: 'full',
+        display: 'flex',
+        flexDirection: 'column',
+        fontFamily: 'Pretendard',
+      },
+    },
+  },
   colors,
   components,
 });
