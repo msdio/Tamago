@@ -1,4 +1,4 @@
-import { extendTheme } from "@chakra-ui/react";
+import { extendTheme, StyleConfig } from '@chakra-ui/react';
 
 export interface FontBorderTheme {
   fontFamily: string;
@@ -57,8 +57,47 @@ const colors: Record<string, ColorType> = {
   }, 
 };
 
+const components: Record<string, StyleConfig> = {
+  Button: {
+    defaultProps: {
+      colorScheme: 'tamago',
+    },
+    sizes: {
+      lg: {
+        fontsize: '18px',
+        padding: '16px 20px',
+        width: '490px',
+        height: '60px',
+      },
+      md: {
+        fontsize: '18px',
+        fontWeight: 'bold',
+        padding: '16px 20px',
+        width: '236px',
+        height: '60px',
+      },
+      sm: {
+        fontsize: '18px',
+        fontWeight: 'medium',
+        padding: '16px 20px',
+        width: '122px',
+        height: '60px',
+      },
+      // login?
+      xs: {
+        fontsize: '18px',
+        fontWeight: 'medium',
+        padding: '16px 20px',
+        width: '96px',
+        height: '36px',
+      },
+    },
+  },
+};
+
 const theme = extendTheme({
   colors,
+  components,
 });
 
 export default theme;
