@@ -1,3 +1,5 @@
+import { extendTheme } from "@chakra-ui/react";
+
 export interface FontBorderTheme {
   fontFamily: string;
   fontSize: string;
@@ -37,3 +39,26 @@ export const DEFAULT_INPUT_THEME: FontBorderTheme = {
   borderColor: '#BFBFBF',
   borderRadius: '5px',
 };
+
+type ColorProperty = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+type ColorType = Record<ColorProperty, string>;
+
+const colors: Record<string, ColorType> = {
+  tamago: {
+    100: '#fffaf8', // hover 등
+    200: '#ff7a29',
+    300: '#ff701e',
+    400: '#ff6611',
+    500: '#FF8A65', // basic color
+    600: '#FF7A3C',
+    700: '#FF6A3C',
+    800: '#dc3d00',
+    900: '#d23400',
+  }, 
+};
+
+const theme = extendTheme({
+  colors,
+});
+
+export default theme;
