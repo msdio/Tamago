@@ -1,10 +1,3 @@
-// import { css } from '@emotion/react';
-import { Box } from '@chakra-ui/react';
-
 export default function Home() {
-  return <Box>메인 페이지</Box>;
+  return <div>메인 페이지</div>;
 }
-
-// export default function Home() {
-//   return <h1>hello next!</h1>;
-// }
