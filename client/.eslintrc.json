@@ -24,9 +24,9 @@
     }
   },
   "rules": {
+    "react/react-in-jsx-scope": 0,
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
-    "react/react-in-jsx-scope": 0,
     "no-unused-private-class-members": "error",
     "no-use-before-define": "error",
     "no-unused-vars": "warn",
@@ -39,6 +39,12 @@
         "varsIgnorePattern": "^_",
         "args": "after-used",
         "argsIgnorePattern": "^_"
+      }
+    ],
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "prefer": "type-imports"
       }
     ],
     "comma-spacing": [

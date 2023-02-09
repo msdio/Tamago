@@ -12,6 +12,8 @@ export function Header() {
     router.push('/login');
   };
 
+  console.log('temp', 'skccc');
+
   const handleSignupClick = () => {
     router.push('/signup');
   };
