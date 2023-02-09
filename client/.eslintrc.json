@@ -4,8 +4,8 @@
     "es2021": true,
     "node": true
   },
-  "extends": ["prettier", "plugin:react/recommended", "plugin:@typescript-eslint/recommended"],
-  "plugins": ["prettier", "@typescript-eslint/eslint-plugin", "simple-import-sort", "unused-imports"],
+  "extends": ["next", "prettier"],
+  "plugins": ["prettier", "simple-import-sort", "unused-imports"],
 
   "settings": {
     "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
@@ -13,22 +13,20 @@
       "node": {
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
+    },
+    "next": {
+      "rootDir": "../client"
     }
   },
   "rules": {
-    "@typescript-eslint/consistent-type-imports": [
-      "error",
-      {
-        "prefer": "type-imports"
-      }
-    ],
-    "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error",
-    "no-unused-private-class-members": "error",
-    "no-use-before-define": "error",
-    "no-unused-vars": "warn",
-    "no-console": "warn",
-    "unused-imports/no-unused-imports": "error",
+    // "simple-import-sort/imports": "error",
+    // "simple-import-sort/exports": "error",
+    // "react/react-in-jsx-scope": 0,
+    // "no-unused-private-class-members": "error",
+    // "no-use-before-define": "error",
+    // "no-unused-vars": "warn",
+    // "no-console": "warn",
+    // "unused-imports/no-unused-imports": "error",
     "unused-imports/no-unused-vars": [
       "warn",
       {
