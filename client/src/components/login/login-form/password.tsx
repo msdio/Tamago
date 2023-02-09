@@ -36,10 +36,10 @@ function LoginPasswordForm() {
         <InputRightElement>
           <Box onClick={handleShowClick} h={'5px'} mr='2'>
             {show ? (
-              <Image src={'/image/eyeslash.svg'} alt='eyeslash' width={22} height={22} />
+              <Image src={'/images/eyeslash.svg'} alt='eyeslash' width={22} height={22} />
             ) : (
               // TODO : eye svg 교체
-              <Image src={'/image/eyeslash.svg'} alt='eyeslash' width={22} height={22} />
+              <Image src={'/images/eyeslash.svg'} alt='eyeslash' width={22} height={22} />
             )}
           </Box>
         </InputRightElement>
