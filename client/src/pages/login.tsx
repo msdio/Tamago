@@ -1,9 +1,9 @@
 import { TabList, TabPanels, Tabs } from '@chakra-ui/react';
-import Guest from '../../component/login/guest';
-import LoginLayout from '../../component/login/layout';
-import LoginForm from '../../component/login/login-form';
-import LoginTab from '../../component/login/login-tab';
-import TabPanelWrapper from '../../component/login/login-tab-panel-wrapper';
+import Guest from '../components/login/guest';
+import LoginLayout from '../components/login/layout';
+import LoginForm from '../components/login/login-form';
+import LoginTab from '../components/login/login-tab';
+import TabPanelWrapper from '../components/login/login-tab-panel-wrapper';
 
 export default function LoginPage() {
   return (

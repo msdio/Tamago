@@ -28,10 +28,10 @@ function LoginForm() {
 
       <Flex justifyContent='center' gap={4}>
         <Button bg='fff' border='0.6px solid #BFBFBF' width='59px' height='59px' p={0}>
-          <Image src='/image/google-icon.svg' alt='google login' width={40} height={38} />
+          <Image src='/images/google-icon.svg' alt='google login' width={40} height={38} />
         </Button>
         <Button bg='fff' border='0.6px solid #BFBFBF' width='59px' height='59px' p={0}>
-          <Image src='/image/github-icon.svg' alt='google login' width={40} height={38} />
+          <Image src='/images/github-icon.svg' alt='google login' width={40} height={38} />
         </Button>
       </Flex>
     </>
