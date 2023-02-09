@@ -15,15 +15,15 @@ export default function SignupTos() {
       </Box>
       <Flex w='full' alignItems='center' justify='space-between'>
         <Checkbox fontSize='15px'>[필수] 서비스 이용약관 동의</Checkbox>
-        <Img w='7px' h='14px' src='/images/arrow_left_1.svg' verticalAlign='middle' />
+        <Img w='5px' h='10px' src='/images/right_arrow_1.png' verticalAlign='middle' />
       </Flex>
       <Flex w='full' alignItems='center' justify='space-between'>
         <Checkbox fontSize='15px'>[필수] 개인정보 수집 및 이용 동의</Checkbox>
-        <Img w='7px' h='14px' src='/images/arrow_left_1.svg' />
+        <Img w='5px' h='10px' src='/images/right_arrow_1.png' />
       </Flex>
       <Flex w='full' alignItems='center' justify='space-between' mb='43px'>
         <Checkbox fontSize='15px'>[선택] 마케팅 수신 동의</Checkbox>
-        <Img w='7px' h='14px' src='/images/arrow_left_1.svg' />
+        <Img w='5px' h='10px' src='/images/right_arrow_1.png' />
       </Flex>
       <Button type='submit' w='full' h='59px' fontSize='17px' fontWeight='700' bg='#D6D6D6' color='white'>
         동의하고 진행하기
