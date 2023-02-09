@@ -7,6 +7,14 @@ export function Header() {
   const [isLogin, setIsLogin] = useState(false);
   const router = useRouter();
 
+  const handleLoginClick = () => {
+    router.push('/login');
+  };
+
+  const handleSignupClick = () => {
+    router.push('/signup');
+  };
+
   return (
     <>
       <Fonts />
@@ -28,9 +36,7 @@ export function Header() {
               border='0.516456px solid #BFBFBF'
               borderRadius='4.3038px'
               bg='white'
-              onClick={() => {
-                router.push('/signup');
-              }}
+              onClick={handleSignupClick}
             >
               회원가입
             </Button>
@@ -40,9 +46,7 @@ export function Header() {
               border='0.516456px solid #BFBFBF'
               borderRadius='4.3038px'
               bg='white'
-              onClick={() => {
-                router.push('/');
-              }}
+              onClick={handleLoginClick}
             >
               로그인
             </Button>
