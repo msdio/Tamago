@@ -5,8 +5,8 @@ import SignupForm from '../components/signup/SignupForm';
 export default function SignupPage() {
   return (
     <SignupLayout>
-      <SignupTos />
-      {/* <SignupForm /> */}
+      {/* <SignupTos /> */}
+      <SignupForm />
     </SignupLayout>
   );
 }
