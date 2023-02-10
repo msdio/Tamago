@@ -21,7 +21,6 @@ const sizes = {
     width: '122px',
     height: '60px',
   },
-  // login?
   xs: {
     fontsize: '18px',
     fontWeight: 'medium',
@@ -31,7 +30,7 @@ const sizes = {
   },
 };
 
-const basicVariant = defineStyle((props) => {
+const baseVariant = defineStyle((props) => {
   const { colorScheme: c } = props;
   return {
     bg: `${c}.500`,
@@ -85,7 +84,7 @@ const outlineVariant = defineStyle((props) => {
 export const buttonTheme = defineStyleConfig({
   sizes,
   variants: {
-    base: basicVariant,
+    base: baseVariant,
     outline: outlineVariant,
   },
   defaultProps: {
