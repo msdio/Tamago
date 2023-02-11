@@ -1,5 +1,5 @@
 import { Flex, Heading } from '@chakra-ui/react';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 interface SignupLayoutProps {
   children: ReactNode;
