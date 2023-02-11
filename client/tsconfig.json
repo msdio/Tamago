@@ -2,7 +2,7 @@
   "compilerOptions": {
     "strict": true,
     "noEmit": true,
-    "target": "es6",
+    "target": "es5",
     "allowJs": true,
     "jsx": "preserve",
     "module": "esnext",
@@ -21,6 +21,6 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src"],
+  "include": ["next-env.d.ts", "src"],
   "exclude": ["node_modules"]
 }

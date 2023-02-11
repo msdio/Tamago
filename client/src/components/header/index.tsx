@@ -1,6 +1,7 @@
-import { HStack, Flex, Heading, Text, Button, Spacer } from '@chakra-ui/react';
+import { Button, Flex, Heading, HStack, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+
 import Fonts from '../../../public/fonts/GangwonEduPower';
 
 export function Header() {
@@ -10,6 +11,8 @@ export function Header() {
   const handleLoginClick = () => {
     router.push('/login');
   };
+
+  console.log('temp', 'skccc');
 
   const handleSignupClick = () => {
     router.push('/signup');
