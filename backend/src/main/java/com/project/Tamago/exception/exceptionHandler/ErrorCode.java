@@ -11,6 +11,8 @@ public enum ErrorCode {
 	INVALID_USER_JWT(2004, "권한이 없는 유저의 접근입니다."),
 	EMPTY_JWT(2005, "JWT를 입력해주세요."),
 	USERS_EMPTY_USER_EMAIL(2006, "유저 이메일 값을 확인해주세요."),
+	USERS_EXISTS_EMAIL(2007, "중복된 이메일입니다."),
+
 	;
 
 	private final int code;

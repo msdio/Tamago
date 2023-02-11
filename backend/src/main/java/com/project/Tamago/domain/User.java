@@ -10,6 +10,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.project.Tamago.util.constants.Role;
 import com.project.Tamago.util.converter.RoleConverter;
@@ -59,4 +60,8 @@ public class User extends BaseTimeEntity {
 
 	@Convert(converter = RoleConverter.class)
 	private Role role;
+
+	public void encodePassword(PasswordEncoder passwordEncoder, String password) {
+		this.password = passwordEncoder.encode(password);
+	}
 }

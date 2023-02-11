@@ -1,6 +1,7 @@
 package com.project.Tamago.service;
 
 import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
+import static com.project.Tamago.util.constants.Constant.*;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,8 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 public class PrincipalDetailService implements UserDetailsService {
-
-	private static final String PROVIDER_NONE = "none";
 	private final UserRepository userRepository;
 
 	@Override
