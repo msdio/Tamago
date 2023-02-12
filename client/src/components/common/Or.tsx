@@ -16,7 +16,7 @@ export default function Or() {
         h: '0.6px',
         fontSize: '0px',
         lineHeight: '0px',
-        marginRight: '22px',
+        m: '0 19px 0 6px',
       }}
       _after={{
         content: '""',
@@ -25,7 +25,7 @@ export default function Or() {
         h: '0.6px',
         fontSize: '0px',
         lineHeight: '0px',
-        marginLeft: '22px',
+        m: '0 6px 0 19px',
       }}
     >
       OR

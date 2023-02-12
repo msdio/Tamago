@@ -1,9 +1,15 @@
-import { Button, Flex, FormLabel } from '@chakra-ui/react';
+import { Button, Flex, FormLabel, Input } from '@chakra-ui/react';
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 
-import InputForm from '../../common/InputForm';
-import Or from './Or';
+import Or from '../../common/Or';
+import InputWithButton from './InputWithButton';
+import InputWithRegex from './InputWithRegex';
+
+// 이런 정규식 및 관련 함수들은 유틸로 빼는게 좋을까요?
+const EMAIL_REGEX = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d).{8,12}$/;
+const getPasswordRegex = (password: string) => new RegExp(`^${password}$`);
 
 export default function SignupForm() {
   const [signupInputs, setSignupInputs] = useState({
@@ -22,51 +28,49 @@ export default function SignupForm() {
 
   return (
     <Flex direction='column'>
-      <Flex direction='column' gap='8px' mb='26px'>
+      <Flex direction='column' gap='8px' mb='25px'>
         <FormLabel fontSize='15px' fontWeight='700'>
           이름
         </FormLabel>
-        <InputForm name='name' placeholder='이름을 입력해 주세요.' value={name} onChange={handleInputChange} />
+        <Input size='lg' name='name' placeholder='이름을 입력해 주세요.' value={name} onChange={handleInputChange} />
       </Flex>
-      <Flex direction='column' gap='8px' mb='37px'>
+      <Flex direction='column' gap='8px' mb='26px'>
         <FormLabel fontSize='15px' fontWeight='700'>
           이메일
         </FormLabel>
-        <Flex gap='13px'>
-          <InputForm
-            name='email'
-            w='351px'
-            type='email'
-            placeholder='이메일을 입력해 주세요.'
-            regex={/^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/}
-            errorMessage='이메일 형식을 확인해 주세요.'
-            value={email}
-            onChange={handleInputChange}
-          />
-          <Button size='sm' colorScheme='secondary' variant='outline'>
-            중복 확인
-          </Button>
-        </Flex>
+        <InputWithButton
+          size='md'
+          name='email'
+          type='email'
+          placeholder='이메일을 입력해 주세요.'
+          regex={EMAIL_REGEX}
+          errorMessage='이메일 형식을 확인해 주세요.'
+          value={email}
+          onChange={handleInputChange}
+          buttonText='중복 확인'
+        />
       </Flex>
-      <Flex direction='column' gap='8px' mb='41px'>
+      <Flex direction='column' gap='8px' mb='57px'>
         <FormLabel fontSize='15px' fontWeight='700'>
           비밀번호
         </FormLabel>
         <Flex direction='column' gap='16px'>
-          <InputForm
+          <InputWithRegex
+            size='lg'
             name='password'
             type='password'
             placeholder='8-12자 영문 + 숫자를 포함하여 입력해 주세요.'
-            regex={/^(?=.*[A-Za-z])(?=.*\d).{8,12}$/}
-            errorMessage='8-12자 영문, 숫자를 사용해 주세요.'
+            regex={PASSWORD_REGEX}
+            errorMessage='8-12자 영문 + 숫자를 포함하여 입력해 주세요.'
             value={password}
             onChange={handleInputChange}
           />
-          <InputForm
+          <InputWithRegex
+            size='lg'
             name='verifyPassword'
             type='password'
             placeholder='비밀번호를 한 번 더 입력해 주세요.'
-            regex={new RegExp(`^${password}$`)}
+            regex={getPasswordRegex(password)}
             errorMessage='비밀번호가 일치하지 않습니다.'
             value={verifyPassword}
             onChange={handleInputChange}
