@@ -1,8 +1,9 @@
-import { Flex, FormLabel, Text } from '@chakra-ui/react';
-import { ChangeEvent, useState } from 'react';
-import { EMAIL_BUTTON_THEME } from '../../../styles/theme';
+import { Button, Flex, FormLabel } from '@chakra-ui/react';
+import type { ChangeEvent } from 'react';
+import { useState } from 'react';
+
 import InputForm from '../../common/InputForm';
-import SubmitButton from '../../common/SubmitButton';
+import Or from './Or';
 
 export default function SignupForm() {
   const [signupInputs, setSignupInputs] = useState({
@@ -42,9 +43,9 @@ export default function SignupForm() {
             value={email}
             onChange={handleInputChange}
           />
-          <SubmitButton w='122px' colorScheme='tamago_gray' theme={EMAIL_BUTTON_THEME}>
+          <Button size='sm' colorScheme='secondary' variant='outline'>
             중복 확인
-          </SubmitButton>
+          </Button>
         </Flex>
       </Flex>
       <Flex direction='column' gap='8px' mb='41px'>
@@ -72,37 +73,8 @@ export default function SignupForm() {
           />
         </Flex>
       </Flex>
-      <SubmitButton type='submit' colorScheme='tamago'>
-        회원가입
-      </SubmitButton>
-      <Text
-        fontSize='15px'
-        fontWeight='700'
-        color='#BFBFBF'
-        display='flex'
-        alignItems='center'
-        m='41px 0px'
-        _before={{
-          content: '""',
-          flexGrow: 1,
-          bg: '#BFBFBF',
-          h: '0.6px',
-          fontSize: '0px',
-          lineHeight: '0px',
-          marginRight: '22px',
-        }}
-        _after={{
-          content: '""',
-          flexGrow: 1,
-          bg: '#BFBFBF',
-          h: '0.6px',
-          fontSize: '0px',
-          lineHeight: '0px',
-          marginLeft: '22px',
-        }}
-      >
-        OR
-      </Text>
+      <Button size='lg'>회원가입</Button>
+      <Or />
     </Flex>
   );
 }
