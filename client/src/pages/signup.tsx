@@ -1,6 +1,5 @@
-import SignupTos from '../components/signup/Tos';
 import SignupLayout from '../components/signup/Layout';
-import SignupForm from '../components/signup/Form';
+import SignupTos from '../components/signup/Tos';
 
 export default function SignupPage() {
   return (

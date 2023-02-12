@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, VStack } from '@chakra-ui/react';
+import { Button, Flex, VStack } from '@chakra-ui/react';
 
 function designSystem() {
   return (

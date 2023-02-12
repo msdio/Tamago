@@ -1,6 +1,8 @@
 import { Flex, Input, Text } from '@chakra-ui/react';
-import { ChangeEvent } from 'react';
-import { DEFAULT_INPUT_THEME, FontBorderTheme } from '../../styles/theme';
+import type { ChangeEvent } from 'react';
+
+import type { FontBorderTheme } from '../../styles/theme';
+import { DEFAULT_INPUT_THEME } from '../../styles/theme';
 
 interface InputProps {
   value: string;
