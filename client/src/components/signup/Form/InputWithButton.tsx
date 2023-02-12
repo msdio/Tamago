@@ -38,7 +38,14 @@ export default function InputWithButton({
       </FormLabel>
       <Flex gap='14px'>
         <Flex direction='column'>
-          <Input name={name} type={type} size={size} placeholder={placeholder} value={value} onChange={onChange} />
+          <Input
+            name={name}
+            type={type}
+            size={size}
+            placeholder={placeholder}
+            defaultValue={value}
+            onChange={onChange}
+          />
           {errorMessage && isError ? (
             <Text fontSize='15px' color='#FF0000' mt='20px'>
               {errorMessage}

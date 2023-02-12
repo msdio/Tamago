@@ -34,7 +34,7 @@ export default function InputWithRegex({
         </FormLabel>
       )}
       <Flex direction='column'>
-        <Input name={name} type={type} size={size} placeholder={placeholder} value={value} onChange={onChange} />
+        <Input name={name} type={type} size={size} placeholder={placeholder} defaultValue={value} onChange={onChange} />
         {errorMessage && isError ? (
           <Text color='#FF0000' mt='17'>
             {errorMessage}

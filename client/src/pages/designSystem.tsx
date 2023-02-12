@@ -25,17 +25,17 @@ function designSystem() {
 
         <Input size='lg' placeholder='Default _ Lg' />
 
-        <Input size='lg' value='Focus _ Lg' />
+        <Input size='lg' defaultValue='Focus _ Lg' />
 
-        <Input size='lg' value='Text Input _ Lg' />
+        <Input size='lg' defaultValue='Text Input _ Lg' />
 
-        <Input size='lg' value='Disabled _ Lg' isDisabled />
+        <Input size='lg' defaultValue='Disabled _ Lg' isDisabled />
 
         <Input size='md' placeholder='Default _ Md' />
 
-        <Input size='md' value='Focus _ Md' />
+        <Input size='md' defaultValue='Focus _ Md' />
 
-        <Input size='md' value='Text Input _ Md' />
+        <Input size='md' defaultValue='Text Input _ Md' />
       </Flex>
     </VStack>
   );
