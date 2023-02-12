@@ -17,7 +17,7 @@ const CheckedIcon = () => {
 };
 
 interface CheckboxProps {
-  labelText: string;
+  labelText?: string;
 }
 
 export const CustomCheckbox = (props: UseCheckboxProps & CheckboxProps) => {
@@ -28,7 +28,7 @@ export const CustomCheckbox = (props: UseCheckboxProps & CheckboxProps) => {
       display='flex'
       alignItems='center'
       borderColor='secondary.100'
-      gap='14px'
+      gap={labelText ? '14px' : '0'}
       cursor='pointer'
       {...htmlProps}
     >
