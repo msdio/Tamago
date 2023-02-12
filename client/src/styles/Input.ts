@@ -38,7 +38,6 @@ const baseVariant = defineStyle((props) => {
       },
       _disabled: {
         bg: 'secondary.100',
-        borderColor: 'secondary.500',
       },
     },
   };
