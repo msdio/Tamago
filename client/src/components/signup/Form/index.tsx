@@ -1,4 +1,4 @@
-import { Button, Flex, FormLabel, Input } from '@chakra-ui/react';
+import { Button, Flex, FormLabel, Image, Input } from '@chakra-ui/react';
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 
@@ -47,6 +47,7 @@ export default function SignupForm() {
           errorMessage='이메일 형식을 확인해 주세요.'
           value={email}
           onChange={handleInputChange}
+          onClick={() => console.log('onClick')}
           buttonText='중복 확인'
         />
       </Flex>
@@ -79,6 +80,14 @@ export default function SignupForm() {
       </Flex>
       <Button size='lg'>회원가입</Button>
       <Or />
+      <Flex justifyContent='center' gap={4}>
+        <Button bg='fff' border='0.6px solid #BFBFBF' width='59px' height='59px' p={0}>
+          <Image src='/images/google-icon.svg' alt='google login' width={40} height={38} />
+        </Button>
+        <Button bg='fff' border='0.6px solid #BFBFBF' width='59px' height='59px' p={0}>
+          <Image src='/images/github-icon.svg' alt='google login' width={40} height={38} />
+        </Button>
+      </Flex>
     </Flex>
   );
 }
