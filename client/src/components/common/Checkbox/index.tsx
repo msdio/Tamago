@@ -4,7 +4,7 @@ import { useCheckbox } from '@chakra-ui/react';
 
 const CheckedIcon = () => {
   return (
-    <Icon viewBox='0 0 12 9' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <Icon viewBox='0 0 12 9' fill='none' xmlns='http://www.w3.org/2000/svg' w='12px'>
       <path
         d='M1.87988 4.72785L4.54312 7.40381L10.1193 1.80103'
         stroke='#FF8A65'
@@ -16,7 +16,12 @@ const CheckedIcon = () => {
   );
 };
 
-export const CustomCheckbox = (props: UseCheckboxProps) => {
+interface CheckboxProps {
+  labelText: string;
+}
+
+export const CustomCheckbox = (props: UseCheckboxProps & CheckboxProps) => {
+  const { labelText } = props;
   const { state, getCheckboxProps, getInputProps, getLabelProps, htmlProps } = useCheckbox(props);
   return (
     <FormLabel
@@ -37,12 +42,14 @@ export const CustomCheckbox = (props: UseCheckboxProps) => {
         borderRadius='5px'
         w='20px'
         h='20px'
+        mx='5px'
+        my='6px'
         {...getCheckboxProps()}
       >
         {state.isChecked && <CheckedIcon />}
       </Flex>
       <Text size='15px' {...getLabelProps()}>
-        custom checkbox
+        {labelText}
       </Text>
     </FormLabel>
   );
