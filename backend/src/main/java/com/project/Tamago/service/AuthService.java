@@ -26,6 +26,7 @@ public class AuthService {
 
 	public void join(JoinReqDto joinReqDto) {
 		checkEmailDuplicate(joinReqDto.getEmail());
+		checkNicknameDuplicate(joinReqDto.getNickname());
 		User user = joinReqDto.toUser();
 		user.encodePassword(passwordEncoder, joinReqDto.getPassword());
 		userRepository.save(user);
@@ -35,6 +36,12 @@ public class AuthService {
 	public void checkEmailDuplicate(String email) {
 		if (userRepository.existsByEmailAndProvider(email, PROVIDER_NONE)) {
 			throw new CustomException(USERS_EXISTS_EMAIL);
+		}
+	}
+
+	private void checkNicknameDuplicate(String nickname) {
+		if (userRepository.existsByNickname(nickname)) {
+			throw new CustomException(USERS_EXISTS_NICKNAME);
 		}
 	}
 }
