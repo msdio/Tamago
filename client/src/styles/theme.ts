@@ -2,6 +2,7 @@ import type { StyleConfig } from '@chakra-ui/react';
 import { extendTheme } from '@chakra-ui/react';
 
 import { buttonTheme } from '@/styles/Button';
+import { inputTheme } from '@/styles/Input';
 
 export interface FontBorderTheme {
   fontFamily: string;
@@ -92,6 +93,7 @@ const colors: Record<string, ColorType> = {
 
 const components: Record<string, StyleConfig> = {
   Button: buttonTheme,
+  Input: inputTheme,
 };
 
 const theme = extendTheme({

@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, Divider, Flex, FormControl, Img, Text } from '@chakra-ui/react';
+import { Box, Button, Checkbox, Divider, Flex, Img, Text } from '@chakra-ui/react';
 // import CustomCheckbox from '../util/Checkbox';
 
 export default function SignupTos() {

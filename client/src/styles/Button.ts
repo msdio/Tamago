@@ -2,27 +2,27 @@ import { defineStyle, defineStyleConfig } from '@chakra-ui/react';
 
 const sizes = {
   lg: {
-    fontsize: '18px',
+    fontSize: '18px',
     padding: '16px 20px',
     width: '490px',
     height: '60px',
   },
   md: {
-    fontsize: '18px',
+    fontSize: '18px',
     fontWeight: 'bold',
     padding: '16px 20px',
     width: '236px',
     height: '60px',
   },
   sm: {
-    fontsize: '18px',
+    fontSize: '18px',
     fontWeight: 'medium',
     padding: '16px 20px',
     width: '122px',
     height: '60px',
   },
   xs: {
-    fontsize: '18px',
+    fontSize: '14px',
     fontWeight: 'medium',
     padding: '16px 20px',
     width: '96px',
