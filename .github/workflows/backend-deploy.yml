@@ -1,0 +1,60 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Backend-Deploy
+
+on:
+  push:
+    branches: 
+      - main
+    paths :
+      - "backend/**"
+
+jobs:
+
+  # This workflow contains a single job called "build"
+
+  deploy: # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: make application-secret.yml
+        run: |
+          cd ./src/backend/src/main/resources
+          touch ./application-secret.yml
+          echo "${{ secrets.SECRET_YML }}" > ./application-secret.yml
+        shell: bash
+
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_IP }}
+          username: ${{ secrets.REMOTE_SSH_ID }}
+          key: ${{ secrets.REMOTE_SSH_KEY }}
+          port: ${{ secrets.REMOTE_SSH_PORT }}
+          script: |
+            whoami
+            cd /home
+            sudo chown -R ubuntu:ubuntu ubuntu
+            cd /home/ubuntu/odongdong/src/backend
+             echo -e "\
+             +------------------------------------+
+             |              1. build              |
+             +------------------------------------+"
+            
+            echo ">>>>>> making secret yml..."
+            echo "${{ secrets.SECRET_YML }}" > ./src/main/resources/application-secret.yml
+            
+            echo -e "\
+             >>>>>> git pull... "
+            cd "/home/ubuntu/odongdong" || exit 1
+            git fetch --all || exit 1
+            git reset --hard origin/main || exit 1
+            git pull origin main || exit 1
+            
+            chmod +x ./dockerfile/backend/backend_install.sh || exit 1
+            ./dockerfile/backend/backend_install.sh || exit 1
+
+
+
+
