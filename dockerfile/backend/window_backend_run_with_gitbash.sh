@@ -1,0 +1,1 @@
+winpty docker run -p 8080:9000/tcp -i -t --name release1 test:1.3
