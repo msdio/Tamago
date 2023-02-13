@@ -22,6 +22,8 @@ jobs:
         run: |
           whoami
           pwd
+          cd ../
+          ls -al
           echo ">>>>>>>>> secret make >>>>>>>>>"
           cd /backend/src/main/resources
           touch ./application-secret.yml
