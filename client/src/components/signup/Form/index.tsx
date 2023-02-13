@@ -2,13 +2,12 @@ import { Box, Button, Flex, Image } from '@chakra-ui/react';
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 
+import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
+
 import Or from '../../common/Or';
 import InputWithButton from './InputWithButton';
 import InputWithRegex from './InputWithRegex';
 
-// 이런 정규식 및 관련 함수들은 유틸로 빼는게 좋을까요?
-const EMAIL_REGEX = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d).{8,12}$/;
 const getPasswordRegex = (password: string) => new RegExp(`^${password}$`);
 
 export default function SignupForm() {
