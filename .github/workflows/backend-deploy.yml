@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: make application-secret.yml
         run: |
-          cd /backend/src/main/resources
+          cd ./backend/src/main/resources
           touch ./application-secret.yml
           echo "${{ secrets.SECRET_YML }}" > ./application-secret.yml
         shell: bash
@@ -36,22 +36,16 @@ jobs:
             whoami
             cd /home
             sudo chown -R ubuntu:ubuntu ubuntu
-            cd /home/ubuntu/odongdong/src/backend
+            cd /home/ubuntu/Tamago/dockerfile/backend
              echo -e "\
              +------------------------------------+
              |              1. build              |
              +------------------------------------+"
             
             echo ">>>>>> making secret yml..."
-            echo "${{ secrets.SECRET_YML }}" > /main/resources/application-secret.yml
-            
+            echo "${{ secrets.SECRET_YML }}" > application-secret.yml
             echo -e "\
-             >>>>>> git pull... "
-            cd "/home/ubuntu/odongdong" || exit 1
-            git fetch --all || exit 1
-            git reset --hard origin/main || exit 1
-            git pull origin main || exit 1
-            
+             >>>>>> dockerfile run... "
             chmod +x ./dockerfile/backend/backend_install.sh || exit 1
             ./dockerfile/backend/backend_install.sh || exit 1
 
