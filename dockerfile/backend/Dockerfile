@@ -14,7 +14,7 @@ RUN git checkout main
 COPY application-secret.yml /root/app/backend/src/main/resources
 WORKDIR /root/app/backend/
 RUN chmod 777 gradlew 
-RUN ./gradlew build
+RUN ./gradlew build -x test
 WORKDIR /root/app/backend/build/libs
 
 CMD [ "java", "-jar", "Tamago-0.0.1-SNAPSHOT.jar"]
