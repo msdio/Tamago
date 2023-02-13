@@ -1,1 +1,1 @@
- docker rm $(docker ps --filter status=exited -q)
+ sudo docker rm $(sudo docker ps --filter status=exited -q)
