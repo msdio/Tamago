@@ -40,7 +40,7 @@ jobs:
 
       - name: make application-secret.yml
         run: |
-          cd ./backend/src/main/resources
+          cd /backend/src/main/resources
           touch ./application-secret.yml
           echo "${{ secrets.SECRET_YML }}" > ./application-secret.yml
         shell: bash
