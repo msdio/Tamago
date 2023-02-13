@@ -1,10 +1,8 @@
 FROM ubuntu
 FROM adoptopenjdk/openjdk11
+FROM baikjonghyun/install-github
 
 LABEL AUTHOR jonghyun <jhbaik1501@naver.com>
-
-RUN apt-get update
-RUN apt-get install -y git
 
 ARG DISABLE_CACHE
 
