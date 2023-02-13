@@ -29,7 +29,7 @@ jobs:
             whoami
             cd /home
             sudo chown -R ubuntu:ubuntu ubuntu
-            cd /home/ubuntu/Tamago/dockerfile/backend
+            cd /home/ubuntu/dockerfile/backend
              echo -e "\
              +------------------------------------+
              |              1. build              |
@@ -41,7 +41,9 @@ jobs:
              >>>>>> dockerfile run... "
             ls -al
             chmod +x backend_install.sh || exit 1
+            chmod +x delete_not_use_image_file.sh || exit 1
             sudo ./backend_install.sh || exit 1
+            sudo ./delete_not_use_image_file.sh || exit 1
 
 
 
