@@ -1,8 +1,8 @@
 import type { StyleConfig } from '@chakra-ui/react';
 import { extendTheme } from '@chakra-ui/react';
 
-import { buttonTheme } from '@/styles/Button';
-import { inputTheme } from '@/styles/Input';
+import { buttonTheme } from './Button';
+import { inputTheme } from './Input';
 
 export interface FontBorderTheme {
   fontFamily: string;
