@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
 
-import Or from '../../common/Or';
+import Or from '../../common/DivideWithOr';
 import InputWithButton from './InputWithButton';
 import InputWithRegex from './InputWithRegex';
 

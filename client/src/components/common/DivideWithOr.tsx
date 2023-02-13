@@ -1,6 +1,6 @@
 import { Text } from '@chakra-ui/react';
 
-export default function Or() {
+export default function DivideWithOr() {
   return (
     <Text
       fontSize='15px'
