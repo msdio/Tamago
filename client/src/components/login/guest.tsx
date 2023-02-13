@@ -1,5 +1,6 @@
 import { Box, Button, Text } from '@chakra-ui/react';
-import LoginEmailForm from './login-form/login-email-form';
+
+import LoginEmailForm from './LoginForm/login-email-form';
 
 function Guest() {
   return (

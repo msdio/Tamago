@@ -1,8 +1,10 @@
+import { ChakraProvider, Spacer } from '@chakra-ui/react';
 import type { AppProps } from 'next/app';
-import { ChakraProvider, extendTheme, Spacer } from '@chakra-ui/react';
-import { Header } from '../components/header';
-import { Footer } from '../components/footer';
+
 import theme from '@/styles/theme';
+
+import { Footer } from '../components/footer';
+import { Header } from '../components/header';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -14,5 +16,3 @@ export default function App({ Component, pageProps }: AppProps) {
     </ChakraProvider>
   );
 }
-
- 
