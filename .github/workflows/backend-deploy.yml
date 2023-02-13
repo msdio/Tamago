@@ -39,8 +39,9 @@ jobs:
             echo "${{ secrets.SECRET_YML }}" > application-secret.yml
             echo -e "\
              >>>>>> dockerfile run... "
-            chmod +x ./dockerfile/backend/backend_install.sh || exit 1
-            ./dockerfile/backend/backend_install.sh || exit 1
+            ls -al
+            chmod +x backend_install.sh || exit 1
+            ./backend_install.sh || exit 1
 
 
 
