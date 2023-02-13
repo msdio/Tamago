@@ -30,6 +30,7 @@ export const CustomCheckbox = (props: UseCheckboxProps & CheckboxProps) => {
       borderColor='secondary.100'
       gap={labelText ? '14px' : '0'}
       cursor='pointer'
+      m={0}
       {...htmlProps}
     >
       <input {...getInputProps()} hidden />
@@ -38,7 +39,7 @@ export const CustomCheckbox = (props: UseCheckboxProps & CheckboxProps) => {
         justifyContent='center'
         bg='white'
         border='0.6px solid'
-        borderColor='tamago.500'
+        borderColor='tamago.400'
         borderRadius='5px'
         w='20px'
         h='20px'

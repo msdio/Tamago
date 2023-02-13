@@ -1,11 +1,11 @@
+import { useState } from 'react';
+
+import SignupForm from '../components/signup/Form';
 import SignupLayout from '../components/signup/Layout';
-import SignupTos from '../components/signup/Tos';
+import SignupTerms from '../components/signup/Terms';
 
 export default function SignupPage() {
-  return (
-    <SignupLayout>
-      <SignupTos />
-      {/* <SignupForm /> */}
-    </SignupLayout>
-  );
+  const [agreeTerms, setAgreeTerms] = useState(false);
+
+  return <SignupLayout>{agreeTerms ? <SignupForm /> : <SignupTerms setAgreeTerms={setAgreeTerms} />}</SignupLayout>;
 }
