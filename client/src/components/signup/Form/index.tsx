@@ -4,9 +4,9 @@ import { useState } from 'react';
 
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
 
-import Or from '../../common/DivideWithOr';
-import InputWithButton from './InputWithButton';
-import InputWithRegex from './InputWithRegex';
+import FormOr from '../../common/FormOr';
+import EmailButton from './EmailButton';
+import RegexInput from './RegexInput';
 
 const getPasswordRegex = (password: string) => new RegExp(`^${password}$`);
 
@@ -28,7 +28,7 @@ export default function SignupForm() {
   return (
     <Flex direction='column'>
       <Box mb='25px'>
-        <InputWithRegex
+        <RegexInput
           label='이름'
           size='lg'
           name='name'
@@ -38,7 +38,7 @@ export default function SignupForm() {
         />
       </Box>
       <Box mb='26px'>
-        <InputWithButton
+        <EmailButton
           label='이메일'
           size='md'
           name='email'
@@ -52,7 +52,7 @@ export default function SignupForm() {
         />
       </Box>
       <Box mb='16px'>
-        <InputWithRegex
+        <RegexInput
           label='비밀번호'
           size='lg'
           name='password'
@@ -65,7 +65,7 @@ export default function SignupForm() {
         />
       </Box>
       <Box mb='57px'>
-        <InputWithRegex
+        <RegexInput
           size='lg'
           name='verifyPassword'
           type='password'
@@ -77,7 +77,7 @@ export default function SignupForm() {
         />
       </Box>
       <Button size='lg'>회원가입</Button>
-      <Or />
+      <FormOr />
       <Flex justifyContent='center' gap={4}>
         <Button bg='fff' border='0.6px solid #BFBFBF' width='59px' height='59px' p={0}>
           <Image src='/images/google-icon.svg' alt='google login' width={40} height={38} />

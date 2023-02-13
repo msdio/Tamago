@@ -1,7 +1,7 @@
 import { Flex, FormLabel, Input, Text } from '@chakra-ui/react';
 import type { ChangeEventHandler } from 'react';
 
-interface InputProps {
+interface RegexInputProps {
   value: string;
   name: string;
   size: string;
@@ -13,7 +13,7 @@ interface InputProps {
   errorMessage?: string;
 }
 
-export default function InputWithRegex({
+export default function RegexInput({
   value,
   name,
   size,
@@ -23,7 +23,7 @@ export default function InputWithRegex({
   type,
   onChange,
   placeholder,
-}: InputProps) {
+}: RegexInputProps) {
   const isError = value !== '' && !regex.test(value);
 
   return (

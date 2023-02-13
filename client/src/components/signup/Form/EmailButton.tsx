@@ -1,7 +1,7 @@
 import { Button, Flex, FormLabel, Input, Text } from '@chakra-ui/react';
 import type { ChangeEventHandler, MouseEventHandler } from 'react';
 
-interface InputProps {
+interface EmailButtonProps {
   value: string;
   name: string;
   size: string;
@@ -15,7 +15,7 @@ interface InputProps {
   buttonText?: string;
 }
 
-export default function InputWithButton({
+export default function EmailButton({
   value,
   name,
   size,
@@ -27,7 +27,7 @@ export default function InputWithButton({
   onClick,
   placeholder,
   buttonText,
-}: InputProps) {
+}: EmailButtonProps) {
   const isMatch = regex.test(value);
   const isError = value !== '' && !isMatch;
 
