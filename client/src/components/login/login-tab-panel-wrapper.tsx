@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
-import { TabPanel, Flex } from '@chakra-ui/react';
+import { Flex, TabPanel } from '@chakra-ui/react';
+import type { ReactNode } from 'react';
 
 export default function LoginTabPanelWrapper({ children }: { children: ReactNode }) {
   return (

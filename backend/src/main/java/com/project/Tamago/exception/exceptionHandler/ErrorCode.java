@@ -7,7 +7,9 @@ public enum ErrorCode {
 	EXPIRED_JWT(2000, "만료된 JWT입니다."),
 	INVALID_SIGNATURE(2001, "유효하지 않은 서명입니다"),
 	INVALID_JWT(2002, "유효하지 않은 JWT입니다."),
-	UNSUPPORTED_JWT(2003, "지원하지않는 JWT입니다.");
+	UNSUPPORTED_JWT(2003, "지원하지않는 JWT입니다."),
+	INVALID_USER_JWT(2004, "권한이 없는 유저의 접근입니다."),
+	EMPTY_JWT(2005, "JWT를 입력해주세요.");
 
 	private final int code;
 	private final String description;

@@ -1,6 +1,8 @@
 import { Button } from '@chakra-ui/react';
-import { MouseEventHandler } from 'react';
-import { FontBorderTheme, DEFAULT_BUTTON_THEME } from '../../styles/theme';
+import type { MouseEventHandler } from 'react';
+
+import type { FontBorderTheme } from '../../styles/theme';
+import { DEFAULT_BUTTON_THEME } from '../../styles/theme';
 
 interface SubmitButtonProps {
   children?: string;

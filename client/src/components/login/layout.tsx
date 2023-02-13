@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
 import { Box, Flex } from '@chakra-ui/react';
+import type { ReactNode } from 'react';
 
 const HEADER_HEIGHT = '88px';
 interface LoginLayoutProps {

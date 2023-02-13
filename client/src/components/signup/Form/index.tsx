@@ -1,5 +1,7 @@
 import { Flex, FormLabel, Text } from '@chakra-ui/react';
-import { ChangeEvent, useState } from 'react';
+import type { ChangeEvent } from 'react';
+import { useState } from 'react';
+
 import { EMAIL_BUTTON_THEME } from '../../../styles/theme';
 import InputForm from '../../common/InputForm';
 import SubmitButton from '../../common/SubmitButton';
