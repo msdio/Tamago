@@ -20,6 +20,9 @@ jobs:
     steps:
       - name: make application-secret.yml
         run: |
+          whoami
+          pwd
+          echo ">>>>>>>>> secret make >>>>>>>>>"
           cd /backend/src/main/resources
           touch ./application-secret.yml
           echo "${{ secrets.SECRET_YML }}" > ./application-secret.yml
