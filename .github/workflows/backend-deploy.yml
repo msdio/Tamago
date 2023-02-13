@@ -41,7 +41,7 @@ jobs:
              >>>>>> dockerfile run... "
             ls -al
             chmod +x backend_install.sh || exit 1
-            ./backend_install.sh || exit 1
+            sudo ./backend_install.sh || exit 1
 
 
 
