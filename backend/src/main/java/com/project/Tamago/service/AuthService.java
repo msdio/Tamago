@@ -32,7 +32,6 @@ public class AuthService {
 		userRepository.save(user);
 	}
 
-	@Transactional(readOnly = true)
 	public void checkEmailDuplicate(String email) {
 		if (userRepository.existsByEmailAndProvider(email, PROVIDER_NONE)) {
 			throw new CustomException(USERS_EXISTS_EMAIL);
