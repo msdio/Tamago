@@ -42,7 +42,7 @@ public class ControllerAdvice {
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(Exception.class)
 	public ErrorMessage exceptionHandler(Exception exception) {
-		log.error(INTERNAL_SERVER_ERROR.getDescription());
+		exception.printStackTrace();
 		return new ErrorMessage(INTERNAL_SERVER_ERROR);
 	}
 }
