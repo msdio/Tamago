@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: make application-secret.yml
         run: |
-          cd ./src/backend/src/main/resources
+          cd /backend/src/main/resources
           touch ./application-secret.yml
           echo "${{ secrets.SECRET_YML }}" > ./application-secret.yml
         shell: bash
@@ -43,7 +43,7 @@ jobs:
              +------------------------------------+"
             
             echo ">>>>>> making secret yml..."
-            echo "${{ secrets.SECRET_YML }}" > ./src/main/resources/application-secret.yml
+            echo "${{ secrets.SECRET_YML }}" > /main/resources/application-secret.yml
             
             echo -e "\
              >>>>>> git pull... "
