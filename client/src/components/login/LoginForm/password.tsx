@@ -19,7 +19,7 @@ function LoginPasswordForm() {
   };
 
   return (
-    <FormControl isInvalid={isError}>
+    <FormControl isInvalid={isError} my='26px'>
       <FormLabel fontSize='15px' fontWeight={700}>
         비밀번호
       </FormLabel>

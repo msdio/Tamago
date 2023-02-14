@@ -77,7 +77,9 @@ export default function SignupForm() {
         />
       </Box>
       <Button size='lg'>회원가입</Button>
-      <FormOr />
+      <Box m='41px 0px'>
+        <FormOr />
+      </Box>
       <Flex justifyContent='center' gap={4}>
         <Button bg='fff' border='0.6px solid #BFBFBF' width='59px' height='59px' p={0}>
           <Image src='/images/google-icon.svg' alt='google login' width={40} height={38} />

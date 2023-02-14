@@ -5,8 +5,10 @@ import LoginForm from '../components/login/LoginForm';
 export default function LoginPage() {
   return (
     <Flex justifyContent='center'>
-      <Flex flexDirection='column' gap='31px' maxW='486px' w='486px' h={'600px'} p={0} pt='50px' alignItems='center'>
-        <Heading>로그인</Heading>
+      <Flex flexDirection='column' maxW='486px' w='486px' py='100px'>
+        <Heading fontSize='28px' fontWeight='bold' mb='57px' textAlign='center'>
+          로그인
+        </Heading>
 
         <LoginForm />
       </Flex>
