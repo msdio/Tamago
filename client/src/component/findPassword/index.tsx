@@ -1,13 +1,16 @@
-import { Box, Button, Flex, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Text, useDisclosure } from '@chakra-ui/react';
 import Link from 'next/link';
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 
 import AuthLayout from '@/component/common/AuthLayout';
+import Alert from '@/component/findPassword/Alert';
 import RegexInput from '@/components/signup/Form/RegexInput';
 import { EMAIL_REGEX } from '@/utils/regex';
 
 export default function FindPassword() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const [inputs, setInputs] = useState({
     name: '',
     email: '',
@@ -46,10 +49,16 @@ export default function FindPassword() {
         />
       </Box>
 
-      <Button colorScheme='secondary' size='lg'>
+      <Button colorScheme='secondary' size='lg' onClick={onOpen}>
         인증번호 받기
       </Button>
-
+      <Alert isOpen={isOpen} onClose={onClose}>
+        <Box lineHeight='160%'>
+          <Text fontWeight='700'>asdf123@naver.com 으로</Text>
+          <Text fontWeight='700'>인증메일이 발송되었습니다.</Text>
+          <Text mt='6px'>메일이 오지 않는다면 스팸함을 확인해 주세요.</Text>
+        </Box>
+      </Alert>
       <Flex gap='10px' justifyContent='center' mt='24px'>
         <Text color='#808080'>계정이 없으신가요?</Text>
         <Link href='/signup'>
