@@ -1,28 +1,22 @@
 package com.project.Tamago.jwt;
 
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.Tamago.dto.LoginReqDto;
 
 @SpringBootTest
 @Transactional
-@AutoConfigureMockMvc
 class JwtTokenProviderTest {
-	@SpyBean
-	private JwtTokenProvider jwtTokenProvider;
 	@Autowired
-	private MockMvc mockMvc;
+	private JwtTokenProvider jwtTokenProvider;
 
 	@Test
 	@DisplayName("토큰 유효성 검증 테스트")
@@ -33,10 +27,8 @@ class JwtTokenProviderTest {
 		LoginReqDto loginReqDto = new LoginReqDto(email, password);
 		Authentication authentication = new UsernamePasswordAuthenticationToken(email, password);
 		// when
-		String token = "Invalid_Token";
-		when(jwtTokenProvider.createAccessToken(authentication)).thenReturn(token);
-
+		String token = jwtTokenProvider.createAccessToken(authentication);
 		// then
-		// assertThrows(new CustomException(INVALID_JWT), () -> jwtTokenProvider.validateAccessToken(token));
+		assertTrue(jwtTokenProvider.validateAccessToken(token));
 	}
 }
