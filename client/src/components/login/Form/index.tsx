@@ -52,7 +52,9 @@ function LoginForm() {
           아이디 저장
         </Checkbox>
         <Flex gap='13px' fontSize='15px'>
-          <Text color='#808080'>비밀번호 찾기</Text>
+          <Link href='/findPassword'>
+            <Text color='#808080'>비밀번호 찾기</Text>
+          </Link>
           <Text color='#808080'>|</Text>
           <Text fontWeight='bold'>회원가입 하기</Text>
         </Flex>
