@@ -45,6 +45,7 @@ public class AuthService {
 		return new TokenDto(jwtTokenProvider.createAccessToken(authentication), null);
 	}
 
+	@Transactional(readOnly = true)
 	public void checkEmailDuplicate(String email) {
 		if (userRepository.existsByEmailAndProvider(email, PROVIDER_NONE)) {
 			throw new CustomException(USERS_EXISTS_EMAIL);
