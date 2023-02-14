@@ -1,14 +1,14 @@
 HELP.md
-.gradle
-build/
+.gradle  
+build/ 
 !gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
+!**/src/main/**/build/ 
 !**/src/test/**/build/
 
 ### STS ###
 .apt_generated
 .classpath
-.factorypath
+.factorypath 
 .project
 .settings
 .springBeans
@@ -37,4 +37,4 @@ out/
 .vscode/
 applicaton-secret.yml
 resources/application-secret.yml
-src/main/resources/application-secret.yml
+src/main/resources/application-secret.yml 

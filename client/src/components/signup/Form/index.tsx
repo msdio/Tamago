@@ -1,8 +1,14 @@
-import { Flex, FormLabel, Text } from '@chakra-ui/react';
-import { ChangeEvent, useState } from 'react';
-import { EMAIL_BUTTON_THEME } from '../../../styles/theme';
-import InputForm from '../../common/InputForm';
-import SubmitButton from '../../common/SubmitButton';
+import { Box, Button, Flex, Image } from '@chakra-ui/react';
+import type { ChangeEvent } from 'react';
+import { useState } from 'react';
+
+import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
+
+import FormOr from '../../common/FormOr';
+import EmailButton from './EmailButton';
+import RegexInput from './RegexInput';
+
+const getPasswordRegex = (password: string) => new RegExp(`^${password}$`);
 
 export default function SignupForm() {
   const [signupInputs, setSignupInputs] = useState({
@@ -21,88 +27,65 @@ export default function SignupForm() {
 
   return (
     <Flex direction='column'>
-      <Flex direction='column' gap='8px' mb='26px'>
-        <FormLabel fontSize='15px' fontWeight='700'>
-          이름
-        </FormLabel>
-        <InputForm name='name' placeholder='이름을 입력해 주세요.' value={name} onChange={handleInputChange} />
+      <Box mb='25px'>
+        <RegexInput
+          label='이름'
+          size='lg'
+          name='name'
+          placeholder='이름을 입력해 주세요.'
+          value={name}
+          onChange={handleInputChange}
+        />
+      </Box>
+      <Box mb='26px'>
+        <EmailButton
+          label='이메일'
+          size='md'
+          name='email'
+          type='email'
+          placeholder='이메일을 입력해 주세요.'
+          regex={EMAIL_REGEX}
+          errorMessage='이메일 형식을 확인해 주세요.'
+          value={email}
+          onChange={handleInputChange}
+          buttonText='중복 확인'
+        />
+      </Box>
+      <Box mb='16px'>
+        <RegexInput
+          label='비밀번호'
+          size='lg'
+          name='password'
+          type='password'
+          placeholder='8-12자 영문 + 숫자를 포함하여 입력해 주세요.'
+          regex={PASSWORD_REGEX}
+          errorMessage='8-12자 영문 + 숫자를 포함하여 입력해 주세요.'
+          value={password}
+          onChange={handleInputChange}
+        />
+      </Box>
+      <Box mb='57px'>
+        <RegexInput
+          size='lg'
+          name='verifyPassword'
+          type='password'
+          placeholder='비밀번호를 한 번 더 입력해 주세요.'
+          regex={getPasswordRegex(password)}
+          errorMessage='비밀번호가 일치하지 않습니다.'
+          value={verifyPassword}
+          onChange={handleInputChange}
+        />
+      </Box>
+      <Button size='lg'>회원가입</Button>
+      <FormOr />
+      <Flex justifyContent='center' gap={4}>
+        <Button bg='fff' border='0.6px solid #BFBFBF' width='59px' height='59px' p={0}>
+          <Image src='/images/google-icon.svg' alt='google login' width={40} height={38} />
+        </Button>
+        <Button bg='fff' border='0.6px solid #BFBFBF' width='59px' height='59px' p={0}>
+          <Image src='/images/github-icon.svg' alt='google login' width={40} height={38} />
+        </Button>
       </Flex>
-      <Flex direction='column' gap='8px' mb='37px'>
-        <FormLabel fontSize='15px' fontWeight='700'>
-          이메일
-        </FormLabel>
-        <Flex gap='13px'>
-          <InputForm
-            name='email'
-            w='351px'
-            type='email'
-            placeholder='이메일을 입력해 주세요.'
-            regex={/^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/}
-            errorMessage='이메일 형식을 확인해 주세요.'
-            value={email}
-            onChange={handleInputChange}
-          />
-          <SubmitButton w='122px' colorScheme='tamago_gray' theme={EMAIL_BUTTON_THEME}>
-            중복 확인
-          </SubmitButton>
-        </Flex>
-      </Flex>
-      <Flex direction='column' gap='8px' mb='41px'>
-        <FormLabel fontSize='15px' fontWeight='700'>
-          비밀번호
-        </FormLabel>
-        <Flex direction='column' gap='16px'>
-          <InputForm
-            name='password'
-            type='password'
-            placeholder='8-12자 영문 + 숫자를 포함하여 입력해 주세요.'
-            regex={/^(?=.*[A-Za-z])(?=.*\d).{8,12}$/}
-            errorMessage='8-12자 영문, 숫자를 사용해 주세요.'
-            value={password}
-            onChange={handleInputChange}
-          />
-          <InputForm
-            name='verifyPassword'
-            type='password'
-            placeholder='비밀번호를 한 번 더 입력해 주세요.'
-            regex={new RegExp(`^${password}$`)}
-            errorMessage='비밀번호가 일치하지 않습니다.'
-            value={verifyPassword}
-            onChange={handleInputChange}
-          />
-        </Flex>
-      </Flex>
-      <SubmitButton type='submit' colorScheme='tamago'>
-        회원가입
-      </SubmitButton>
-      <Text
-        fontSize='15px'
-        fontWeight='700'
-        color='#BFBFBF'
-        display='flex'
-        alignItems='center'
-        m='41px 0px'
-        _before={{
-          content: '""',
-          flexGrow: 1,
-          bg: '#BFBFBF',
-          h: '0.6px',
-          fontSize: '0px',
-          lineHeight: '0px',
-          marginRight: '22px',
-        }}
-        _after={{
-          content: '""',
-          flexGrow: 1,
-          bg: '#BFBFBF',
-          h: '0.6px',
-          fontSize: '0px',
-          lineHeight: '0px',
-          marginLeft: '22px',
-        }}
-      >
-        OR
-      </Text>
     </Flex>
   );
 }

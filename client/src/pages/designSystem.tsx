@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, VStack } from '@chakra-ui/react';
+import { Button, Flex, Input, VStack } from '@chakra-ui/react';
 
 function designSystem() {
   return (
@@ -22,6 +22,20 @@ function designSystem() {
         <Button size='xs' colorScheme='' variant='outline'>
           log in
         </Button>
+
+        <Input size='lg' placeholder='Default _ Lg' />
+
+        <Input size='lg' defaultValue='Focus _ Lg' />
+
+        <Input size='lg' defaultValue='Text Input _ Lg' />
+
+        <Input size='lg' defaultValue='Disabled _ Lg' isDisabled />
+
+        <Input size='md' placeholder='Default _ Md' />
+
+        <Input size='md' defaultValue='Focus _ Md' />
+
+        <Input size='md' defaultValue='Text Input _ Md' />
       </Flex>
     </VStack>
   );
