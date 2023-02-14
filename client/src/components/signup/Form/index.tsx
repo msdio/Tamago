@@ -2,8 +2,7 @@ import { Box, Button, Flex, Image } from '@chakra-ui/react';
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 
-import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
-
+import { EMAIL_REGEX, PASSWORD_REGEX } from '../../../utils/regex';
 import FormOr from '../../common/FormOr';
 import EmailButton from './EmailButton';
 import RegexInput from './RegexInput';
