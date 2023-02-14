@@ -25,16 +25,13 @@ function LoginPasswordForm() {
       </FormLabel>
       <InputGroup>
         <Input
+          size='lg'
           type={show ? 'text' : 'password'}
           value={input}
           onChange={handleInputChange}
           placeholder='8-12자 영문 + 숫자를 포함하여 입력해 주세요.'
-          border={'.6px solid #BFBFBF'}
-          colorScheme='tamago'
-          focusBorderColor='tamago.500'
-          h='59px'
         />
-        <InputRightElement>
+        <InputRightElement height='45px'>
           <Box onClick={handleShowClick} h={'5px'} mr='2'>
             {show ? (
               <Image src={'/images/eyeslash.svg'} alt='eyeslash' width={22} height={22} />

@@ -1,29 +1,15 @@
-import { TabList, TabPanels, Tabs } from '@chakra-ui/react';
+import { Flex, Heading } from '@chakra-ui/react';
 
-import Guest from '../components/login/guest';
-import LoginLayout from '../components/login/layout';
-import LoginTab from '../components/login/login-tab';
-import TabPanelWrapper from '../components/login/login-tab-panel-wrapper';
 import LoginForm from '../components/login/LoginForm';
 
 export default function LoginPage() {
   return (
-    <LoginLayout>
-      <Tabs variant='unstyled'>
-        <TabList>
-          <LoginTab>로그인</LoginTab>
-          <LoginTab>게스트</LoginTab>
-        </TabList>
+    <Flex justifyContent='center'>
+      <Flex flexDirection='column' gap='31px' maxW='486px' w='486px' h={'600px'} p={0} pt='50px' alignItems='center'>
+        <Heading>로그인</Heading>
 
-        <TabPanels>
-          <TabPanelWrapper>
-            <LoginForm />
-          </TabPanelWrapper>
-          <TabPanelWrapper>
-            <Guest />
-          </TabPanelWrapper>
-        </TabPanels>
-      </Tabs>
-    </LoginLayout>
+        <LoginForm />
+      </Flex>
+    </Flex>
   );
 }

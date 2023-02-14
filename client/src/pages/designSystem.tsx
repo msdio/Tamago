@@ -14,7 +14,7 @@ function designSystem() {
         </Button>
 
         <Button size='sm' colorScheme='secondary' variant='outline'>
-          Check _ sm{' '}
+          Check _ sm
         </Button>
 
         {/* NOTE: header이외에 login은 계속 쓰인다면 theme에 추가 

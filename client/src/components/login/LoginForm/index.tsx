@@ -10,7 +10,7 @@ function LoginForm() {
     <>
       <LoginEmailForm />
       <LoginPasswordForm />
-      <Flex justifyContent='space-between'>
+      <Flex w='full' justifyContent='space-between'>
         <Checkbox defaultChecked colorScheme='tamago'>
           아이디 저장
         </Checkbox>
@@ -20,10 +20,8 @@ function LoginForm() {
           <Text>비밀번호 찾기</Text>
         </Flex>
       </Flex>
-      <Button colorScheme='tamago' h='59px'>
-        로그인
-      </Button>
-      <Button colorScheme='tamago' variant={'outline'} h='59px'>
+      <Button size='lg'>로그인</Button>
+      <Button size='lg' variant={'outline'}>
         회원가입
       </Button>
 
