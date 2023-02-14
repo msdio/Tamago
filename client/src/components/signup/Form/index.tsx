@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
 
 import FormOr from '../../common/FormOr';
-import EmailButton from './EmailButton';
+import EmailInput from './EmailInput';
 import RegexInput from './RegexInput';
 
 const getPasswordRegex = (password: string) => new RegExp(`^${password}$`);
@@ -38,7 +38,7 @@ export default function SignupForm() {
         />
       </Box>
       <Box mb='26px'>
-        <EmailButton
+        <EmailInput
           label='이메일'
           size='md'
           name='email'
