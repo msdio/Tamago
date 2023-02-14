@@ -3,8 +3,8 @@ import Image from 'next/image';
 
 import FormOr from '@/components/common/FormOr';
 
-import LoginEmailForm from './login-email-form';
-import LoginPasswordForm from './password';
+import LoginEmailForm from './LoginEmailForm';
+import LoginPasswordForm from './LoginPasswordForm';
 
 // NOTE : form 을 더 분리해야 할지는 후에 로직을 만들면서 생각해볼 것 같습니다.
 function LoginForm() {
