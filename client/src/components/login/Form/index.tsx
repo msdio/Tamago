@@ -1,17 +1,52 @@
 import { Box, Button, Checkbox, Flex, Text } from '@chakra-ui/react';
 import Image from 'next/image';
+import type { ChangeEvent } from 'react';
+import { useState } from 'react';
 
 import FormOr from '@/components/common/FormOr';
+import RegexInput from '@/components/common/RegexInput';
+import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
 
-import LoginEmailForm from './LoginEmailForm';
-import LoginPasswordForm from './LoginPasswordForm';
-
-// NOTE : form 을 더 분리해야 할지는 후에 로직을 만들면서 생각해볼 것 같습니다.
 function LoginForm() {
+  const [inputs, setInputs] = useState({
+    email: '',
+    password: '',
+  });
+
+  const { email, password } = inputs;
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
+    setInputs({ ...inputs, [name]: value });
+  };
+
   return (
     <>
-      <LoginEmailForm />
-      <LoginPasswordForm />
+      <RegexInput
+        label='이메일'
+        size='lg'
+        name='email'
+        type='email'
+        placeholder='이메일을 입력해 주세요.'
+        regex={EMAIL_REGEX}
+        errorMessage='이메일 형식을 확인해 주세요.'
+        value={email}
+        onChange={handleInputChange}
+      />
+      <Box my='26px'>
+        <RegexInput
+          label='비밀번호'
+          size='lg'
+          name='password'
+          type='password'
+          placeholder='8-12자 영문 + 숫자를 포함하여 입력해 주세요.'
+          regex={PASSWORD_REGEX}
+          errorMessage='8-12자 영문 + 숫자를 포함하여 입력해 주세요.'
+          value={password}
+          onChange={handleInputChange}
+        />
+      </Box>
+
       <Flex w='full' justifyContent='space-between' mt='20px'>
         <Checkbox defaultChecked colorScheme='tamago'>
           아이디 저장
@@ -25,6 +60,7 @@ function LoginForm() {
       <Button size='lg' mt='42px'>
         로그인
       </Button>
+
       <Box my='54px'>
         <FormOr />
       </Box>

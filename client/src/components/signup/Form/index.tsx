@@ -5,8 +5,8 @@ import { useState } from 'react';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
 
 import FormOr from '../../common/FormOr';
+import RegexInput from '../../common/RegexInput';
 import EmailButton from './EmailButton';
-import RegexInput from './RegexInput';
 
 const getPasswordRegex = (password: string) => new RegExp(`^${password}$`);
 
