@@ -1,4 +1,4 @@
-import AuthLayout from '@/component/common/AuthLayout';
+import AuthLayout from '@/components/common/AuthLayout';
 import LoginForm from '@/components/login/Form';
 
 function Login() {

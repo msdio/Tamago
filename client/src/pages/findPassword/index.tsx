@@ -1,4 +1,4 @@
-import FindPassword from '@/component/findPassword';
+import FindPassword from '@/components/findPassword/index';
 
 function FindPasswordPage() {
   return (

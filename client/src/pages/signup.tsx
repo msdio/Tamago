@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import AuthLayout from '@/component/common/AuthLayout';
+import AuthLayout from '@/components/common/AuthLayout';
 
 import SignupForm from '../components/signup/Form';
 import SignupTerms from '../components/signup/Terms';

@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, Flex, Text } from '@chakra-ui/react';
+import { Box, Button, Checkbox, Flex, Link, Text } from '@chakra-ui/react';
 import Image from 'next/image';
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
