@@ -18,13 +18,6 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: make application-secret.yml
-        run: |
-          cd ./src/backend/src/main/resources
-          touch ./application-secret.yml
-          echo "${{ secrets.SECRET_YML }}" > ./application-secret.yml
-        shell: bash
-
       - name: Deploy
         uses: appleboy/ssh-action@master
         with:
@@ -36,24 +29,21 @@ jobs:
             whoami
             cd /home
             sudo chown -R ubuntu:ubuntu ubuntu
-            cd /home/ubuntu/odongdong/src/backend
+            cd /home/ubuntu/dockerfile/backend
              echo -e "\
              +------------------------------------+
              |              1. build              |
              +------------------------------------+"
             
             echo ">>>>>> making secret yml..."
-            echo "${{ secrets.SECRET_YML }}" > ./src/main/resources/application-secret.yml
-            
+            echo "${{ secrets.EC2_SECRET_YML }}" > application-secret.yml
             echo -e "\
-             >>>>>> git pull... "
-            cd "/home/ubuntu/odongdong" || exit 1
-            git fetch --all || exit 1
-            git reset --hard origin/main || exit 1
-            git pull origin main || exit 1
-            
-            chmod +x ./dockerfile/backend/backend_install.sh || exit 1
-            ./dockerfile/backend/backend_install.sh || exit 1
+             >>>>>> dockerfile run... "
+            ls -al
+            chmod +x backend_install.sh || exit 1
+            chmod +x delete_not_use_image_file.sh || exit 1
+            sudo ./backend_install.sh || exit 1
+            sudo ./delete_not_use_image_file.sh || exit 1
 
 
 

@@ -1,5 +1,6 @@
-import { Input, Flex, Checkbox, Button, Text, FormControl, FormLabel } from '@chakra-ui/react';
+import { Button, Checkbox, Flex, Text } from '@chakra-ui/react';
 import Image from 'next/image';
+
 import LoginEmailForm from './login-email-form';
 import LoginPasswordForm from './password';
 

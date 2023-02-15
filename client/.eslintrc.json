@@ -4,7 +4,12 @@
     "es2021": true,
     "node": true
   },
-  "extends": ["prettier", "plugin:react/recommended", "plugin:@typescript-eslint/recommended"],
+  "extends": [
+    "next",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
   "plugins": ["prettier", "@typescript-eslint/eslint-plugin", "simple-import-sort", "unused-imports"],
 
   "settings": {
@@ -13,15 +18,13 @@
       "node": {
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
+    },
+    "next": {
+      "rootDir": "../client"
     }
   },
   "rules": {
-    "@typescript-eslint/consistent-type-imports": [
-      "error",
-      {
-        "prefer": "type-imports"
-      }
-    ],
+    "react/react-in-jsx-scope": 0,
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
     "no-unused-private-class-members": "error",
@@ -36,6 +39,12 @@
         "varsIgnorePattern": "^_",
         "args": "after-used",
         "argsIgnorePattern": "^_"
+      }
+    ],
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "prefer": "type-imports"
       }
     ],
     "comma-spacing": [

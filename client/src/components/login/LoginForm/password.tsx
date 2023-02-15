@@ -1,6 +1,7 @@
-import { ChangeEvent, useState } from 'react';
-import Image from 'next/image';
 import { Box, FormControl, FormErrorMessage, FormLabel, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
+import Image from 'next/image';
+import type { ChangeEvent } from 'react';
+import { useState } from 'react';
 
 function LoginPasswordForm() {
   const [show, setShow] = useState(false);

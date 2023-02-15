@@ -27,7 +27,7 @@ public class Typing extends BaseTimeEntity {
 
 	private Integer length;
 
-	private Integer viewCount; 
+	private Integer viewCount;
 
 	@ColumnDefault("true")
 	private Boolean contentType; 
