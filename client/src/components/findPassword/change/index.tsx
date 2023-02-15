@@ -1,4 +1,5 @@
 import { Box, Button, Flex, Link, Text } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 
@@ -6,7 +7,8 @@ import AuthLayout from '@/components/common/AuthLayout';
 import RegexInput from '@/components/common/RegexInput';
 import { PASSWORD_REGEX } from '@/utils/regex';
 
-export default function PasswordChange() {
+export default function FindPasswordChange() {
+  const router = useRouter();
   const [inputs, setInputs] = useState({
     password: '',
     newPassword: '',
@@ -17,6 +19,10 @@ export default function PasswordChange() {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setInputs({ ...inputs, [name]: value });
+  };
+
+  const handlePasswordChange = () => {
+    router.push('/findPassword/complete');
   };
 
   return (
@@ -45,9 +51,11 @@ export default function PasswordChange() {
           onChange={handleInputChange}
         />
       </Box>
-      <Button colorScheme='secondary' size='lg'>
+
+      <Button colorScheme='secondary' size='lg' onClick={handlePasswordChange}>
         비밀번호 변경하기
       </Button>
+
       <Flex gap='10px' justifyContent='center' mt='24px'>
         <Text color='#808080'>계정이 없으신가요?</Text>
         <Link href='/signup'>

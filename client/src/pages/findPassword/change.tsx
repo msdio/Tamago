@@ -1,9 +1,9 @@
-import PasswordChange from '@/components/findPassword/change';
+import FindPasswordChange from '@/components/findPassword/change';
 
-export default function PasswordChangePage() {
+export default function FindPasswordChangePage() {
   return (
     <>
-      <PasswordChange />
+      <FindPasswordChange />
     </>
   );
 }
