@@ -1,10 +1,10 @@
 package com.project.Tamago.exception.exceptionHandler;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
+
 import lombok.extern.slf4j.Slf4j;
+
 import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
 
 import org.springframework.http.HttpStatus;
@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.project.Tamago.exception.CustomException;
 import com.project.Tamago.exception.InvalidParameterException;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestControllerAdvice
