@@ -1,5 +1,10 @@
 package com.project.Tamago.exception.exceptionHandler;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.HttpStatus;
@@ -30,7 +35,10 @@ public class ControllerAdvice {
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(Exception.class)
 	public ErrorMessage exceptionHandler(Exception exception) {
-		exception.printStackTrace();
+		log.error(Arrays.stream(exception.getStackTrace())
+			.map(StackTraceElement::toString)
+			.map(toString -> toString + "\n")
+			.collect(Collectors.joining()));
 		return new ErrorMessage(ErrorCode.INTERNAL_SERVER_ERROR);
 	}
 }
