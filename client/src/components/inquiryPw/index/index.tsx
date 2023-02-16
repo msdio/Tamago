@@ -1,17 +1,19 @@
 import { Box, Button, Flex, Input, Text, useDisclosure } from '@chakra-ui/react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 
+import Alert from '@/components/common/Alert';
 import AuthLayout from '@/components/common/AuthLayout';
 import RegexInput from '@/components/common/RegexInput';
-import Alert from '@/components/findPassword/index/Alert';
 import { EMAIL_REGEX } from '@/utils/regex';
 
-export default function FindPassword() {
+interface InquiryPwProps {
+  handleNextStep: () => void;
+}
+
+export default function InquiryPw({ handleNextStep }: InquiryPwProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const router = useRouter();
   const [inputs, setInputs] = useState({
     name: '',
     email: '',
@@ -37,10 +39,6 @@ export default function FindPassword() {
 
   const handleReSendClick = () => {
     handleReceiveAuthNumberButtonClick();
-  };
-
-  const handleAuthCompleteButtonClick = () => {
-    router.push('/findPassword/change');
   };
 
   return (
@@ -91,7 +89,7 @@ export default function FindPassword() {
         <Button
           colorScheme={isAuthComplete ? 'tamago' : 'secondary'}
           size='lg'
-          onClick={handleAuthCompleteButtonClick}
+          onClick={handleNextStep}
           isDisabled={!isAuthComplete}
         >
           인증 완료

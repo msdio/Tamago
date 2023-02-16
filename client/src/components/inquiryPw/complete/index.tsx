@@ -4,7 +4,7 @@ import Link from 'next/link';
 import AuthLayout from '@/components/common/AuthLayout';
 import CheckCircle from '@/icons/CheckCircle';
 
-export default function FindPasswordComplete() {
+export default function PasswordChangeComplete() {
   return (
     <AuthLayout title=''>
       <Box textAlign='center'>

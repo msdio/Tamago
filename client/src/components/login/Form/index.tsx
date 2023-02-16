@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 import FormOr from '@/components/common/FormOr';
 import RegexInput from '@/components/common/RegexInput';
+import { INQUIRY_PW_PATH } from '@/utils/paths';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
 
 function LoginForm() {
@@ -52,7 +53,7 @@ function LoginForm() {
           아이디 저장
         </Checkbox>
         <Flex gap='13px' fontSize='15px'>
-          <Link href='/findPassword'>
+          <Link href={INQUIRY_PW_PATH}>
             <Text color='#808080'>비밀번호 찾기</Text>
           </Link>
           <Text color='#808080'>|</Text>

@@ -1,5 +1,4 @@
 import { Box, Button, Flex, Link, Text } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 
@@ -7,8 +6,11 @@ import AuthLayout from '@/components/common/AuthLayout';
 import RegexInput from '@/components/common/RegexInput';
 import { PASSWORD_REGEX } from '@/utils/regex';
 
-export default function FindPasswordChange() {
-  const router = useRouter();
+interface PasswordChangeProps {
+  handleNextStep: () => void;
+}
+
+export default function PasswordChange({ handleNextStep }: PasswordChangeProps) {
   const [inputs, setInputs] = useState({
     password: '',
     newPassword: '',
@@ -19,10 +21,6 @@ export default function FindPasswordChange() {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setInputs({ ...inputs, [name]: value });
-  };
-
-  const handlePasswordChange = () => {
-    router.push('/findPassword/complete');
   };
 
   return (
@@ -52,7 +50,7 @@ export default function FindPasswordChange() {
         />
       </Box>
 
-      <Button colorScheme='secondary' size='lg' onClick={handlePasswordChange}>
+      <Button colorScheme='secondary' size='lg' onClick={handleNextStep}>
         비밀번호 변경하기
       </Button>
 
