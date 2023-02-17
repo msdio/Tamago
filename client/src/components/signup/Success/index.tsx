@@ -16,7 +16,7 @@ export default function SignupSuccess() {
         </Text>
         <Flex gap='18px'>
           <Button>로그인하기</Button>
-          <Button>메인 화면으로 가기</Button>
+          <Button colorScheme='tamago-reverse'>메인 화면으로 가기</Button>
         </Flex>
       </Flex>
     </Box>

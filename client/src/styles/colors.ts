@@ -9,7 +9,7 @@ type ColorType = Record<ColorProperty, string>;
  * 700: button pressed,
  */
 const colors: Record<string, ColorType> = {
-  tamago: {
+  'tamago': {
     100: '#ffffff',
     200: '#fffaf8',
     300: '#ff701e',
@@ -20,7 +20,7 @@ const colors: Record<string, ColorType> = {
     800: '#FF6A3C',
     900: '#FF6A3C',
   },
-  secondary: {
+  'tamago-gray': {
     100: '#F5F5F5', // fill
     200: '#F5F5F5',
     300: '#F5F5F5',
@@ -30,6 +30,17 @@ const colors: Record<string, ColorType> = {
     700: '#808080',
     800: '#808080',
     900: '#808080', // text
+  },
+  'tamago-reverse': {
+    100: '#FF8A65',
+    200: '#fffaf8',
+    300: '#ff701e',
+    400: '#FF8A65',
+    500: '#ffffff', //basic
+    600: '#FF8A65',
+    700: '#F7FAFC', // hover
+    800: '#FF6A3C',
+    900: '#FF6A3C',
   },
 };
 export default colors;

@@ -51,7 +51,7 @@ export default function EmailButton({
         </Flex>
         <Button
           size='sm'
-          colorScheme={isValid ? 'tamago' : 'secondary'}
+          colorScheme={isValid ? 'tamago' : 'tamago-gray'}
           variant={isValid ? 'base' : 'outline'}
           onClick={onClick}
         >
