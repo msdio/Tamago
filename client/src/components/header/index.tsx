@@ -1,6 +1,9 @@
-import { Button, Flex, Heading, HStack, Text } from '@chakra-ui/react';
+import { Button, Flex, HStack, Text } from '@chakra-ui/react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+
+import { TamagoLogo } from '@/icons/TamagoLogo';
 
 import Fonts from '../../../public/fonts/GangwonEduPower';
 
@@ -19,10 +22,19 @@ export function Header() {
   return (
     <>
       <Fonts />
-      <Flex as='header' direction='row' h='88px' borderBottom='0.6px solid #BFBFBF' p='0 120px' minW='1100px'>
-        <Heading fontSize='26px' lineHeight='88px' fontFamily='GangwonEduPower' letterSpacing='.05em'>
-          Tamago
-        </Heading>
+      <Flex
+        as='header'
+        direction='row'
+        h='88px'
+        minH='88px'
+        borderBottom='0.6px solid #BFBFBF'
+        p='0 120px'
+        minW='1100px'
+        alignItems='center'
+      >
+        <Link href='/'>
+          <TamagoLogo />
+        </Link>
         <HStack spacing='62px' w='100%' marginLeft='81px' fontSize='17px' fontWeight='700'>
           <Text>긴글연습</Text>
           <Text>짧은글연습</Text>
