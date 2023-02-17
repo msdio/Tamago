@@ -67,10 +67,10 @@ function LoginForm() {
 
       <Flex justifyContent='center' gap='29.5px'>
         <Button bg='fff' border='0.6px solid #BFBFBF' width='59px' height='59px' p={0}>
-          <Image src='/images/google-icon.svg' alt='google login' width={40} height={38} />
+          <Image src={require('../../../assets/icons/google-icon.svg')} alt='google login' width={40} height={38} />
         </Button>
         <Button bg='fff' border='0.6px solid #BFBFBF' width='59px' height='59px' p={0}>
-          <Image src='/images/github-icon.svg' alt='google login' width={40} height={38} />
+          <Image src={require('../../../assets/icons/github-icon.svg')} alt='github login' width={40} height={38} />
         </Button>
       </Flex>
     </>
