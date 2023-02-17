@@ -1,8 +1,8 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import theme from '../../../styles/theme';
-import { PASSWORD_REGEX } from '../../../utils/regex';
+import theme from '../../styles/theme';
+import { PASSWORD_REGEX } from '../../utils/regex';
 import RegexInput from './RegexInput';
 
 export default {

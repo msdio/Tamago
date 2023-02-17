@@ -5,10 +5,10 @@ interface EmailButtonProps {
   value: string;
   name: string;
   size: string;
+  isValid?: boolean;
   label?: string;
   errorMessage?: string;
   type?: string;
-  regex?: RegExp;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   placeholder?: string;
@@ -19,18 +19,15 @@ export default function EmailButton({
   value,
   name,
   size,
+  isValid = true,
   label,
   errorMessage,
   type,
-  regex = /./,
   onChange,
   onClick,
   placeholder,
   buttonText,
 }: EmailButtonProps) {
-  const isMatch = regex.test(value);
-  const isError = value !== '' && !isMatch;
-
   return (
     <Flex direction='column' gap='8px'>
       <FormLabel fontSize='15px' fontWeight='700'>
@@ -46,7 +43,7 @@ export default function EmailButton({
             defaultValue={value}
             onChange={onChange}
           />
-          {errorMessage && isError ? (
+          {errorMessage && value !== '' && !isValid ? (
             <Text fontSize='15px' color='#FF0000' mt='20px'>
               {errorMessage}
             </Text>
@@ -54,8 +51,8 @@ export default function EmailButton({
         </Flex>
         <Button
           size='sm'
-          colorScheme={!isMatch ? 'secondary' : 'tamago'}
-          variant={!isMatch ? 'outline' : 'base'}
+          colorScheme={isValid ? 'tamago' : 'secondary'}
+          variant={isValid ? 'base' : 'outline'}
           onClick={onClick}
         >
           {buttonText}

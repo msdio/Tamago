@@ -1,28 +1,41 @@
 import { Box, Button, Flex, Image } from '@chakra-ui/react';
-import type { ChangeEvent } from 'react';
-import { useState } from 'react';
 
+import useRegexInputs from '@/hooks/useRegexInputs';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
 
 import FormOr from '../../common/FormOr';
 import RegexInput from '../../common/RegexInput';
 import EmailInput from './EmailInput';
 
-const getPasswordRegex = (password: string) => new RegExp(`^${password}$`);
-
 export default function SignupForm() {
-  const [signupInputs, setSignupInputs] = useState({
-    name: '',
-    email: '',
-    password: '',
-    verifyPassword: '',
+  const [inputs, valids, handleInputChange] = useRegexInputs({
+    name: /./,
+    email: EMAIL_REGEX,
+    password: PASSWORD_REGEX,
+    verifyPassword: /./,
   });
 
-  const { name, email, password, verifyPassword } = signupInputs;
+  const { name, email, password, verifyPassword } = inputs as {
+    name: string;
+    email: string;
+    password: string;
+    verifyPassword: string;
+  };
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
-    setSignupInputs({ ...signupInputs, [name]: value });
+  const {
+    name: isNameValid,
+    email: isEmailValid,
+    password: isPasswordValid,
+  } = valids as {
+    name: boolean;
+    email: boolean;
+    password: boolean;
+  };
+
+  const handleSubmit = () => {
+    const { name, email, password } = inputs;
+    // 서버에서 확인용 비밀번호 체크해줘야 할까
+    console.log({ name, email, password });
   };
 
   return (
@@ -34,6 +47,7 @@ export default function SignupForm() {
           name='name'
           placeholder='이름을 입력해 주세요.'
           value={name}
+          isValid={isNameValid}
           onChange={handleInputChange}
         />
       </Box>
@@ -44,9 +58,9 @@ export default function SignupForm() {
           name='email'
           type='email'
           placeholder='이메일을 입력해 주세요.'
-          regex={EMAIL_REGEX}
           errorMessage='이메일 형식을 확인해 주세요.'
           value={email}
+          isValid={isEmailValid}
           onChange={handleInputChange}
           buttonText='중복 확인'
         />
@@ -58,9 +72,9 @@ export default function SignupForm() {
           name='password'
           type='password'
           placeholder='8-12자 영문 + 숫자를 포함하여 입력해 주세요.'
-          regex={PASSWORD_REGEX}
           errorMessage='8-12자 영문 + 숫자를 포함하여 입력해 주세요.'
           value={password}
+          isValid={isPasswordValid}
           onChange={handleInputChange}
         />
       </Box>
@@ -70,13 +84,15 @@ export default function SignupForm() {
           name='verifyPassword'
           type='password'
           placeholder='비밀번호를 한 번 더 입력해 주세요.'
-          regex={getPasswordRegex(password)}
           errorMessage='비밀번호가 일치하지 않습니다.'
           value={verifyPassword}
+          isValid={password === verifyPassword}
           onChange={handleInputChange}
         />
       </Box>
-      <Button size='lg'>회원가입</Button>
+      <Button size='lg' onClick={handleSubmit}>
+        회원가입 하기
+      </Button>
       <Box m='41px 0px'>
         <FormOr />
       </Box>
