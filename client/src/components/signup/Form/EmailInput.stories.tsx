@@ -2,7 +2,6 @@ import { ChakraProvider } from '@chakra-ui/react';
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import theme from '../../../styles/theme';
-import { EMAIL_REGEX } from '../../../utils/regex';
 import EmailInput from './EmailInput';
 
 export default {
@@ -26,5 +25,5 @@ EmailInputTemplate.args = {
   placeholder: '이메일을 입력해 주세요.',
   errorMessage: '이메일 형식을 확인해 주세요.',
   buttonText: '중복 확인',
-  regex: EMAIL_REGEX,
+  isValid: false,
 };
