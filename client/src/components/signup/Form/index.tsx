@@ -1,10 +1,10 @@
 import { Box, Button, Flex, Image } from '@chakra-ui/react';
 
+import FormOr from '@/components/common/FormOr';
+import RegexInput from '@/components/common/RegexInput';
 import useRegexInputs from '@/hooks/useRegexInputs';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
 
-import FormOr from '@/common/FormOr';
-import RegexInput from '@/common/RegexInput';
 import EmailInput from './EmailInput';
 
 export default function SignupForm() {
