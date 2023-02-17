@@ -1,23 +1,21 @@
 import { Box, Button, Checkbox, Flex, Text } from '@chakra-ui/react';
 import Image from 'next/image';
-import type { ChangeEvent } from 'react';
-import { useState } from 'react';
 
 import FormOr from '@/components/common/FormOr';
 import RegexInput from '@/components/common/RegexInput';
+import useRegexInputs from '@/hooks/useRegexInputs';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
 
 function LoginForm() {
-  const [inputs, setInputs] = useState({
-    email: '',
-    password: '',
+  const [inputs, valids, handleInputChange] = useRegexInputs({
+    email: EMAIL_REGEX,
+    password: PASSWORD_REGEX,
   });
 
-  const { email, password } = inputs;
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
-    setInputs({ ...inputs, [name]: value });
+  const { email, password } = inputs as { email: string; password: string };
+  const { email: isEmailValid, password: isPasswordValid } = valids as {
+    email: boolean;
+    password: boolean;
   };
 
   return (
@@ -28,9 +26,9 @@ function LoginForm() {
         name='email'
         type='email'
         placeholder='이메일을 입력해 주세요.'
-        regex={EMAIL_REGEX}
         errorMessage='이메일 형식을 확인해 주세요.'
         value={email}
+        isValid={isEmailValid}
         onChange={handleInputChange}
       />
       <Box my='26px'>
@@ -40,9 +38,9 @@ function LoginForm() {
           name='password'
           type='password'
           placeholder='8-12자 영문 + 숫자를 포함하여 입력해 주세요.'
-          regex={PASSWORD_REGEX}
           errorMessage='8-12자 영문 + 숫자를 포함하여 입력해 주세요.'
           value={password}
+          isValid={isPasswordValid}
           onChange={handleInputChange}
         />
       </Box>
