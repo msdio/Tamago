@@ -31,6 +31,8 @@ export function Header() {
         p='0 120px'
         minW='1100px'
         alignItems='center'
+        zIndex='100'
+        background='white'
       >
         <Link href='/'>
           <TamagoLogo />
@@ -42,7 +44,7 @@ export function Header() {
           <Text>프로필</Text>
         </HStack>
         {!isLogin && (
-          <HStack spacing='12.91px' fontSize='14px' lineHeight='17px'>
+          <HStack spacing='12.91px'>
             <Button
               w='95.54px'
               h='35.29px'
@@ -50,6 +52,9 @@ export function Header() {
               borderRadius='4.3038px'
               bg='white'
               onClick={handleSignupClick}
+              color='black'
+              fontSize='14px'
+              lineHeight='17px'
             >
               회원가입
             </Button>
@@ -59,7 +64,10 @@ export function Header() {
               border='0.516456px solid #BFBFBF'
               borderRadius='4.3038px'
               bg='white'
+              color='black'
               onClick={handleLoginClick}
+              fontSize='14px'
+              lineHeight='17px'
             >
               로그인
             </Button>
