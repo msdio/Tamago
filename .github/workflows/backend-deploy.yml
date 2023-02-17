@@ -36,7 +36,7 @@ jobs:
              +------------------------------------+"
             
             echo ">>>>>> making secret yml..."
-            echo "${{ secrets.SECRET_YML }}" > application-secret.yml
+            echo "${{ secrets.EC2_SECRET_YML }}" > application-secret.yml
             echo -e "\
              >>>>>> dockerfile run... "
             ls -al

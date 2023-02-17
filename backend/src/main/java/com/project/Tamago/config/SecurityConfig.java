@@ -3,9 +3,12 @@ package com.project.Tamago.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -22,8 +25,9 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 
 	private final CorsConfig corsConfig;
-	private final RedisTemplate<String, Object> redisTemplate;
 	private final JwtTokenProvider jwtTokenProvider;
+	private final RedisTemplate<String, Object> redisTemplate;
+	private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
 	@Bean
 	public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
@@ -59,4 +63,10 @@ public class SecurityConfig {
 
 		return http.build();
 	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	}
+
 }
