@@ -4,8 +4,8 @@ import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 
 import { CustomCheckbox } from '@/components/common/Checkbox';
+import { RightArrow } from '@/icons/RightArrow';
 
-import { RightArrow } from '../../../icons/RightArrow';
 import IconCheckbox from './IconCheckbox';
 
 export default function SignupTerms() {

@@ -2,7 +2,7 @@ import { Button, Flex, Heading, HStack, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-import Fonts from '../../../public/fonts/GangwonEduPower';
+import Fonts from '@/public/fonts/GangwonEduPower';
 
 export function Header() {
   const [isLogin, setIsLogin] = useState(false);
