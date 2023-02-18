@@ -1,4 +1,5 @@
-import { Box, Button, Flex, Image } from '@chakra-ui/react';
+import { Box, Button, Flex } from '@chakra-ui/react';
+import Image from 'next/image';
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 
@@ -77,15 +78,17 @@ export default function SignupForm() {
         />
       </Box>
       <Button size='lg'>회원가입</Button>
+
       <Box m='41px 0px'>
         <FormOr />
       </Box>
-      <Flex justifyContent='center' gap={4}>
-        <Button bg='fff' border='0.6px solid #BFBFBF' width='59px' height='59px' p={0}>
-          <Image src={require('../../../assets/icons/google-icon.svg')} alt='google login' width={40} height={38} />
+
+      <Flex justifyContent='center' gap='29.5px'>
+        <Button colorScheme='whiteAlpha' border='0.6px solid #BFBFBF' width='59px' height='59px' p={0}>
+          <Image src='/icons/google-icon.png' alt='google login' width={40} height={38} />
         </Button>
-        <Button bg='fff' border='0.6px solid #BFBFBF' width='59px' height='59px' p={0}>
-          <Image src={require('../../../assets/icons/github-icon.svg')} alt='github login' width={40} height={38} />
+        <Button colorScheme='whiteAlpha' border='0.6px solid #BFBFBF' width='59px' height='59px' p={0}>
+          <Image src='/icons/github-icon.png' alt='github login' width={40} height={38} />
         </Button>
       </Flex>
     </Flex>
