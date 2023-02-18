@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import PasswordChange from '@/components/inquiryPw/change';
-import PasswordChangeComplete from '@/components/inquiryPw/complete';
-import InquiryPw from '@/components/inquiryPw/index';
+import PasswordChange from '@/components/password/change';
+import PasswordChangeComplete from '@/components/password/complete';
+import InquiryPw from '@/components/password/index/index';
 
 type InquiryStatusType = 'init' | 'complete' | 'change';
 
