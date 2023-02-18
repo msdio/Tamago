@@ -18,6 +18,6 @@ const Template: ComponentStory<typeof FormOr> = (args) => {
   );
 };
 
-export const EmailInputTemplate: ComponentStory<typeof FormOr> = Template.bind({});
+export const FormOrTemplate: ComponentStory<typeof FormOr> = Template.bind({});
 
-EmailInputTemplate.args = {};
+FormOrTemplate.args = {};

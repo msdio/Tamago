@@ -38,6 +38,10 @@ export default function SignupForm() {
     console.log({ name, email, password });
   };
 
+  const handleEmailButton = () => {
+    console.log('이메일 버튼 클릭');
+  };
+
   return (
     <Box mt='171px' mb='136px'>
       <Heading fontSize='28px' fontWeight='700' textAlign='center' mb='46px'>
