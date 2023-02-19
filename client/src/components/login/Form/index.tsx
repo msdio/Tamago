@@ -1,10 +1,11 @@
-import { Box, Button, Checkbox, Flex, Text } from '@chakra-ui/react';
+import { Box, Button, Checkbox, Flex, Link, Text } from '@chakra-ui/react';
 import Image from 'next/image';
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 
 import FormOr from '@/components/common/FormOr';
 import RegexInput from '@/components/common/RegexInput';
+import { INQUIRY_PW_PATH } from '@/utils/paths';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
 
 function LoginForm() {
@@ -52,7 +53,9 @@ function LoginForm() {
           아이디 저장
         </Checkbox>
         <Flex gap='13px' fontSize='15px'>
-          <Text color='#808080'>비밀번호 찾기</Text>
+          <Link href={INQUIRY_PW_PATH}>
+            <Text color='#808080'>비밀번호 찾기</Text>
+          </Link>
           <Text color='#808080'>|</Text>
           <Text fontWeight='bold'>회원가입 하기</Text>
         </Flex>
