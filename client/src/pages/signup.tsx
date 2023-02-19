@@ -1,10 +1,16 @@
-import SignupLayout from '@/components/signup/Layout';
-import SignupTerms from '@/components/signup/Terms';
+import { useState } from 'react';
+
+import AuthLayout from '@/components/common/AuthLayout';
+
+import SignupForm from '../components/signup/Form';
+import SignupTerms from '../components/signup/Terms';
 
 export default function SignupPage() {
+  const [agreeTerms, setAgreeTerms] = useState(false);
+
   return (
-    <SignupLayout>
-      <SignupTerms />
-    </SignupLayout>
+    <AuthLayout title={'회원가입'}>
+      {agreeTerms ? <SignupForm /> : <SignupTerms setAgreeTerms={setAgreeTerms} />}
+    </AuthLayout>
   );
 }
