@@ -37,16 +37,15 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 			return;
 		}
 		try {
-			if (jwtTokenProvider.validateAccessToken(token)) {
-				String isLogout = (String)redisTemplate.opsForValue().get(token);
-				if (ObjectUtils.isEmpty(isLogout)) {
+			jwtTokenProvider.validateAccessToken(token);
+			String isLogout = (String)redisTemplate.opsForValue().get(token);
+			if (ObjectUtils.isEmpty(isLogout)) {
 
-					Authentication authentication = jwtTokenProvider.getAuthentication(token);
-					String nickname = authentication.getName();
-					SecurityContextHolder.getContext().setAuthentication(authentication);
+				Authentication authentication = jwtTokenProvider.getAuthentication(token);
+				String nickname = authentication.getName();
+				SecurityContextHolder.getContext().setAuthentication(authentication);
 
-					request.setAttribute("nickname", nickname);
-				}
+				request.setAttribute("nickname", nickname);
 			}
 		} catch (CustomException e) {
 			request.setAttribute("exception", e.getErrorCode().getCode());

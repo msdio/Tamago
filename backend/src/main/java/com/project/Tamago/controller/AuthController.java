@@ -58,4 +58,10 @@ public class AuthController {
 
 		return tokenDto.getAccessToken();
 	}
+
+	// @PostMapping("/jwt")
+	// public String reissue(HttpServletRequest request,
+	// 	@CookieValue(value = "refreshToken", required = false) String refreshToken, @RequestBody String accessToken) {
+	// 	return authService.reissue(refreshToken, accessToken);
+	// }
 }

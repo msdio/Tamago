@@ -60,6 +60,20 @@ public class AuthService {
 		return tokenDto;
 	}
 
+	// public String reissue(String refreshToken, String accessToken) throws BaseException {
+	// 	jwtTokenProvider.checkAccessTokenExpiration(accessToken);
+	// 	jwtTokenProvider.validateRefreshToken(refreshToken);
+	//
+	// 	Authentication authentication = jwtTokenProvider.getAuthenticationFromRef(refreshToken);
+	//
+	// 	String redisRefreshToken = String.valueOf(
+	// 		redisTemplate.opsForValue().get("refreshToken:" + authentication.getName()));
+	// 	if (!redisRefreshToken.equals(refreshToken)) {
+	// 		throw new BaseException(DIFFERENT_REFRESH_TOKEN);
+	// 	}
+	// 	return jwtTokenProvider.createAccessToken(authentication);
+	// }
+
 	@Transactional(readOnly = true)
 	public void checkEmailDuplicate(String email) {
 		if (userRepository.existsByEmailAndProvider(email, PROVIDER_NONE)) {

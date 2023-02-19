@@ -107,8 +107,12 @@ public class JwtTokenProvider {
 		return (expiration.getTime() - now.getTime());
 	}
 
-	public boolean validateAccessToken(String accessToken) throws IllegalArgumentException {
-		return validateToken(KeyType.ACCESS, accessToken);
+	public void validateAccessToken(String accessToken) throws IllegalArgumentException {
+		validateToken(KeyType.ACCESS, accessToken);
+	}
+
+	public void validateRefreshToken(String refreshToken) throws IllegalArgumentException {
+		validateToken(KeyType.REFRESH, refreshToken);
 	}
 
 	public String resolveToken(HttpServletRequest request) {
@@ -125,10 +129,6 @@ public class JwtTokenProvider {
 		}
 	}
 
-	public boolean validateRefreshToken(String refreshToken) throws IllegalArgumentException {
-		return validateToken(KeyType.REFRESH, refreshToken);
-	}
-
 	private String createBuilder(KeyType type, Authentication authentication) {
 		String authorities = authentication.getAuthorities().stream()
 			.map(GrantedAuthority::getAuthority)
@@ -142,12 +142,11 @@ public class JwtTokenProvider {
 			.compact();
 	}
 
-	private boolean validateToken(KeyType type, String token) {
+	private void validateToken(KeyType type, String token) {
 		try {
 			Jwts
 				.parserBuilder().setSigningKey(publicKeys.get(type)).build()
 				.parseClaimsJws(token);
-			return true;
 		} catch (SignatureException e) {
 			throw new CustomException(INVALID_SIGNATURE);
 		} catch (MalformedJwtException e) {
@@ -157,8 +156,7 @@ public class JwtTokenProvider {
 		} catch (UnsupportedJwtException e) {
 			throw new CustomException(UNSUPPORTED_JWT);
 		} catch (IllegalArgumentException e) {
-			log.error("JWT token compact of handler are invalid.");
+			throw new IllegalArgumentException();
 		}
-		return false;
 	}
 }
