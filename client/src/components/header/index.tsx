@@ -1,18 +1,11 @@
 import { Button, Flex, Heading, HStack, Text } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { useState } from 'react';
+
+import { LOGIN_PATH, SIGNUP_TERM_PATH } from '@/utils/paths';
 
 export function Header() {
   const [isLogin, setIsLogin] = useState(false);
-  const router = useRouter();
-
-  const handleLoginClick = () => {
-    router.push('/login');
-  };
-
-  const handleSignupClick = () => {
-    router.push('/signup/terms');
-  };
 
   return (
     <>
@@ -28,26 +21,16 @@ export function Header() {
         </HStack>
         {!isLogin && (
           <HStack spacing='12.91px' fontSize='14px' lineHeight='17px'>
-            <Button
-              w='95.54px'
-              h='35.29px'
-              border='0.516456px solid #BFBFBF'
-              borderRadius='4.3038px'
-              bg='white'
-              onClick={handleSignupClick}
-            >
-              회원가입
-            </Button>
-            <Button
-              w='95.54px'
-              h='35.29px'
-              border='0.516456px solid #BFBFBF'
-              borderRadius='4.3038px'
-              bg='white'
-              onClick={handleLoginClick}
-            >
-              로그인
-            </Button>
+            <Link href={SIGNUP_TERM_PATH}>
+              <Button w='95.54px' h='35.29px' border='0.516456px solid #BFBFBF' borderRadius='4.3038px' bg='white'>
+                회원가입
+              </Button>
+            </Link>
+            <Link href={LOGIN_PATH}>
+              <Button w='95.54px' h='35.29px' border='0.516456px solid #BFBFBF' borderRadius='4.3038px' bg='white'>
+                로그인
+              </Button>
+            </Link>
           </HStack>
         )}
       </Flex>
