@@ -1,6 +1,5 @@
 package com.project.Tamago.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.validation.BindingResult;
@@ -9,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.Tamago.dto.JoinReqDto;
-import com.project.Tamago.dto.LoginReqDto;
+import com.project.Tamago.dto.requestDto.JoinReqDto;
+import com.project.Tamago.dto.requestDto.LoginReqDto;
 import com.project.Tamago.dto.SuccessResDto;
 import com.project.Tamago.dto.TokenDto;
 import com.project.Tamago.exception.InvalidParameterException;
