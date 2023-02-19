@@ -24,6 +24,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import com.project.Tamago.dto.TokenDto;
 import com.project.Tamago.exception.CustomException;
 import com.project.Tamago.util.constants.KeyType;
 
@@ -65,6 +66,10 @@ public class JwtTokenProvider {
 
 		expireTimes.put(KeyType.ACCESS, accessTokenExpireTime);
 		expireTimes.put(KeyType.REFRESH, refreshTokenExpireTime);
+	}
+
+	public TokenDto createToken(Authentication authentication) {
+		return new TokenDto(createAccessToken(authentication), createRefreshToken(authentication));
 	}
 
 	public String createAccessToken(Authentication authentication) {

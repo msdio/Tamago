@@ -1,8 +1,10 @@
 package com.project.Tamago.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseCookie;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/auth")
 public class AuthController {
 
+	@Value("${jwt.time.refresh}")
+	private Long refreshTokenExpireTime;
 	private final AuthService authService;
 
 	@PostMapping("/join")
@@ -37,7 +41,21 @@ public class AuthController {
 	}
 
 	@PostMapping("/login")
-	public TokenDto login(@RequestBody LoginReqDto loginReqDto) {
+	public String login(@RequestBody LoginReqDto loginReqDto) {
 		return authService.login(loginReqDto);
+	}
+
+	@PostMapping("/login/auto")
+	public String loginAuto(@RequestBody LoginReqDto loginReqDto, HttpServletResponse response) {
+		TokenDto tokenDto = authService.loginAuto(loginReqDto);
+
+		ResponseCookie cookie = ResponseCookie.from("refreshToken", tokenDto.getRefreshToken())
+			.maxAge(refreshTokenExpireTime)
+			.httpOnly(true)
+			.path("/")
+			.build();
+		response.setHeader("Set-Cookie", cookie.toString());
+
+		return tokenDto.getAccessToken();
 	}
 }

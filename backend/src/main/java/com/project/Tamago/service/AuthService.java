@@ -3,6 +3,10 @@ package com.project.Tamago.service;
 import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
 import static com.project.Tamago.util.constants.Constant.*;
 
+import java.util.concurrent.TimeUnit;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -26,10 +30,12 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 @RequiredArgsConstructor
 public class AuthService {
-
+	@Value("${jwt.time.refresh}")
+	private Long refreshTokenExpireTime;
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final JwtTokenProvider jwtTokenProvider;
+	private final RedisTemplate<String, Object> redisTemplate;
 	private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
 	public void join(JoinReqDto joinReqDto) {
@@ -40,9 +46,18 @@ public class AuthService {
 		userRepository.save(user);
 	}
 
-	public TokenDto login(LoginReqDto loginReqDto) {
+	public String login(LoginReqDto loginReqDto) {
 		Authentication authentication = attemptAuthentication(loginReqDto);
-		return new TokenDto(jwtTokenProvider.createAccessToken(authentication), null);
+		return jwtTokenProvider.createAccessToken(authentication);
+	}
+
+	public TokenDto loginAuto(LoginReqDto loginReqDto) {
+		Authentication authentication = attemptAuthentication(loginReqDto);
+		TokenDto tokenDto = jwtTokenProvider.createToken(authentication);
+		redisTemplate.opsForValue()
+			.set("refreshToken:" + authentication.getName(), tokenDto.getRefreshToken(),
+				refreshTokenExpireTime, TimeUnit.MILLISECONDS);
+		return tokenDto;
 	}
 
 	@Transactional(readOnly = true)
@@ -59,13 +74,8 @@ public class AuthService {
 	}
 
 	private Authentication attemptAuthentication(LoginReqDto loginReqDto) {
-		// 1. Email/PW 기반 Authentication 객체 생성
-		// 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
 			loginReqDto.getEmail(), loginReqDto.getPassword());
-
-		// 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
-		// authenticate 매서드가 실행될 때 PrincipalDetailsService 에서 만든 loadUserByUsername 메서드가 실행
 		return authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 	}
 }
