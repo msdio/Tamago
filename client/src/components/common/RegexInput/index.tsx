@@ -13,7 +13,6 @@ interface RegexInputProps {
   onChange?: ChangeEventHandler<HTMLInputElement>;
   placeholder?: string;
   errorMessage?: string;
-  ref: ForwardedRef<HTMLInputElement>;
 }
 
 function RegexInput(
