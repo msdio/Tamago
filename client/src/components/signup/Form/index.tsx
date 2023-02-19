@@ -15,22 +15,8 @@ export default function SignupForm() {
     verifyPassword: /./,
   });
 
-  const { name, email, password, verifyPassword } = inputs as {
-    name: string;
-    email: string;
-    password: string;
-    verifyPassword: string;
-  };
-
-  const {
-    name: isNameValid,
-    email: isEmailValid,
-    password: isPasswordValid,
-  } = valids as {
-    name: boolean;
-    email: boolean;
-    password: boolean;
-  };
+  const { name, email, password, verifyPassword } = inputs;
+  const { name: isNameValid, email: isEmailValid, password: isPasswordValid } = valids;
 
   const handleSubmit = () => {
     const { name, email, password } = inputs;

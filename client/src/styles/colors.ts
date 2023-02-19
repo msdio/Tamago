@@ -31,16 +31,5 @@ const colors: Record<string, ColorType> = {
     800: '#808080',
     900: '#808080', // text
   },
-  'tamago-reverse': {
-    100: '#FF8A65',
-    200: '#fffaf8',
-    300: '#ff701e',
-    400: '#FF8A65',
-    500: '#ffffff', //basic
-    600: '#FF8A65',
-    700: '#F7FAFC', // hover
-    800: '#FF6A3C',
-    900: '#FF6A3C',
-  },
 };
 export default colors;
