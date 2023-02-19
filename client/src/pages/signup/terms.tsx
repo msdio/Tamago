@@ -1,10 +1,10 @@
-import SignupLayout from '@/components/signup/Layout';
+import AuthLayout from '@/components/common/AuthLayout';
 import SignupTerms from '@/components/signup/Terms';
 
 export default function SignupPage() {
   return (
-    <SignupLayout>
+    <AuthLayout title={'회원가입'}>
       <SignupTerms />
-    </SignupLayout>
+    </AuthLayout>
   );
 }

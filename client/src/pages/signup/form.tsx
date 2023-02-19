@@ -1,10 +1,10 @@
+import AuthLayout from '@/components/common/AuthLayout';
 import SignupForm from '@/components/signup/Form';
-import SignupLayout from '@/components/signup/Layout';
 
 export default function SignupPage() {
   return (
-    <SignupLayout>
+    <AuthLayout title={'회원가입'}>
       <SignupForm />
-    </SignupLayout>
+    </AuthLayout>
   );
 }

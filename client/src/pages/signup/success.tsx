@@ -1,10 +1,10 @@
-import SignupLayout from '@/components/signup/Layout';
+import AuthLayout from '@/components/common/AuthLayout';
 import SignupSuccess from '@/components/signup/Success';
 
 export default function SignupPage() {
   return (
-    <SignupLayout>
+    <AuthLayout>
       <SignupSuccess />
-    </SignupLayout>
+    </AuthLayout>
   );
 }
