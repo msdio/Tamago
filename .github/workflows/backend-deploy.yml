@@ -1,4 +1,4 @@
-# This is a basic workflow to help you get started with Actions
+
 
 name: Backend-Deploy
 
@@ -58,20 +58,6 @@ jobs:
           key: ${{ secrets.REMOTE_SSH_KEY }}
           port: ${{ secrets.REMOTE_SSH_PORT }}
           script: |
-<<<<<<< HEAD
-=======
-            whoami
-            cd /home
-            sudo chown -R ubuntu:ubuntu ubuntu
-            cd /home/ubuntu/dockerfile/backend
-             echo -e "\
-             +------------------------------------+
-             |              1. build              |
-             +------------------------------------+"
-            
-            echo ">>>>>> making secret yml..."
-            echo "${{ secrets.EC2_SECRET_YML }}" > application-secret.yml
->>>>>>> 71dbb54cea6118bd9b64e83cc1d02904ac16ccc9
             echo -e "\
              +------------------------------------+
              |                run                 |
