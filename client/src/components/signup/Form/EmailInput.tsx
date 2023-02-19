@@ -30,7 +30,7 @@ function EmailButton(
     placeholder,
     buttonText,
   }: EmailButtonProps,
-  ref: ForwardedRef<HTMLInputElement>,
+  ref?: ForwardedRef<HTMLInputElement>,
 ) {
   return (
     <Flex direction='column' gap='8px'>

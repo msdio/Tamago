@@ -13,11 +13,12 @@ interface RegexInputProps {
   onChange?: ChangeEventHandler<HTMLInputElement>;
   placeholder?: string;
   errorMessage?: string;
+  ref: ForwardedRef<HTMLInputElement>;
 }
 
 function RegexInput(
   { value, name, size, isValid = true, errorMessage, label, type, onChange, placeholder }: RegexInputProps,
-  ref: ForwardedRef<HTMLInputElement>,
+  ref?: ForwardedRef<HTMLInputElement>,
 ) {
   return (
     <Flex direction='column' gap='8px'>
