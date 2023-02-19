@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.Tamago.dto.requestDto.JoinReqDto;
 import com.project.Tamago.dto.requestDto.LoginReqDto;
-import com.project.Tamago.dto.SuccessResDto;
+import com.project.Tamago.dto.SuccessMessage;
 import com.project.Tamago.dto.TokenDto;
 import com.project.Tamago.exception.InvalidParameterException;
 import com.project.Tamago.service.AuthService;
@@ -27,12 +27,12 @@ public class AuthController {
 	private final AuthService authService;
 
 	@PostMapping("/join")
-	public SuccessResDto join(@Valid @RequestBody JoinReqDto joinReqDto, BindingResult result) {
+	public SuccessMessage join(@Valid @RequestBody JoinReqDto joinReqDto, BindingResult result) {
 		if (result.hasErrors()) {
 			throw new InvalidParameterException(result);
 		}
 		authService.join(joinReqDto);
-		return new SuccessResDto();
+		return new SuccessMessage();
 	}
 
 	@PostMapping("/login")

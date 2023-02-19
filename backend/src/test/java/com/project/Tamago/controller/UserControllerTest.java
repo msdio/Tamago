@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.responseDto.ProfileResDto;
+import com.project.Tamago.repository.UserRepository;
 import com.project.Tamago.service.UserService;
 
 @SpringBootTest
@@ -25,13 +26,15 @@ public class UserControllerTest {
 
 	@MockBean
 	private UserService userService;
+	@MockBean
+	private UserRepository userRepository;
 	@Autowired
 	private MockMvc mockMvc;
 
 	@Test
 	@DisplayName("유저 정보 가져오기 성공")
 	@WithMockUser(username = "user", authorities = {"ROLE_USER"})
-	public void join() throws Exception {
+	public void findProfile() throws Exception {
 		// given
 		User user = User.builder()
 			.id(1)
@@ -49,4 +52,27 @@ public class UserControllerTest {
 		resultActions.andExpect(status().isOk());
 	}
 
+	// @Test
+	// @DisplayName("유저 정보 변경하기")
+	// public void modifyUserProfile() throws Exception {
+	// 	// given
+	// 	User user = User.builder()
+	// 		.id(1)
+	// 		.email("test@naver.com")
+	// 		.nickname("test")
+	// 		.password("1234")
+	// 		.build();
+	// 	userRepository.save(user);
+	// 	Optional<User> optionalUser = Optional.of(user);
+	// 	doReturn(optionalUser).when(userRepository).findByNickname(anyString());
+	//
+	//
+	// 	ModifyProfileReqDto modifyProfileReqDto = new ModifyProfileReqDto("안녕하세요.",
+	// 		"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT55B_AMMO9_gDppDBojupeVFHeQIg4zXSRDJ5COw4h&s");
+	// 	// when
+	// 	userService.modifyUserByJwtToken("any", modifyProfileReqDto);
+	// 	// then
+	//
+	// 	System.out.println("user = " + user.getProfileImg());
+	// }
 }
