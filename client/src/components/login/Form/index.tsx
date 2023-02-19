@@ -7,16 +7,30 @@ import useRegexInputs from '@/hooks/useRegexInputs';
 import { INQUIRY_PW_PATH } from '@/utils/paths';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
 
-function LoginForm() {
+type InputType = {
+  email: string;
+  password: string;
+};
+
+type InputValidType = { email: boolean; password: boolean };
+
+interface LoginFormProps {
+  onLogin: (email: string, password: string) => Promise<void>;
+}
+
+function LoginForm({ onLogin }: LoginFormProps) {
   const [inputs, valids, handleInputChange] = useRegexInputs({
     email: EMAIL_REGEX,
     password: PASSWORD_REGEX,
   });
 
-  const { email, password } = inputs as { email: string; password: string };
-  const { email: isEmailValid, password: isPasswordValid } = valids as {
-    email: boolean;
-    password: boolean;
+  const { email, password } = inputs as InputType;
+  const { email: isEmailValid, password: isPasswordValid } = valids as InputValidType;
+
+  const isLoginDisabled = !(isEmailValid && isPasswordValid);
+
+  const onSubmit = () => {
+    onLogin(email, password);
   };
 
   return (
@@ -58,7 +72,7 @@ function LoginForm() {
           <Text fontWeight='bold'>회원가입 하기</Text>
         </Flex>
       </Flex>
-      <Button size='lg' mt='42px'>
+      <Button size='lg' mt='42px' onClick={onSubmit} isDisabled={isLoginDisabled}>
         로그인
       </Button>
 
