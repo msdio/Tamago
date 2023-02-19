@@ -1,15 +1,29 @@
 import { Box, Button, Flex, Image, Text, useDisclosure } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import { useRef, useState } from 'react';
 
 import Alert from '@/components/common/Alert';
 import FormOr from '@/components/common/FormOr';
 import RegexInput from '@/components/common/RegexInput';
 import useRegexInputs from '@/hooks/useRegexInputs';
+import { SIGNUP_COMPLETE_PATH } from '@/utils/paths';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
 
 import EmailInput from './EmailInput';
 
+interface InputRef {
+  name: HTMLInputElement | null;
+  email: HTMLInputElement | null;
+  password: HTMLInputElement | null;
+  verifyPassword: HTMLInputElement | null;
+}
+
 export default function SignupForm() {
+  const router = useRouter();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [isEmailDuplicated, setIsEmailDuplicated] = useState(true);
 
   const [inputs, valids, handleInputChange] = useRegexInputs({
     name: /./,
@@ -18,15 +32,35 @@ export default function SignupForm() {
     verifyPassword: /./,
   });
 
+  const inputRef = useRef<InputRef>({
+    name: null,
+    email: null,
+    password: null,
+    verifyPassword: null,
+  });
+
   const { name, email, password, verifyPassword } = inputs;
   const { name: isNameValid, email: isEmailValid, password: isPasswordValid } = valids;
 
-  const handleSubmit = () => {
-    console.log(inputs);
+  const handleEmailButton = () => {
+    setIsEmailDuplicated(!isEmailDuplicated);
+    onOpen();
   };
 
-  const handleEmailButton = () => {
-    console.log(email);
+  const handleSubmit = () => {
+    if (!isNameValid) {
+      inputRef.current['name']?.focus();
+    } else if (!isEmailValid) {
+      inputRef.current['email']?.focus();
+    } else if (!isPasswordValid) {
+      inputRef.current['password']?.focus();
+    } else if (password !== verifyPassword) {
+      inputRef.current['verifyPassword']?.focus();
+    } else if (isEmailDuplicated) {
+      onOpen();
+    } else {
+      router.push(SIGNUP_COMPLETE_PATH);
+    }
   };
 
   return (
@@ -41,6 +75,7 @@ export default function SignupForm() {
             value={name}
             isValid={isNameValid}
             onChange={handleInputChange}
+            ref={(el) => (inputRef.current['name'] = el)}
           />
         </Box>
         <Box mb='26px'>
@@ -56,6 +91,7 @@ export default function SignupForm() {
             onChange={handleInputChange}
             onClick={handleEmailButton}
             buttonText='중복 확인'
+            ref={(el) => (inputRef.current['email'] = el)}
           />
         </Box>
         <Box mb='16px'>
@@ -69,6 +105,7 @@ export default function SignupForm() {
             value={password}
             isValid={isPasswordValid}
             onChange={handleInputChange}
+            ref={(el) => (inputRef.current['password'] = el)}
           />
         </Box>
         <Box mb='57px'>
@@ -81,6 +118,7 @@ export default function SignupForm() {
             value={verifyPassword}
             isValid={password === verifyPassword}
             onChange={handleInputChange}
+            ref={(el) => (inputRef.current['verifyPassword'] = el)}
           />
         </Box>
         <Button size='lg' onClick={handleSubmit}>
@@ -98,9 +136,11 @@ export default function SignupForm() {
           </Button>
         </Flex>
       </Flex>
-      <Alert isOpen={true} onClose={onClose}>
+      <Alert isOpen={isOpen} onClose={onClose}>
         <Box textAlign='center' mt='34px' mb='54px'>
-          <Text fontWeight='700'>사용 가능한 이메일 입니다.</Text>
+          <Text fontWeight='700'>
+            {isEmailDuplicated ? '이미 사용 중인 이메일 입니다.' : '사용 가능한 이메일 입니다.'}
+          </Text>
         </Box>
       </Alert>
     </>
