@@ -19,13 +19,11 @@ export default function SignupForm() {
   const { name: isNameValid, email: isEmailValid, password: isPasswordValid } = valids;
 
   const handleSubmit = () => {
-    const { name, email, password } = inputs;
-    // 서버에서 확인용 비밀번호 체크해줘야 할까
-    console.log({ name, email, password });
+    console.log(inputs);
   };
 
   const handleEmailButton = () => {
-    console.log('이메일 버튼 클릭');
+    console.log(email);
   };
 
   return (
@@ -52,6 +50,7 @@ export default function SignupForm() {
           value={email}
           isValid={isEmailValid}
           onChange={handleInputChange}
+          onClick={handleEmailButton}
           buttonText='중복 확인'
         />
       </Box>
