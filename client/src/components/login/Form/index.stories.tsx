@@ -1,8 +1,7 @@
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, theme } from '@chakra-ui/react';
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import theme from '../../../styles/theme';
-import LoginForm from '.';
+import LoginForm from '@/components/login/Form';
 
 export default {
   title: 'components/loginForm',
@@ -12,9 +11,13 @@ export default {
 const Template: ComponentStory<typeof LoginForm> = () => {
   return (
     <ChakraProvider theme={theme}>
-      <LoginForm />
+      <LoginForm {...args} />
     </ChakraProvider>
   );
 };
 
-export const CheckboxTemplate: ComponentStory<typeof LoginForm> = Template.bind({});
+export const LoginFormTemplate: ComponentStory<typeof LoginForm> = Template.bind({});
+
+LoginFormTemplate.args = {
+  onLogin: async () => undefined,
+};
