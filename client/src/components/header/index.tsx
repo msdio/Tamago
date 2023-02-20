@@ -8,12 +8,22 @@ import { useRouter } from 'next/router';
 
 import { TamagoLogo } from '@/icons/TamagoLogo';
 
+
 export function Header() {
   const [isLogin, setIsLogin] = useState(false);
+  const router = useRouter();
+
+  const handleLoginClick = () => {
+    router.push('/login');
+    setIsLogin(true);
+  };
+
+  const handleSignupClick = () => {
+    router.push('/signup/terms');
+  };
 
   return (
     <>
-      <Fonts />
       <Flex
         as='header'
         direction='row'

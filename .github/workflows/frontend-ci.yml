@@ -1,0 +1,40 @@
+name: Frontend-Build-Test
+
+on:
+  pull_request:
+    branches:
+      - "main"
+      - "feature/**"
+      - "fix/**"
+      - "refactor/**"
+    paths:
+      - "client/**"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "16.x"
+
+      - name: Install Dependencies
+        run: |
+          cd ./client
+          yarn
+
+      - name: Test with jest
+        run: |
+          cd ./client
+          yarn test
+
+      - name: Build with yarn
+        run: |
+          cd ./client
+          yarn install --frozen-lockfile
+          yarn build
