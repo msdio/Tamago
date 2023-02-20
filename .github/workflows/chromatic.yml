@@ -16,7 +16,6 @@ jobs:
     steps:
       - name: Check repository
       - uses: actions/checkout@v1
-      - name: Change Directory
         run: cd ./client
       - name: Install dependencies
         run: yarn
