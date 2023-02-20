@@ -28,8 +28,7 @@ public class AuthController {
 	private final AuthService authService;
 
 	@PostMapping("/join")
-	public SuccessResDto join(@Valid @RequestBody JoinReqDto joinReqDto, BindingResult result,
-		HttpServletRequest request) {
+	public SuccessResDto join(@Valid @RequestBody JoinReqDto joinReqDto, BindingResult result) {
 		if (result.hasErrors()) {
 			throw new InvalidParameterException(result);
 		}
@@ -38,7 +37,7 @@ public class AuthController {
 	}
 
 	@PostMapping("/login")
-	public TokenDto login(@RequestBody LoginReqDto loginReqDto, HttpServletRequest request) {
+	public TokenDto login(@RequestBody LoginReqDto loginReqDto) {
 		return authService.login(loginReqDto);
 	}
 }

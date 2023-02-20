@@ -5,6 +5,7 @@ interface RegexInputProps {
   value: string;
   name: string;
   size: string;
+  isValid?: boolean;
   regex?: RegExp;
   label?: string;
   type?: string;
@@ -17,15 +18,13 @@ export default function RegexInput({
   value,
   name,
   size,
+  isValid = true,
   errorMessage,
-  regex = /./,
   label,
   type,
   onChange,
   placeholder,
 }: RegexInputProps) {
-  const isError = value !== '' && !regex.test(value);
-
   return (
     <Flex direction='column' gap='8px'>
       {label && (
@@ -35,7 +34,7 @@ export default function RegexInput({
       )}
       <Flex direction='column'>
         <Input name={name} type={type} size={size} placeholder={placeholder} defaultValue={value} onChange={onChange} />
-        {errorMessage && isError ? (
+        {errorMessage && value !== '' && !isValid ? (
           <Text color='#FF0000' mt='17'>
             {errorMessage}
           </Text>

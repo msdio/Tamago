@@ -13,7 +13,7 @@ function designSystem() {
           Line _ md
         </Button>
 
-        <Button size='sm' colorScheme='secondary' variant='outline'>
+        <Button size='sm' colorScheme='tamago-gray' variant='outline'>
           Check _ sm
         </Button>
 

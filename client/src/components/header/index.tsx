@@ -16,7 +16,7 @@ export function Header() {
   };
 
   const handleSignupClick = () => {
-    router.push('/signup');
+    router.push('/signup/terms');
   };
 
   return (
