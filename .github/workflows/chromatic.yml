@@ -9,21 +9,25 @@ on:
 
 # List of jobs
 jobs:
-  test:
+  chromatic-deployment:
     # Operating System
     runs-on: ubuntu-latest
-    # list of steps of actions
+    # Job steps
     steps:
-      - name: Check repository
       - uses: actions/checkout@v1
-        run: cd ./client
       - name: Install dependencies
-        run: yarn
-        #👇 Adds Chromatic as a step in the workflow
+        run: |
+          cd ./client
+          yarn
+
+      - name: Build storybook
+        run: |
+          cd ./client
+          yarn build-storybook
+
       - name: Publish to Chromatic
-      - uses: chromaui/action@v1
-        # Chromatic's GitHub Action options
+        uses: chromaui/action@v1
         with:
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          token: ${{ secrets.GITHUB_TOKEN }}
           workingDir: client
+          token: ${{ secrets.GITHUB_TOKEN }}
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
