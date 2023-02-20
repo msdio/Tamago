@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.Tamago.dto.JoinReqDto;
+import com.project.Tamago.dto.LoginReqDto;
 import com.project.Tamago.exception.CustomException;
 import com.project.Tamago.jwt.JwtTokenProvider;
 import com.project.Tamago.repository.UserRepository;
@@ -90,4 +91,22 @@ public class AuthControllerTest {
 		resultActions.andExpect(status().isBadRequest())
 			.andExpect(jsonPath("$.code").value(USERS_EXISTS_NICKNAME.getCode()));
 	}
+
+	@Test
+	@DisplayName("로그인 검증")
+	public void autoLoginTest() throws Exception {
+		// given
+		LoginReqDto loginReqDto = new LoginReqDto("username", "password");
+		String accessToken = "access_token";
+		doReturn(accessToken).when(authService).login(loginReqDto);
+		// when
+		ResultActions resultActions = mockMvc.perform(post("/auth/login")
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(new ObjectMapper().writeValueAsString(loginReqDto)));
+		// then
+		resultActions.andExpect(status().isOk())
+			.andExpect(content().string(accessToken));
+
+	}
+
 }
