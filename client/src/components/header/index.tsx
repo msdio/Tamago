@@ -5,14 +5,13 @@ import { useState } from 'react';
 
 import { TamagoLogo } from '@/icons/TamagoLogo';
 
-import Fonts from '../../../public/fonts/GangwonEduPower';
-
 export function Header() {
   const [isLogin, setIsLogin] = useState(false);
   const router = useRouter();
 
   const handleLoginClick = () => {
     router.push('/login');
+    setIsLogin(true);
   };
 
   const handleSignupClick = () => {
@@ -21,7 +20,6 @@ export function Header() {
 
   return (
     <>
-      <Fonts />
       <Flex
         as='header'
         direction='row'

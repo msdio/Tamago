@@ -1,6 +1,4 @@
 import { Box, Button, Flex } from '@chakra-ui/react';
-import type { ChangeEvent } from 'react';
-import { useState } from 'react';
 
 import FormOr from '@/components/common/FormOr';
 import RegexInput from '@/components/common/RegexInput';
@@ -20,15 +18,15 @@ export default function SignupForm() {
   const { name, email, password, verifyPassword } = inputs;
   const { name: isNameValid, email: isEmailValid, password: isPasswordValid } = valids;
 
-  const handleSubmit = () => {
-    const { name, email, password } = inputs;
-    // 서버에서 확인용 비밀번호 체크해줘야 할까
-    console.log({ name, email, password });
-  };
+  // const handleSubmit = () => {
+  //   const { name, email, password } = inputs;
+  //   // 서버에서 확인용 비밀번호 체크해줘야 할까
+  //   console.log({ name, email, password });
+  // };
 
-  const handleEmailButton = () => {
-    console.log('이메일 버튼 클릭');
-  };
+  // const handleEmailButton = () => {
+  //   console.log('이메일 버튼 클릭');
+  // };
 
   return (
     <Flex direction='column'>
@@ -82,9 +80,7 @@ export default function SignupForm() {
           onChange={handleInputChange}
         />
       </Box>
-      <Button size='lg' onClick={handleSubmit}>
-        회원가입 하기
-      </Button>
+      <Button size='lg'>회원가입 하기</Button>
       <Box m='41px 0px'>
         <FormOr />
       </Box>
