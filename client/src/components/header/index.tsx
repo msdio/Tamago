@@ -4,15 +4,31 @@ import { useState } from 'react';
 
 import { LOGIN_PATH, SIGNUP_TERM_PATH } from '@/utils/paths';
 
+import { useRouter } from 'next/router';
+
+import { TamagoLogo } from '@/icons/TamagoLogo';
+
 export function Header() {
   const [isLogin, setIsLogin] = useState(false);
 
   return (
     <>
-      <Flex as='header' direction='row' h='88px' borderBottom='0.6px solid #BFBFBF' p='0 120px' minW='1100px'>
-        <Heading fontSize='26px' lineHeight='88px' fontFamily='GangwonEduPower' letterSpacing='.05em'>
-          Tamago
-        </Heading>
+      <Fonts />
+      <Flex
+        as='header'
+        direction='row'
+        h='88px'
+        minH='88px'
+        borderBottom='0.6px solid #BFBFBF'
+        p='0 120px'
+        minW='1100px'
+        alignItems='center'
+        zIndex='100'
+        background='white'
+      >
+        <Link href='/'>
+          <TamagoLogo />
+        </Link>
         <HStack spacing='62px' w='100%' marginLeft='81px' fontSize='17px' fontWeight='700'>
           <Text>긴글연습</Text>
           <Text>짧은글연습</Text>
@@ -20,17 +36,33 @@ export function Header() {
           <Text>프로필</Text>
         </HStack>
         {!isLogin && (
-          <HStack spacing='12.91px' fontSize='14px' lineHeight='17px'>
-            <Link href={SIGNUP_TERM_PATH}>
-              <Button w='95.54px' h='35.29px' border='0.516456px solid #BFBFBF' borderRadius='4.3038px' bg='white'>
-                회원가입
-              </Button>
-            </Link>
-            <Link href={LOGIN_PATH}>
-              <Button w='95.54px' h='35.29px' border='0.516456px solid #BFBFBF' borderRadius='4.3038px' bg='white'>
-                로그인
-              </Button>
-            </Link>
+          <HStack spacing='12.91px'>
+            <Button
+              w='95.54px'
+              h='35.29px'
+              border='0.516456px solid #BFBFBF'
+              borderRadius='4.3038px'
+              bg='white'
+              onClick={handleSignupClick}
+              color='black'
+              fontSize='14px'
+              lineHeight='17px'
+            >
+              회원가입
+            </Button>
+            <Button
+              w='95.54px'
+              h='35.29px'
+              border='0.516456px solid #BFBFBF'
+              borderRadius='4.3038px'
+              bg='white'
+              color='black'
+              onClick={handleLoginClick}
+              fontSize='14px'
+              lineHeight='17px'
+            >
+              로그인
+            </Button>
           </HStack>
         )}
       </Flex>

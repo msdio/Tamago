@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-export const axiosInstance = axios.create({
-  baseURL: 'https://api.themoviedb.org/3/',
+const request = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
   // withCredentials: true,
 });
+
+export default request;

@@ -1,6 +1,7 @@
 import { Box, Button, Flex, Image, Text, useDisclosure } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
+import type { ChangeEvent } from 'react';
 
 import Alert from '@/components/common/Alert';
 import FormOr from '@/components/common/FormOr';
