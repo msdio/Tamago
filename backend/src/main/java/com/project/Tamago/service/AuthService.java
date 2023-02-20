@@ -17,10 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.requestDto.JoinReqDto;
 import com.project.Tamago.dto.requestDto.LoginReqDto;
-import com.project.Tamago.dto.TokenDto;
 import com.project.Tamago.exception.CustomException;
 import com.project.Tamago.jwt.JwtTokenProvider;
 import com.project.Tamago.repository.UserRepository;
+import com.project.Tamago.util.security.Token;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -51,13 +51,13 @@ public class AuthService {
 		return jwtTokenProvider.createAccessToken(authentication);
 	}
 
-	public TokenDto loginAuto(LoginReqDto loginReqDto) {
+	public Token loginAuto(LoginReqDto loginReqDto) {
 		Authentication authentication = attemptAuthentication(loginReqDto);
-		TokenDto tokenDto = jwtTokenProvider.createToken(authentication);
+		Token token = jwtTokenProvider.createToken(authentication);
 		redisTemplate.opsForValue()
-			.set(REFRESH_TOKEN + COLON + authentication.getName(), tokenDto.getRefreshToken(),
+			.set(REFRESH_TOKEN + COLON + authentication.getName(), token.getRefreshToken(),
 				refreshTokenExpireTime, TimeUnit.MILLISECONDS);
-		return tokenDto;
+		return token;
 	}
 
 	// public String reissue(String refreshToken, String accessToken) throws BaseException {

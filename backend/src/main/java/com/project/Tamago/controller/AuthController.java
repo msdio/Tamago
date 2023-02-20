@@ -14,11 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.Tamago.dto.SuccessMessage;
-import com.project.Tamago.dto.TokenDto;
 import com.project.Tamago.dto.requestDto.JoinReqDto;
 import com.project.Tamago.dto.requestDto.LoginReqDto;
+import com.project.Tamago.dto.responseDto.LoginResDto;
 import com.project.Tamago.exception.InvalidParameterException;
 import com.project.Tamago.service.AuthService;
+import com.project.Tamago.util.security.Token;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,22 +44,22 @@ public class AuthController {
 	}
 
 	@PostMapping("/login")
-	public String login(@RequestBody LoginReqDto loginReqDto) {
-		return authService.login(loginReqDto);
+	public LoginResDto login(@RequestBody LoginReqDto loginReqDto) {
+		return new LoginResDto(authService.login(loginReqDto));
 	}
 
 	@PostMapping("/login/auto")
-	public String loginAuto(@RequestBody LoginReqDto loginReqDto, HttpServletResponse response) {
-		TokenDto tokenDto = authService.loginAuto(loginReqDto);
+	public LoginResDto loginAuto(@RequestBody LoginReqDto loginReqDto, HttpServletResponse response) {
+		Token token = authService.loginAuto(loginReqDto);
 
-		ResponseCookie cookie = ResponseCookie.from(REFRESH_TOKEN, tokenDto.getRefreshToken())
+		ResponseCookie cookie = ResponseCookie.from(REFRESH_TOKEN, token.getRefreshToken())
 			.maxAge(refreshTokenExpireTime)
 			.httpOnly(true)
 			.path("/")
 			.build();
 		response.setHeader("Set-Cookie", cookie.toString());
 
-		return tokenDto.getAccessToken();
+		return new LoginResDto(token.getAccessToken());
 	}
 
 	// @PostMapping("/jwt")

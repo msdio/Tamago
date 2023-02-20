@@ -105,7 +105,7 @@ public class AuthControllerTest {
 			.content(new ObjectMapper().writeValueAsString(loginReqDto)));
 		// then
 		resultActions.andExpect(status().isOk())
-			.andExpect(content().string(accessToken));
+			.andExpect(jsonPath("accessToken").value(accessToken));
 
 	}
 
