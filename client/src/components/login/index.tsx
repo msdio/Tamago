@@ -1,11 +1,11 @@
+import AuthLayout from '@/components/common/AuthLayout';
 import LoginForm from '@/components/login/Form';
-import LoginLayout from '@/components/login/Layout';
 
 function Login() {
   return (
-    <LoginLayout>
+    <AuthLayout title={'로그인'}>
       <LoginForm />
-    </LoginLayout>
+    </AuthLayout>
   );
 }
 export default Login;

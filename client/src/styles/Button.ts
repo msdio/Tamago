@@ -35,13 +35,13 @@ const baseVariant = defineStyle((props) => {
   return {
     bg: `${c}.500`,
     border: '0.6px solid',
-    color: '#fff',
+    color: `${c}.100`,
 
     _hover: {
       bg: `${c}.700`,
       border: '0.6px solid',
       _disabled: {
-        bg: 'secondary.500',
+        bg: 'tamago-gray.500',
       },
     },
     _active: {
@@ -50,9 +50,9 @@ const baseVariant = defineStyle((props) => {
       borderColor: `${c}.700`,
     },
     _disabled: {
-      bg: 'secondary.500',
+      bg: 'tamago-gray.500',
       border: '0.6px solid',
-      borderColor: 'secondary.500',
+      borderColor: 'tamago-gray.500',
     },
   };
 });
@@ -67,16 +67,16 @@ const outlineVariant = defineStyle((props) => {
     _hover: {
       bg: `${c}.200`,
       _disabled: {
-        bg: 'secondary.500',
+        bg: 'tamago-gray.500',
       },
     },
     _active: {
       bg: `${c}.200`,
     },
     _disabled: {
-      bg: 'secondary.500',
+      bg: 'tamago-gray.500',
       border: '0.6px solid',
-      borderColor: 'secondary.500',
+      borderColor: 'tamago-gray.500',
     },
   };
 });

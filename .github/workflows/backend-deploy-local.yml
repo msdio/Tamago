@@ -1,6 +1,6 @@
 
 
-name: Backend-Deploy
+name: Backend-Deploy-Local
 
 on:
   push:
@@ -21,7 +21,7 @@ jobs:
         run: |
           cd ./dockerfile/backend/
           touch ./application-secret.yml
-          echo "${{ secrets.SECRET_YML }}" > ./application-secret.yml
+          echo "${{ secrets.LOCAL_SECRET_YML }}" > ./application-secret.yml
         shell: bash
       -
         name: Docker meta
@@ -46,24 +46,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./dockerfile/backend/
-          file: ./dockerfile/backend/Dockerfile
+          file: ./dockerfile/backend/Dockerfile-Local
           platforms: linux/amd64
           push: true
-          tags: baikjonghyun/tamago:lastest
-      - name: Deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.REMOTE_IP }}
-          username: ${{ secrets.REMOTE_SSH_ID }}
-          key: ${{ secrets.REMOTE_SSH_KEY }}
-          port: ${{ secrets.REMOTE_SSH_PORT }}
-          script: |
-            echo -e "\
-             +------------------------------------+
-             |                run                 |
-             +------------------------------------+"
-            cd /home/ubuntu/dockerfile/backend
-            chmod +x backend_install.sh || exit 1
-            chmod +x delete_not_use_image_file.sh || exit 1
-            sudo ./backend_install.sh || exit 1
-            sudo ./delete_not_use_image_file.sh || exit 1
+          tags: baikjonghyun/tamago-local:lastest

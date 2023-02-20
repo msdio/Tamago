@@ -27,17 +27,17 @@ const baseVariant = defineStyle((props) => {
     field: {
       bg: `${c}.100`,
       border: '1px solid',
-      borderColor: 'secondary.500',
+      borderColor: 'tamago-gray.500',
 
       _placeholder: {
         fontWeight: 'regular',
-        color: 'secondary.500',
+        color: 'tamago-gray.500',
       },
       _focus: {
         borderColor: `${c}.500`,
       },
       _disabled: {
-        bg: 'secondary.100',
+        bg: 'tamago-gray.100',
       },
     },
   };
