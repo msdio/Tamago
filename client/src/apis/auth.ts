@@ -6,14 +6,20 @@ const LOGIN_PATH = '/auth/login';
 const SIGNUP_PATH = '/auth/join';
 const EMAIL_DUPLICATE_PATH = '/auth/email';
 
-export const loginAPI = async (email: string, password: string) => {
+interface LoginAPIReturnType {
+  accessToken: string;
+  refreshToken: string;
+}
+
+export const loginAPI = async (email: string, password: string): Promise<LoginAPIReturnType> => {
   try {
     const response = await request.post(LOGIN_PATH, { email, password });
 
     const { data, status } = response;
-    const { accessToken, refreshToke } = data;
+    const { accessToken, refreshToken }: LoginAPIReturnType = data;
+    // TODO: accessToken 처리 이야기 후, 수정
 
-    return { accessToken, refreshToke };
+    return { accessToken, refreshToken };
   } catch (error) {
     if (error instanceof AxiosError) {
       const { code } = error.response?.data;
