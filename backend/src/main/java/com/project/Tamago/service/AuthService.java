@@ -81,6 +81,13 @@ public class AuthService {
 		}
 	}
 
+	@Transactional(readOnly = true)
+	public void checkEmailExistence(String email) {
+		if (!userRepository.existsByEmailAndProvider(email, PROVIDER_NONE)) {
+			throw new CustomException(USERS_EMPTY_USER_EMAIL);
+		}
+	}
+
 	private void checkNicknameDuplicate(String nickname) {
 		if (userRepository.existsByNickname(nickname)) {
 			throw new CustomException(USERS_EXISTS_NICKNAME);

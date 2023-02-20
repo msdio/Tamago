@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.Tamago.dto.CustomResponse;
@@ -67,5 +69,17 @@ public class AuthController {
 	public CustomResponse<String> reissue(@RequestBody String accessToken,
 		@RequestHeader(value = REFRESH_TOKEN, required = false) String refreshToken) {
 		return new CustomResponse<>(authService.reissue(accessToken, refreshToken));
+	}
+
+	@GetMapping("/email")
+	public SuccessMessage checkEmailDuplicate(@RequestParam(required = true) String email) {
+		authService.checkEmailDuplicate(email);
+		return new SuccessMessage();
+	}
+
+	@GetMapping("/email/existence")
+	public SuccessMessage checkEmailExistence(@RequestParam(required = true) String email) {
+		authService.checkEmailExistence(email);
+		return new SuccessMessage();
 	}
 }
