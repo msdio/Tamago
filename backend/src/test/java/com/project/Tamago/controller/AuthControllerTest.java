@@ -106,7 +106,6 @@ public class AuthControllerTest {
 		// then
 		resultActions.andExpect(status().isOk())
 			.andExpect(jsonPath("accessToken").value(accessToken));
-
 	}
 
 }

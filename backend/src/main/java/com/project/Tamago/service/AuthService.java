@@ -60,19 +60,19 @@ public class AuthService {
 		return token;
 	}
 
-	// public String reissue(String refreshToken, String accessToken) throws BaseException {
-	// 	jwtTokenProvider.checkAccessTokenExpiration(accessToken);
-	// 	jwtTokenProvider.validateRefreshToken(refreshToken);
-	//
-	// 	Authentication authentication = jwtTokenProvider.getAuthenticationFromRef(refreshToken);
-	//
-	// 	String redisRefreshToken = String.valueOf(
-	// 		redisTemplate.opsForValue().get("refreshToken:" + authentication.getName()));
-	// 	if (!redisRefreshToken.equals(refreshToken)) {
-	// 		throw new BaseException(DIFFERENT_REFRESH_TOKEN);
-	// 	}
-	// 	return jwtTokenProvider.createAccessToken(authentication);
-	// }
+	public String reissue(String accessToken, String refreshToken) {
+		jwtTokenProvider.checkAccessTokenExpiration(accessToken);
+		jwtTokenProvider.validateRefreshToken(refreshToken);
+
+		Authentication authentication = jwtTokenProvider.getAuthenticationFromRef(refreshToken);
+
+		String redisRefreshToken = String.valueOf(
+			redisTemplate.opsForValue().get(REFRESH_TOKEN + COLON + authentication.getName()));
+		if (!redisRefreshToken.equals(refreshToken)) {
+			throw new CustomException(DIFFERENT_REFRESH_TOKEN);
+		}
+		return jwtTokenProvider.createAccessToken(authentication);
+	}
 
 	@Transactional(readOnly = true)
 	public void checkEmailDuplicate(String email) {

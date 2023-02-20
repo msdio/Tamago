@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -62,9 +63,9 @@ public class AuthController {
 		return new LoginResDto(token.getAccessToken());
 	}
 
-	// @PostMapping("/jwt")
-	// public String reissue(HttpServletRequest request,
-	// 	@CookieValue(value = "refreshToken", required = false) String refreshToken, @RequestBody String accessToken) {
-	// 	return authService.reissue(refreshToken, accessToken);
-	// }
+	@PostMapping("/jwt")
+	public String reissue(@RequestBody String accessToken,
+		@RequestHeader(value = REFRESH_TOKEN, required = false) String refreshToken) {
+		return authService.reissue(accessToken, refreshToken);
+	}
 }

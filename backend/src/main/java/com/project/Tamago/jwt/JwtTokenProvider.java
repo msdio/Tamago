@@ -93,6 +93,20 @@ public class JwtTokenProvider {
 		return new UsernamePasswordAuthenticationToken(claims.getSubject(), token, authorities);
 	}
 
+	public Authentication getAuthenticationFromRef(String token) {
+		Claims claims = Jwts.parserBuilder()
+			.setSigningKey(publicKeys.get(KeyType.REFRESH))
+			.build()
+			.parseClaimsJws(token)
+			.getBody();
+
+		Collection<? extends GrantedAuthority> authorities =
+			Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+				.map(SimpleGrantedAuthority::new)
+				.collect(Collectors.toList());
+		return new UsernamePasswordAuthenticationToken(claims.getSubject(), "", authorities);
+	}
+
 	public Long getExpiration(String accessToken) {
 		Date expiration = Jwts.parserBuilder()
 			.setSigningKey(publicKeys.get(KeyType.ACCESS))
@@ -115,6 +129,19 @@ public class JwtTokenProvider {
 
 	public String resolveToken(HttpServletRequest request) {
 		return request.getHeader(AUTHORIZATION_HEADER);
+	}
+
+	public void checkAccessTokenExpiration(String accessToken) {
+		try {
+			Jwts
+				.parserBuilder().setSigningKey(publicKeys.get(KeyType.ACCESS)).build()
+				.parseClaimsJws(accessToken);
+			throw new CustomException(NOT_POSSIBLE_REISSUE);
+		} catch (ExpiredJwtException e) {
+			log.info(POSSIBLE_REISSUE);
+		} catch (Exception e) {
+			throw new CustomException(NOT_POSSIBLE_REISSUE);
+		}
 	}
 
 	private KeyPair generateRSAKeyPair() {
