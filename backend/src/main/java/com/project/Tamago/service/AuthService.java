@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.requestDto.JoinReqDto;
 import com.project.Tamago.dto.requestDto.LoginReqDto;
+import com.project.Tamago.dto.requestDto.PasswordReqDto;
 import com.project.Tamago.exception.CustomException;
 import com.project.Tamago.jwt.JwtTokenProvider;
 import com.project.Tamago.repository.UserRepository;
@@ -72,6 +73,14 @@ public class AuthService {
 			throw new CustomException(DIFFERENT_REFRESH_TOKEN);
 		}
 		return jwtTokenProvider.createAccessToken(authentication);
+	}
+
+	public void modifyPassword(PasswordReqDto passwordReqDto) {
+		String email = passwordReqDto.getEmail();
+
+		User user = userRepository.findByEmailAndProvider(email, PROVIDER_NONE)
+			.orElseThrow(() -> new CustomException(USERS_EMPTY_USER_EMAIL));
+		user.encodePassword(passwordEncoder, passwordReqDto.getNewPassword());
 	}
 
 	@Transactional(readOnly = true)

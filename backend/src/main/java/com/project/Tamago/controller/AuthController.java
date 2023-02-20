@@ -9,6 +9,7 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -20,6 +21,7 @@ import com.project.Tamago.dto.CustomResponse;
 import com.project.Tamago.dto.SuccessMessage;
 import com.project.Tamago.dto.requestDto.JoinReqDto;
 import com.project.Tamago.dto.requestDto.LoginReqDto;
+import com.project.Tamago.dto.requestDto.PasswordReqDto;
 import com.project.Tamago.exception.InvalidParameterException;
 import com.project.Tamago.service.AuthService;
 import com.project.Tamago.util.security.Token;
@@ -80,6 +82,12 @@ public class AuthController {
 	@GetMapping("/email/existence")
 	public SuccessMessage checkEmailExistence(@RequestParam(required = true) String email) {
 		authService.checkEmailExistence(email);
+		return new SuccessMessage();
+	}
+
+	@PatchMapping("/password")
+	public SuccessMessage modifyPassword(@RequestBody PasswordReqDto passwordReqDto) {
+		authService.modifyPassword(passwordReqDto);
 		return new SuccessMessage();
 	}
 }
