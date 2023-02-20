@@ -2,6 +2,8 @@ import { Box, Button, Flex, Image, Text, useDisclosure } from '@chakra-ui/react'
 import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 
+import { emailDuplicateAPI, signupAPI } from '@/apis/auth';
+import { EmailDuplicateError, NicknameDuplicateError, ServerError } from '@/apis/error';
 import Alert from '@/components/common/Alert';
 import FormOr from '@/components/common/FormOr';
 import RegexInput from '@/components/common/RegexInput';
@@ -42,12 +44,22 @@ export default function SignupForm() {
   const { name, email, password, verifyPassword } = inputs;
   const { name: isNameValid, email: isEmailValid, password: isPasswordValid } = valids;
 
-  const handleEmailButton = () => {
-    setIsEmailDuplicated(!isEmailDuplicated);
-    onOpen();
+  const handleEmailDuplicate = async () => {
+    try {
+      await emailDuplicateAPI(email);
+      setIsEmailDuplicated(true);
+      onOpen();
+    } catch (error) {
+      if (error instanceof EmailDuplicateError) {
+        setIsEmailDuplicated(false);
+        onOpen();
+      } else {
+        alert('알 수 없는 오류가 발생했습니다.');
+      }
+    }
   };
 
-  const handleSubmit = () => {
+  const handleSignup = async () => {
     if (!isNameValid) {
       inputRef.current['name']?.focus();
     } else if (!isEmailValid) {
@@ -56,10 +68,23 @@ export default function SignupForm() {
       inputRef.current['password']?.focus();
     } else if (password !== verifyPassword) {
       inputRef.current['verifyPassword']?.focus();
-    } else if (isEmailDuplicated) {
-      onOpen();
+      // } else if (isEmailDuplicated) {
+      //   alert('이메일 중복 확인을 해주세요');
     } else {
-      router.push(SIGNUP_COMPLETE_PATH);
+      try {
+        await signupAPI(email, name, password);
+        router.push(SIGNUP_COMPLETE_PATH);
+      } catch (error) {
+        if (error instanceof EmailDuplicateError) {
+          alert(error.message);
+        } else if (error instanceof NicknameDuplicateError) {
+          alert(error.message);
+        } else if (error instanceof ServerError) {
+          alert(error.message);
+        } else {
+          alert('알 수 없는 오류가 발생했습니다.');
+        }
+      }
     }
   };
 
@@ -89,7 +114,7 @@ export default function SignupForm() {
             value={email}
             isValid={isEmailValid}
             onChange={handleInputChange}
-            onClick={handleEmailButton}
+            onClick={handleEmailDuplicate}
             buttonText='중복 확인'
             ref={(el) => (inputRef.current['email'] = el)}
           />
@@ -121,7 +146,7 @@ export default function SignupForm() {
             ref={(el) => (inputRef.current['verifyPassword'] = el)}
           />
         </Box>
-        <Button size='lg' onClick={handleSubmit}>
+        <Button size='lg' onClick={handleSignup}>
           회원가입 하기
         </Button>
         <Box m='41px 0px'>
