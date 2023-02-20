@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.Tamago.domain.User;
-import com.project.Tamago.dto.JoinReqDto;
-import com.project.Tamago.dto.LoginReqDto;
+import com.project.Tamago.dto.requestDto.JoinReqDto;
+import com.project.Tamago.dto.requestDto.LoginReqDto;
 import com.project.Tamago.dto.TokenDto;
 import com.project.Tamago.exception.CustomException;
 import com.project.Tamago.jwt.JwtTokenProvider;

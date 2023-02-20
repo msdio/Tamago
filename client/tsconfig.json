@@ -16,7 +16,7 @@
     "forceConsistentCasingInFileNames": true,
     "lib": ["dom", "dom.iterable", "esnext"],
     "typeRoots": [],
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"]
     }

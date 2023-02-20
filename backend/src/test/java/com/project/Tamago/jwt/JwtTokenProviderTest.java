@@ -8,7 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.Tamago.dto.LoginReqDto;
+import com.project.Tamago.dto.requestDto.LoginReqDto;
 
 @SpringBootTest
 @Transactional

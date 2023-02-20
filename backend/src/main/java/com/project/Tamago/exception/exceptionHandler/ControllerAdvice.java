@@ -1,19 +1,20 @@
 package com.project.Tamago.exception.exceptionHandler;
 
+import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
+
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import lombok.extern.slf4j.Slf4j;
-
-import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
-
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.project.Tamago.exception.CustomException;
 import com.project.Tamago.exception.InvalidParameterException;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestControllerAdvice
@@ -40,6 +41,13 @@ public class ControllerAdvice {
 		ErrorCode errorCode = exception.getErrorCode();
 		log.error(errorCode.getDescription());
 		return new ErrorMessage(errorCode);
+	}
+
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ErrorMessage customExceptionHandler(MethodArgumentNotValidException exception) {
+		log.error(INVALID_PARAMETER.getDescription());
+		return new ErrorMessage(INVALID_PARAMETER);
 	}
 
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
