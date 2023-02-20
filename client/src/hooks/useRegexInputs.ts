@@ -17,11 +17,7 @@ const useRegexInputs = (initialState: Record<string, RegExp>) => {
     setValids({ ...valids, [name]: isValid });
   };
 
-  return [inputs, valids, handleChange] as [
-    Record<string, string>,
-    Record<string, boolean>,
-    (e: ChangeEvent<HTMLInputElement>) => void,
-  ];
+  return [inputs, valids, handleChange] as [Record<string, string>, Record<string, boolean>, () => void];
 };
 
 export default useRegexInputs;

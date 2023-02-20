@@ -1,6 +1,5 @@
 import { Box, Button, Checkbox, Flex, Text } from '@chakra-ui/react';
-import type { ChangeEvent } from 'react';
-import { useState } from 'react';
+import Link from 'next/link';
 
 import FormOr from '@/components/common/FormOr';
 import RegexInput from '@/components/common/RegexInput';
