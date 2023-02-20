@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.Tamago.dto.CustomResponse;
 import com.project.Tamago.dto.SuccessMessage;
 import com.project.Tamago.dto.requestDto.ModifyProfileReqDto;
 import com.project.Tamago.dto.responseDto.ProfileResDto;
@@ -25,8 +26,8 @@ public class UserController {
 	private final UserService userService;
 
 	@GetMapping("/profile")
-	public ProfileResDto findProfile(@RequestHeader("Authorization") String jwtToken) {
-		return userService.findProfileByJwtToken(jwtToken);
+	public CustomResponse<ProfileResDto> findProfile(@RequestHeader("Authorization") String jwtToken) {
+		return new CustomResponse<>(userService.findProfileByJwtToken(jwtToken));
 	}
 
 	@PatchMapping("/profile")
