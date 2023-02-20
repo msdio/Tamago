@@ -25,6 +25,7 @@ public class UserService {
 	private final UserRepository userRepository;
 	private final JwtTokenProvider jwtTokenProvider;
 
+	@Transactional(readOnly = true)
 	public ProfileResDto findProfileByJwtToken(String jwtToken) {
 		return UserMapper.convertProfileResDto(getUserByJwtToken(jwtToken));
 	}
@@ -34,8 +35,7 @@ public class UserService {
 	}
 
 	private User getUserByJwtToken(String jwtToken) {
-		User user = userRepository.findByNickname(jwtTokenProvider.getAuthentication(jwtToken).getName())
+		return userRepository.findByNickname(jwtTokenProvider.getAuthentication(jwtToken).getName())
 			.orElseThrow(() -> new CustomException(USERS_INFO_NOT_EXISTS));
-		return user;
 	}
 }
