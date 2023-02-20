@@ -78,33 +78,12 @@ public class JwtTokenProvider {
 		return createBuilder(KeyType.REFRESH, authentication);
 	}
 
-	public Authentication getAuthentication(String token) {
-		Claims claims = Jwts.parserBuilder()
-			.setSigningKey(publicKeys.get(KeyType.ACCESS))
-			.build()
-			.parseClaimsJws(token)
-			.getBody();
-
-		Collection<? extends GrantedAuthority> authorities =
-			Arrays.stream(claims.get(AUTHORITIES_KEY, String.class).split(","))
-				.map(SimpleGrantedAuthority::new)
-				.collect(Collectors.toList());
-
-		return new UsernamePasswordAuthenticationToken(claims.getSubject(), token, authorities);
+	public Authentication getAuthenticationFromAcs(String token) {
+		return getAuthentication(KeyType.ACCESS, token);
 	}
 
 	public Authentication getAuthenticationFromRef(String token) {
-		Claims claims = Jwts.parserBuilder()
-			.setSigningKey(publicKeys.get(KeyType.REFRESH))
-			.build()
-			.parseClaimsJws(token)
-			.getBody();
-
-		Collection<? extends GrantedAuthority> authorities =
-			Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
-				.map(SimpleGrantedAuthority::new)
-				.collect(Collectors.toList());
-		return new UsernamePasswordAuthenticationToken(claims.getSubject(), "", authorities);
+		return getAuthentication(KeyType.REFRESH, token);
 	}
 
 	public Long getExpiration(String accessToken) {
@@ -119,18 +98,6 @@ public class JwtTokenProvider {
 		return (expiration.getTime() - now.getTime());
 	}
 
-	public void validateAccessToken(String accessToken) throws IllegalArgumentException {
-		validateToken(KeyType.ACCESS, accessToken);
-	}
-
-	public void validateRefreshToken(String refreshToken) throws IllegalArgumentException {
-		validateToken(KeyType.REFRESH, refreshToken);
-	}
-
-	public String resolveToken(HttpServletRequest request) {
-		return request.getHeader(AUTHORIZATION_HEADER);
-	}
-
 	public void checkAccessTokenExpiration(String accessToken) {
 		try {
 			Jwts
@@ -142,6 +109,18 @@ public class JwtTokenProvider {
 		} catch (Exception e) {
 			throw new CustomException(NOT_POSSIBLE_REISSUE);
 		}
+	}
+
+	public void validateAccessToken(String accessToken) throws IllegalArgumentException {
+		validateToken(KeyType.ACCESS, accessToken);
+	}
+
+	public void validateRefreshToken(String refreshToken) throws IllegalArgumentException {
+		validateToken(KeyType.REFRESH, refreshToken);
+	}
+
+	public String resolveToken(HttpServletRequest request) {
+		return request.getHeader(AUTHORIZATION_HEADER);
 	}
 
 	private KeyPair generateRSAKeyPair() {
@@ -183,5 +162,22 @@ public class JwtTokenProvider {
 		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException();
 		}
+	}
+
+	private Authentication getAuthentication(KeyType type, String token) {
+		Claims claims = Jwts.parserBuilder()
+			.setSigningKey(publicKeys.get(type))
+			.build()
+			.parseClaimsJws(token)
+			.getBody();
+
+		Collection<? extends GrantedAuthority> authorities = authoritiesFromClaims(claims);
+		return new UsernamePasswordAuthenticationToken(claims.getSubject(), token, authorities);
+	}
+
+	private Collection<? extends GrantedAuthority> authoritiesFromClaims(Claims claims) {
+		return Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+			.map(SimpleGrantedAuthority::new)
+			.collect(Collectors.toList());
 	}
 }

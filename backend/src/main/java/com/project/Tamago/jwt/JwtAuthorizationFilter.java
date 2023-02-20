@@ -41,7 +41,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 			String isLogout = (String)redisTemplate.opsForValue().get(token);
 			if (ObjectUtils.isEmpty(isLogout)) {
 
-				Authentication authentication = jwtTokenProvider.getAuthentication(token);
+				Authentication authentication = jwtTokenProvider.getAuthenticationFromAcs(token);
 				String nickname = authentication.getName();
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 
