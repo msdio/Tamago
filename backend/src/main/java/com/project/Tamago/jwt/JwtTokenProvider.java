@@ -1,6 +1,7 @@
 package com.project.Tamago.jwt;
 
 import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
+import static com.project.Tamago.util.constants.Constant.*;
 
 import java.security.Key;
 import java.security.KeyPair;
@@ -42,9 +43,6 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @RequiredArgsConstructor
 public class JwtTokenProvider {
-
-	private static final String AUTHORITIES_KEY = "auth";
-	public static final String AUTHORIZATION_HEADER = "Authorization";
 	private final Map<KeyType, Key> privateKeys = new EnumMap<>(KeyType.class);
 	private final Map<KeyType, Key> publicKeys = new EnumMap<>(KeyType.class);
 	private final Map<KeyType, Long> expireTimes = new EnumMap<>(KeyType.class);

@@ -1,5 +1,7 @@
 package com.project.Tamago.controller;
 
+import static com.project.Tamago.util.constants.Constant.*;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -49,7 +51,7 @@ public class AuthController {
 	public String loginAuto(@RequestBody LoginReqDto loginReqDto, HttpServletResponse response) {
 		TokenDto tokenDto = authService.loginAuto(loginReqDto);
 
-		ResponseCookie cookie = ResponseCookie.from("refreshToken", tokenDto.getRefreshToken())
+		ResponseCookie cookie = ResponseCookie.from(REFRESH_TOKEN, tokenDto.getRefreshToken())
 			.maxAge(refreshTokenExpireTime)
 			.httpOnly(true)
 			.path("/")

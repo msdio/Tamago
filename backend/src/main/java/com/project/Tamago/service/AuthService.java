@@ -55,7 +55,7 @@ public class AuthService {
 		Authentication authentication = attemptAuthentication(loginReqDto);
 		TokenDto tokenDto = jwtTokenProvider.createToken(authentication);
 		redisTemplate.opsForValue()
-			.set("refreshToken:" + authentication.getName(), tokenDto.getRefreshToken(),
+			.set(REFRESH_TOKEN + COLON + authentication.getName(), tokenDto.getRefreshToken(),
 				refreshTokenExpireTime, TimeUnit.MILLISECONDS);
 		return tokenDto;
 	}
