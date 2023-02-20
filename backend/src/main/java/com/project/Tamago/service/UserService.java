@@ -2,7 +2,6 @@ package com.project.Tamago.service;
 
 import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,8 +34,7 @@ public class UserService {
 	}
 
 	private User getUserByJwtToken(String jwtToken) {
-		Authentication authentication = jwtTokenProvider.getAuthentication(jwtToken);
-		User user = userRepository.findByNickname(authentication.getName())
+		User user = userRepository.findByNickname(jwtTokenProvider.getAuthentication(jwtToken).getName())
 			.orElseThrow(() -> new CustomException(USERS_INFO_NOT_EXISTS));
 		return user;
 	}
