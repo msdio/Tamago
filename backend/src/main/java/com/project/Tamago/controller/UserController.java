@@ -1,5 +1,6 @@
 package com.project.Tamago.controller;
 
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +29,7 @@ public class UserController {
 
 	@PatchMapping("/profile")
 	public SuccessMessage modifyProfile(@RequestHeader("Authorization") String jwtToken,
-		@RequestBody ModifyProfileReqDto modifyProfileReqDto) {
+		@Validated @RequestBody ModifyProfileReqDto modifyProfileReqDto) {
 		userService.modifyUserByJwtToken(jwtToken, modifyProfileReqDto);
 		return new SuccessMessage();
 	}

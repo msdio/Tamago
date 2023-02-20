@@ -15,7 +15,9 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.Tamago.domain.User;
+import com.project.Tamago.dto.requestDto.ModifyProfileReqDto;
 import com.project.Tamago.dto.responseDto.ProfileResDto;
 import com.project.Tamago.service.UserService;
 
@@ -49,6 +51,23 @@ public class UserControllerTest {
 		);
 		// then
 		resultActions.andExpect(status().isOk());
+	}
+
+	@Test
+	@DisplayName("유저 정보 변경 실패 : introduce 길이 20 초과")
+	@WithMockUser(username = "user", authorities = {"ROLE_USER"})
+	public void modifyProfileWithIntroduceLength() throws Exception {
+		// given
+		ModifyProfileReqDto modifyProfileReqDto = new ModifyProfileReqDto(".............................................................",
+			"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT55B_AMMO9_gDppDBojupeVFHeQIg4zXSRDJ5COw4h&s");
+		// when
+		ResultActions resultActions = mockMvc.perform(patch("/user/profile")
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(new ObjectMapper().writeValueAsString(modifyProfileReqDto))
+			.header("Authorization", "test")
+		);
+		// then
+		resultActions.andExpect(status().is4xxClientError());
 	}
 
 }
