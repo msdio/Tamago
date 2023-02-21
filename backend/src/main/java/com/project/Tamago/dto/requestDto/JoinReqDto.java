@@ -1,4 +1,4 @@
-package com.project.Tamago.dto;
+package com.project.Tamago.dto.requestDto;
 
 import javax.validation.constraints.Size;
 

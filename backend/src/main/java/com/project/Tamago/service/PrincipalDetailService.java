@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.Tamago.domain.PrincipalDetails;
+import com.project.Tamago.util.security.PrincipalDetails;
 import com.project.Tamago.domain.User;
 import com.project.Tamago.exception.CustomException;
 import com.project.Tamago.repository.UserRepository;

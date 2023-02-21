@@ -12,6 +12,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.project.Tamago.dto.requestDto.ModifyProfileReqDto;
 import com.project.Tamago.util.constants.Role;
 import com.project.Tamago.util.converter.RoleConverter;
 
@@ -63,5 +64,10 @@ public class User extends BaseTimeEntity {
 
 	public void encodePassword(PasswordEncoder passwordEncoder, String password) {
 		this.password = passwordEncoder.encode(password);
+	}
+
+	public void modifyUserInfo(ModifyProfileReqDto modifyProfileReqDto) {
+		this.profileImg = modifyProfileReqDto.getProfileImg();
+		this.introduce = modifyProfileReqDto.getIntroduce();
 	}
 }

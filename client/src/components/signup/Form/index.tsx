@@ -13,13 +13,6 @@ import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
 
 import EmailInput from './EmailInput';
 
-interface InputRef {
-  name: HTMLInputElement | null;
-  email: HTMLInputElement | null;
-  password: HTMLInputElement | null;
-  verifyPassword: HTMLInputElement | null;
-}
-
 export default function SignupForm() {
   const router = useRouter();
 
@@ -34,19 +27,32 @@ export default function SignupForm() {
     verifyPassword: /./,
   });
 
-  const inputRef = useRef<InputRef>({
+  /**
+   * 회원가입시 유효하지 않은 input으로 포커싱
+   */
+  const inputRef = useRef<Record<string, HTMLInputElement | null>>({
     name: null,
     email: null,
     password: null,
     verifyPassword: null,
   });
 
-  const { name, email, password, verifyPassword } = inputs;
-  const { name: isNameValid, email: isEmailValid, password: isPasswordValid } = valids;
+  /**
+   * 각 input의 값과 유효성을 모두 가지고 있는 객체
+   */
+  const inputInfo = Object.keys(inputs).reduce((prev, curr) => {
+    prev[curr] = {
+      value: inputs[curr],
+      isValid: curr === 'verifyPassword' ? inputs['password'] === inputs['verifyPassword'] : valids[curr],
+    };
+    return prev;
+  }, {} as Record<string, { value: string; isValid: boolean }>);
+
+  const { name, email, password, verifyPassword } = inputInfo;
 
   const handleEmailDuplicate = async () => {
     try {
-      await emailDuplicateAPI(email);
+      await emailDuplicateAPI(email.value);
       setIsEmailDuplicated(true);
       onOpen();
     } catch (error) {
@@ -60,19 +66,15 @@ export default function SignupForm() {
   };
 
   const handleSignup = async () => {
-    if (!isNameValid) {
-      inputRef.current['name']?.focus();
-    } else if (!isEmailValid) {
-      inputRef.current['email']?.focus();
-    } else if (!isPasswordValid) {
-      inputRef.current['password']?.focus();
-    } else if (password !== verifyPassword) {
-      inputRef.current['verifyPassword']?.focus();
-      // } else if (isEmailDuplicated) {
-      //   alert('이메일 중복 확인을 해주세요');
+    const notValidInput = Object.entries(inputInfo).find(([, { isValid }]) => !isValid);
+    if (notValidInput) {
+      const [input] = notValidInput;
+      inputRef.current[input]?.focus();
+    } else if (isEmailDuplicated) {
+      onOpen();
     } else {
       try {
-        await signupAPI(email, name, password);
+        await signupAPI(email.value, name.value, password.value);
         router.push(SIGNUP_COMPLETE_PATH);
       } catch (error) {
         if (error instanceof EmailDuplicateError) {
@@ -97,8 +99,8 @@ export default function SignupForm() {
             size='lg'
             name='name'
             placeholder='이름을 입력해 주세요.'
-            value={name}
-            isValid={isNameValid}
+            value={name.value}
+            isValid={name.isValid}
             onChange={handleInputChange}
             ref={(el) => (inputRef.current['name'] = el)}
           />
@@ -111,8 +113,8 @@ export default function SignupForm() {
             type='email'
             placeholder='이메일을 입력해 주세요.'
             errorMessage='이메일 형식을 확인해 주세요.'
-            value={email}
-            isValid={isEmailValid}
+            value={email.value}
+            isValid={email.isValid}
             onChange={handleInputChange}
             onClick={handleEmailDuplicate}
             buttonText='중복 확인'
@@ -127,8 +129,8 @@ export default function SignupForm() {
             type='password'
             placeholder='8-12자 영문 + 숫자를 포함하여 입력해 주세요.'
             errorMessage='8-12자 영문 + 숫자를 포함하여 입력해 주세요.'
-            value={password}
-            isValid={isPasswordValid}
+            value={password.value}
+            isValid={password.isValid}
             onChange={handleInputChange}
             ref={(el) => (inputRef.current['password'] = el)}
           />
@@ -140,8 +142,8 @@ export default function SignupForm() {
             type='password'
             placeholder='비밀번호를 한 번 더 입력해 주세요.'
             errorMessage='비밀번호가 일치하지 않습니다.'
-            value={verifyPassword}
-            isValid={password === verifyPassword}
+            value={verifyPassword.value}
+            isValid={verifyPassword.isValid}
             onChange={handleInputChange}
             ref={(el) => (inputRef.current['verifyPassword'] = el)}
           />

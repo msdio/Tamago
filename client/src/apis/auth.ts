@@ -18,12 +18,6 @@ interface EmailDuplicateResponse {
   description?: string;
 }
 
-export const loginAPI = async (email: string, password: string) => {
-  try {
-    const response = request.post(LOGIN_PATH, {});
-  } catch (error) {}
-};
-
 export const signupAPI = async (email: string, nickname: string, password: string) => {
   try {
     await request.post(SIGNUP_PATH, { email, nickname, password });

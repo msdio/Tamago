@@ -47,6 +47,10 @@ public class SecurityConfig {
 			.authenticationEntryPoint(new CustomAuthenticationEntryPointHandler())
 			.accessDeniedHandler(new CustomAccessDeniedHandler());
 		http
+			.headers()
+			.frameOptions()
+			.sameOrigin();
+		http
 			.authorizeRequests()
 			// swagger
 			.antMatchers("/auth/**").permitAll()
@@ -57,6 +61,7 @@ public class SecurityConfig {
 			.antMatchers("/swagger-resources/**").permitAll()
 			.antMatchers("/v2/api-docs").permitAll()
 			.antMatchers("/health").permitAll()
+			.antMatchers("/h2-console/**").permitAll()
 			.and()
 			.authorizeRequests()
 			.anyRequest().authenticated();
