@@ -1,6 +1,6 @@
 import type { AxiosError } from 'axios';
 
-import { axiosInstance } from '.';
+import request from '@/apis';
 
 interface SignupData {
   name: string;
@@ -14,7 +14,7 @@ interface SignupResponse {
 
 export const postSignup = async ({ name, email, password }: SignupData) => {
   try {
-    const response: SignupResponse = await axiosInstance.post('/auth/join', {
+    const response: SignupResponse = await request.post('/auth/join', {
       name,
       email,
       password,

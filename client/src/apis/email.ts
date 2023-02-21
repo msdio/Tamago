@@ -1,10 +1,10 @@
 import type { AxiosError } from 'axios';
 
-import { axiosInstance } from '.';
+import request from '@/apis';
 
 export const getEmailDuplication = async (email: string) => {
   try {
-    const response = await axiosInstance.get('/auth/email', {
+    const response = await request.get('/auth/email', {
       params: { email },
     });
     return response.data;
@@ -18,7 +18,7 @@ export const getEmailDuplication = async (email: string) => {
 
 export const getEmailCertification = async (email: string) => {
   try {
-    const response = await axiosInstance.get('/auth/email/certification', {
+    const response = await request.get('/auth/email/certification', {
       params: { email },
     });
     return response.data;
