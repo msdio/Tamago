@@ -10,5 +10,5 @@
 - http://localhost:8080/h2-console 에 들어가 실제 요청에 대해 데이터베이스에 반영이 되었는지 H2 Database 상태를 확인해볼 수 있습니다.
 
 # H2 데이터 베이스를 사용하는 경우 유의사항
-- JDBC URL을 jdbc:h2:~/test가 아닌 **jdbc:h2:~/test2** 로 바꿔야합니다.
+- JDBC URL을 ``` jdbc:h2:~/test ``` 가 아닌 ``` jdbc:h2:~/test2 ```로 바꿔야합니다.
 - 그렇지 않으면, Database "/root/test" not found 오류가 발생
