@@ -1,3 +1,4 @@
+export const MAIN_PATH = '/';
 export const INQUIRY_PW_PATH = '/password';
 
 export const SIGNUP_TERM_PATH = '/signup/terms';
