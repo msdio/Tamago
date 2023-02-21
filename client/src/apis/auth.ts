@@ -2,7 +2,7 @@ import { AxiosError } from 'axios';
 
 import request from '@/apis';
 
-// const LOGIN_PATH = '/auth/login';
+const LOGIN_PATH = '/auth/login';
 // const SIGNUP_PATH = '/auth/join';
 const EMAIL_DUPLICATE_PATH = '/auth/email';
 
@@ -30,7 +30,6 @@ export const loginAPI = async (email: string, password: string): Promise<LoginAP
     return await Promise.reject(error);
   }
 };
-
 
 // export const signupAPI = async (email: string, nickname: string, password: string) => {
 //   const response = await request.post(SIGNUP_PATH, {});
