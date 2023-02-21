@@ -1,6 +1,6 @@
 import { Button, Flex, Img, Text } from '@chakra-ui/react';
 
-export default function SignupSuccess() {
+export default function SignupComplete() {
   return (
     <Flex direction='column' alignItems='center'>
       <Img w='54px' h='54px' mb='21px' src='/images/signup-ok.png' />

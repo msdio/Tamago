@@ -106,7 +106,7 @@ export default function InquiryPw({ handleNextStep }: InquiryPwProps) {
       )}
 
       <Alert isOpen={isOpen} onClose={onClose}>
-        <Box lineHeight='160%'>
+        <Box textAlign='center' mt='13px' mb='34px'>
           <Text fontWeight='700'>asdf123@naver.com 으로</Text>
           <Text fontWeight='700'>인증메일이 발송되었습니다.</Text>
           <Text mt='6px'>메일이 오지 않는다면 스팸함을 확인해 주세요.</Text>

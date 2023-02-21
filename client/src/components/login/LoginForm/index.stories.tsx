@@ -9,7 +9,7 @@ export default {
   component: LoginForm,
 } as ComponentMeta<typeof LoginForm>;
 
-const Template: ComponentStory<typeof LoginForm> = (args) => {
+const Template: ComponentStory<typeof LoginForm> = () => {
   return (
     <ChakraProvider theme={theme}>
       <LoginForm />
