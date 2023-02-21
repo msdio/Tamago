@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 export function Header() {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin] = useState(false);
   const router = useRouter();
 
   const handleLoginClick = () => {

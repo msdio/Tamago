@@ -9,8 +9,8 @@ function Login() {
   const router = useRouter();
   const handleLogin = async (email: string, password: string) => {
     try {
-      const { accessToken, refreshToken } = await loginAPI(email, password);
       // TODO: accessToken 처리 이야기 후, 수정
+      await loginAPI(email, password);
       router.push(MAIN_PATH);
     } catch (error) {
       // TODO : error handling 방식 논의후 정리

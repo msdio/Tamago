@@ -15,7 +15,7 @@ export const loginAPI = async (email: string, password: string): Promise<LoginAP
   try {
     const response = await request.post(LOGIN_PATH, { email, password });
 
-    const { data, status } = response;
+    const { data } = response;
     const { accessToken, refreshToken }: LoginAPIReturnType = data;
     // TODO: accessToken 처리 이야기 후, 수정
 

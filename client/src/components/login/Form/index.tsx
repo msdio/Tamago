@@ -15,6 +15,7 @@ type InputType = {
 type InputValidType = { email: boolean; password: boolean };
 
 interface LoginFormProps {
+  // eslint-disable-next-line no-unused-vars
   onLogin: (email: string, password: string) => Promise<void>;
 }
 
