@@ -1,13 +1,9 @@
-import { Button, Flex, Heading, HStack, Text } from '@chakra-ui/react';
+import { Button, Flex, HStack, Text } from '@chakra-ui/react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-import { LOGIN_PATH, SIGNUP_TERM_PATH } from '@/utils/paths';
-
-import { useRouter } from 'next/router';
-
 import { TamagoLogo } from '@/icons/TamagoLogo';
-
 
 export function Header() {
   const [isLogin, setIsLogin] = useState(false);
