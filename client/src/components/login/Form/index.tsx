@@ -7,7 +7,7 @@ import useRegexInputs from '@/hooks/useRegexInputs';
 import { INQUIRY_PW_PATH } from '@/utils/paths';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
 
-type InputType = {
+export type InputType = {
   email: string;
   password: string;
 };
