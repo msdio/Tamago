@@ -1,5 +1,6 @@
 import { Button, Flex, FormLabel, Input, Text } from '@chakra-ui/react';
-import type { ChangeEventHandler, MouseEventHandler } from 'react';
+import type { ChangeEventHandler, ForwardedRef, MouseEventHandler } from 'react';
+import { forwardRef } from 'react';
 
 interface EmailButtonProps {
   value: string;
@@ -15,19 +16,22 @@ interface EmailButtonProps {
   buttonText?: string;
 }
 
-export default function EmailButton({
-  value,
-  name,
-  size,
-  isValid = true,
-  label,
-  errorMessage,
-  type,
-  onChange,
-  onClick,
-  placeholder,
-  buttonText,
-}: EmailButtonProps) {
+function EmailButton(
+  {
+    value,
+    name,
+    size,
+    isValid = true,
+    label,
+    errorMessage,
+    type,
+    onChange,
+    onClick,
+    placeholder,
+    buttonText,
+  }: EmailButtonProps,
+  ref?: ForwardedRef<HTMLInputElement>,
+) {
   return (
     <Flex direction='column' gap='8px'>
       <FormLabel fontSize='15px' fontWeight='700'>
@@ -42,6 +46,7 @@ export default function EmailButton({
             placeholder={placeholder}
             defaultValue={value}
             onChange={onChange}
+            ref={ref}
           />
           {errorMessage && value !== '' && !isValid ? (
             <Text fontSize='15px' color='#FF0000' mt='20px'>
@@ -61,3 +66,7 @@ export default function EmailButton({
     </Flex>
   );
 }
+
+const ForwardRefEmailButton = forwardRef<HTMLInputElement, EmailButtonProps>(EmailButton);
+
+export default ForwardRefEmailButton;

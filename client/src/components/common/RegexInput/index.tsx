@@ -1,5 +1,6 @@
 import { Flex, FormLabel, Input, Text } from '@chakra-ui/react';
-import type { ChangeEventHandler } from 'react';
+import type { ChangeEventHandler, ForwardedRef } from 'react';
+import { forwardRef } from 'react';
 
 interface RegexInputProps {
   value: string;
@@ -14,17 +15,10 @@ interface RegexInputProps {
   errorMessage?: string;
 }
 
-export default function RegexInput({
-  value,
-  name,
-  size,
-  isValid = true,
-  errorMessage,
-  label,
-  type,
-  onChange,
-  placeholder,
-}: RegexInputProps) {
+function RegexInput(
+  { value, name, size, isValid = true, errorMessage, label, type, onChange, placeholder }: RegexInputProps,
+  ref?: ForwardedRef<HTMLInputElement>,
+) {
   return (
     <Flex direction='column' gap='8px'>
       {label && (
@@ -33,7 +27,15 @@ export default function RegexInput({
         </FormLabel>
       )}
       <Flex direction='column'>
-        <Input name={name} type={type} size={size} placeholder={placeholder} defaultValue={value} onChange={onChange} />
+        <Input
+          name={name}
+          type={type}
+          size={size}
+          placeholder={placeholder}
+          defaultValue={value}
+          onChange={onChange}
+          ref={ref}
+        />
         {errorMessage && value !== '' && !isValid ? (
           <Text color='#FF0000' mt='17'>
             {errorMessage}
@@ -43,3 +45,7 @@ export default function RegexInput({
     </Flex>
   );
 }
+
+const ForwardRefRegexInput = forwardRef<HTMLInputElement, RegexInputProps>(RegexInput);
+
+export default ForwardRefRegexInput;

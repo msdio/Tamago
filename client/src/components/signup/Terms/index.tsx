@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import { CustomCheckbox } from '@/components/common/Checkbox';
 import { RightArrow } from '@/icons/RightArrow';
+import { SIGNUP_FORM_PATH } from '@/utils/paths';
 
 import IconCheckbox from './IconCheckbox';
 
@@ -34,7 +35,7 @@ export default function SignupTerms() {
   // };
 
   const handleSubmit = () => {
-    router.push({ pathname: '/signup/form', query: { termsMarketing: true } }, '/signup/form');
+    router.push({ pathname: SIGNUP_FORM_PATH, query: { termsMarketing: true } });
     setCheckedTerms({ age: false, service: false, privacy: false, marketing: false }); //빌드용 임시코드
   };
 
