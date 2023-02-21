@@ -1,5 +1,5 @@
 import { Flex } from '@chakra-ui/react';
-import type { ChangeEvent, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 import { CustomCheckbox } from '@/components/common/Checkbox';
 
@@ -7,7 +7,7 @@ interface IconCheckboxProps {
   labelText: string;
   icon: ReactNode;
   isChecked?: boolean;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: () => void;
   name?: string;
 }
 

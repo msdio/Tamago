@@ -31,27 +31,4 @@ class TamagoApplicationTests {
 			.andDo(print());
 	}
 
-
-	// @Test
-	// void testTestMvc2() throws Exception {
-	// 	mockMvc.perform(MockMvcRequestBuilders.get("/test?str=user")
-	// 			.contentType(MediaType.APPLICATION_JSON)
-	// 		)
-	// 		.andExpect(status().is4xxClientError())
-	// 		.andExpect(jsonPath("$.status", notNullValue()))
-	// 		.andExpect(jsonPath("$.description", notNullValue()))
-	// 		.andDo(print());
-	// }
-	//
-	// @Test
-	// void testTestMvc3() throws Exception {
-	// 	mockMvc.perform(MockMvcRequestBuilders.get("/test?str=error")
-	// 			.contentType(MediaType.APPLICATION_JSON)
-	// 		)
-	// 		.andExpect(status().is5xxServerError())
-	// 		.andExpect(jsonPath("$.status", notNullValue()))
-	// 		.andExpect(jsonPath("$.description", notNullValue()))
-	// 		.andDo(print());
-	// }
-
 }

@@ -1,4 +1,4 @@
-package com.project.Tamago.domain;
+package com.project.Tamago.util.security;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.Tamago.domain.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

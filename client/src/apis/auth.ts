@@ -2,8 +2,8 @@ import { AxiosError } from 'axios';
 
 import request from '@/apis';
 
-const LOGIN_PATH = '/auth/login';
-const SIGNUP_PATH = '/auth/join';
+// const LOGIN_PATH = '/auth/login';
+// const SIGNUP_PATH = '/auth/join';
 const EMAIL_DUPLICATE_PATH = '/auth/email';
 
 interface LoginAPIReturnType {
@@ -31,9 +31,10 @@ export const loginAPI = async (email: string, password: string): Promise<LoginAP
   }
 };
 
-export const signupAPI = async (email: string, nickname: string, password: string) => {
-  const response = await request.post(SIGNUP_PATH, {});
-};
+
+// export const signupAPI = async (email: string, nickname: string, password: string) => {
+//   const response = await request.post(SIGNUP_PATH, {});
+// };
 
 export const emailDuplicateAPI = async (email: string) => {
   return await request.get(EMAIL_DUPLICATE_PATH, { params: { email } });

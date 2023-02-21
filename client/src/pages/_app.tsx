@@ -9,10 +9,12 @@ import { Header } from '../components/header';
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
-      <Header />
-      <Component {...pageProps} />
-      <Spacer />
-      <Footer />
+      <div style={{ position: 'relative' }}>
+        <Header />
+        <Component {...pageProps} />
+        <Spacer />
+        <Footer />
+      </div>
     </ChakraProvider>
   );
 }
