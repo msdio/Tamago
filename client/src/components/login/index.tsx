@@ -2,14 +2,14 @@ import { useRouter } from 'next/router';
 
 import { loginAPI } from '@/apis/auth';
 import AuthLayout from '@/components/common/AuthLayout';
+import type { InputType } from '@/components/login/Form';
 import LoginForm from '@/components/login/Form';
 import { MAIN_PATH } from '@/utils/paths';
 
 function Login() {
   const router = useRouter();
-  const handleLogin = async (email: string, password: string) => {
+  const handleLogin = async ({ email, password }: InputType) => {
     try {
-      // TODO: accessToken 처리 이야기 후, 수정
       await loginAPI(email, password);
       router.push(MAIN_PATH);
     } catch (error) {

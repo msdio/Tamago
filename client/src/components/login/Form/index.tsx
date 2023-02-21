@@ -15,8 +15,7 @@ type InputType = {
 type InputValidType = { email: boolean; password: boolean };
 
 interface LoginFormProps {
-  // eslint-disable-next-line no-unused-vars
-  onLogin: (email: string, password: string) => Promise<void>;
+  onLogin: ({}: InputType) => Promise<void>;
 }
 
 function LoginForm({ onLogin }: LoginFormProps) {
@@ -31,7 +30,7 @@ function LoginForm({ onLogin }: LoginFormProps) {
   const isLoginDisabled = !(isEmailValid && isPasswordValid);
 
   const onSubmit = () => {
-    onLogin(email, password);
+    onLogin({ email, password });
   };
 
   return (
