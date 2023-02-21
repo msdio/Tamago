@@ -11,15 +11,17 @@ interface LoginAPIReturnType {
   refreshToken: string;
 }
 
-export const loginAPI = async (email: string, password: string): Promise<LoginAPIReturnType> => {
+export const loginAPI = async (email: string, password: string): Promise<number> => {
   try {
     const response = await request.post(LOGIN_PATH, { email, password });
 
-    const { data } = response;
+    const { data, status } = response;
     const { accessToken, refreshToken }: LoginAPIReturnType = data;
-    // TODO: accessToken 처리 이야기 후, 수정
 
-    return { accessToken, refreshToken };
+    window.localStorage.setItem('accessToken', accessToken);
+    window.localStorage.setItem('refreshToken', refreshToken);
+
+    return status;
   } catch (error) {
     if (error instanceof AxiosError) {
       const { code } = error.response?.data;
