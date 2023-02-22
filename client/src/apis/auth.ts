@@ -13,6 +13,11 @@ interface LoginAPIReturnType {
   refreshToken: string;
 }
 
+interface EmailDuplicateResponse {
+  code: number;
+  description?: string;
+}
+
 export const loginAPI = async (email: string, password: string): Promise<number> => {
   try {
     const response = await request.post(LOGIN_PATH, { email, password });
@@ -34,11 +39,6 @@ export const loginAPI = async (email: string, password: string): Promise<number>
     return await Promise.reject(error);
   }
 };
-
-interface EmailDuplicateResponse {
-  code: number;
-  description?: string;
-}
 
 export const signupAPI = async (email: string, nickname: string, password: string) => {
   try {
