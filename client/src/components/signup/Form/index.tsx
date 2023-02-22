@@ -74,7 +74,7 @@ export default function SignupForm() {
       onOpen();
     } else {
       try {
-        await signupAPI(email.value, name.value, password.value);
+        await signupAPI({ nickname: name.value, email: email.value, password: password.value });
         router.push(SIGNUP_COMPLETE_PATH);
       } catch (error) {
         if (error instanceof EmailDuplicateError) {

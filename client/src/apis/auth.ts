@@ -40,7 +40,13 @@ export const loginAPI = async (email: string, password: string): Promise<number>
   }
 };
 
-export const signupAPI = async (email: string, nickname: string, password: string) => {
+interface SignupAPIParams {
+  email: string;
+  password: string;
+  nickname: string;
+}
+
+export const signupAPI = async ({ email, password, nickname }: SignupAPIParams) => {
   try {
     await request.post(SIGNUP_PATH, { email, nickname, password });
   } catch (error) {
