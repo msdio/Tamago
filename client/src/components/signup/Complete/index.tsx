@@ -1,4 +1,7 @@
 import { Button, Flex, Img, Text } from '@chakra-ui/react';
+import Link from 'next/link';
+
+import { LOGIN_PATH, MAIN_PATH } from '@/utils/paths';
 
 export default function SignupComplete() {
   return (
@@ -14,8 +17,12 @@ export default function SignupComplete() {
         가입된 이메일로 로그인 해 주세요.
       </Text>
       <Flex gap='18px'>
-        <Button>로그인하기</Button>
-        <Button variant='outline'>메인 화면으로 가기</Button>
+        <Link href={LOGIN_PATH}>
+          <Button>로그인하기</Button>
+        </Link>
+        <Link href={MAIN_PATH}>
+          <Button variant='outline'>메인 화면으로 가기</Button>
+        </Link>
       </Flex>
     </Flex>
   );

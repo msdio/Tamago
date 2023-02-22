@@ -2,6 +2,8 @@ import { Box, Button, Flex, Image, Text, useDisclosure } from '@chakra-ui/react'
 import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 
+import { emailDuplicateAPI, signupAPI } from '@/apis/auth';
+import { EmailDuplicateError, NicknameDuplicateError, ServerError } from '@/apis/error';
 import Alert from '@/components/common/Alert';
 import FormOr from '@/components/common/FormOr';
 import RegexInput from '@/components/common/RegexInput';
@@ -48,12 +50,22 @@ export default function SignupForm() {
 
   const { name, email, password, verifyPassword } = inputInfo;
 
-  const handleEmailButton = () => {
-    setIsEmailDuplicated(!isEmailDuplicated);
-    onOpen();
+  const handleEmailDuplicate = async () => {
+    try {
+      await emailDuplicateAPI(email.value);
+      setIsEmailDuplicated(true);
+      onOpen();
+    } catch (error) {
+      if (error instanceof EmailDuplicateError) {
+        setIsEmailDuplicated(false);
+        onOpen();
+      } else {
+        alert('알 수 없는 오류가 발생했습니다.');
+      }
+    }
   };
 
-  const handleSubmit = () => {
+  const handleSignup = async () => {
     const notValidInput = Object.entries(inputInfo).find(([, { isValid }]) => !isValid);
     if (notValidInput) {
       const [input] = notValidInput;
@@ -61,7 +73,20 @@ export default function SignupForm() {
     } else if (isEmailDuplicated) {
       onOpen();
     } else {
-      router.push(SIGNUP_COMPLETE_PATH);
+      try {
+        await signupAPI({ nickname: name.value, email: email.value, password: password.value });
+        router.push(SIGNUP_COMPLETE_PATH);
+      } catch (error) {
+        if (error instanceof EmailDuplicateError) {
+          alert(error.message);
+        } else if (error instanceof NicknameDuplicateError) {
+          alert(error.message);
+        } else if (error instanceof ServerError) {
+          alert(error.message);
+        } else {
+          alert('알 수 없는 오류가 발생했습니다.');
+        }
+      }
     }
   };
 
@@ -91,7 +116,7 @@ export default function SignupForm() {
             value={email.value}
             isValid={email.isValid}
             onChange={handleInputChange}
-            onClick={handleEmailButton}
+            onClick={handleEmailDuplicate}
             buttonText='중복 확인'
             ref={(el) => (inputRef.current['email'] = el)}
           />
@@ -123,7 +148,7 @@ export default function SignupForm() {
             ref={(el) => (inputRef.current['verifyPassword'] = el)}
           />
         </Box>
-        <Button size='lg' onClick={handleSubmit}>
+        <Button size='lg' onClick={handleSignup}>
           회원가입 하기
         </Button>
         <Box m='41px 0px'>
