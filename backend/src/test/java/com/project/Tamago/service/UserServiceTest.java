@@ -43,7 +43,8 @@ public class UserServiceTest {
 			.build();
 
 		when(userRepository.findByNickname(any())).thenReturn(Optional.of(user));
-		when(jwtTokenProvider.getAuthentication(anyString())).thenReturn(new UsernamePasswordAuthenticationToken(new Object(), new Object()));
+		when(jwtTokenProvider.getAuthenticationFromAcs(anyString())).thenReturn(
+			new UsernamePasswordAuthenticationToken(new Object(), new Object()));
 
 		ModifyProfileReqDto modifyProfileReqDto = new ModifyProfileReqDto("안녕하세요",
 			"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT55B_AMMO9_gDppDBojupeVFHeQIg4zXSRDJ5COw4h&s");

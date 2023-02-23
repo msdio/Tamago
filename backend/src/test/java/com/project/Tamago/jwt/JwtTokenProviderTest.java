@@ -1,7 +1,5 @@
 package com.project.Tamago.jwt;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +27,6 @@ class JwtTokenProviderTest {
 		// when
 		String token = jwtTokenProvider.createAccessToken(authentication);
 		// then
-		assertTrue(jwtTokenProvider.validateAccessToken(token));
+		jwtTokenProvider.validateAccessToken(token);
 	}
 }

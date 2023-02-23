@@ -1,11 +1,11 @@
-package com.project.Tamago.dto;
+package com.project.Tamago.util.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class TokenDto {
+public class Token {
 	private final String accessToken;
 	private final String refreshToken;
 }

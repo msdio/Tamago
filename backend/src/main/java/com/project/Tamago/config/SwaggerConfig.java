@@ -1,5 +1,7 @@
 package com.project.Tamago.config;
 
+import static com.project.Tamago.util.constants.Constant.*;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -49,7 +51,7 @@ public class SwaggerConfig {
 	}
 
 	private ApiKey apiKey() {
-		return new ApiKey("JWT", "Authorization", "header");
+		return new ApiKey("JWT", AUTHORIZATION_HEADER, "header");
 	}
 
 	private SecurityContext securityContext() {

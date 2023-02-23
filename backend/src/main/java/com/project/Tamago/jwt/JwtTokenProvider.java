@@ -1,6 +1,7 @@
 package com.project.Tamago.jwt;
 
 import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
+import static com.project.Tamago.util.constants.Constant.*;
 
 import java.security.Key;
 import java.security.KeyPair;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Component;
 
 import com.project.Tamago.exception.CustomException;
 import com.project.Tamago.util.constants.KeyType;
+import com.project.Tamago.util.security.Token;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -41,9 +43,6 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @RequiredArgsConstructor
 public class JwtTokenProvider {
-
-	private static final String AUTHORITIES_KEY = "auth";
-	public static final String AUTHORIZATION_HEADER = "Authorization";
 	private final Map<KeyType, Key> privateKeys = new EnumMap<>(KeyType.class);
 	private final Map<KeyType, Key> publicKeys = new EnumMap<>(KeyType.class);
 	private final Map<KeyType, Long> expireTimes = new EnumMap<>(KeyType.class);
@@ -67,6 +66,10 @@ public class JwtTokenProvider {
 		expireTimes.put(KeyType.REFRESH, refreshTokenExpireTime);
 	}
 
+	public Token createToken(Authentication authentication) {
+		return new Token(createAccessToken(authentication), createRefreshToken(authentication));
+	}
+
 	public String createAccessToken(Authentication authentication) {
 		return createBuilder(KeyType.ACCESS, authentication);
 	}
@@ -75,19 +78,12 @@ public class JwtTokenProvider {
 		return createBuilder(KeyType.REFRESH, authentication);
 	}
 
-	public Authentication getAuthentication(String token) {
-		Claims claims = Jwts.parserBuilder()
-			.setSigningKey(publicKeys.get(KeyType.ACCESS))
-			.build()
-			.parseClaimsJws(token)
-			.getBody();
+	public Authentication getAuthenticationFromAcs(String token) {
+		return getAuthentication(KeyType.ACCESS, token);
+	}
 
-		Collection<? extends GrantedAuthority> authorities =
-			Arrays.stream(claims.get(AUTHORITIES_KEY, String.class).split(","))
-				.map(SimpleGrantedAuthority::new)
-				.collect(Collectors.toList());
-
-		return new UsernamePasswordAuthenticationToken(claims.getSubject(), token, authorities);
+	public Authentication getAuthenticationFromRef(String token) {
+		return getAuthentication(KeyType.REFRESH, token);
 	}
 
 	public Long getExpiration(String accessToken) {
@@ -102,8 +98,25 @@ public class JwtTokenProvider {
 		return (expiration.getTime() - now.getTime());
 	}
 
-	public boolean validateAccessToken(String accessToken) throws IllegalArgumentException {
-		return validateToken(KeyType.ACCESS, accessToken);
+	public void checkAccessTokenExpiration(String accessToken) {
+		try {
+			Jwts
+				.parserBuilder().setSigningKey(publicKeys.get(KeyType.ACCESS)).build()
+				.parseClaimsJws(accessToken);
+			throw new CustomException(NOT_POSSIBLE_REISSUE);
+		} catch (ExpiredJwtException e) {
+			log.info(POSSIBLE_REISSUE);
+		} catch (Exception e) {
+			throw new CustomException(NOT_POSSIBLE_REISSUE);
+		}
+	}
+
+	public void validateAccessToken(String accessToken) throws IllegalArgumentException {
+		validateToken(KeyType.ACCESS, accessToken);
+	}
+
+	public void validateRefreshToken(String refreshToken) throws IllegalArgumentException {
+		validateToken(KeyType.REFRESH, refreshToken);
 	}
 
 	public String resolveToken(HttpServletRequest request) {
@@ -120,10 +133,6 @@ public class JwtTokenProvider {
 		}
 	}
 
-	public boolean validateRefreshToken(String refreshToken) throws IllegalArgumentException {
-		return validateToken(KeyType.REFRESH, refreshToken);
-	}
-
 	private String createBuilder(KeyType type, Authentication authentication) {
 		String authorities = authentication.getAuthorities().stream()
 			.map(GrantedAuthority::getAuthority)
@@ -137,12 +146,11 @@ public class JwtTokenProvider {
 			.compact();
 	}
 
-	private boolean validateToken(KeyType type, String token) {
+	private void validateToken(KeyType type, String token) {
 		try {
 			Jwts
 				.parserBuilder().setSigningKey(publicKeys.get(type)).build()
 				.parseClaimsJws(token);
-			return true;
 		} catch (SignatureException e) {
 			throw new CustomException(INVALID_SIGNATURE);
 		} catch (MalformedJwtException e) {
@@ -152,8 +160,24 @@ public class JwtTokenProvider {
 		} catch (UnsupportedJwtException e) {
 			throw new CustomException(UNSUPPORTED_JWT);
 		} catch (IllegalArgumentException e) {
-			log.error("JWT token compact of handler are invalid.");
+			throw new IllegalArgumentException();
 		}
-		return false;
+	}
+
+	private Authentication getAuthentication(KeyType type, String token) {
+		Claims claims = Jwts.parserBuilder()
+			.setSigningKey(publicKeys.get(type))
+			.build()
+			.parseClaimsJws(token)
+			.getBody();
+
+		Collection<? extends GrantedAuthority> authorities = authoritiesFromClaims(claims);
+		return new UsernamePasswordAuthenticationToken(claims.getSubject(), token, authorities);
+	}
+
+	private Collection<? extends GrantedAuthority> authoritiesFromClaims(Claims claims) {
+		return Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+			.map(SimpleGrantedAuthority::new)
+			.collect(Collectors.toList());
 	}
 }

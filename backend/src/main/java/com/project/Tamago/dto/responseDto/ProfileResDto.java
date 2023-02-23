@@ -1,12 +1,11 @@
 package com.project.Tamago.dto.responseDto;
 
 import com.project.Tamago.domain.User;
-import com.project.Tamago.dto.SuccessMessage;
 
 import lombok.Data;
 
 @Data
-public class ProfileResDto extends SuccessMessage {
+public class ProfileResDto {
 
 	private String email;
 	private String nickname;
