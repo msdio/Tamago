@@ -2,6 +2,7 @@ import Banner from '../Banner';
 import Landing from '../Landing';
 import Menus from '../Menus';
 import Stats from '../Stats';
+import Tiers from '../Tiers';
 
 export default function HomeLayout() {
   return (
@@ -11,6 +12,8 @@ export default function HomeLayout() {
       <Stats />
 
       <Banner />
+
+      <Tiers />
     </>
   );
 }
