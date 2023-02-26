@@ -43,10 +43,10 @@ const MenuCard = styled.div`
 export default function Menus() {
   return (
     <Container maxW='container.xl' h='80vh' py='6.9375rem'>
-      <Text fontSize='25px' marginBottom='.9375rem'>
+      <Text fontSize='1.5625rem' marginBottom='.9375rem'>
         About Tamago
       </Text>
-      <Text fontSize='36px' fontWeight='bold'>
+      <Text fontSize='2.25rem' fontWeight='bold'>
         개발할 때 쓰이는 코드로
         <br />
         다양하게 타자 연습을
@@ -63,10 +63,10 @@ export default function Menus() {
             top='2.0625rem'
             right='2.0625rem'
           />
-          <Text fontSize='30px' fontWeight='bold'>
+          <Text fontSize='1.875rem' fontWeight='bold'>
             긴글 연습
           </Text>
-          <Text fontSize='16px' marginTop='.875rem'>
+          <Text fontSize='1rem' marginTop='.875rem'>
             Lorem ipsum dolor sit amet,
             <br />
             consectetu
@@ -81,10 +81,10 @@ export default function Menus() {
             top='2.0625rem'
             right='2.0625rem'
           />
-          <Text fontSize='30px' fontWeight='bold'>
+          <Text fontSize='1.875rem' fontWeight='bold'>
             짧은 글 연습
           </Text>
-          <Text fontSize='16px' marginTop='.875rem'>
+          <Text fontSize='1rem' marginTop='.875rem'>
             Lorem ipsum dolor sit amet,
             <br />
             consectetu
@@ -99,10 +99,10 @@ export default function Menus() {
             top='2.0625rem'
             right='2.0625rem'
           />
-          <Text fontSize='30px' fontWeight='bold'>
+          <Text fontSize='1.875rem' fontWeight='bold'>
             글 등록
           </Text>
-          <Text fontSize='16px' marginTop='.875rem'>
+          <Text fontSize='1rem' marginTop='.875rem'>
             Lorem ipsum dolor sit amet,
             <br />
             consectetu

@@ -1,15 +1,15 @@
-import { Container, Image, Text } from '@chakra-ui/react';
+import { Container, Flex, Image, Text } from '@chakra-ui/react';
 
 export default function Banner() {
   return (
-    <div style={{ width: '100vw', height: '199px', backgroundColor: '#FF8A65' }}>
+    <Flex w='100vw' h='199px' bgColor='tamago.500'>
       <Container maxW='container.xl' h='100%' display='flex' alignItems='center' justifyContent='space-between'>
-        <Text fontSize='36px' fontWeight='extrabold' color='#FFFFFF'>
+        <Text fontSize='2.25rem' fontWeight='extrabold' color='white'>
           이제는 개발에 재미를 더해요.
         </Text>
 
-        <Image src='/images/home/banner-message.png' alt='banner message' w='549px' mr='30px' />
+        <Image src='/images/home/banner-message.png' alt='banner message' w='34.3125rem' mr='1.875rem' />
       </Container>
-    </div>
+    </Flex>
   );
 }

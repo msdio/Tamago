@@ -1,17 +1,17 @@
-import { Container, Image, Text } from '@chakra-ui/react';
+import { Container, Flex, Image, Text } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 
 import { RightArrowWithCircle } from '@/icons/RightArrowWithCircle';
 
 const StatCard = styled.div`
-  width: 772px;
-  height: 404px;
+  width: 48.25rem;
+  height: 25.25rem;
 
   display: flex;
   flex-direction: column;
   position: relative;
 
-  padding: 53px 57px;
+  padding: 3.3125rem 3.5625rem;
 
   background-color: #ffffff;
   border: 1px solid black;
@@ -21,14 +21,14 @@ const StatCard = styled.div`
 `;
 
 const StatCardShadow = styled.div`
-  width: 772px;
-  height: 404px;
+  width: 48.25rem;
+  height: 25.25rem;
 
   background-color: #f6f6f6;
   border: 1px solid black;
   border-radius: 5px;
 
-  transform: translateX(19px) translateY(21px);
+  transform: translateX(1.1875rem) translateY(1.3125rem);
 
   z-index: 1;
   position: absolute;
@@ -36,9 +36,9 @@ const StatCardShadow = styled.div`
 
 const Badge = styled.div`
   width: fit-content;
-  height: 61px;
+  height: 3.8125rem;
 
-  padding: 14px 29px;
+  padding: 0.875rem 1.8125rem;
 
   border: 1px solid black;
   border-radius: 40px;
@@ -50,27 +50,27 @@ const Badge = styled.div`
   justify-content: center;
 
   p {
-    font-size: 28px;
+    font-size: 1.75rem;
     font-weight: bold;
   }
 
   :nth-child(2) {
-    transform: translateX(51px);
+    transform: translateX(3.1875rem);
   }
   :nth-child(3) {
-    transform: translateX(15px);
+    transform: translateX(0.9375rem);
   }
 `;
 
 export default function Stats() {
   return (
-    <div style={{ width: '100vw', height: '653px', backgroundColor: '#FAFAFA' }}>
+    <Flex w='100vw' h='653px' bgColor='#FAFAFA'>
       <Container maxW='container.xl' py='6.9375rem' display='flex' justifyContent='space-between'>
         <StatCard>
-          <Text fontSize='25px' mb='21px'>
+          <Text fontSize='1.5625rem' mb='1.3125rem'>
             Statistics
           </Text>
-          <Text fontSize='36px' fontWeight='bold' mb='23px'>
+          <Text fontSize='2.25rem' fontWeight='bold' mb='1.4375rem'>
             타자를 측정하고 분석하여
             <br />
             본인의 타이핑 실력을
@@ -83,8 +83,8 @@ export default function Stats() {
           <Image
             src='/images/home/graph-circle.png'
             alt='circle graph'
-            w='252px'
-            h='248px'
+            w='15.75rem'
+            h='15.5rem'
             position='absolute'
             bottom='0'
             right='0'
@@ -93,15 +93,7 @@ export default function Stats() {
 
         <StatCardShadow />
 
-        <div
-          style={{
-            width: '382px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '22px',
-            position: 'relative',
-          }}
-        >
+        <Flex w='23.875rem' display='flex' flexDirection='column' gap='1.375rem' position='relative'>
           <Badge>
             <Text>정확도</Text>
           </Badge>
@@ -112,9 +104,9 @@ export default function Stats() {
             <Text>속도</Text>
           </Badge>
 
-          <Image src='/images/home/graph-bar.png' alt='bar graph' w='160px' position='absolute' bottom='0' right='0' />
-        </div>
+          <Image src='/images/home/graph-bar.png' alt='bar graph' w='10rem' position='absolute' bottom='0' right='0' />
+        </Flex>
       </Container>
-    </div>
+    </Flex>
   );
 }

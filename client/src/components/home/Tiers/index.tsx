@@ -47,12 +47,12 @@ export default function Tiers() {
       maxW='container.xl'
       w='100%'
       h='757px'
-      mt='112px'
+      mt='7rem'
       display='flex'
       flexDirection='column'
       textAlign='center'
     >
-      <Text fontSize='25px' mb='21px'>
+      <Text fontSize='1.5625rem' mb='1.3125rem'>
         Tier
       </Text>
       <Heading lineHeight='160%'>
@@ -61,16 +61,16 @@ export default function Tiers() {
         성장하고 공유할 수 있어요.
       </Heading>
 
-      <Flex gap='26px' justifyContent='center' mt='71px'>
+      <Flex gap='1.625rem' justifyContent='center' mt='4.4375rem'>
         {tierInfo.map((el) => (
-          <Flex w='178px' h='286px' key={el.level} alignItems='center' flexDirection='column'>
-            <Flex w='100%' h='246px' flexDirection='column' justifyContent='space-between' alignItems='center'>
+          <Flex w='178px' h='17.875rem' key={el.level} alignItems='center' flexDirection='column'>
+            <Flex w='100%' h='15.375rem' flexDirection='column' justifyContent='space-between' alignItems='center'>
               <Tier level={el.level} />
-              <Text fontSize='26px' fontWeight='extrabold' mt='26px' alignItems='flex-end'>
+              <Text fontSize='1.625rem' fontWeight='extrabold' mt='1.625rem' alignItems='flex-end'>
                 {el.text}
               </Text>
             </Flex>
-            <Text fontSize='20px' mt='15px'>
+            <Text fontSize='1.25rem' mt='.9375rem'>
               {el.label}
             </Text>
           </Flex>

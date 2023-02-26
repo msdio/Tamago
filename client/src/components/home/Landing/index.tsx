@@ -43,17 +43,24 @@ export default function Landing() {
       <Image
         src='/images/home/feather.png'
         alt='feather'
-        w='48px'
+        w='3.625rem'
         position='absolute'
-        top='20%'
-        left='-7px'
+        top='18%'
+        left='-9px'
         transform='rotate(100deg)'
       />
-      <Image src='/images/home/feather.png' alt='feather' w='48px' position='absolute' bottom='45%' right='75px' />
       <Image
         src='/images/home/feather.png'
         alt='feather'
-        w='62.3px'
+        w='3.625rem'
+        position='absolute'
+        bottom='45%'
+        right='4.6875rem'
+      />
+      <Image
+        src='/images/home/feather.png'
+        alt='feather'
+        w='4.5187rem'
         position='absolute'
         bottom='-40px'
         right='23%'
