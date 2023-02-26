@@ -1,29 +1,41 @@
-class EmailDuplicateError extends Error {
-  constructor() {
-    super('이미 존재하는 이메일입니다.');
-    this.name = 'EmailDuplicateError';
-  }
+interface ApiErrorType {
+  code: number | string;
+  description: string;
 }
 
-class NicknameDuplicateError extends Error {
-  constructor() {
-    super('이미 존재하는 닉네임입니다.');
-    this.name = 'NicknameDuplicateError';
-  }
+export class ApiError implements ApiErrorType {
+  code = '000';
+  description = 'unknown error';
+
+  constructor() {}
 }
 
-class ServerError extends Error {
-  constructor() {
-    super('서버 에러가 발생했습니다.');
-    this.name = 'ServerError';
-  }
-}
+// class EmailDuplicateError extends Error {
+//   constructor() {
+//     super('이미 존재하는 이메일입니다.');
+//     this.name = 'EmailDuplicateError';
+//   }
+// }
 
-class SignupError extends Error {
-  constructor() {
-    super('회원가입에 실패했습니다.');
-    this.name = 'SignupError';
-  }
-}
+// class NicknameDuplicateError extends Error {
+//   constructor() {
+//     super('이미 존재하는 닉네임입니다.');
+//     this.name = 'NicknameDuplicateError';
+//   }
+// }
 
-export { EmailDuplicateError, NicknameDuplicateError, ServerError, SignupError };
+// class ServerError extends Error {
+//   constructor() {
+//     super('서버 에러가 발생했습니다.');
+//     this.name = 'ServerError';
+//   }
+// }
+
+// class SignupError extends Error {
+//   constructor() {
+//     super('회원가입에 실패했습니다.');
+//     this.name = 'SignupError';
+//   }
+// }
+
+// export { EmailDuplicateError, NicknameDuplicateError, ServerError, SignupError };
