@@ -1,5 +1,7 @@
 import { Button, Flex, Image, Text } from '@chakra-ui/react';
 
+import { ScrollIndicator } from '@/icons/ScrollIndicator';
+
 export default function Landing() {
   return (
     <Flex
@@ -9,6 +11,7 @@ export default function Landing() {
       backgroundSize='contain'
       justifyContent='center'
       alignItems='center'
+      position='relative'
     >
       <Image
         src='/images/home/yellow-chick.png'
@@ -40,6 +43,8 @@ export default function Landing() {
         ml='113.9px'
         transform='translateY(250px)'
       />
+
+      <ScrollIndicator />
     </Flex>
   );
 }
