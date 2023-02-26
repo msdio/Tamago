@@ -38,12 +38,16 @@ const Badge = styled.div`
   width: fit-content;
   height: 61px;
 
-  padding: 14px 29px 9px 34px;
+  padding: 14px 29px;
 
   border: 1px solid black;
   border-radius: 40px;
 
   background-color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   p {
     font-size: 28px;
@@ -61,7 +65,7 @@ const Badge = styled.div`
 export default function Stats() {
   return (
     <div style={{ width: '100vw', height: '653px', backgroundColor: '#FAFAFA' }}>
-      <Container maxW='container.xl' py='6.9375rem' display='flex'>
+      <Container maxW='container.xl' py='6.9375rem' display='flex' justifyContent='space-between'>
         <StatCard>
           <Text fontSize='25px' mb='21px'>
             Statistics
@@ -94,7 +98,6 @@ export default function Stats() {
             width: '382px',
             display: 'flex',
             flexDirection: 'column',
-            marginLeft: '44px',
             gap: '22px',
             position: 'relative',
           }}
