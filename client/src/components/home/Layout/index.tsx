@@ -1,4 +1,5 @@
 import Banner from '../Banner';
+import HomeFooter from '../Footer';
 import Landing from '../Landing';
 import Menus from '../Menus';
 import Stats from '../Stats';
@@ -14,6 +15,8 @@ export default function HomeLayout() {
       <Banner />
 
       <Tiers />
+
+      <HomeFooter />
     </>
   );
 }
