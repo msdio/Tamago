@@ -31,7 +31,7 @@ const BottomIndicator = () => (
 export const ScrollIndicator = () => (
   <Flex
     position='absolute'
-    bottom='2%'
+    bottom='5%'
     flexDirection='column'
     margin='auto'
     alignItems='center'

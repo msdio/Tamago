@@ -5,25 +5,26 @@ import { ScrollIndicator } from '@/icons/ScrollIndicator';
 export default function Landing() {
   return (
     <Flex
+      alignItems='center'
+      justifyContent='center'
       h='calc(100vh - 88px)'
       w='100%'
-      backgroundImage='/images/home/background.png'
-      backgroundSize='contain'
-      justifyContent='center'
-      alignItems='center'
       position='relative'
+      backgroundColor='#FFF6F1'
+      backgroundImage='linear-gradient(#EFDFD3 0.6px, transparent 1px), linear-gradient(to right, #EFDFD3 1px, #FFF6F1 1px);'
+      backgroundSize='3.75rem 3.7656rem'
     >
-      <Image
-        src='/images/home/yellow-chick.png'
-        alt='yellow chick'
-        w='140.4px'
-        h='226.3px'
-        mr='70px'
-        transform='translateY(100px)'
-      />
+      <Image src='/images/home/yellow-chick.png' alt='yellow chick' w='8.775rem' transform='translateY(6.25rem)' />
 
-      <Flex direction='column' justifyContent='center' alignItems='center'>
-        <Image src='/images/home/main-image.png' alt='main image' w='704px' h='360px' />
+      <Flex
+        direction='column'
+        justifyContent='center'
+        alignItems='center'
+        ml='4.375rem'
+        mr='7.1188rem'
+        transform='translateX(1.3719rem)'
+      >
+        <Image src='/images/home/main-image.png' alt='main image' w='38.2687rem' />
         <Text fontSize='15px' mt='33.8px' textAlign='center'>
           타마고는 개발자가 많이 사용하는 특수문자 또는 개발 언어를 연습하여 빠르게 치도록 도와줍니다.
           <br />
@@ -35,16 +36,29 @@ export default function Landing() {
         </Button>
       </Flex>
 
-      <Image
-        src='/images/home/white-chicken.png'
-        alt='white chicken'
-        w='147.6px'
-        h='170.7px'
-        ml='113.9px'
-        transform='translateY(250px)'
-      />
+      <Image src='/images/home/white-chicken.png' alt='white chicken' w='9.225rem' transform='translateY(15.625rem)' />
 
       <ScrollIndicator />
+
+      <Image
+        src='/images/home/feather.png'
+        alt='feather'
+        w='48px'
+        position='absolute'
+        top='20%'
+        left='-7px'
+        transform='rotate(100deg)'
+      />
+      <Image src='/images/home/feather.png' alt='feather' w='48px' position='absolute' bottom='45%' right='75px' />
+      <Image
+        src='/images/home/feather.png'
+        alt='feather'
+        w='62.3px'
+        position='absolute'
+        bottom='-40px'
+        right='23%'
+        transform='scaleX(-1) rotate(10deg)'
+      />
     </Flex>
   );
 }
