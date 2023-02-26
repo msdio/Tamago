@@ -23,3 +23,12 @@ export const bouncingDown = keyframes`
     transform: translateY(2px)
   }
 `;
+
+export const cardShadow = keyframes`
+  from {
+    box-shadow: 8px 10px gray;
+  }
+  to {
+    box-shadow: 13px 15px orange;
+  }
+`;
