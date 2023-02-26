@@ -1,29 +1,6 @@
 import { Flex, Icon } from '@chakra-ui/react';
-import { keyframes } from '@emotion/react';
 
-const bouncingUp = keyframes`
-  0% {
-    transform: translateY(-2px);
-  }
-  50% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-2px);
-  }
-`;
-
-const bouncingDown = keyframes`
-  0% {
-    transform: translateY(2px);
-  }
-  50% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(2px)
-  }
-`;
+import { bouncingDown, bouncingUp } from '@/constants/animations';
 
 const TopIndicator = () => (
   <Icon
