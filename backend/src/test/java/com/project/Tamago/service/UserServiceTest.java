@@ -16,7 +16,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 
 import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.requestDto.ModifyProfileReqDto;
-import com.project.Tamago.jwt.JwtTokenProvider;
+import com.project.Tamago.security.jwt.JwtTokenProvider;
 import com.project.Tamago.repository.UserRepository;
 
 @SpringBootTest

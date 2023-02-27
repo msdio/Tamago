@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.project.Tamago.exception.CustomException;
+import com.project.Tamago.security.jwt.JwtTokenProvider;
 
 @ExtendWith(SpringExtension.class)
 class JwtAuthorizationFilterTest {

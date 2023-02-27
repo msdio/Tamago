@@ -12,10 +12,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.project.Tamago.jwt.JwtAuthorizationFilter;
-import com.project.Tamago.jwt.JwtTokenProvider;
-import com.project.Tamago.jwt.handler.CustomAccessDeniedHandler;
-import com.project.Tamago.jwt.handler.CustomAuthenticationEntryPointHandler;
+import com.project.Tamago.security.jwt.JwtAuthorizationFilter;
+import com.project.Tamago.security.jwt.JwtTokenProvider;
+import com.project.Tamago.security.jwt.handler.CustomAccessDeniedHandler;
+import com.project.Tamago.security.jwt.handler.CustomAuthenticationEntryPointHandler;
 
 import lombok.RequiredArgsConstructor;
 

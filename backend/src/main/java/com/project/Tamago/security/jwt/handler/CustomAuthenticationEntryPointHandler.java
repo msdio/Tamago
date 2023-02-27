@@ -1,4 +1,4 @@
-package com.project.Tamago.jwt.handler;
+package com.project.Tamago.security.jwt.handler;
 
 import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
 

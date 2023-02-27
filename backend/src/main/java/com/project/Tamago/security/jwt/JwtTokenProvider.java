@@ -1,7 +1,7 @@
-package com.project.Tamago.jwt;
+package com.project.Tamago.security.jwt;
 
 import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
-import static com.project.Tamago.util.constants.Constant.*;
+import static com.project.Tamago.constants.Constant.*;
 
 import java.security.Key;
 import java.security.KeyPair;
@@ -26,8 +26,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import com.project.Tamago.exception.CustomException;
-import com.project.Tamago.util.constants.KeyType;
-import com.project.Tamago.util.security.Token;
+import com.project.Tamago.constants.KeyType;
+import com.project.Tamago.security.Token;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;

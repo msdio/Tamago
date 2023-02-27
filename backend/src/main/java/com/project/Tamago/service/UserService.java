@@ -9,8 +9,8 @@ import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.requestDto.ModifyProfileReqDto;
 import com.project.Tamago.dto.responseDto.ProfileResDto;
 import com.project.Tamago.exception.CustomException;
-import com.project.Tamago.jwt.JwtTokenProvider;
-import com.project.Tamago.mapper.UserMapper;
+import com.project.Tamago.security.jwt.JwtTokenProvider;
+import com.project.Tamago.dto.mapper.UserMapper;
 import com.project.Tamago.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;

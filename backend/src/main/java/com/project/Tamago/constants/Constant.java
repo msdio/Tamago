@@ -1,4 +1,4 @@
-package com.project.Tamago.util.constants;
+package com.project.Tamago.constants;
 
 public class Constant {
 	public static final String PROVIDER_NONE = "none";

@@ -1,4 +1,4 @@
-package com.project.Tamago.util.constants;
+package com.project.Tamago.constants;
 
 import java.util.Arrays;
 

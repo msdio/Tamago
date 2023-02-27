@@ -1,7 +1,7 @@
 package com.project.Tamago.service;
 
 import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
-import static com.project.Tamago.util.constants.Constant.*;
+import static com.project.Tamago.constants.Constant.*;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.Tamago.util.security.PrincipalDetails;
+import com.project.Tamago.security.PrincipalDetails;
 import com.project.Tamago.domain.User;
 import com.project.Tamago.exception.CustomException;
 import com.project.Tamago.repository.UserRepository;
