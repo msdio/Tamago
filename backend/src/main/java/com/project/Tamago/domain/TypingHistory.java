@@ -2,6 +2,8 @@ package com.project.Tamago.domain;
 
 import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.ColumnDefault;
+
+import com.project.Tamago.domain.enums.Mode;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -19,7 +25,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class TypingHistory {
+public class TypingHistory extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -36,8 +42,15 @@ public class TypingHistory {
 
 	private Double accuracy;
 
+	@ColumnDefault("true")
+	private Boolean contentType;
+
+	@Enumerated(EnumType.STRING)
+	private Mode mode;
+
 	private Integer beforeMmr;
 
 	private Integer increasedValue;
+
 
 }
