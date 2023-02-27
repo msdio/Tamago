@@ -1,6 +1,9 @@
 import { Container, Flex, Image, Text } from '@chakra-ui/react';
 import styled from '@emotion/styled';
+import { useRef } from 'react';
 
+import { fadeIn } from '@/constants/animations';
+import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import { RightArrowWithCircle } from '@/icons/RightArrowWithCircle';
 
 const StatCard = styled.div`
@@ -63,8 +66,18 @@ const Badge = styled.div`
 `;
 
 export default function Stats() {
+  const observerRef = useRef<HTMLDivElement>(null);
+  const animationTrigger = useIntersectionObserver({ ref: observerRef, threshold: 0.3 });
+
   return (
-    <Flex w='100vw' h='653px' bgColor='#FAFAFA'>
+    <Flex
+      w='100vw'
+      h='653px'
+      bgColor='#FAFAFA'
+      ref={observerRef}
+      opacity={animationTrigger ? 1 : 0}
+      animation={animationTrigger ? `${fadeIn} 1s linear` : ''}
+    >
       <Container maxW='container.xl' py='6.9375rem' display='flex' justifyContent='space-between'>
         <StatCard>
           <Text fontSize='1.5625rem' mb='1.3125rem'>

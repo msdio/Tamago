@@ -13,9 +13,7 @@ export default function HomeLayout() {
       <Stats />
 
       <Banner />
-
       <Tiers />
-
       <HomeFooter />
     </>
   );

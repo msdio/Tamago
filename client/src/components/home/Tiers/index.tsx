@@ -1,6 +1,9 @@
 import { Container, Flex, Heading, Text } from '@chakra-ui/react';
+import { useRef } from 'react';
 
 import { Tier } from '@/components/common/Tiers';
+import { fadeIn } from '@/constants/animations';
+import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 
 interface TierInfoProps {
   level: 0 | 1 | 2 | 3 | 4 | 5;
@@ -42,15 +45,21 @@ const tierInfo: TierInfoProps[] = [
 ];
 
 export default function Tiers() {
+  const observerRef = useRef<HTMLDivElement>(null);
+  const animationTrigger = useIntersectionObserver({ ref: observerRef, threshold: 0.3 });
+
   return (
     <Container
       maxW='container.xl'
       w='100%'
-      h='757px'
+      h='47.3125rem'
       mt='7rem'
       display='flex'
       flexDirection='column'
       textAlign='center'
+      ref={observerRef}
+      opacity={animationTrigger ? 1 : 0}
+      animation={animationTrigger ? `${fadeIn} 1s linear` : ''}
     >
       <Text fontSize='1.5625rem' mb='1.3125rem'>
         Tier

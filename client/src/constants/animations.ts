@@ -32,3 +32,14 @@ export const cardShadow = keyframes`
     box-shadow: 13px 15px orange;
   }
 `;
+
+export const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
