@@ -1,6 +1,18 @@
 import { Button, Flex, Image, Text } from '@chakra-ui/react';
+import styled from '@emotion/styled';
 
+import { jumping, jumpingShadow } from '@/constants/animations';
 import { ScrollIndicator } from '@/icons/ScrollIndicator';
+
+const ChickImage = styled.div`
+  width: 8.8775rem;
+  height: 14.1438rem;
+  transform: translateY(6.25rem);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
 
 export default function Landing() {
   return (
@@ -14,7 +26,21 @@ export default function Landing() {
       backgroundImage='linear-gradient(#EFDFD3 0.6px, transparent 1px), linear-gradient(to right, #EFDFD3 1px, #FFF6F1 1px);'
       backgroundSize='3.75rem 3.7656rem'
     >
-      <Image src='/images/home/yellow-chick.png' alt='yellow chick' w='8.775rem' transform='translateY(6.25rem)' />
+      <ChickImage>
+        <Image
+          src='/images/home/yellow-chick.png'
+          alt='yellow chick'
+          w='8.3125rem'
+          animation={jumping + ' 2s infinite ease'}
+        />
+        <Image
+          src='/images/home/yellow-chick-shadow.png'
+          alt='yellow chick'
+          w='6.875rem'
+          transform='translateX(1.5625rem)'
+          animation={jumpingShadow + ' 2s infinite ease'}
+        />
+      </ChickImage>
 
       <Flex
         direction='column'

@@ -43,3 +43,42 @@ export const fadeIn = keyframes`
     transform: translateY(0);
   }
 `;
+
+export const jumping = keyframes`
+  0% {
+    transform: scale(1, 1) translateY(0) rotate(0deg);
+  }
+  10% {
+    transform: scale(1.1, 0.9) translateY(0) rotate(3deg);
+  }
+  30% { 
+    transform: scale(0.9, 1.1) translateY(-100px) rotate(10deg);
+  }
+  50% { 
+    transform: scale(1.05, 0.95) translateY(0) rotate(15deg);
+  }
+  60% { 
+    transform: scale(1, 1) translateY(-7px) rotate(0deg); 
+  }
+  70% { 
+    transform: scale(1, 1) translateY(0) rotate(0deg); 
+  }
+  100% { 
+    transform: scale(1, 1) translateY(0) rotate(0deg); 
+  }
+`;
+
+export const jumpingShadow = keyframes`
+  0% {
+    transfrom: scale(1) translateX(1.5625rem);
+  }
+  30% {
+    transform: scale(0.6, 1) translateX(1.5625rem);
+  }
+  45% {
+    transfrom: scale(1) translateX(1.5625rem);
+  }
+  100% {
+    transfrom: scale(1) translateX(1.5625rem);
+  }
+`;
