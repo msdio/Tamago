@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +31,7 @@ public class ShortTypingServiceTest {
 	List<Typing> typingList;
 	ShortTypingDto shortTypingDto;
 
-	@BeforeEach
-	public void makeTypings() {
+	private void makeTypings() {
 		Typing typing1 = Typing.builder()
 			.content("Test1")
 			.build();
@@ -59,9 +57,12 @@ public class ShortTypingServiceTest {
 	@Test
 	@DisplayName("타이핑 글을 랜덤으로 30개 가져오기")
 	public void getShortTyping() {
+		// given
+		makeTypings();
+		// when
 		ShortTypingListResDto shortTypingListResDto = shortTypingService.findRandomShortTyping();
 		List<ShortTypingDto> shortTypingList = shortTypingListResDto.getTypingWritings();
-
+		// then
 		assertEquals(shortTypingListResDto.getContentType(), 0);
 		assertEquals(shortTypingListResDto.getTypingsType(), "practice");
 		assertEquals(shortTypingList.get(0), shortTypingDto);
