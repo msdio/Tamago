@@ -21,7 +21,7 @@ import com.project.Tamago.repository.TypingRepository;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ShortTypingServiceTest {
-	Logger log = (Logger) LoggerFactory.getLogger(ShortTypingServiceTest.class);
+
 	@Autowired
 	private ShortTypingService shortTypingService;
 
@@ -56,7 +56,6 @@ public class ShortTypingServiceTest {
 
 	@Test
 	@DisplayName("타이핑 글을 랜덤으로 30개 가져오기")
-	@Transactional
 	public void getShortTyping() {
 		// given
 		makeTypings();
@@ -67,8 +66,6 @@ public class ShortTypingServiceTest {
 
 		assertEquals(shortTypingListResDto.getContentType(), 0);
 		assertEquals(shortTypingListResDto.getTypingsType(), "practice");
-		log.info(shortTypingList.get(0).toString());
-		log.info(shortTypingDto.toString());
 		assertEquals(shortTypingList.get(0), shortTypingDto);
 	}
 
