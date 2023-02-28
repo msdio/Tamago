@@ -65,6 +65,8 @@ public class ShortTypingServiceTest {
 		// then
 		assertEquals(shortTypingListResDto.getContentType(), 0);
 		assertEquals(shortTypingListResDto.getTypingsType(), "practice");
+		System.out.println("shortTypingList = " + shortTypingList.get(0));
+		System.out.println("shortTypingDto = " + shortTypingDto);
 		assertEquals(shortTypingList.get(0), shortTypingDto);
 	}
 
