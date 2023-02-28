@@ -1,48 +1,10 @@
 import { Container, Flex, Heading, Text } from '@chakra-ui/react';
 import { useRef } from 'react';
 
-import { Tier } from '@/components/common/Tiers';
+import { Tier } from '@/components/common/Tier';
 import { fadeIn } from '@/constants/animations';
+import { tierInfo } from '@/constants/tierInfo';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
-
-interface TierInfoProps {
-  level: 0 | 1 | 2 | 3 | 4 | 5;
-  text: string;
-  label: string;
-}
-
-const tierInfo: TierInfoProps[] = [
-  {
-    level: 0,
-    text: 'GUEST',
-    label: '깃털',
-  },
-  {
-    level: 1,
-    text: 'Lv.1',
-    label: '달걀',
-  },
-  {
-    level: 2,
-    text: 'Lv.2',
-    label: '갓 난 병아리',
-  },
-  {
-    level: 3,
-    text: 'Lv.3',
-    label: '병아리',
-  },
-  {
-    level: 4,
-    text: 'Lv.4',
-    label: '청소년 병아리',
-  },
-  {
-    level: 5,
-    text: 'Lv.5',
-    label: '위풍당당한 닭',
-  },
-];
 
 export default function Tiers() {
   const observerRef = useRef<HTMLDivElement>(null);
@@ -72,9 +34,11 @@ export default function Tiers() {
 
       <Flex gap='1.625rem' justifyContent='center' mt='4.4375rem'>
         {tierInfo.map((el) => (
-          <Flex w='178px' h='17.875rem' key={el.level} alignItems='center' flexDirection='column'>
+          <Flex key={el.level} w='178px' h='17.875rem' alignItems='center' flexDirection='column'>
             <Flex w='100%' h='15.375rem' flexDirection='column' justifyContent='space-between' alignItems='center'>
-              <Tier level={el.level} />
+              <Flex w='172.7px' h='172px' alignItems='center' flexDirection='column'>
+                <Tier level={el.level} />
+              </Flex>
               <Text fontSize='1.625rem' fontWeight='extrabold' mt='1.625rem' alignItems='flex-end'>
                 {el.text}
               </Text>
