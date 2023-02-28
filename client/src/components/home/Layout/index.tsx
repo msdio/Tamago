@@ -7,7 +7,7 @@ import Tiers from '../Tiers';
 
 export default function HomeLayout() {
   return (
-    <>
+    <div style={{ overflowX: 'hidden' }}>
       <Landing />
       <Menus />
       <Stats />
@@ -15,6 +15,6 @@ export default function HomeLayout() {
       <Banner />
       <Tiers />
       <HomeFooter />
-    </>
+    </div>
   );
 }
