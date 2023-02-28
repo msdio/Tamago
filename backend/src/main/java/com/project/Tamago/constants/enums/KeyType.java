@@ -1,4 +1,4 @@
-package com.project.Tamago.constants;
+package com.project.Tamago.constants.enums;
 
 import lombok.Getter;
 

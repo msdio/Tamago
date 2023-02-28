@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.ColumnDefault;
 
-import com.project.Tamago.domain.enums.Mode;
+import com.project.Tamago.constants.enums.Mode;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

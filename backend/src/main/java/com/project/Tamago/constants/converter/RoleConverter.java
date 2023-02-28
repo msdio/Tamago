@@ -3,7 +3,7 @@ package com.project.Tamago.constants.converter;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-import com.project.Tamago.constants.Role;
+import com.project.Tamago.constants.enums.Role;
 
 @Converter
 public class RoleConverter implements AttributeConverter<Role, String> {

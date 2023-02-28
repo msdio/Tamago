@@ -26,7 +26,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import com.project.Tamago.exception.CustomException;
-import com.project.Tamago.constants.KeyType;
+import com.project.Tamago.constants.enums.KeyType;
 import com.project.Tamago.security.Token;
 
 import io.jsonwebtoken.Claims;

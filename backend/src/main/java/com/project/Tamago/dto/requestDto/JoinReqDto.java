@@ -3,7 +3,7 @@ package com.project.Tamago.dto.requestDto;
 import javax.validation.constraints.Size;
 
 import com.project.Tamago.domain.User;
-import com.project.Tamago.constants.Role;
+import com.project.Tamago.constants.enums.Role;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
