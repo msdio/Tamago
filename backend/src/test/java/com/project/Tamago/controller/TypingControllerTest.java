@@ -21,7 +21,7 @@ public class TypingControllerTest {
 
 	@Test
 	@DisplayName("짧은 글 가져오기")
-	public void findProfile() throws Exception {
+	public void findShortTypings() throws Exception {
 		// given
 
 		// when
