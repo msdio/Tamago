@@ -1,6 +1,6 @@
 package com.project.Tamago.config;
 
-import static com.project.Tamago.util.constants.Constant.*;
+import static com.project.Tamago.constants.Constant.*;
 
 import java.util.Collections;
 import java.util.HashSet;

@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.Tamago.dto.requestDto.JoinReqDto;
 import com.project.Tamago.dto.requestDto.LoginReqDto;
 import com.project.Tamago.exception.CustomException;
-import com.project.Tamago.jwt.JwtTokenProvider;
+import com.project.Tamago.security.jwt.JwtTokenProvider;
 import com.project.Tamago.repository.UserRepository;
 import com.project.Tamago.service.AuthService;
 

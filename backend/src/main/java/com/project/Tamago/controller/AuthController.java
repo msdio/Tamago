@@ -1,6 +1,6 @@
 package com.project.Tamago.controller;
 
-import static com.project.Tamago.util.constants.Constant.*;
+import static com.project.Tamago.constants.Constant.*;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,7 +24,7 @@ import com.project.Tamago.dto.requestDto.LoginReqDto;
 import com.project.Tamago.dto.requestDto.PasswordReqDto;
 import com.project.Tamago.exception.InvalidParameterException;
 import com.project.Tamago.service.AuthService;
-import com.project.Tamago.util.security.Token;
+import com.project.Tamago.security.Token;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

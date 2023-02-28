@@ -1,4 +1,4 @@
-package com.project.Tamago.mapper;
+package com.project.Tamago.dto.mapper;
 
 import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.responseDto.ProfileResDto;

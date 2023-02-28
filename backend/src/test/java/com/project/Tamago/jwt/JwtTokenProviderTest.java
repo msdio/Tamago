@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.Tamago.dto.requestDto.LoginReqDto;
+import com.project.Tamago.security.jwt.JwtTokenProvider;
 
 @SpringBootTest
 @Transactional

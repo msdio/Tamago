@@ -1,4 +1,4 @@
-package com.project.Tamago.jwt;
+package com.project.Tamago.security.jwt;
 
 import java.io.IOException;
 

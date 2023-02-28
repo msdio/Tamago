@@ -1,4 +1,4 @@
-package com.project.Tamago.util.security;
+package com.project.Tamago.security;
 
 import java.util.ArrayList;
 import java.util.Collection;
