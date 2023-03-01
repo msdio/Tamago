@@ -1,3 +1,5 @@
+import request from '@/apis';
+
 export interface ShortTypingType {
   typingId: string;
   content: string;
@@ -31,5 +33,7 @@ const SHORT_DUMMY = {
 };
 
 export const getShortTypingWritingsAPI = async (): Promise<ShortTypingType[]> => {
-  return SHORT_DUMMY.typingWritings;
+  const res = await request.get('/typing/short-typing');
+
+  return res.data.typingWritings;
 };
