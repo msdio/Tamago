@@ -4,9 +4,11 @@ import java.util.List;
 
 import com.project.Tamago.dto.ShortTypingDto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class ShortTypingListResDto {
 
 	private Integer contentType;
