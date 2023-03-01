@@ -1,8 +1,6 @@
 import { Image } from '@chakra-ui/react';
 
-interface Levels {
-  level: 0 | 1 | 2 | 3 | 4 | 5;
-}
+import type { TierLevels } from '@/types/tier';
 
 const tiersMap = {
   0: <Image src='/images/tiers/tier-zero.png' alt='tier 0' h='85%' objectFit='cover' />,
@@ -13,6 +11,6 @@ const tiersMap = {
   5: <Image src='/images/tiers/tier-five.png' alt='tier 5' w='100%' objectFit='cover' />,
 };
 
-export const Tier = ({ level }: Levels) => <>{tiersMap[level]}</>;
+export const Tier = (level: TierLevels) => <>{tiersMap[level]}</>;
 
 export const AllTiers = () => <>{Object.values(tiersMap)}</>;

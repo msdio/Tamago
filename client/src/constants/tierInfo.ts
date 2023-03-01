@@ -1,5 +1,7 @@
+import type { TierLevels } from '@/types/tier';
+
 interface TierInfoProps {
-  level: 0 | 1 | 2 | 3 | 4 | 5;
+  level: TierLevels;
   text: string;
   label: string;
 }
