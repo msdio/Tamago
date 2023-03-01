@@ -55,7 +55,7 @@ export default function PasswordChange({ handleNextStep }: PasswordChangeProps) 
       </Button>
 
       <Flex gap='10px' justifyContent='center' mt='24px'>
-        <Text color='#808080'>계정이 없으신가요?</Text>
+        <Text color='secondary.text'>계정이 없으신가요?</Text>
         <Link href='/signup'>
           <Text>회원가입하기</Text>
         </Link>

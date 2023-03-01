@@ -5,13 +5,13 @@ export default function DivideWithOr() {
     <Text
       fontSize='15px'
       fontWeight='700'
-      color='#BFBFBF'
+      color='secondary.disabled'
       display='flex'
       alignItems='center'
       _before={{
         content: '""',
         flexGrow: 1,
-        bg: '#BFBFBF',
+        bg: 'secondary.disabled',
         h: '0.6px',
         fontSize: '0px',
         lineHeight: '0px',
@@ -20,7 +20,7 @@ export default function DivideWithOr() {
       _after={{
         content: '""',
         flexGrow: 1,
-        bg: '#BFBFBF',
+        bg: 'secondary.disabled',
         h: '0.6px',
         fontSize: '0px',
         lineHeight: '0px',

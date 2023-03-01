@@ -27,17 +27,17 @@ const baseVariant = defineStyle((props) => {
     field: {
       bg: `${c}.100`,
       border: '1px solid',
-      borderColor: 'tamago-gray.500',
+      borderColor: 'secondary.disabled',
 
       _placeholder: {
         fontWeight: 'regular',
-        color: 'tamago-gray.500',
+        color: 'secondary.disabled',
       },
       _focus: {
         borderColor: `${c}.500`,
       },
       _disabled: {
-        bg: 'tamago-gray.100',
+        bg: 'secondary.fill',
       },
     },
   };
@@ -49,7 +49,7 @@ export const inputTheme = defineStyleConfig({
     base: baseVariant,
   },
   defaultProps: {
-    colorScheme: 'tamago',
+    colorScheme: 'primary',
     variant: 'base',
   },
 });

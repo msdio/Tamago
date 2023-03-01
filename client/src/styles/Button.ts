@@ -41,7 +41,7 @@ const baseVariant = defineStyle((props) => {
       bg: `${c}.700`,
       border: '0.6px solid',
       _disabled: {
-        bg: 'tamago-gray.500',
+        bg: 'secondary.disabled',
       },
     },
     _active: {
@@ -52,7 +52,7 @@ const baseVariant = defineStyle((props) => {
     _disabled: {
       bg: 'tamago-gray.500',
       border: '0.6px solid',
-      borderColor: 'tamago-gray.500',
+      borderColor: 'secondary.disabled',
     },
   };
 });
@@ -67,16 +67,16 @@ const outlineVariant = defineStyle((props) => {
     _hover: {
       bg: `${c}.200`,
       _disabled: {
-        bg: 'tamago-gray.500',
+        bg: 'secondary.disabled',
       },
     },
     _active: {
       bg: `${c}.200`,
     },
     _disabled: {
-      bg: 'tamago-gray.500',
+      bg: 'secondary.disabled',
       border: '0.6px solid',
-      borderColor: 'tamago-gray.500',
+      borderColor: 'secondary.disabled',
     },
   };
 });

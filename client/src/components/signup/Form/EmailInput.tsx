@@ -49,14 +49,14 @@ function EmailButton(
             ref={ref}
           />
           {errorMessage && value !== '' && !isValid ? (
-            <Text fontSize='15px' color='#FF0000' mt='20px'>
+            <Text fontSize='15px' color='error.main' mt='20px'>
               {errorMessage}
             </Text>
           ) : null}
         </Flex>
         <Button
           size='sm'
-          colorScheme={isValid ? 'tamago' : 'tamago-gray'}
+          colorScheme={isValid ? 'primary' : 'secondary'}
           variant={isValid ? 'base' : 'outline'}
           onClick={onClick}
         >

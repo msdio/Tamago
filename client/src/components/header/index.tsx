@@ -25,12 +25,13 @@ export function Header() {
         direction='row'
         h='88px'
         minH='88px'
-        borderBottom='0.6px solid #BFBFBF'
+        borderBottom='0.6px solid'
+        borderColor='secondary.disabled'
         p='0 120px'
         minW='1100px'
         alignItems='center'
         zIndex='100'
-        background='white'
+        background='primary.white'
       >
         <Link href='/'>
           <TamagoLogo />
@@ -46,11 +47,12 @@ export function Header() {
             <Button
               w='95.54px'
               h='35.29px'
-              border='0.516456px solid #BFBFBF'
+              border='0.516456px solid'
+              borderColor='secondary.disabled'
               borderRadius='4.3038px'
               bg='white'
               onClick={handleSignupClick}
-              color='black'
+              color='primary.black'
               fontSize='14px'
               lineHeight='17px'
             >
@@ -59,10 +61,11 @@ export function Header() {
             <Button
               w='95.54px'
               h='35.29px'
-              border='0.516456px solid #BFBFBF'
+              border='0.516456px solid'
+              borderColor='secondary.disabled'
               borderRadius='4.3038px'
               bg='white'
-              color='black'
+              color='primary.black'
               onClick={handleLoginClick}
               fontSize='14px'
               lineHeight='17px'
