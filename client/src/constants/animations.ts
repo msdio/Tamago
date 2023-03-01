@@ -70,15 +70,15 @@ export const jumping = keyframes`
 
 export const jumpingShadow = keyframes`
   0% {
-    transfrom: scale(1) translateX(1.5625rem);
+    transform: scale(1) translateX(1.5625rem);
   }
   30% {
     transform: scale(0.6, 1) translateX(1.5625rem);
   }
-  45% {
-    transfrom: scale(1) translateX(1.5625rem);
+  60% {
+    transform: scale(1) translateX(1.5625rem);
   }
   100% {
-    transfrom: scale(1) translateX(1.5625rem);
+    transform: scale(1) translateX(1.5625rem);
   }
 `;
