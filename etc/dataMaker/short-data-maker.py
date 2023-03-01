@@ -1,5 +1,5 @@
-file_location = "short_data.txt"
-language = "korean"
+file_location = "short_data_english.txt"
+language = "english"
 
 
 f = open(file_location, 'r', encoding='UTF8' )
