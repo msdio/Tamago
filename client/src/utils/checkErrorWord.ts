@@ -1,6 +1,6 @@
 import { CONSONANT, FINAL_CONSONANT, VOWEL } from '@/constants/hangul';
 
-export const getConstantVowel = (kor: string) => {
+const getConstantVowel = (kor: string) => {
   const ga = 44032;
   let uni = kor.charCodeAt(0);
 
@@ -17,7 +17,7 @@ export const getConstantVowel = (kor: string) => {
   };
 };
 
-export function isHangulChar(word: string) {
+function isHangulChar(word: string) {
   if (!word) return false;
 
   const c = word.charCodeAt(0);
@@ -27,7 +27,7 @@ export function isHangulChar(word: string) {
   return false;
 }
 
-export const checkEqualHangul = (word1: string, word2: string) => {
+const checkEqualHangul = (word1: string, word2: string) => {
   const { f: f1, s: s1, t: t1 } = getConstantVowel(word1);
   const { f: f2, s: s2, t: t2 } = getConstantVowel(word2);
   const errorWords: Record<string, number> = {};
@@ -44,7 +44,7 @@ export const checkEqualHangul = (word1: string, word2: string) => {
   return errorWords;
 };
 
-export const checkEqualEnglish = (word1: string, word2: string) => {
+const checkEqualEnglish = (word1: string, word2: string) => {
   const errorWords: Record<string, number> = {};
   if (word1 !== word2) {
     errorWords[word1] = 1;
@@ -52,3 +52,17 @@ export const checkEqualEnglish = (word1: string, word2: string) => {
 
   return errorWords;
 };
+
+const checkErrorWord = (correctWord: string, inputWord: string) => {
+  const isHangul = isHangulChar(correctWord);
+
+  if (isHangul) {
+    const currentErrorWords = checkEqualHangul(correctWord, inputWord);
+    return currentErrorWords;
+  } else {
+    const currentErrorWords = checkEqualEnglish(correctWord, inputWord);
+    return currentErrorWords;
+  }
+};
+
+export default checkErrorWord;

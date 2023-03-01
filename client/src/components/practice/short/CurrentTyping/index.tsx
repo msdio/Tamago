@@ -3,22 +3,13 @@ import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 
 import type { ShortTypingType } from '@/apis/typing';
-import { checkEqualEnglish, checkEqualHangul, isHangulChar } from '@/utils/hangul';
+import checkErrorWord from '@/utils/checkErrorWord';
 
 type ErrorWordType = Record<string, number>;
 
 interface CurrentTypingProps {
   writing: ShortTypingType;
 }
-
-const mergeObj = (obj1: ErrorWordType, obj2: ErrorWordType) => {
-  const newObj = { ...obj1 };
-  for (const key in obj2) {
-    newObj[key] += obj1[key];
-  }
-
-  return newObj;
-};
 
 // NOTE:
 // 1. 글자가 끝났는지 확인한다
@@ -50,18 +41,6 @@ export default function CurrentTyping({ writing }: CurrentTypingProps) {
     setErrorWordList(prevErrorWords);
   };
 
-  const checkErrorWord = (correctWord: string, inputWord: string) => {
-    const isHangul = isHangulChar(correctWord);
-
-    if (isHangul) {
-      const currentErrorWords = checkEqualHangul(correctWord, inputWord);
-      return currentErrorWords;
-    } else {
-      const currentErrorWords = checkEqualEnglish(correctWord, inputWord);
-      return currentErrorWords;
-    }
-  };
-
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     const word = e.target.value;
     setInput(word);
@@ -75,7 +54,7 @@ export default function CurrentTyping({ writing }: CurrentTypingProps) {
   };
 
   return (
-    <Box p='30px 49px'>
+    <Box p='30px 49px' bg='#FFF2BA'>
       <Flex pl='5px' fontSize='24px' fontWeight='bold'>
         {typingWriting}
       </Flex>

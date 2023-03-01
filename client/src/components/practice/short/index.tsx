@@ -43,8 +43,20 @@ export default function PracticeShort() {
       </Flex>
 
       {writings[currentIdx] && (
-        <Box border='0.6px solid #000000' borderRadius='30px 0px 0px 0px' h='403px' mt='27px'>
-          <CurrentTyping writing={writings[currentIdx]} />
+        <Box position='relative' border='0.6px solid #000000' borderRadius='30px 0px 0px 0px' h='403px' mt='27px'>
+          <Box
+            border='0.6px solid #000000'
+            position='absolute'
+            w='calc(100% + 32px)'
+            left='--16px'
+            right='-16px'
+            top='0'
+            bottom='0'
+            margin='auto'
+            h='fit-content'
+          >
+            <CurrentTyping writing={writings[currentIdx]} />
+          </Box>
         </Box>
       )}
     </Box>
