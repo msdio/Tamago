@@ -1,7 +1,7 @@
 import type { TierLevels } from '@/types/tier';
 
 interface TierInfoProps {
-  level: TierLevels['level'];
+  level: TierLevels;
   text: string;
   label: string;
 }
