@@ -5,13 +5,6 @@ const global = {
     p: '0',
     fontFamily: 'Pretendard',
   },
-  // footer 바닥에 붙어있게 하기 위한 css
-  // '#__next': {
-  //   h: 'full',
-  //   display: 'flex',
-  //   flexDirection: 'column',
-  //   fontFamily: 'Pretendard',
-  // },
 };
 
 const styles = {

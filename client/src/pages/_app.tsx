@@ -1,3 +1,5 @@
+import '../styles/font.css';
+
 import { ChakraProvider, Spacer } from '@chakra-ui/react';
 import type { AppProps } from 'next/app';
 
