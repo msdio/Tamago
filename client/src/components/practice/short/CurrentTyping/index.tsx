@@ -1,9 +1,9 @@
-import { Box, Input, Text } from '@chakra-ui/react';
+import { Box, Flex, Input, Text } from '@chakra-ui/react';
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 
 import type { ShortTypingType } from '@/apis/typing';
-import { checkEqualHangul, isHangulChar } from '@/utils/hangul';
+import { checkEqualEnglish, checkEqualHangul, isHangulChar } from '@/utils/hangul';
 
 type ErrorWordType = Record<string, number>;
 
@@ -28,6 +28,39 @@ const mergeObj = (obj1: ErrorWordType, obj2: ErrorWordType) => {
 export default function CurrentTyping({ writing }: CurrentTypingProps) {
   const [input, setInput] = useState('');
   const [errorWordList, setErrorWordList] = useState<ErrorWordType[]>([]);
+  const currentIdx = input.length - 1;
+
+  const typingWriting = writing.content.split('').map((word, idx) => {
+    if (currentIdx >= idx && Object.keys(errorWordList[idx]).length > 0) {
+      return (
+        <Text color='red' key={idx}>
+          {word}
+        </Text>
+      );
+    }
+    return <Text key={idx}>{word}</Text>;
+  });
+
+  const setErrorWord = (idx: number, errorWord: ErrorWordType) => {
+    // NOTE: error word를 index마다 관리하고,
+    // 지금 입력하는 index가 아니면 오류를 보여주는 방향으로
+    const prevErrorWords = [...errorWordList];
+
+    prevErrorWords[idx] = errorWord;
+    setErrorWordList(prevErrorWords);
+  };
+
+  const checkErrorWord = (correctWord: string, inputWord: string) => {
+    const isHangul = isHangulChar(correctWord);
+
+    if (isHangul) {
+      const currentErrorWords = checkEqualHangul(correctWord, inputWord);
+      return currentErrorWords;
+    } else {
+      const currentErrorWords = checkEqualEnglish(correctWord, inputWord);
+      return currentErrorWords;
+    }
+  };
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     const word = e.target.value;
@@ -37,27 +70,15 @@ export default function CurrentTyping({ writing }: CurrentTypingProps) {
     const lastWord = word[currentIdx];
     const correctLastWord = writing.content[currentIdx];
 
-    // NOTE: 한글인 경우
-    const isHangul = isHangulChar(lastWord);
-
-    if (isHangul) {
-      const currentErrorWords = checkEqualHangul(correctLastWord, lastWord);
-      // idx마다 따로 체크해야할것 같다고 생각이 든다.
-      // 치는 도중에 에러가 발생하나?
-      const prevErrorWords = [...errorWordList];
-      console.log('prevErrorWords: ', prevErrorWords);
-      prevErrorWords[currentIdx] = currentErrorWords;
-      setErrorWordList(prevErrorWords);
-    }
+    const currentErrorWords = checkErrorWord(correctLastWord, lastWord);
+    setErrorWord(currentIdx, currentErrorWords);
   };
 
   return (
     <Box p='30px 49px'>
-      <Box pl='5px'>
-        <Text fontSize='24px' fontWeight='bold'>
-          {writing.content}
-        </Text>
-      </Box>
+      <Flex pl='5px' fontSize='24px' fontWeight='bold'>
+        {typingWriting}
+      </Flex>
 
       <Input
         variant='flushed'

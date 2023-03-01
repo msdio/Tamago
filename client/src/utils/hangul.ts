@@ -43,3 +43,12 @@ export const checkEqualHangul = (word1: string, word2: string) => {
 
   return errorWords;
 };
+
+export const checkEqualEnglish = (word1: string, word2: string) => {
+  const errorWords: Record<string, number> = {};
+  if (word1 !== word2) {
+    errorWords[word1] = 1;
+  }
+
+  return errorWords;
+};
