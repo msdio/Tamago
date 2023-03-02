@@ -20,12 +20,12 @@ import lombok.RequiredArgsConstructor;
 public class TypingController {
 
 	private final ShortTypingService shortTypingService;
+	private static final String[] supportLanguage = {"korean", "english", "code"};
 
 	@GetMapping("/short-typing")
 	public ShortTypingListResDto findShortTypings(@RequestParam String language) {
 
-		if (Stream.of("korean", "english", "code")
-			.noneMatch(element -> element.equals(language)))
+		if (Stream.of(supportLanguage).noneMatch(element -> element.equals(language)))
 			throw new CustomException(ErrorCode.INVALID_PARAMETER);
 
 		return shortTypingService.findRandomShortTyping(language);
