@@ -16,7 +16,7 @@ public class TypingController {
 
 	private final ShortTypingService shortTypingService;
 
-	@GetMapping("/short-typing")
+	@GetMapping("/short")
 	public ShortTypingListResDto findShortTypings() {
 		return shortTypingService.findRandomShortTyping();
 	}
