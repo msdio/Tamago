@@ -1,8 +1,7 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import type { ShortTypingType } from '@/apis/typing';
-import { getShortTypingWritingsAPI } from '@/apis/typing';
+import type { ShortTypingResponseType } from '@/apis/typing';
 import CurrentTyping from '@/components/practice/short/CurrentTyping';
 import InfoBar from '@/components/practice/short/InfoBar';
 import PrevTyping from '@/components/practice/short/PrevTyping';
@@ -15,19 +14,13 @@ const INIT_INFO = {
   accuracy: 0,
   typist: 0,
 };
-export default function PracticeShort() {
-  const [writings, setWritings] = useState<ShortTypingType[]>([]);
+
+// NOTE: 어떻게 합치면 좋을까
+type PracticeShortProps = ShortTypingResponseType;
+
+export default function PracticeShort({ typingWritings }: PracticeShortProps) {
   const [currentIdx, setcurrentIdx] = useState(0);
   const [infos, setInfos] = useState(INIT_INFO);
-
-  const getShortTypingWritings = async () => {
-    const { typingWritings } = await getShortTypingWritingsAPI();
-    setWritings(typingWritings);
-  };
-
-  useEffect(() => {
-    getShortTypingWritings();
-  }, []);
 
   return (
     <Box p='35px 120px' minW='1100px'>
@@ -55,11 +48,11 @@ export default function PracticeShort() {
         </Box>
       </Flex>
 
-      {writings[currentIdx] && (
+      {typingWritings[currentIdx] && (
         <Box position='relative' border='0.6px solid #000000' borderRadius='30px 0px 0px 0px' mt='28px'>
           <PrevTyping />
 
-          <CurrentTyping writing={writings[currentIdx]} />
+          <CurrentTyping writing={typingWritings[currentIdx]} />
 
           <Flex p='24px 40px 32px' alignItems='center' gap='16.18px'>
             <TwoRightArrow />

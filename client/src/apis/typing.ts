@@ -5,13 +5,13 @@ export interface ShortTypingType {
   content: string;
 }
 
-interface ShortTypingResponse {
+export interface ShortTypingResponseType {
   contentType: '0' | '1';
   typingsType: 'practice';
   typingWritings: ShortTypingType[];
 }
 
-export const getShortTypingWritingsAPI = async (): Promise<ShortTypingResponse> => {
+export const getShortTypingWritingsAPI = async (): Promise<ShortTypingResponseType> => {
   const res = await request.get('/typing/short-typing?language=korean');
 
   return res.data;
