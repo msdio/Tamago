@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import type { ShortTypingType } from '@/apis/typing';
 import { getShortTypingWritingsAPI } from '@/apis/typing';
 import CurrentTyping from '@/components/practice/short/CurrentTyping';
+import InfoBarItem from '@/components/practice/short/InfoBar/InfoBarItem';
 
 export default function PracticeShort() {
   const [writings, setWritings] = useState<ShortTypingType[]>([]);
@@ -19,28 +20,30 @@ export default function PracticeShort() {
   }, []);
 
   return (
-    <Box margin='35px 120px'>
-      <Flex border='1px solid rgb(0, 0, 0)'>
-        <Box p={25} flex={1}>
-          <Text>소요 시간</Text>
-          <Text>00:06</Text>
-        </Box>
-        <Box p={25} borderLeft='1px solid #000' flex={1}>
-          <Text>WPN</Text>
-          <Text>30</Text>
-        </Box>
-        <Box p={25} borderLeft='1px solid #000' flex={1}>
-          <Text>정확도</Text>
-          <Text>99%</Text>
-        </Box>
-        <Box p={25} borderLeft='1px solid #000' flex={1}>
-          <Text>타자</Text>
-          <Text>130타</Text>
-        </Box>
+    <Box p='35px 120px' minW='1100px'>
+      <Flex border='1px solid rgb(0, 0, 0)' borderRadius={10} h={'56px'}>
+        <InfoBarItem label='소요 시간' content={'00:06'} />
+        <InfoBarItem label='WPM' content={'30'} />
+        <InfoBarItem label='정확도' content={'99%'} />
+        <InfoBarItem label='타자' content={'130타'} />
+
         <Box p={25} borderLeft='1px solid #000' flex={1}></Box>
-        <Box p={25} borderLeft='1px solid #000' flex={1}>
-          <Text>타마고 모드</Text>
-        </Box>
+        <Flex
+          pl={23}
+          pr={27}
+          borderLeft='1px solid #000'
+          flex={1}
+          flexDirection='row-reverse'
+          alignItems='center'
+          gap={1}
+        >
+          <Text fontWeight={600} fontSize={18} lineHeight='18px'>
+            님
+          </Text>
+          <Text fontWeight={800} fontSize={18} lineHeight='18px'>
+            타마고
+          </Text>
+        </Flex>
       </Flex>
 
       {writings[currentIdx] && (
