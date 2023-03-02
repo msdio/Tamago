@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import type { ShortTypingType } from '@/apis/typing';
 import { getShortTypingWritingsAPI } from '@/apis/typing';
 import CurrentTyping from '@/components/practice/short/CurrentTyping';
-import InfoBarItem from '@/components/practice/short/InfoBar/InfoBarItem';
+import InfoBar from '@/components/practice/short/InfoBar';
+import DownArrow from '@/icons/DownArrow';
 
 export default function PracticeShort() {
   const [writings, setWritings] = useState<ShortTypingType[]>([]);
@@ -21,33 +22,27 @@ export default function PracticeShort() {
 
   return (
     <Box p='35px 120px' minW='1100px'>
-      <Flex border='1px solid rgb(0, 0, 0)' borderRadius={10} h={'56px'}>
-        <InfoBarItem label='소요 시간' content={'00:06'} />
-        <InfoBarItem label='WPM' content={'30'} />
-        <InfoBarItem label='정확도' content={'99%'} />
-        <InfoBarItem label='타자' content={'130타'} />
+      <Flex
+        mb='21px'
+        alignItems='center'
+        gap='8.5px'
+        border='0.6px solid #000000'
+        bg='#BCF075'
+        w='fit-content'
+        p='10px 23px'
+        borderRadius={30}
+      >
+        <Text fontSize='18px' fontWeight={500}>
+          짧은 글 연습모드
+        </Text>
 
-        <Box p={25} borderLeft='1px solid #000' flex={1}></Box>
-        <Flex
-          pl={23}
-          pr={27}
-          borderLeft='1px solid #000'
-          flex={1}
-          flexDirection='row-reverse'
-          alignItems='center'
-          gap={1}
-        >
-          <Text fontWeight={600} fontSize={18} lineHeight='18px'>
-            님
-          </Text>
-          <Text fontWeight={800} fontSize={18} lineHeight='18px'>
-            타마고
-          </Text>
-        </Flex>
+        <DownArrow />
       </Flex>
 
+      <InfoBar time={8} wpm={0} accuracy={0} typist={0} />
+
       {writings[currentIdx] && (
-        <Box position='relative' border='0.6px solid #000000' borderRadius='30px 0px 0px 0px' h='403px' mt='27px'>
+        <Box position='relative' border='0.6px solid #000000' borderRadius='30px 0px 0px 0px' h='403px' mt='28px'>
           <Box
             border='0.6px solid #000000'
             position='absolute'
