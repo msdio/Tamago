@@ -8,9 +8,10 @@ import CurrentTyping from '@/components/practice/short/CurrentTyping';
 export default function PracticeShort() {
   const [writings, setWritings] = useState<ShortTypingType[]>([]);
   const [currentIdx, setcurrentIdx] = useState(0);
+
   const getShortTypingWritings = async () => {
-    const res = await getShortTypingWritingsAPI();
-    setWritings(res);
+    const { typingWritings } = await getShortTypingWritingsAPI();
+    setWritings(typingWritings);
   };
 
   useEffect(() => {
