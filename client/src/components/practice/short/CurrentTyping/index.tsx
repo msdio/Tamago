@@ -50,12 +50,26 @@ export default function CurrentTyping({ writing }: CurrentTypingProps) {
   };
 
   return (
-    <Box p='30px 49px' bg='#FFF2BA'>
-      <Flex pl='5px' fontSize='24px' fontWeight='bold'>
+    <Box
+      border='0.6px solid #000000'
+      position='relative'
+      w='calc(100% + 32px)'
+      left='-16px'
+      right='-16px'
+      top='0'
+      bottom='0'
+      margin='auto'
+      h='fit-content'
+      borderRadius={10}
+      p='30px 49px'
+      bg='#FFF2BA'
+    >
+      <Flex pl='5px' mb='10px' fontSize='23px' fontWeight={500}>
         {typingWriting}
       </Flex>
 
       <Input
+        bg='#FFE98B'
         variant='flushed'
         placeholder=' '
         type='text'
@@ -63,7 +77,8 @@ export default function CurrentTyping({ writing }: CurrentTypingProps) {
         onChange={handleInput}
         w='100%'
         p='11px 5px'
-        fontSize='24px'
+        height='48px'
+        fontSize='23px'
       />
     </Box>
   );

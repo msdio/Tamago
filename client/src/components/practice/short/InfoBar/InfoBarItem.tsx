@@ -19,15 +19,15 @@ function InfoBarItem({ label, content }: InfoBarItemProps) {
       gap='40px'
       justifyContent='space-between'
       alignItems='center'
-      pl={23}
-      pr={27}
+      pl={22}
+      pr={22}
       flex={1}
       color='#000'
     >
-      <Text fontWeight={800} fontSize={18} lineHeight='18px'>
+      <Text fontWeight={800} fontSize={16}>
         {label}
       </Text>
-      <Text fontFamily={'GangwonEduPower'} fontSize={25} fontWeight={900} lineHeight='25px' mt='2px'>
+      <Text fontFamily={'GangwonEduPower'} fontSize={20} fontWeight={900} mt='3px'>
         {content}
       </Text>
     </Wrapper>
