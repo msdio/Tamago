@@ -6,7 +6,7 @@ import { createContext } from 'react';
 
 import type { ShortTypingType, TypingHistoryRequest } from '@/apis/typing';
 import useStopwatch from '@/components/practice/short/useStopWatch';
-import { calcTypingSpeed, calcWrongCount } from '@/utils/typing';
+import { calcAccuracy, calcTypingSpeed } from '@/utils/typing';
 
 export interface SubmitRequestType {
   input: string;
@@ -15,6 +15,9 @@ export interface SubmitRequestType {
 interface ShortTypingContextType {
   time: number;
   currentWritingContent: string;
+  typingCount: number;
+  typingSpeed: number;
+  typingAccuracy: number;
 }
 
 interface ShortTypingHandlerContextType {
@@ -58,6 +61,11 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
     setTypingSpeed(newTypingSpeed);
   };
 
+  const handleTypingAccuracy = (inputWriting: string) => {
+    const newAccuracy = calcAccuracy({ inputWriting, correctWriting: currentWritingContent });
+    setTypingAccuracy(newAccuracy);
+  };
+
   const handleBackspace = () => {
     backspaceCount.current += 1;
   };
@@ -73,6 +81,7 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
     //? 타이핑 속도 계산
     handleTypingSpeed();
     //? 타이핑 정확도 계산 - 오타 계산
+    handleTypingAccuracy(input);
   };
 
   const handleSubmit = async (input: string) => {
@@ -98,7 +107,6 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
   };
 
   const handleEndTyping = async (input: string) => {
-    console.log('handleEndTyping: ', input);
     await handleSubmit(input);
 
     // TODO : 오류 단어 체크
@@ -116,6 +124,9 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
   const values = {
     time: time.second,
     currentWritingContent,
+    typingAccuracy,
+    typingCount,
+    typingSpeed,
   };
 
   const actions = {

@@ -1,17 +1,19 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 
 import InfoBarItem from '@/components/practice/short/InfoBar/InfoBarItem';
+import { useShortTypingContext } from '@/components/practice/short/shortTypingContext';
 import DownArrow from '@/icons/DownArrow';
 import { getSecondToMMSSFormat } from '@/utils/time';
 
 interface InfoBarProps {
   time: number;
-  wpm: number;
-  accuracy: number;
-  typist: number;
+  // wpm: number;
+  // accuracy: number;
+  // typist: number;
 }
 
-function InfoBar({ time, wpm, accuracy, typist }: InfoBarProps) {
+function InfoBar({ time }: InfoBarProps) {
+  const { typingAccuracy, typingCount, typingSpeed } = useShortTypingContext();
   return (
     <Flex gap='24px'>
       <Box w='118px' bg='#CEF0FF' border=' 0.6px solid #000000' borderRadius={10}></Box>
@@ -35,9 +37,9 @@ function InfoBar({ time, wpm, accuracy, typist }: InfoBarProps) {
 
         <Flex border='1px solid rgb(0, 0, 0)' borderRadius={10} h={'56px'}>
           <InfoBarItem label='경과 시간' content={getSecondToMMSSFormat(time)} />
-          <InfoBarItem label='WPM' content={`${wpm}`} />
-          <InfoBarItem label='정확도' content={`${accuracy}%`} />
-          <InfoBarItem label='타자' content={`${typist}타`} />
+          <InfoBarItem label='WPM' content={`${typingSpeed}`} />
+          <InfoBarItem label='정확도' content={`${typingAccuracy}%`} />
+          <InfoBarItem label='타자' content={`${typingCount}타`} />
 
           <Flex pr={27} borderLeft='1px solid #000' flex={1} flexDirection='row-reverse' alignItems='center' gap={1}>
             <Text fontWeight={600} fontSize={16}>
