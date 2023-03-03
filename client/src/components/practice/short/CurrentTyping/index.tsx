@@ -6,9 +6,11 @@ import type { ShortTypingType } from '@/apis/typing';
 
 interface CurrentTypingProps {
   writing: ShortTypingType;
+  onStart: () => void;
+  onEnd: () => Promise<void>;
 }
 
-export default function CurrentTyping({ writing }: CurrentTypingProps) {
+export default function CurrentTyping({ writing, onStart, onEnd }: CurrentTypingProps) {
   const [input, setInput] = useState('');
   // const [errorWordList, setErrorWordList] = useState<ErrorWordType[]>([]);
 
@@ -40,6 +42,8 @@ export default function CurrentTyping({ writing }: CurrentTypingProps) {
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     const word = e.target.value;
     setInput(word);
+
+    onStart();
 
     // const currentIdx = word.length - 1;
     // const lastWord = word[currentIdx];
@@ -79,6 +83,10 @@ export default function CurrentTyping({ writing }: CurrentTypingProps) {
         p='11px 5px'
         height='48px'
         fontSize='23px'
+        onSelect={(e) => e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)}
+        onCopy={(e) => e.preventDefault()}
+        onCut={(e) => e.preventDefault()}
+        onPaste={(e) => e.preventDefault()}
       />
     </Box>
   );
