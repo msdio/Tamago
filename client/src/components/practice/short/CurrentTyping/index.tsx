@@ -15,7 +15,7 @@ export interface SubmitRequestType {
 
 export default function CurrentTyping({}) {
   const { currentWritingContent: correctWriting } = useShortTypingContext();
-  const { onStartTyping } = useShortTypingHandlerContext();
+  const { onStartTyping, onEndTyping } = useShortTypingHandlerContext();
 
   const [input, setInput] = useState(INIT_INPUT);
 
@@ -34,7 +34,6 @@ export default function CurrentTyping({}) {
     return <Text key={idx}>{word}</Text>;
   });
 
-  // TODO : error word를 잡는것은 서버에 보낼때만 하면 된다, 이전에는 값이 틀린지 아닌지만 체크하면 된다.
   // const setErrorWord = (idx: number, errorWord: ErrorWordType) => {
   //   // NOTE: error word를 index마다 관리하고,
   //   // 지금 입력하는 index가 아니면 오류를 보여주는 방향으로
@@ -54,9 +53,10 @@ export default function CurrentTyping({}) {
     if (word.length === correctWriting.length) {
       const isLast = checkAllInput(word[correctWriting.length - 1], correctWriting[correctWriting.length - 1]);
       if (isLast) {
-        // onEnd({ correctWriting, input: word });
+        onEndTyping(word);
       }
     }
+
     // const currentIdx = word.length - 1;
     // const lastWord = word[currentIdx];
     // const correctLastWord = writing.content[currentIdx];
@@ -69,7 +69,7 @@ export default function CurrentTyping({}) {
     //? NOTE: enter 누른 경우 -> submit
     if (e.key === 'Enter') {
       e.preventDefault();
-      // onEnd({ correctWriting, input });
+      onEndTyping(input);
     }
 
     // TODO : backspace 누른 경우 -> 타수에 영향

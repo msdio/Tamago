@@ -7,7 +7,6 @@ import type { ShortTypingType } from '@/apis/typing';
 import useStopwatch from '@/components/practice/short/useStopWatch';
 
 export interface SubmitRequestType {
-  correctWriting: string;
   input: string;
 }
 
@@ -18,7 +17,7 @@ interface ShortTypingContextType {
 
 interface ShortTypingHandlerContextType {
   onStartTyping: () => void;
-  handleEndTyping: ({}: SubmitRequestType) => void;
+  onEndTyping: (input: string) => Promise<void>;
 }
 
 const ShortTypingContext = createContext<ShortTypingContextType | null>(null);
@@ -40,9 +39,14 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
     timePlay();
   };
 
-  const handleEndTyping = async ({ correctWriting, input }: SubmitRequestType) => {
-    // TODO : 오류 단어 체크
+  const handleSubmit = () => {
+    // TODO : error word를 잡는것은 서버에 보낼때만 하면 된다, 이전에는 값이 틀린지 아닌지만 체크하면 된다.
+  };
 
+  const handleEndTyping = async (input: string) => {
+    console.log('handleEndTyping: ', input);
+
+    // TODO : 오류 단어 체크
     const data = {
       content: input,
       time: time.second,
@@ -65,7 +69,7 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
 
   const actions = {
     onStartTyping: handleStartTyping,
-    handleEndTyping,
+    onEndTyping: handleEndTyping,
   };
 
   return (
