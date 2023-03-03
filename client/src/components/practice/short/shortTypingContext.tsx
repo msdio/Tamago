@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useContext } from 'react';
 import { createContext } from 'react';
 
-import type { ShortTypingType } from '@/apis/typing';
+import type { ShortTypingType, TypingHistoryRequest } from '@/apis/typing';
 import useStopwatch from '@/components/practice/short/useStopWatch';
 
 export interface SubmitRequestType {
@@ -39,18 +39,32 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
     timePlay();
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (input: string) => {
     // TODO : error word를 잡는것은 서버에 보낼때만 하면 된다, 이전에는 값이 틀린지 아닌지만 체크하면 된다.
+
+    const data: TypingHistoryRequest = {
+      content: typingWritings[currentIdx]?.content,
+      resultContent: input,
+      elapsedTime: time.second, // 초 단위!
+      typingId: '1231',
+      contentType: 0, // 1: 긴글?, 0: 짧은 글
+      contentLength: 24, // 타이핑한 짧은 글 글자 길이 = 총글자수
+      pageInfo: null, // 짧은 글일 경우 NULL
+      endTime: new Date(),
+      language: 'Korean', // 언어 종류
+      typingMode: 'practice',
+      typingSpeed: 550,
+      typingAccuracy: 98,
+      wrongKeys: [],
+    };
+
+    console.log(data);
   };
 
   const handleEndTyping = async (input: string) => {
     console.log('handleEndTyping: ', input);
 
     // TODO : 오류 단어 체크
-    const data = {
-      content: input,
-      time: time.second,
-    };
 
     timeReset();
 
