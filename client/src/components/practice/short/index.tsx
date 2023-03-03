@@ -1,11 +1,10 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
-import { useState } from 'react';
 
 import type { ShortTypingResponseType } from '@/apis/typing';
 import CurrentTyping from '@/components/practice/short/CurrentTyping';
 import InfoBar from '@/components/practice/short/InfoBar';
 import PrevTyping from '@/components/practice/short/PrevTyping';
-import useStopwatch from '@/components/practice/short/useStopWatch';
+import { useShortTypingContext } from '@/components/practice/short/shortTypingContext';
 import TwoRightArrow from '@/icons/TwoRightArrow';
 
 const INIT_INFO = {
@@ -18,31 +17,47 @@ const INIT_INFO = {
 type PracticeShortProps = ShortTypingResponseType;
 
 export default function PracticeShort({ typingWritings }: PracticeShortProps) {
-  const [currentIdx, setcurrentIdx] = useState(0);
-  const [infos, setInfos] = useState(INIT_INFO);
+  // const { time, status, timePlay, timePause, timeReset } = useStopwatch();
+  const { time, currentWritingContent } = useShortTypingContext();
+  // const [currentIdx, setCurrentIdx] = useState(0);
+  // const [infos, setInfos] = useState(INIT_INFO);
+  // const [typingCnt, setTypingCnt] = useState(0);
 
-  const { time, status, timePlay, timePause } = useStopwatch();
+  // const handleStartTyping = () => {
+  //   if (status === 'stop') {
+  //     timePlay();
+  //   }
+  // };
 
-  const handleStartTyping = () => {
-    if (status === 'stop') {
-      timePlay();
-    }
-  };
+  // const handleEndTyping = async ({ correctWriting, input }: SubmitRequestType) => {
+  //   // TODO : 오류 단어 체크
 
-  const handleEndTyping = async (input: string) => {
-    console.log('input: ', input);
-    timePause();
-  };
+  //   const data = {
+  //     content: input,
+  //     time: time.second,
+  //   };
+
+  //   console.log('handleEndTyping: ', data);
+
+  //   timeReset();
+
+  //   //? NOTE: 다음 문장으로 넘어간다.
+  //   if (currentIdx < typingWritings.length - 1) {
+  //     setCurrentIdx((prev) => prev + 1);
+  //   } else {
+  //     // TODO : 30문장 끝
+  //   }
+  // };
 
   return (
     <Box p='35px 120px' minW='1100px'>
-      <InfoBar {...infos} time={time.second} />
+      <InfoBar time={time} wpm={0} accuracy={0} typist={0} />
 
-      {typingWritings[currentIdx] && (
+      {currentWritingContent && (
         <Box position='relative' border='0.6px solid #000000' borderRadius='30px 0px 0px 0px' mt='28px'>
           <PrevTyping />
 
-          <CurrentTyping writing={typingWritings[currentIdx]} onStart={handleStartTyping} onEnd={handleEndTyping} />
+          <CurrentTyping />
 
           <Flex p='24px 40px 32px' alignItems='center' gap='16.18px'>
             <TwoRightArrow />

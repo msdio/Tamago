@@ -1,20 +1,24 @@
 import { Box, Flex, Input, Text } from '@chakra-ui/react';
-import type { ChangeEvent } from 'react';
+import type { ChangeEvent, KeyboardEvent } from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
 
-import type { ShortTypingType } from '@/apis/typing';
+import { useShortTypingContext } from '@/components/practice/short/shortTypingContext';
 import { checkAllInput } from '@/utils/checkErrorWord';
 
-interface CurrentTypingProps {
-  writing: ShortTypingType;
-  onStart: () => void;
-  onEnd: (input: string) => Promise<void>;
+const INIT_INPUT = '';
+
+export interface SubmitRequestType {
+  correctWriting: string;
+  input: string;
 }
 
-export default function CurrentTyping({ writing, onStart, onEnd }: CurrentTypingProps) {
-  const [input, setInput] = useState('');
+export default function CurrentTyping({}) {
+  const { currentWritingContent: correctWriting } = useShortTypingContext();
+  const [input, setInput] = useState(INIT_INPUT);
+
   //? NOTE: 입력값과 실제 입력해야 하는 값을 비교하고, error를 띄운다
-  const typingWriting = writing.content.split('').map((word, idx) => {
+  const typingWriting = correctWriting?.split('').map((word, idx) => {
     if (word === ' ') {
       return <Text key={idx}>&nbsp;</Text>;
     }
@@ -42,13 +46,13 @@ export default function CurrentTyping({ writing, onStart, onEnd }: CurrentTyping
     const word = e.target.value;
     setInput(word);
 
-    onStart();
+    // onStart();
 
-    // NOTE: 마지막 글자까지 입력하면, 제출하고 다음 문장으로 넘어간다.
-    if (word.length === writing.content.length) {
-      const isLast = checkAllInput(word[writing.content.length - 1], writing.content[writing.content.length - 1]);
+    //? NOTE: 마지막 글자까지 입력하면, 제출하고 다음 문장으로 넘어간다.
+    if (word.length === correctWriting.length) {
+      const isLast = checkAllInput(word[correctWriting.length - 1], correctWriting[correctWriting.length - 1]);
       if (isLast) {
-        onEnd(word);
+        // onEnd({ correctWriting, input: word });
       }
     }
     // const currentIdx = word.length - 1;
@@ -58,6 +62,23 @@ export default function CurrentTyping({ writing, onStart, onEnd }: CurrentTyping
     // const currentErrorWords = checkErrorWord(correctLastWord, lastWord);
     // setErrorWord(currentIdx, currentErrorWords);
   };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    //? NOTE: enter 누른 경우 -> submit
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      // onEnd({ correctWriting, input });
+    }
+
+    // TODO : backspace 누른 경우 -> 타수에 영향
+    if (e.key === 'Backspace') {
+      // e.preventDefault();
+    }
+  };
+
+  useEffect(() => {
+    setInput(INIT_INPUT);
+  }, [correctWriting]);
 
   return (
     <Box
@@ -85,6 +106,7 @@ export default function CurrentTyping({ writing, onStart, onEnd }: CurrentTyping
         type='text'
         value={input}
         onChange={handleInput}
+        onKeyDown={handleKeyDown}
         w='100%'
         p='11px 5px'
         height='48px'

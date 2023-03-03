@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import type { ShortTypingResponseType } from '@/apis/typing';
 import { getShortTypingWritingsAPI } from '@/apis/typing';
 import PracticeShort from '@/components/practice/short';
+import ShortTypingProvider from '@/components/practice/short/shortTypingContext';
 
 // interface PracticeShortPageProps {
 //   data: ShortTypingResponseType;
@@ -26,9 +27,9 @@ export default function PracticeShortPage() {
   }, []);
 
   return (
-    <>
+    <ShortTypingProvider typingWritings={data.typingWritings}>
       <PracticeShort {...data} />;
-    </>
+    </ShortTypingProvider>
   );
 }
 
