@@ -15,7 +15,7 @@ export interface SubmitRequestType {
 
 export default function CurrentTyping({}) {
   const { currentWritingContent: correctWriting } = useShortTypingContext();
-  const { onStartTyping, onEndTyping } = useShortTypingHandlerContext();
+  const { onStartTyping, onEndTyping, onBackspace, onTyping } = useShortTypingHandlerContext();
 
   const [input, setInput] = useState(INIT_INPUT);
 
@@ -47,7 +47,7 @@ export default function CurrentTyping({}) {
     const word = e.target.value;
     setInput(word);
 
-    onStartTyping();
+    onTyping(word);
 
     //? NOTE: 마지막 글자까지 입력하면, 제출하고 다음 문장으로 넘어간다.
     if (word.length === correctWriting.length) {
@@ -78,6 +78,7 @@ export default function CurrentTyping({}) {
     // TODO : backspace 누른 경우 -> 타수에 영향
     if (e.key === 'Backspace') {
       // e.preventDefault();
+      onBackspace();
     }
   };
 

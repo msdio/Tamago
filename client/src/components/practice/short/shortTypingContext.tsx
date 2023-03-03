@@ -1,10 +1,12 @@
 import type { ReactNode } from 'react';
+import { useRef } from 'react';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { createContext } from 'react';
 
 import type { ShortTypingType, TypingHistoryRequest } from '@/apis/typing';
 import useStopwatch from '@/components/practice/short/useStopWatch';
+import { calcTypingSpeed, calcWrongCount } from '@/utils/typing';
 
 export interface SubmitRequestType {
   input: string;
@@ -18,6 +20,9 @@ interface ShortTypingContextType {
 interface ShortTypingHandlerContextType {
   onStartTyping: () => void;
   onEndTyping: (input: string) => Promise<void>;
+
+  onBackspace: () => void;
+  onTyping: (inputChar: string) => void;
 }
 
 const ShortTypingContext = createContext<ShortTypingContextType | null>(null);
@@ -29,21 +34,52 @@ interface ShortTypingProviderProps {
 }
 
 const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderProps) => {
+  // NOTE : state를 하나로 합칠지는 고민중.
   const { time, status, timePlay, timePause, timeReset } = useStopwatch();
+  const [typingCount, setTypingCount] = useState(0);
+  const [typingSpeed, setTypingSpeed] = useState(0);
+  const [typingAccuracy, setTypingAccuracy] = useState(0);
+  const backspaceCount = useRef(0);
 
   const [currentIdx, setCurrentIdx] = useState(0);
-  const [typingCnt, setTypingCnt] = useState(0);
 
+  const currentWritingContent = typingWritings[currentIdx]?.content ?? '';
   const handleStartTyping = () => {
-    if (status === 'play') return;
+    return;
     timePlay();
   };
 
-  const handleSubmit = (input: string) => {
+  const handleTypingSpeed = () => {
+    const newTypingSpeed = calcTypingSpeed({
+      typingCount,
+      backspaceCount: backspaceCount.current,
+      elapsedTime: time.second,
+    });
+    setTypingSpeed(newTypingSpeed);
+  };
+
+  const handleBackspace = () => {
+    backspaceCount.current += 1;
+  };
+
+  const handleTyping = (input: string) => {
+    // 경과 시간 계산 시작
+    if (status !== 'play') {
+      timePlay();
+    }
+
+    //? NOTE: 한글, 영타 구분?, 타자수 계산
+    setTypingCount((prev) => prev + 1);
+    //? 타이핑 속도 계산
+    handleTypingSpeed();
+    //? 타이핑 정확도 계산 - 오타 계산
+  };
+
+  const handleSubmit = async (input: string) => {
     // TODO : error word를 잡는것은 서버에 보낼때만 하면 된다, 이전에는 값이 틀린지 아닌지만 체크하면 된다.
 
     const data: TypingHistoryRequest = {
-      content: typingWritings[currentIdx]?.content,
+      content: currentWritingContent,
       resultContent: input,
       elapsedTime: time.second, // 초 단위!
       typingId: '1231',
@@ -53,7 +89,7 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
       endTime: new Date(),
       language: 'Korean', // 언어 종류
       typingMode: 'practice',
-      typingSpeed: 550,
+      typingSpeed,
       typingAccuracy: 98,
       wrongKeys: [],
     };
@@ -63,6 +99,7 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
 
   const handleEndTyping = async (input: string) => {
     console.log('handleEndTyping: ', input);
+    await handleSubmit(input);
 
     // TODO : 오류 단어 체크
 
@@ -78,12 +115,14 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
 
   const values = {
     time: time.second,
-    currentWritingContent: typingWritings[currentIdx]?.content ?? '',
+    currentWritingContent,
   };
 
   const actions = {
     onStartTyping: handleStartTyping,
     onEndTyping: handleEndTyping,
+    onBackspace: handleBackspace,
+    onTyping: handleTyping,
   };
 
   return (
