@@ -8,11 +8,6 @@ const SIGNUP_PATH = '/auth/join';
 const LOGIN_PATH = '/auth/login';
 const EMAIL_DUPLICATE_PATH = '/auth/email';
 
-interface LoginAPIReturnType {
-  accessToken: string;
-  refreshToken: string;
-}
-
 interface EmailDuplicateResponse {
   code: number;
   description?: string;
@@ -23,10 +18,8 @@ export const loginAPI = async (email: string, password: string): Promise<number>
     const response = await request.post(LOGIN_PATH, { email, password });
 
     const { data, status } = response;
-    const { accessToken, refreshToken }: LoginAPIReturnType = data;
 
-    window.localStorage.setItem('accessToken', accessToken);
-    window.localStorage.setItem('refreshToken', refreshToken);
+    window.localStorage.setItem('accessToken', data.result);
 
     return status;
   } catch (error) {

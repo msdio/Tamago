@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -26,6 +27,13 @@ public class ControllerAdvice {
 		ErrorCode errorCode = exception.getErrorCode();
 		log.error(errorCode.getDescription());
 		return new ErrorMessage(errorCode, exception.getErrors());
+	}
+
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(MissingServletRequestParameterException.class)
+	protected ErrorMessage nullParameterExceptionHandler(MissingServletRequestParameterException exception) {
+		log.error("파라미터 {}가 존재하지 않습니다", exception.getParameterName());
+		return new ErrorMessage(NULL_PARAMETER);
 	}
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)

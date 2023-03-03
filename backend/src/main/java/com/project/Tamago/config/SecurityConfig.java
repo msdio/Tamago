@@ -62,6 +62,7 @@ public class SecurityConfig {
 			.antMatchers("/v2/api-docs").permitAll()
 			.antMatchers("/health").permitAll()
 			.antMatchers("/h2-console/**").permitAll()
+			.antMatchers("/typing/**").permitAll()
 			.and()
 			.authorizeRequests()
 			.anyRequest().authenticated();
