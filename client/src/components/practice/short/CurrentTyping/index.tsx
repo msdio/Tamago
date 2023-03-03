@@ -3,7 +3,7 @@ import type { ChangeEvent, KeyboardEvent } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
-import { useShortTypingContext } from '@/components/practice/short/shortTypingContext';
+import { useShortTypingContext, useShortTypingHandlerContext } from '@/components/practice/short/shortTypingContext';
 import { checkAllInput } from '@/utils/checkErrorWord';
 
 const INIT_INPUT = '';
@@ -15,6 +15,8 @@ export interface SubmitRequestType {
 
 export default function CurrentTyping({}) {
   const { currentWritingContent: correctWriting } = useShortTypingContext();
+  const { onStartTyping } = useShortTypingHandlerContext();
+
   const [input, setInput] = useState(INIT_INPUT);
 
   //? NOTE: 입력값과 실제 입력해야 하는 값을 비교하고, error를 띄운다
@@ -46,7 +48,7 @@ export default function CurrentTyping({}) {
     const word = e.target.value;
     setInput(word);
 
-    // onStart();
+    onStartTyping();
 
     //? NOTE: 마지막 글자까지 입력하면, 제출하고 다음 문장으로 넘어간다.
     if (word.length === correctWriting.length) {

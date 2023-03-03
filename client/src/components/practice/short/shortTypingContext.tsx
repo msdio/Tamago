@@ -6,12 +6,23 @@ import { createContext } from 'react';
 import type { ShortTypingType } from '@/apis/typing';
 import useStopwatch from '@/components/practice/short/useStopWatch';
 
+export interface SubmitRequestType {
+  correctWriting: string;
+  input: string;
+}
+
 interface ShortTypingContextType {
   time: number;
   currentWritingContent: string;
 }
 
-const ShortTypingContext = createContext<ShortTypingContextType>({});
+interface ShortTypingHandlerContextType {
+  onStartTyping: () => void;
+  handleEndTyping: ({}: SubmitRequestType) => void;
+}
+
+const ShortTypingContext = createContext<ShortTypingContextType | null>(null);
+const ShortTypingHandlerContext = createContext<ShortTypingHandlerContextType | null>(null);
 
 interface ShortTypingProviderProps {
   children: ReactNode;
@@ -23,6 +34,11 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
 
   const [currentIdx, setCurrentIdx] = useState(0);
   const [typingCnt, setTypingCnt] = useState(0);
+
+  const handleStartTyping = () => {
+    if (status === 'play') return;
+    timePlay();
+  };
 
   const handleEndTyping = async ({ correctWriting, input }: SubmitRequestType) => {
     // TODO : 오류 단어 체크
@@ -42,18 +58,36 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
     }
   };
 
-  const value = {
+  const values = {
     time: time.second,
     currentWritingContent: typingWritings[currentIdx]?.content ?? '',
   };
 
-  return <ShortTypingContext.Provider value={value}>{children}</ShortTypingContext.Provider>;
+  const actions = {
+    onStartTyping: handleStartTyping,
+    handleEndTyping,
+  };
+
+  return (
+    <ShortTypingContext.Provider value={values}>
+      <ShortTypingHandlerContext.Provider value={actions}>{children}</ShortTypingHandlerContext.Provider>
+    </ShortTypingContext.Provider>
+  );
 };
 
 export function useShortTypingContext() {
   const value = useContext(ShortTypingContext);
   if (value === null) {
-    throw new Error('useShortTypingContext should be used within InterviewApplicantsProvider');
+    throw new Error('useShortTypingContext should be used within ShortTypingProvider');
+  }
+
+  return value;
+}
+
+export function useShortTypingHandlerContext() {
+  const value = useContext(ShortTypingHandlerContext);
+  if (value === null) {
+    throw new Error('useShortTypingHandlerContext should be used within ShortTypingHandlerProvider');
   }
 
   return value;
