@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 
 import { useShortTypingContext, useShortTypingHandlerContext } from '@/components/practice/short/shortTypingContext';
-import { checkAllInput } from '@/utils/checkErrorWord';
+import { checkAllInputTyping } from '@/utils/typing';
 
 const INIT_INPUT = '';
 
@@ -51,10 +51,13 @@ export default function CurrentTyping({}) {
 
     //? NOTE: 마지막 글자까지 입력하면, 제출하고 다음 문장으로 넘어간다.
     if (word.length === correctWriting.length) {
-      const isLast = checkAllInput(word[correctWriting.length - 1], correctWriting[correctWriting.length - 1]);
+      const isLast = checkAllInputTyping(word[correctWriting.length - 1], correctWriting[correctWriting.length - 1]);
       if (isLast) {
         onEndTyping(word);
       }
+    }
+    if (word.length > correctWriting.length) {
+      onEndTyping(word);
     }
 
     // const currentIdx = word.length - 1;
