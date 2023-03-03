@@ -65,4 +65,20 @@ const checkErrorWord = (correctWord: string, inputWord: string) => {
   }
 };
 
+const checkAllInput = (correctWord: string, inputWord: string) => {
+  const isHangul = isHangulChar(correctWord);
+  if (isHangul) {
+    const { f: f1, s: s1, t: t1 } = getConstantVowel(correctWord);
+    const { f: f2, s: s2, t: t2 } = getConstantVowel(inputWord);
+
+    const correctCnt = [f1, s1, t1].filter((v) => v).length;
+    const inputCnt = [f2, s2, t2].filter((v) => v).length;
+    return correctCnt === inputCnt;
+  } else {
+    return correctWord.length === inputWord.length;
+  }
+};
+
+export { checkAllInput };
+
 export default checkErrorWord;

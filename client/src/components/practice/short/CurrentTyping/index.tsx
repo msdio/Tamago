@@ -3,17 +3,16 @@ import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 
 import type { ShortTypingType } from '@/apis/typing';
+import { checkAllInput } from '@/utils/checkErrorWord';
 
 interface CurrentTypingProps {
   writing: ShortTypingType;
   onStart: () => void;
-  onEnd: () => Promise<void>;
+  onEnd: (input: string) => Promise<void>;
 }
 
 export default function CurrentTyping({ writing, onStart, onEnd }: CurrentTypingProps) {
   const [input, setInput] = useState('');
-  // const [errorWordList, setErrorWordList] = useState<ErrorWordType[]>([]);
-
   //? NOTE: 입력값과 실제 입력해야 하는 값을 비교하고, error를 띄운다
   const typingWriting = writing.content.split('').map((word, idx) => {
     if (word === ' ') {
@@ -45,6 +44,13 @@ export default function CurrentTyping({ writing, onStart, onEnd }: CurrentTyping
 
     onStart();
 
+    // NOTE: 마지막 글자까지 입력하면, 제출하고 다음 문장으로 넘어간다.
+    if (word.length === writing.content.length) {
+      const isLast = checkAllInput(word[writing.content.length - 1], writing.content[writing.content.length - 1]);
+      if (isLast) {
+        onEnd(word);
+      }
+    }
     // const currentIdx = word.length - 1;
     // const lastWord = word[currentIdx];
     // const correctLastWord = writing.content[currentIdx];

@@ -29,7 +29,8 @@ export default function PracticeShort({ typingWritings }: PracticeShortProps) {
     }
   };
 
-  const handleEndTyping = async () => {
+  const handleEndTyping = async (input: string) => {
+    console.log('input: ', input);
     timePause();
   };
 
