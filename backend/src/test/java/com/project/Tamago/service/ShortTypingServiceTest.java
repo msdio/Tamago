@@ -61,7 +61,7 @@ public class ShortTypingServiceTest {
 		makeTypings();
 
 		// when
-		ShortTypingListResDto shortTypingListResDto = shortTypingService.findRandomShortTyping();
+		ShortTypingListResDto shortTypingListResDto = shortTypingService.findRandomShortTyping("korean");
 		List<ShortTypingDto> shortTypingList = shortTypingListResDto.getTypingWritings();
 		//then
 		assertEquals(shortTypingListResDto.getContentType(), 0);

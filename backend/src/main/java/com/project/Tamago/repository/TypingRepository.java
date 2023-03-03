@@ -10,5 +10,5 @@ import com.project.Tamago.domain.Typing;
 @Repository
 public interface TypingRepository extends JpaRepository<Typing, Integer> {
 
-	List<Typing> findByContentTypeIsFalse();
+	List<Typing> findByContentTypeIsFalseAndLanguageIs(String language);
 }
