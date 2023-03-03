@@ -1,12 +1,30 @@
+import { useEffect, useState } from 'react';
+
 import type { ShortTypingResponseType } from '@/apis/typing';
 import { getShortTypingWritingsAPI } from '@/apis/typing';
 import PracticeShort from '@/components/practice/short';
 
-interface PracticeShortPageProps {
-  data: ShortTypingResponseType;
-}
+// interface PracticeShortPageProps {
+//   data: ShortTypingResponseType;
+// }
 
-export default function PracticeShortPage({ data }: PracticeShortPageProps) {
+export default function PracticeShortPage() {
+  const [data, setData] = useState<ShortTypingResponseType>({
+    typingWritings: [],
+    contentType: '0',
+    typingsType: 'practice',
+  });
+
+  const getTypingWritings = async () => {
+    const data = await getShortTypingWritingsAPI();
+
+    setData(data);
+  };
+
+  useEffect(() => {
+    getTypingWritings();
+  }, []);
+
   return (
     <>
       <PracticeShort {...data} />;
@@ -14,8 +32,8 @@ export default function PracticeShortPage({ data }: PracticeShortPageProps) {
   );
 }
 
-export async function getServerSideProps() {
-  const data = await getShortTypingWritingsAPI();
+// export async function getServerSideProps() {
+//   const data = await getShortTypingWritingsAPI();
 
-  return { props: { data } };
-}
+//   return { props: { data } };
+// }

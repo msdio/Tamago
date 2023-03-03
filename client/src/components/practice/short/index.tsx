@@ -34,14 +34,6 @@ export default function PracticeShort({ typingWritings }: PracticeShortProps) {
     timePause();
   };
 
-  // useEffect(() => {
-  //   timePlay();
-
-  //   return () => {
-  //     timePause();
-  //   };
-  // }, []);
-
   return (
     <Box p='35px 120px' minW='1100px'>
       <Flex gap='24px'>
