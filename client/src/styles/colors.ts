@@ -3,17 +3,25 @@ type ColorType = Record<ColorProperty, string>;
 
 const colors: Record<string, ColorType> = {
   primary: {
+    dark: '#FF6A3C',
     main: '#FF8A65',
-    white: '#FFFFFF',
-    black: '#101010',
-    pressed: '#FF6A3C',
+    light: '#FFA68A',
   },
   secondary: {
-    text: '#808080',
-    fill: '#F5F5F5',
-    gray: '#C3C3C3',
-    disabled: '#BFBFBF',
-    navigation: '#272727',
+    light: '#FFFAF8',
+  },
+  black: {
+    dark: '#101010',
+    main: '#272727',
+    light: '#3F3C3B',
+  },
+  gray: {
+    dark: '#808080',
+    main: '#BFBFBF',
+    light: '#F5F5F5',
+  },
+  white: {
+    light: '#FFFFFF',
   },
   error: {
     main: '#FF0000',
@@ -22,7 +30,8 @@ const colors: Record<string, ColorType> = {
   background: {
     main: '#FFF6F1',
     white: '#FAFAFA',
-    black: '#3F3C3B',
+    gray: '#C3C3C3',
+    slate: '#D9D9D9',
   },
 };
 export default colors;

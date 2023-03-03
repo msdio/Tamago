@@ -56,7 +56,7 @@ function EmailButton(
         </Flex>
         <Button
           size='sm'
-          colorScheme={isValid ? 'primary' : 'secondary'}
+          colorScheme={isValid ? 'primary' : 'gray'}
           variant={isValid ? 'base' : 'outline'}
           onClick={onClick}
         >

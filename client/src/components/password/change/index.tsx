@@ -50,12 +50,12 @@ export default function PasswordChange({ handleNextStep }: PasswordChangeProps) 
         />
       </Box>
 
-      <Button colorScheme='secondary' size='lg' onClick={handleNextStep}>
+      <Button colorScheme='gray' size='lg' onClick={handleNextStep}>
         비밀번호 변경하기
       </Button>
 
       <Flex gap='10px' justifyContent='center' mt='24px'>
-        <Text color='secondary.text'>계정이 없으신가요?</Text>
+        <Text color='gray.dark'>계정이 없으신가요?</Text>
         <Link href='/signup'>
           <Text>회원가입하기</Text>
         </Link>
