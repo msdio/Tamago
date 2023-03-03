@@ -6,7 +6,6 @@ import CurrentTyping from '@/components/practice/short/CurrentTyping';
 import InfoBar from '@/components/practice/short/InfoBar';
 import PrevTyping from '@/components/practice/short/PrevTyping';
 import useStopwatch from '@/components/practice/short/useStopWatch';
-import DownArrow from '@/icons/DownArrow';
 import TwoRightArrow from '@/icons/TwoRightArrow';
 
 const INIT_INFO = {
@@ -36,29 +35,7 @@ export default function PracticeShort({ typingWritings }: PracticeShortProps) {
 
   return (
     <Box p='35px 120px' minW='1100px'>
-      <Flex gap='24px'>
-        <Box w='118px' bg='#CEF0FF' border=' 0.6px solid #000000' borderRadius={10}></Box>
-        <Box flex={1}>
-          <Flex
-            mb='21px'
-            alignItems='center'
-            gap='8.5px'
-            border='0.6px solid #000000'
-            bg='#BCF075'
-            w='fit-content'
-            p='10px 23px'
-            borderRadius={30}
-          >
-            <Text fontSize='18px' fontWeight={500}>
-              짧은 글 연습모드
-            </Text>
-
-            <DownArrow />
-          </Flex>
-
-          <InfoBar {...infos} time={time.second} />
-        </Box>
-      </Flex>
+      <InfoBar {...infos} time={time.second} />
 
       {typingWritings[currentIdx] && (
         <Box position='relative' border='0.6px solid #000000' borderRadius='30px 0px 0px 0px' mt='28px'>
