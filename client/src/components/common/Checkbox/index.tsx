@@ -37,7 +37,7 @@ export const CustomCheckbox = (props: UseCheckboxProps & CheckboxProps) => {
       <Flex
         alignItems='center'
         justifyContent='center'
-        bg='primary.white'
+        bg='white.light'
         border='0.6px solid'
         borderColor='primary.main'
         borderRadius='5px'
