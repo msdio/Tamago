@@ -5,6 +5,8 @@ public enum ErrorCode {
 	INVALID_INPUT_VALUE(400, "유효성 검증에 실패한 경우"),
 	INTERNAL_SERVER_ERROR(500, "서버 에러입니다"),
 	INVALID_PARAMETER(600, "유효하지 않은 파라미터입니다"),
+
+	NULL_PARAMETER(601, "파라미터가 존재하지 않습니다"),
 	EXPIRED_JWT(2000, "만료된 JWT입니다."),
 	INVALID_SIGNATURE(2001, "유효하지 않은 서명입니다"),
 	INVALID_JWT(2002, "유효하지 않은 JWT입니다."),

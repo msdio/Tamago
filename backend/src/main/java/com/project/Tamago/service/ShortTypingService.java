@@ -25,8 +25,8 @@ public class ShortTypingService {
 	private final TypingRepository typingRepository;
 	private static final int SHORT_TYPING_SIZE = 30;
 
-	public ShortTypingListResDto findRandomShortTyping() {
-		List<ShortTypingDto> shortTypingDtos = getRandomLimit30(typingRepository.findByContentTypeIsFalse());
+	public ShortTypingListResDto findRandomShortTyping(String language) {
+		List<ShortTypingDto> shortTypingDtos = getRandomLimit30(typingRepository.findByContentTypeIsFalseAndLanguageIs(language));
 		return new ShortTypingListResDto(0, "practice", shortTypingDtos);
 	}
 
