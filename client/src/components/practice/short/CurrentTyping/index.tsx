@@ -15,7 +15,7 @@ export interface SubmitRequestType {
 
 export default function CurrentTyping({}) {
   const { currentWritingContent: correctWriting } = useShortTypingContext();
-  const { onStartTyping, onEndTyping, onBackspace, onTyping } = useShortTypingHandlerContext();
+  const { onEndTyping, onBackspace, onTyping } = useShortTypingHandlerContext();
 
   const [input, setInput] = useState(INIT_INPUT);
 

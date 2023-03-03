@@ -21,7 +21,6 @@ interface ShortTypingContextType {
 }
 
 interface ShortTypingHandlerContextType {
-  onStartTyping: () => void;
   onEndTyping: (input: string) => Promise<void>;
 
   onBackspace: () => void;
@@ -38,7 +37,7 @@ interface ShortTypingProviderProps {
 
 const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderProps) => {
   // NOTE : state를 하나로 합칠지는 고민중.
-  const { time, status, timePlay, timePause, timeReset } = useStopwatch();
+  const { time, status, timePlay, timeReset } = useStopwatch();
   const [typingCount, setTypingCount] = useState(0);
   const [typingSpeed, setTypingSpeed] = useState(0);
   const [typingAccuracy, setTypingAccuracy] = useState(0);
@@ -47,10 +46,6 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
   const [currentIdx, setCurrentIdx] = useState(0);
 
   const currentWritingContent = typingWritings[currentIdx]?.content ?? '';
-  const handleStartTyping = () => {
-    return;
-    timePlay();
-  };
 
   const handleTypingSpeed = () => {
     const newTypingSpeed = calcTypingSpeed({
@@ -76,6 +71,7 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
       timePlay();
     }
 
+    // NOTE:  이런 부분들을 1분마다 리렌더링 시켜줄지 고민중
     //? NOTE: 한글, 영타 구분?, 타자수 계산
     setTypingCount((prev) => prev + 1);
     //? 타이핑 속도 계산
@@ -88,19 +84,19 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
     // TODO : error word를 잡는것은 서버에 보낼때만 하면 된다, 이전에는 값이 틀린지 아닌지만 체크하면 된다.
 
     const data: TypingHistoryRequest = {
+      endTime: new Date(),
+      pageInfo: null, // 짧은 글일 경우 NULL
+      contentType: 0, // 1: 긴글?, 0: 짧은 글
+      typingMode: 'practice',
+      typingSpeed,
+      typingAccuracy,
       content: currentWritingContent,
       resultContent: input,
       elapsedTime: time.second, // 초 단위!
-      typingId: '1231',
-      contentType: 0, // 1: 긴글?, 0: 짧은 글
-      contentLength: 24, // 타이핑한 짧은 글 글자 길이 = 총글자수
-      pageInfo: null, // 짧은 글일 경우 NULL
-      endTime: new Date(),
-      language: 'Korean', // 언어 종류
-      typingMode: 'practice',
-      typingSpeed,
-      typingAccuracy: 98,
-      wrongKeys: [],
+      typingId: '1231', //TODO : typingId
+      language: 'Korean', // TODO : 언어 종류
+      contentLength: 24, // TODO 타이핑한 짧은 글 글자 길이 = 총글자수
+      wrongKeys: [], // TODO : 오류 단어 체크
     };
 
     console.log(data);
@@ -130,7 +126,6 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
   };
 
   const actions = {
-    onStartTyping: handleStartTyping,
     onEndTyping: handleEndTyping,
     onBackspace: handleBackspace,
     onTyping: handleTyping,

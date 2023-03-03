@@ -8,6 +8,7 @@ interface CalcTypingSpeedRequest {
 
 const calcTypingSpeed = ({ elapsedTime, backspaceCount, typingCount }: CalcTypingSpeedRequest) => {
   // NOTE: 현재속도 = (타수-백스페이스*2) / 경과시간(초) * 60초
+  // TODO : infinite typing speed 나는 문제 확인
   return Math.floor(((typingCount - backspaceCount * 2) / elapsedTime) * 60);
 };
 
@@ -27,8 +28,8 @@ const calcWrongCount = ({ correctWriting, inputWriting }: calcTypingRequest) => 
   return wrongCount;
 };
 
+// TODO : parameter Object로 변경
 export const checkAllInputTyping = (correctWord: string, inputWord: string) => {
-  console.log('correctWord: ', correctWord, inputWord);
   const isCorrectWordHangul = isHangulChar(correctWord);
   const isInputWordHangul = isHangulChar(inputWord);
 
