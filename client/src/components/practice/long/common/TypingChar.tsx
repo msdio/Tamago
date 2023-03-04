@@ -2,12 +2,12 @@ import { Text } from '@chakra-ui/react';
 
 interface TypingCharProps {
   char: string;
-  status?: string;
+  state?: string;
 }
 
-export default function TypingChar({ char, status = 'd' }: TypingCharProps) {
-  const charColor = (status: string) => {
-    switch (status) {
+export default function TypingChar({ char, state }: TypingCharProps) {
+  const charColor = (state: string | undefined) => {
+    switch (state) {
       case 'c':
         return 'black';
       case 'i':
@@ -20,7 +20,7 @@ export default function TypingChar({ char, status = 'd' }: TypingCharProps) {
   };
 
   return (
-    <Text as='span' fontFamily='D2 coding' color={charColor(status)}>
+    <Text as='span' fontFamily='D2 coding' color={charColor(state)}>
       {char}
     </Text>
   );

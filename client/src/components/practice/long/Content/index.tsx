@@ -21,8 +21,8 @@ export default function LongContent({ title, content, currPage, totalPage }: Lon
         backgroundColor='#fff'
         p='34px 53px'
       >
-        {content.split('\n').map((line, index) => (
-          <TypingLine key={index} line={line} />
+        {content.split('\n').map((line, i) => (
+          <TypingLine key={i} line={line} states={'c'.repeat(line.length)} />
         ))}
       </Flex>
     </PracticeLongLayout>
