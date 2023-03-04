@@ -10,7 +10,7 @@ export default function TypingLine({ line }: TypingLineProps) {
   return (
     <Flex>
       {[...line].map((key, index) => (
-        <TypingChar key={index} char={key} />
+        <TypingChar key={index} char={key} status='c' />
       ))}
     </Flex>
   );
