@@ -15,7 +15,7 @@ export default function PracticeLongLayout({ children }: PracticeLongLayoutProps
   return (
     <>
       <GridBackground>
-        <Box w='1170px' p='35px 135px 35px 135px'>
+        <Box w='1170px' p='35px 135px 35px 135px' m='auto'>
           {children}
         </Box>
       </GridBackground>
