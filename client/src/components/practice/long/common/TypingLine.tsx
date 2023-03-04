@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 
 import TypingChar from './TypingChar';
 
@@ -8,10 +8,10 @@ interface TypingLineProps {
 
 export default function TypingLine({ line }: TypingLineProps) {
   return (
-    <Box>
+    <Flex>
       {[...line].map((key, index) => (
         <TypingChar key={index} char={key} />
       ))}
-    </Box>
+    </Flex>
   );
 }
