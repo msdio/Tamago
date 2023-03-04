@@ -42,7 +42,7 @@ export default function PracticeLongPage() {
             <Thead key={typingId}>
               <Tr>
                 <Th>
-                  <Link href={`/practice/long/${typingId}/1?typing=true`}>{typingTitle}</Link>
+                  <Link href={`/practice/long/${typingId}/1?isTyping=true`}>{typingTitle}</Link>
                 </Th>
                 <Th>{typingType}</Th>
                 <Th>
