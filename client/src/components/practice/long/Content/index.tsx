@@ -12,7 +12,9 @@ interface LongContentProps {
 export default function LongContent({ title, content, currPage, totalPage }: LongContentProps) {
   return (
     <PracticeLongLayout>
-      <Box h='390px' border='0.6px solid #000000' borderRadius='10px' backgroundColor='#fff'></Box>
+      <Box h='390px' border='0.6px solid #000000' borderRadius='10px' backgroundColor='#fff' p='34px 53px'>
+        {content}
+      </Box>
     </PracticeLongLayout>
   );
 }
