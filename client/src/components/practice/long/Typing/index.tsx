@@ -1,4 +1,5 @@
 import { Box, Flex, Text, Textarea } from '@chakra-ui/react';
+import { disassemble } from 'hangul-js';
 import { useEffect, useRef, useState } from 'react';
 
 import DownArrow from '@/icons/DownArrow';
@@ -30,7 +31,7 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
     [...content].map((char) => ({
       char,
       type: getCharType(char),
-      components: [],
+      components: disassemble(char),
     })),
   );
   // 사용자가 타이핑한 문자들을 분석하여 저장, 초기에는 빈 문자로 초기화
