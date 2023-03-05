@@ -1,8 +1,18 @@
-import { Flex, Textarea } from '@chakra-ui/react';
+import { Box, Flex, Text, Textarea } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 
+import DownArrow from '@/icons/DownArrow';
+
+import useStopwatch from '../../short/useStopWatch';
 import TypingLine from '../common/TypingLine';
 import PracticeLongLayout from '../Layout';
+import InfoBar from './InfoBar';
+
+const INIT_INFO = {
+  wpm: 0,
+  accuracy: 0,
+  typist: 0,
+};
 
 interface CharInfo {
   char: string;
@@ -41,6 +51,9 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
   const [textarea, setTextarea] = useState('');
   const [typingStates, setTypingStates] = useState<string>('f');
   const [recentChar, setRecentChar] = useState<string>('');
+  const [infos, setInfos] = useState(INIT_INFO);
+
+  const { time, status, timePlay, timePause } = useStopwatch();
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -161,6 +174,29 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
 
   return (
     <PracticeLongLayout>
+      <Flex gap='24px' mb='28px'>
+        <Box w='118px' bg='#CEF0FF' border=' 0.6px solid #000000' borderRadius={10}></Box>
+        <Box flex={1}>
+          <Flex
+            mb='21px'
+            alignItems='center'
+            gap='8.5px'
+            border='0.6px solid #000000'
+            bg='#BCF075'
+            w='fit-content'
+            p='10px 23px'
+            borderRadius={30}
+          >
+            <Text fontSize='18px' fontWeight={500}>
+              긴 글 연습모드
+            </Text>
+
+            <DownArrow />
+          </Flex>
+
+          <InfoBar {...infos} time={time.second} />
+        </Box>
+      </Flex>
       <Flex
         direction='column'
         h='390px'
