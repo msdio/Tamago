@@ -18,6 +18,10 @@ export function Header() {
     router.push('/signup/terms');
   };
 
+  const handlePracticeShortClick = () => {
+    router.push('/practice/short');
+  };
+
   return (
     <>
       <Flex
@@ -37,7 +41,7 @@ export function Header() {
         </Link>
         <HStack spacing='62px' w='100%' marginLeft='81px' fontSize='17px' fontWeight='700'>
           <Text>긴글연습</Text>
-          <Text>짧은글연습</Text>
+          <Text onClick={handlePracticeShortClick}>짧은글연습</Text>
           <Text>글등록</Text>
           <Text>프로필</Text>
         </HStack>

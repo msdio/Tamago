@@ -29,7 +29,7 @@ public class TypingControllerTest {
 		MultiValueMap<String, String> info = new LinkedMultiValueMap<>();
 		info.add("language", "korean");
 		// when
-		ResultActions resultActions = mockMvc.perform(get("/typing/short-typing").params(info));
+		ResultActions resultActions = mockMvc.perform(get("/typing/short").params(info));
 		// then
 		resultActions.andExpectAll(status().isOk());
 		resultActions.andExpect(jsonPath("$.contentType", notNullValue()));
@@ -38,7 +38,6 @@ public class TypingControllerTest {
 		resultActions.andReturn();
 	}
 
-
 	@Test
 	@DisplayName("짧은 글 가져오기 실패 : 유효하지 않은 파라미터")
 	public void findShortTypingsFailInvaildParam() throws Exception {
@@ -46,7 +45,7 @@ public class TypingControllerTest {
 		MultiValueMap<String, String> info = new LinkedMultiValueMap<>();
 		info.add("language", "asdf");
 		// when
-		ResultActions resultActions = mockMvc.perform(get("/typing/short-typing").params(info));
+		ResultActions resultActions = mockMvc.perform(get("/typing/short").params(info));
 		// then
 		resultActions.andExpectAll(status().is4xxClientError());
 		resultActions.andExpect(jsonPath("$.code").value(INVALID_PARAMETER.getCode()));
@@ -54,14 +53,13 @@ public class TypingControllerTest {
 		resultActions.andReturn();
 	}
 
-
 	@Test
 	@DisplayName("짧은 글 가져오기 실패 : 파라미터가 존재하지 않는 경우")
 	public void findShortTypingsFailNotContainParam() throws Exception {
 		// given
 
 		// when
-		ResultActions resultActions = mockMvc.perform(get("/typing/short-typing"));
+		ResultActions resultActions = mockMvc.perform(get("/typing/short"));
 		// then
 		resultActions.andExpectAll(status().is4xxClientError());
 		resultActions.andExpect(jsonPath("$.code").value(NULL_PARAMETER.getCode()));

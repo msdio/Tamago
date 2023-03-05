@@ -21,7 +21,7 @@ function Login() {
   };
 
   return (
-    <AuthLayout title={'로그인'}>
+    <AuthLayout title='로그인'>
       <LoginForm onLogin={handleLogin} />
     </AuthLayout>
   );
