@@ -34,6 +34,9 @@ const getCharType = (char: string) => {
 };
 
 export default function PracticeLongTyping({ title, content, currPage, totalPage }: PracticeLongTypingProps) {
+  /**
+   * 원본 긴 글을 분석하여 저장
+   */
   const originalInfo = useRef<CharInfo[]>(
     [...content].map((char) => ({
       char,
@@ -41,6 +44,10 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
       components: [],
     })),
   );
+  /**
+   * 사용자가 타이핑한 문자들을 분석하여 저장
+   * 초기에는 빈 문자로 초기화
+   */
   const typingInfo = useRef<CharInfo[]>(
     [...content].map(() => ({
       char: '',
@@ -49,7 +56,15 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
     })),
   );
   const [textarea, setTextarea] = useState('');
+  /**
+   * 처음 'f'로 초기화되어 가장 먼저 온 글자에 포커싱
+   * 'f' 이외에도 'c'(correct), 'i'(incorrect), 'u'(unknown)로 상태 구분
+   */
   const [typingStates, setTypingStates] = useState<string>('f');
+  /**
+   * 사용자가 마지막으로 타이핑한 글쇠 저장
+   * 한글을 타이핑한 경우 의미를 갖는다.
+   */
   const [recentChar, setRecentChar] = useState<string>('');
   const [infos, setInfos] = useState(INIT_INFO);
 
@@ -57,12 +72,18 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const focusTextarea = () => {
-    if (textareaRef.current) {
-      textareaRef.current.focus();
-    }
-  };
+  /**
+   * 숨겨진 textarea로 포커싱
+   */
+  const focusTextarea = () => textareaRef.current?.focus();
 
+  /**
+   * 사용자가 타이핑을 할 경우 상태 변화
+   * textarea의 value를 기본적으로 바꾸고
+   * 원본 긴 글과 사용자가 타이핑한 글의 정보를 업데이트한다.
+   * 한글의 경우 더하거나 지우더라도 value의 길이가 변하지 않는 경우 존재하여
+   * 해당 경우에 대한 경우의 수 처리
+   */
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.target;
     setTextarea(value);
@@ -112,7 +133,7 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
       return;
     }
 
-    // 타이핑하는 경우
+    // 타이핑하여 글자가 증가한 경우
     if (value.length > currLength) {
       typingInfo.current[value.length - 1].char = value[value.length - 1];
       typingInfo.current[value.length - 1].type = getCharType(value[value.length - 1]);
@@ -142,7 +163,7 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
       }
     }
 
-    // 빼는 경우
+    // 빼서 글자가 감소한 경우
     if (value.length < currLength) {
       typingInfo.current[value.length].char = '';
       typingInfo.current[value.length].type = 'other';
@@ -152,11 +173,19 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
     }
   };
 
+  /**
+   * 누른 key가 특수키(Space, Enter 등)인 경우 제외하고
+   * 사용자가 마지막에 타이핑한 글쇠에 key 저장
+   */
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key.length > 1) return;
     setRecentChar(e.key);
   };
 
+  /**
+   * 원본 글, textarea 글, 글 상태를 원본 글의 각 줄에 대응되게 slice한다.
+   * 이후 slice된 각 문자열을 TypingLine의 params으로 전달한다.
+   */
   const slicedContentAndTextareaAndStates = (content: string, textarea: string, states: string) => {
     const spiltedContent = content.split('\n').map((line) => line + '\n');
     return spiltedContent.map((slicedContent) => {
@@ -168,6 +197,10 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
     });
   };
 
+  /**
+   * 처음 화면이 렌더링될 때 textarea로 포커싱되도록 한다.
+   * textarea는 숨겨두었기 때문에 사용자가 보고 포커싱할 수 없다.
+   */
   useEffect(() => {
     focusTextarea();
   }, []);
@@ -190,10 +223,8 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
             <Text fontSize='18px' fontWeight={500}>
               긴 글 연습모드
             </Text>
-
             <DownArrow />
           </Flex>
-
           <InfoBar {...infos} time={time.second} />
         </Box>
       </Flex>
