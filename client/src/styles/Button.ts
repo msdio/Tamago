@@ -33,26 +33,26 @@ const sizes = {
 const baseVariant = defineStyle((props) => {
   const { colorScheme: c } = props;
   return {
-    bg: `${c}.500`,
+    bg: `${c}.main`,
     border: '0.6px solid',
-    color: `${c}.100`,
+    color: `${c}.light`,
 
     _hover: {
-      bg: `${c}.700`,
+      bg: `${c}.dark`,
       border: '0.6px solid',
       _disabled: {
-        bg: 'tamago-gray.500',
+        bg: 'gray.main',
       },
     },
     _active: {
-      bg: `${c}.700`,
+      bg: `${c}.dark`,
       border: '0.6px solid',
-      borderColor: `${c}.700`,
+      borderColor: `${c}.dark`,
     },
     _disabled: {
-      bg: 'tamago-gray.500',
+      bg: 'gray.main',
       border: '0.6px solid',
-      borderColor: 'tamago-gray.500',
+      borderColor: 'gray.main',
     },
   };
 });
@@ -60,23 +60,23 @@ const baseVariant = defineStyle((props) => {
 const outlineVariant = defineStyle((props) => {
   const { colorScheme: c } = props;
   return {
-    bg: `${c}.100`,
-    color: `${c}.600`,
+    bg: `${c}.light`,
+    color: `${c}.main`,
     border: '0.6px solid',
 
     _hover: {
-      bg: `${c}.200`,
+      bg: `${c}.light`,
       _disabled: {
-        bg: 'tamago-gray.500',
+        bg: 'gray.main',
       },
     },
     _active: {
-      bg: `${c}.200`,
+      bg: `${c}.light`,
     },
     _disabled: {
-      bg: 'tamago-gray.500',
+      bg: 'gray.main',
       border: '0.6px solid',
-      borderColor: 'tamago-gray.500',
+      borderColor: 'gray.main',
     },
   };
 });
@@ -88,7 +88,7 @@ export const buttonTheme = defineStyleConfig({
     outline: outlineVariant,
   },
   defaultProps: {
-    colorScheme: 'tamago',
+    colorScheme: 'primary',
     variant: 'base',
   },
 });

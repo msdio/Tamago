@@ -11,7 +11,7 @@ export default function Landing() {
       h='calc(100vh - 88px)'
       w='100%'
       position='relative'
-      backgroundColor='#FFF6F1'
+      backgroundColor='background.main'
       backgroundImage='linear-gradient(#EFDFD3 0.6px, transparent 1px), linear-gradient(to right, #EFDFD3 1px, #FFF6F1 1px);'
       backgroundSize='3.75rem 3.7656rem'
     >

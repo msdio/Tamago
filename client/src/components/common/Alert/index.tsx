@@ -6,6 +6,7 @@ interface AlertProps {
   isOpen: boolean;
   onClose: () => void;
 }
+
 export default function Alert({ children, isOpen, onClose }: AlertProps) {
   return (
     <>

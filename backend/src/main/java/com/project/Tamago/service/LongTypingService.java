@@ -23,8 +23,7 @@ public class LongTypingService {
 
 	@Transactional(readOnly = true)
 	public List<LongTypingResDto> findLongTypings() {
-		List<LongTyping> longTypings = longTypingRepository.findAll();
-		return longTypings.stream()
+		return longTypingRepository.findAll().stream()
 			.map(DataMapper.INSTANCE::LongTypingToLongTypingResDto)
 			.collect(Collectors.toList());
 	}

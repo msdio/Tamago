@@ -2,9 +2,9 @@ import { Container, Flex, Image, Text } from '@chakra-ui/react';
 
 export default function Banner() {
   return (
-    <Flex w='100%' h='199px' bgColor='tamago.500'>
+    <Flex w='100%' h='199px' bgColor='primary.main'>
       <Container maxW='container.xl' h='100%' display='flex' alignItems='center' justifyContent='space-between'>
-        <Text fontSize='2.25rem' fontWeight='extrabold' color='white'>
+        <Text fontSize='2.25rem' fontWeight='extrabold' color='primary.white'>
           이제는 개발에 재미를 더해요.
         </Text>
 

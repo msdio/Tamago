@@ -18,6 +18,10 @@ export function Header() {
     router.push('/signup/terms');
   };
 
+  const handlePracticeShortClick = () => {
+    router.push('/practice/short');
+  };
+
   return (
     <>
       <Flex
@@ -25,19 +29,20 @@ export function Header() {
         direction='row'
         h='88px'
         minH='88px'
-        borderBottom='0.6px solid #BFBFBF'
+        borderBottom='0.6px solid'
+        borderColor='gray.main'
         p='0 120px'
         minW='1100px'
         alignItems='center'
         zIndex='100'
-        background='white'
+        background='white.light'
       >
         <Link href='/'>
           <TamagoLogo />
         </Link>
         <HStack spacing='62px' w='100%' marginLeft='81px' fontSize='17px' fontWeight='700'>
           <Text>긴글연습</Text>
-          <Text>짧은글연습</Text>
+          <Text onClick={handlePracticeShortClick}>짧은글연습</Text>
           <Text>글등록</Text>
           <Text>프로필</Text>
         </HStack>
@@ -46,11 +51,12 @@ export function Header() {
             <Button
               w='95.54px'
               h='35.29px'
-              border='0.516456px solid #BFBFBF'
+              border='0.516456px solid'
+              borderColor='gray.main'
               borderRadius='4.3038px'
-              bg='white'
+              bg='white.light'
               onClick={handleSignupClick}
-              color='black'
+              color='black.dark'
               fontSize='14px'
               lineHeight='17px'
             >
@@ -59,10 +65,11 @@ export function Header() {
             <Button
               w='95.54px'
               h='35.29px'
-              border='0.516456px solid #BFBFBF'
+              border='0.516456px solid'
+              borderColor='gray.main'
               borderRadius='4.3038px'
-              bg='white'
-              color='black'
+              bg='white.light'
+              color='black.dark'
               onClick={handleLoginClick}
               fontSize='14px'
               lineHeight='17px'
