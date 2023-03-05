@@ -265,6 +265,12 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
           ref={textareaRef}
           onKeyDown={handleKeyDown}
           onChange={handleChange}
+          onSelect={(e) =>
+            e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)
+          }
+          onCopy={(e) => e.preventDefault()}
+          onCut={(e) => e.preventDefault()}
+          onPaste={(e) => e.preventDefault()}
         />
         {slicedContentAndTextareaAndStates(content, textarea, typingStates).map(
           ([contentLine, typingLine, states], i) => (
