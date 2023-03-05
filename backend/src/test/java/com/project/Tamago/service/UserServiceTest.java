@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.requestDto.ModifyProfileReqDto;
@@ -33,6 +34,7 @@ public class UserServiceTest {
 	@Test
 	@DisplayName("유저 정보 변경하기 성공")
 	@WithMockUser(username = "test", authorities = {"ROLE_USER"})
+	@Transactional
 	public void modifyUserProfile() {
 		// given
 		User user = User.builder()
