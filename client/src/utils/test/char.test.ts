@@ -38,11 +38,11 @@ test('문자 글쇠 분리', () => {
   // expect(getConstantVowel('!').length).toBe(1);
   // expect(getConstantVowel('ㄱ').length).toBe(1);
   // expect(getConstantVowel('ㅏ').length).toBe(1);
-  expect(getConstantVowel('닭')).toBe(2);
+  expect(getConstantVowel('닭')).toEqual(['ㄷ', 'ㅏ', 'ㄺ']);
 });
 
 test('hangul-js 문자 글쇠 분리', () => {
-  expect(hangul.disassemble('닭')).toBe(3);
+  expect(hangul.disassemble('닭')).toEqual(['ㄷ', 'ㅏ', 'ㄹ', 'ㄱ']);
 });
 
 export {};

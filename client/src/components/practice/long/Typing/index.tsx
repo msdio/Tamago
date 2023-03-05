@@ -2,6 +2,7 @@ import { Box, Flex, Text, Textarea } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 
 import DownArrow from '@/icons/DownArrow';
+import { getTypingAccuracy } from '@/utils/typing';
 
 import useStopwatch from '../../short/useStopWatch';
 import TypingLine from '../common/TypingLine';
@@ -76,11 +77,15 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
 
   useEffect(() => {
     if (status === 'stop') return;
-
-    const newWpm = 0;
-    const newAccuracy = 0;
-    const newTypist = 0;
   }, [time]);
+
+  /**
+   * 타이핑할 때마다 타자 정확도 계산
+   */
+  useEffect(() => {
+    infos.accuracy = getTypingAccuracy(typingStates);
+    setInfos({ ...infos });
+  }, [typingStates]);
 
   /**
    * 사용자가 타이핑을 할 경우 상태 변화
