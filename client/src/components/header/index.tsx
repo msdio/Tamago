@@ -19,7 +19,7 @@ export function Header() {
   };
 
   const handlePracticeLongClick = () => {
-    router.push('/practice/long/1/1');
+    router.push('/practice');
   };
 
   const handlePracticeShortClick = () => {

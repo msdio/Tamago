@@ -1,6 +1,7 @@
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
 import LongTyping from '@/components/practice/long/Content';
+import PracticeLongTyping from '@/components/practice/long/Typing';
 
 interface Data {
   contentTitle: string;
@@ -43,12 +44,21 @@ export const getServerSideProps: GetServerSideProps<{ data: Data }> = async (con
 export default function LongTypingPage({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
-      <LongTyping
-        title={data.contentTitle}
-        content={data.content}
-        currPage={data.currPage}
-        totalPage={data.totalPage}
-      />
+      {data.isTyping ? (
+        <PracticeLongTyping
+          title={data.contentTitle}
+          content={data.content}
+          currPage={data.currPage}
+          totalPage={data.totalPage}
+        />
+      ) : (
+        <LongTyping
+          title={data.contentTitle}
+          content={data.content}
+          currPage={data.currPage}
+          totalPage={data.totalPage}
+        />
+      )}
     </>
   );
 }

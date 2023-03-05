@@ -22,7 +22,7 @@ export default function LongContent({ title, content, currPage, totalPage }: Lon
         p='34px 53px'
       >
         {content.split('\n').map((line, i) => (
-          <TypingLine key={i} line={line} states={'c'.repeat(line.length)} />
+          <TypingLine key={i} contentLine={line} states={'c'.repeat(line.length)} />
         ))}
       </Flex>
     </PracticeLongLayout>
