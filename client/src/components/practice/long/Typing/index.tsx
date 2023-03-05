@@ -48,8 +48,9 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
   // 사용자가 마지막으로 타이핑한 글쇠 저장, 한글을 타이핑한 경우 의미를 갖는다.
   const [recentChar, setRecentChar] = useState<string>('');
   const [infos, setInfos] = useState(INIT_INFO);
+  // 전체 타수
   const [totalTypingCount, setTotalTypingCount] = useState(0);
-
+  // 현재 문자의 타수, 맞는 경우 전체 타수에 반영하고 틀릴 경우는 반영하지 않는다.
   const currTypingCount = useRef<number>(0);
 
   const { time, status, timePlay, timePause } = useStopwatch();
@@ -129,8 +130,9 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
         }
 
         if (
-          originalInfo.current[value.length - 1].components.length >
-          typingInfo.current[value.length - 1].components.length
+          typingInfo.current[value.length - 1].components.every(
+            (component, i) => component === originalInfo.current[value.length - 1].components[i],
+          )
         ) {
           setTypingStates(`${typingStates.slice(0, -2)}uf`);
         } else {

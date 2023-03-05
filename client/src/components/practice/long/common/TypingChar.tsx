@@ -1,4 +1,5 @@
 import { Text } from '@chakra-ui/react';
+import { memo } from 'react';
 
 interface TypingCharProps {
   contentChar: string;
@@ -6,7 +7,7 @@ interface TypingCharProps {
   state?: string;
 }
 
-export default function TypingChar({ contentChar, typingChar, state }: TypingCharProps) {
+function TypingChar({ contentChar, typingChar, state }: TypingCharProps) {
   const charColor = (state: string | undefined) => {
     switch (state) {
       case 'c':
@@ -33,3 +34,5 @@ export default function TypingChar({ contentChar, typingChar, state }: TypingCha
     </Text>
   );
 }
+
+export default memo(TypingChar);

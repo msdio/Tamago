@@ -1,4 +1,5 @@
 import { Flex } from '@chakra-ui/react';
+import { memo } from 'react';
 
 import TypingChar from './TypingChar';
 
@@ -8,7 +9,7 @@ interface TypingLineProps {
   states?: string;
 }
 
-export default function TypingLine({ contentLine, typingLine, states }: TypingLineProps) {
+function TypingLine({ contentLine, typingLine, states }: TypingLineProps) {
   return (
     <Flex>
       {[...contentLine].map((key, i) => (
@@ -17,3 +18,5 @@ export default function TypingLine({ contentLine, typingLine, states }: TypingLi
     </Flex>
   );
 }
+
+export default memo(TypingLine);
