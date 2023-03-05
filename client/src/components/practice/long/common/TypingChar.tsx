@@ -20,9 +20,16 @@ export default function TypingChar({ contentChar, typingChar, state }: TypingCha
     }
   };
 
+  const convertBlankToVisible = (char: string) => {
+    if (char === ' ' || char === '\n') return <>&nbsp;</>;
+    return char;
+  };
+
   return (
     <Text as='span' fontFamily='D2 coding' color={charColor(state)}>
-      {state === 'i' || state === 'u' ? typingChar : contentChar}
+      {state === 'i' || state === 'u'
+        ? convertBlankToVisible(typingChar || contentChar)
+        : convertBlankToVisible(contentChar)}
     </Text>
   );
 }

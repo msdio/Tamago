@@ -105,7 +105,7 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
       typingInfo.current[value.length - 1].type = getCharType(value[value.length - 1]);
       typingInfo.current[value.length - 1].components = [recentChar];
 
-      if (originalInfo.current[value.length - 1].char === value[value.length - 1]) {
+      if (originalInfo.current[value.length - 1].char === typingInfo.current[value.length - 1].char) {
         setTypingStates(`${typingStates.replace('u', 'i').slice(0, -1)}cf`);
         return;
       }
@@ -127,15 +127,13 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
         setTypingStates(`${typingStates.replace('u', 'i').slice(0, -1)}if`);
         return;
       }
-
-      return;
     }
 
     // 빼는 경우
     if (value.length < currLength) {
-      typingInfo.current[value.length - 1].char = '';
-      typingInfo.current[value.length - 1].type = 'other';
-      typingInfo.current[value.length - 1].components = [];
+      typingInfo.current[value.length].char = '';
+      typingInfo.current[value.length].type = 'other';
+      typingInfo.current[value.length].components = [];
 
       setTypingStates(`${typingStates.slice(0, -2)}f`);
     }
