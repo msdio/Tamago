@@ -1,4 +1,4 @@
-import { isEnglishChar, isHangulChar } from '../char';
+import { getConstantVowel, isEnglishChar, isHangulChar } from '../char';
 
 test('한글 확인', () => {
   expect(isHangulChar('ㄱ')).toBe(true);
@@ -28,6 +28,14 @@ test('영어 확인', () => {
   expect(isEnglishChar('C')).toBe(true);
   expect(isEnglishChar('!')).toBe(false);
   expect(isEnglishChar('?')).toBe(false);
+});
+
+test('문자 글쇠 분리', () => {
+  expect(getConstantVowel('a').length).toBe(1);
+  expect(getConstantVowel('!').length).toBe(1);
+  expect(getConstantVowel('ㄱ').length).toBe(1);
+  expect(getConstantVowel('ㅏ').length).toBe(1);
+  expect(getConstantVowel('가').length).toBe(2);
 });
 
 export {};
