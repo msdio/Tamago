@@ -61,14 +61,14 @@ function LoginForm({ onLogin }: LoginFormProps) {
       </Box>
 
       <Flex w='full' justifyContent='space-between' mt='20px'>
-        <Checkbox defaultChecked colorScheme='tamago'>
+        <Checkbox defaultChecked colorScheme='primary'>
           아이디 저장
         </Checkbox>
         <Flex gap='13px' fontSize='15px'>
           <Link href={INQUIRY_PW_PATH}>
-            <Text color='#808080'>비밀번호 찾기</Text>
+            <Text color='gray.dark'>비밀번호 찾기</Text>
           </Link>
-          <Text color='#808080'>|</Text>
+          <Text color='gray.dark'>|</Text>
           <Text fontWeight='bold'>회원가입 하기</Text>
         </Flex>
       </Flex>
@@ -81,10 +81,10 @@ function LoginForm({ onLogin }: LoginFormProps) {
       </Box>
 
       <Flex justifyContent='center' gap='29.5px'>
-        <Button bg='fff' border='0.6px solid #BFBFBF' width='59px' height='59px' p={0}>
+        <Button bg='fff' border='0.6px solid' borderColor='gray.main' width='59px' height='59px' p={0}>
           {/* <Image src={require('../../../assets/icons/google-icon.svg')} alt='google login' width={40} height={38} /> */}
         </Button>
-        <Button bg='fff' border='0.6px solid #BFBFBF' width='59px' height='59px' p={0}>
+        <Button bg='fff' border='0.6px solid' borderColor='gray.main' width='59px' height='59px' p={0}>
           {/* <Image src={require('../../../assets/icons/github-icon.svg')} alt='github login' width={40} height={38} /> */}
         </Button>
       </Flex>

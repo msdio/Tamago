@@ -47,7 +47,7 @@ export default function SignupTerms() {
         isChecked={allChecked}
         // onChange={handleCheckboxChange}
       />
-      <Divider borderColor='#BFBFBF' />
+      <Divider borderColor='gray.main' />
       <CustomCheckbox
         name='age'
         labelText='[필수] 만 14세 이상입니다.'
@@ -79,8 +79,8 @@ export default function SignupTerms() {
         동의하고 진행하기
       </Button>
       <Flex gap='14px' justifyContent='center' mt='12px'>
-        <Text color='#808080'>이미 가입된 계정이 있으신가요?</Text>
-        <Text color='black'>로그인하기</Text>
+        <Text color='gray.dark'>이미 가입된 계정이 있으신가요?</Text>
+        <Text color='black.dark'>로그인하기</Text>
       </Flex>
     </Flex>
   );

@@ -11,6 +11,6 @@ const tiersMap = {
   5: <Image src='/images/tiers/tier-five.png' alt='tier 5' w='100%' objectFit='cover' />,
 };
 
-export const Tier = ({ level }: TierLevels) => <>{tiersMap[level]}</>;
+export const Tier = ({ level }: { level: TierLevels }) => <>{tiersMap[level]}</>;
 
 export const AllTiers = () => <>{Object.values(tiersMap)}</>;
