@@ -1,6 +1,8 @@
 package com.project.Tamago.dto.mapper;
 
 import com.project.Tamago.domain.LongTyping;
+import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
+import com.project.Tamago.dto.responseDto.LongTypingDetailResDto.LongTypingDetailResDtoBuilder;
 import com.project.Tamago.dto.responseDto.LongTypingResDto;
 import com.project.Tamago.dto.responseDto.LongTypingResDto.LongTypingResDtoBuilder;
 import javax.annotation.processing.Generated;
@@ -8,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-06T00:33:52+0900",
+    date = "2023-03-06T06:47:25+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.17 (Eclipse Adoptium)"
 )
 @Component
@@ -33,5 +35,26 @@ public class DataMapperImpl implements DataMapper {
         longTypingResDto.language( longTyping.getLanguage().toString() );
 
         return longTypingResDto.build();
+    }
+
+    @Override
+    public LongTypingDetailResDto LongTypingToLongTypingDetailResDto(LongTyping longTyping, String pageContent) {
+        if ( longTyping == null && pageContent == null ) {
+            return null;
+        }
+
+        LongTypingDetailResDtoBuilder longTypingDetailResDto = LongTypingDetailResDto.builder();
+
+        if ( longTyping != null ) {
+            longTypingDetailResDto.typingId( longTyping.getId() );
+            longTypingDetailResDto.title( longTyping.getTitle() );
+            longTypingDetailResDto.totalPage( longTyping.getTotalPage() );
+        }
+        if ( pageContent != null ) {
+            longTypingDetailResDto.content( pageContent );
+        }
+        longTypingDetailResDto.language( longTyping.getLanguage().toString() );
+
+        return longTypingDetailResDto.build();
     }
 }
