@@ -26,7 +26,7 @@ export default function TypingChar({ contentChar, typingChar, state }: TypingCha
   };
 
   return (
-    <Text as='span' fontFamily='D2 coding' color={charColor(state)}>
+    <Text as='span' fontFamily='D2 coding' color={charColor(state)} backgroundColor={state === 'f' ? '#FBE789' : ''}>
       {state === 'i' || state === 'u'
         ? convertBlankToVisible(typingChar || contentChar)
         : convertBlankToVisible(contentChar)}
