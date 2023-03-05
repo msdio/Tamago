@@ -18,13 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.Tamago.dto.CustomResponse;
-import com.project.Tamago.dto.SuccessMessage;
 import com.project.Tamago.dto.requestDto.JoinReqDto;
 import com.project.Tamago.dto.requestDto.LoginReqDto;
 import com.project.Tamago.dto.requestDto.PasswordReqDto;
 import com.project.Tamago.exception.InvalidParameterException;
-import com.project.Tamago.service.AuthService;
 import com.project.Tamago.security.Token;
+import com.project.Tamago.service.AuthService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,12 +39,12 @@ public class AuthController {
 	private final AuthService authService;
 
 	@PostMapping("/join")
-	public SuccessMessage join(@Validated @RequestBody JoinReqDto joinReqDto, BindingResult result) {
+	public CustomResponse<Void> join(@Validated @RequestBody JoinReqDto joinReqDto, BindingResult result) {
 		if (result.hasErrors()) {
 			throw new InvalidParameterException(result);
 		}
 		authService.join(joinReqDto);
-		return new SuccessMessage();
+		return new CustomResponse<>();
 	}
 
 	@PostMapping("/login")
@@ -74,20 +73,20 @@ public class AuthController {
 	}
 
 	@GetMapping("/email")
-	public SuccessMessage checkEmailDuplicate(@RequestParam(required = true) String email) {
+	public CustomResponse<Void> checkEmailDuplicate(@RequestParam(required = true) String email) {
 		authService.checkEmailDuplicate(email);
-		return new SuccessMessage();
+		return new CustomResponse<>();
 	}
 
 	@GetMapping("/email/existence")
-	public SuccessMessage checkEmailExistence(@RequestParam(required = true) String email) {
+	public CustomResponse<Void> checkEmailExistence(@RequestParam(required = true) String email) {
 		authService.checkEmailExistence(email);
-		return new SuccessMessage();
+		return new CustomResponse<>();
 	}
 
 	@PatchMapping("/password")
-	public SuccessMessage modifyPassword(@RequestBody PasswordReqDto passwordReqDto) {
+	public CustomResponse<Void> modifyPassword(@RequestBody PasswordReqDto passwordReqDto) {
 		authService.modifyPassword(passwordReqDto);
-		return new SuccessMessage();
+		return new CustomResponse<>();
 	}
 }
