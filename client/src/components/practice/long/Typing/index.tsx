@@ -48,6 +48,9 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
   // 사용자가 마지막으로 타이핑한 글쇠 저장, 한글을 타이핑한 경우 의미를 갖는다.
   const [recentChar, setRecentChar] = useState<string>('');
   const [infos, setInfos] = useState(INIT_INFO);
+  const [totalTypingCount, setTotalTypingCount] = useState(0);
+
+  const currTypingCount = useRef<number>(0);
 
   const { time, status, timePlay, timePause } = useStopwatch();
 
@@ -68,9 +71,8 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
 
   useEffect(() => {
     if (status === 'stop') return;
-    console.log('time');
-    infos.wpm = getTypingWpm(typingInfo.current, typingStates, time.minute + time.second / 60 + time.ms / 60000);
-    infos.typist = getTypingSpeed(typingInfo.current, typingStates, time.minute + time.second / 60 + time.ms / 60000);
+    infos.wpm = getTypingWpm(totalTypingCount, time.minute + time.second / 60 + time.ms / 60000);
+    infos.typist = getTypingSpeed(totalTypingCount, time.minute + time.second / 60 + time.ms / 60000);
     setInfos({ ...infos });
   }, [time]);
 
@@ -80,10 +82,10 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
    */
   useEffect(() => {
     infos.accuracy = getTypingAccuracy(typingStates);
-    infos.wpm = getTypingWpm(typingInfo.current, typingStates, time.minute + time.second / 60);
-    infos.typist = getTypingSpeed(typingInfo.current, typingStates, time.minute + time.second / 60);
+    infos.wpm = getTypingWpm(totalTypingCount, time.minute + time.second / 60);
+    infos.typist = getTypingSpeed(totalTypingCount, time.minute + time.second / 60);
     setInfos({ ...infos });
-  }, [typingStates]);
+  }, [typingStates, totalTypingCount]);
 
   /**
    * 사용자가 타이핑을 할 경우 상태 변화
@@ -118,6 +120,9 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
         typingInfo.current[value.length - 1].components.pop();
         setRecentChar(typingInfo.current[value.length - 1].components.at(-1) || '');
 
+        setTotalTypingCount((prev) => (prev - 2 >= 0 ? prev - 2 : 0));
+        currTypingCount.current = 0;
+
         if (originalInfo.current[value.length - 1].char === value[value.length - 1]) {
           setTypingStates(`${typingStates.slice(0, -2)}cf`);
           return;
@@ -130,6 +135,7 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
           setTypingStates(`${typingStates.slice(0, -2)}uf`);
         } else {
           setTypingStates(`${typingStates.slice(0, -2)}if`);
+          currTypingCount.current = 0;
         }
       }
       // 한글을 더한 경우 (길이 변화 X)
@@ -138,6 +144,9 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
 
         if (originalInfo.current[value.length - 1].char === value[value.length - 1]) {
           setTypingStates(`${typingStates.slice(0, -2)}cf`);
+          const tempTypingCount = currTypingCount.current;
+          setTotalTypingCount((prev) => prev + tempTypingCount);
+          currTypingCount.current = 0;
           return;
         }
 
@@ -149,6 +158,7 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
           setTypingStates(`${typingStates.slice(0, -2)}uf`);
         } else {
           setTypingStates(`${typingStates.slice(0, -2)}if`);
+          currTypingCount.current = 0;
         }
       }
       return;
@@ -162,11 +172,15 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
 
       if (originalInfo.current[value.length - 1].char === typingInfo.current[value.length - 1].char) {
         setTypingStates(`${typingStates.replace('u', 'i').slice(0, -1)}cf`);
+        const tempTypingCount = currTypingCount.current;
+        setTotalTypingCount((prev) => prev + tempTypingCount);
+        currTypingCount.current = 0;
         return;
       }
 
       if (originalInfo.current[value.length - 1].type !== typingInfo.current[value.length - 1].type) {
         setTypingStates(`${typingStates.replace('u', 'i').slice(0, -1)}if`);
+        currTypingCount.current = 0;
         return;
       }
 
@@ -181,6 +195,7 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
 
       if (originalInfo.current[value.length - 1].char !== value[value.length - 1]) {
         setTypingStates(`${typingStates.replace('u', 'i').slice(0, -1)}if`);
+        currTypingCount.current = 0;
         return;
       }
     }
@@ -191,6 +206,9 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
       typingInfo.current[value.length].type = 'other';
       typingInfo.current[value.length].components = [];
 
+      setTotalTypingCount((prev) => (prev - 2 >= 0 ? prev - 2 : 0));
+      currTypingCount.current = 0;
+
       setTypingStates(`${typingStates.slice(0, -2)}f`);
     }
   };
@@ -200,7 +218,12 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
    * 사용자가 마지막에 타이핑한 글쇠에 key 저장
    */
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Shift' || e.key === 'Enter' || e.key === 'Space') {
+      currTypingCount.current++;
+      return;
+    }
     if (e.key.length > 1) return;
+    currTypingCount.current++;
     setRecentChar(e.key);
   };
 
