@@ -1,3 +1,5 @@
+import type { CharInfo } from '@/types/typing';
+
 export const getTypingAccuracy = (states: string) => {
   // 어떤 문자도 타이핑하지 않은 상태
   if (states === 'f') return 0;
@@ -27,4 +29,24 @@ export const getTypingWpm = (typingCount: number, minute: number) => {
 export const getTypingSpeed = (typingCount: number, minute: number) => {
   if (minute === 0) return 0;
   return Math.floor(typingCount / minute);
+};
+
+export const getWrongKeys = (contentInfos: CharInfo[], typingInfos: CharInfo[]) => {
+  const wrongKeys: Record<string, { total: number; count: number }> = {};
+  contentInfos.forEach((contentInfo, i) => {
+    const { char: contentChar, type: contentType, components: contentComponents } = contentInfo;
+    const { char: typingChar, type: typingType, components: typingComponents } = typingInfos[i];
+
+    contentComponents.forEach((contentComponent, j) => {
+      if (!wrongKeys[contentComponent]) wrongKeys[contentComponent] = { total: 1, count: 0 };
+      else wrongKeys[contentComponent].total++;
+      if (contentComponent !== typingComponents[j]) wrongKeys[contentComponent].count++;
+    });
+  });
+
+  for (const key in wrongKeys) {
+    if (wrongKeys[key].count === 0) delete wrongKeys[key];
+  }
+
+  return wrongKeys;
 };
