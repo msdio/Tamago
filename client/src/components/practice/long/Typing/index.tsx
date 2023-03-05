@@ -2,7 +2,9 @@ import { Box, Flex, Text, Textarea } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 
 import DownArrow from '@/icons/DownArrow';
-import { getTypingAccuracy } from '@/utils/typing';
+import type { CharInfo } from '@/types/typing';
+import { getCharType } from '@/utils/char';
+import { getTypingAccuracy, getTypingWpm } from '@/utils/typing';
 
 import useStopwatch from '../../short/useStopWatch';
 import TypingLine from '../common/TypingLine';
@@ -15,24 +17,12 @@ const INIT_INFO = {
   typist: 0,
 };
 
-interface CharInfo {
-  char: string;
-  type: string;
-  components: string[];
-}
-
 interface PracticeLongTypingProps {
   title: string;
   content: string;
   currPage: number;
   totalPage: number;
 }
-
-const getCharType = (char: string) => {
-  if (/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(char)) return 'hangul';
-  if (/[a-zA-Z]/.test(char)) return 'english';
-  return 'other';
-};
 
 export default function PracticeLongTyping({ title, content, currPage, totalPage }: PracticeLongTypingProps) {
   // 원본 긴 글을 분석하여 저장
@@ -77,13 +67,17 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
 
   useEffect(() => {
     if (status === 'stop') return;
+    infos.wpm = getTypingWpm(typingInfo.current, typingStates, time.minute + time.second / 60);
+    setInfos({ ...infos });
   }, [time]);
 
   /**
    * 타이핑할 때마다 타자 정확도 계산
+   * 의존성으로 왜 useEffect로 사용하는 상태를 모두 넣어야되는지 모르겠습니다.
    */
   useEffect(() => {
     infos.accuracy = getTypingAccuracy(typingStates);
+    infos.wpm = getTypingWpm(typingInfo.current, typingStates, time.minute + time.second / 60);
     setInfos({ ...infos });
   }, [typingStates]);
 

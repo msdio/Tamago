@@ -19,6 +19,12 @@ export function isEnglishChar(word: string) {
   return false;
 }
 
+export const getCharType = (char: string) => {
+  if (isHangulChar(char)) return 'hangul';
+  if (isEnglishChar(char)) return 'english';
+  return 'other';
+};
+
 export const getConstantVowel = (char: string) => {
   if (!isHangulChar(char)) return [char];
 
