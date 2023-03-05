@@ -19,8 +19,8 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/typing")
 public class TypingController {
 
-	private final ShortTypingService shortTypingService;
 	private static final String[] supportLanguage = {"korean", "english", "code"};
+	private final ShortTypingService shortTypingService;
 
 	@GetMapping("/short-typing")
 	public ShortTypingListResDto findShortTypings(@RequestParam String language) {
