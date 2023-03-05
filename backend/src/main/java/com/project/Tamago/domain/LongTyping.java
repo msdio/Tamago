@@ -26,7 +26,7 @@ public class LongTyping extends BaseTimeEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String title;
-	@Column(length = 1000)
+	@Column(length = 2000)
 	private String content;
 	private String thumbnail;
 	@Enumerated(EnumType.STRING)
