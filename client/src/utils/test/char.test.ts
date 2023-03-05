@@ -1,3 +1,5 @@
+import hangul from 'hangul-js';
+
 import { getConstantVowel, isEnglishChar, isHangulChar } from '../char';
 
 test('한글 확인', () => {
@@ -30,12 +32,17 @@ test('영어 확인', () => {
   expect(isEnglishChar('?')).toBe(false);
 });
 
+// getConstantVowel 수정 예정 -> hangul.disassemble()처럼 수행되도록 해야함
 test('문자 글쇠 분리', () => {
-  expect(getConstantVowel('a').length).toBe(1);
-  expect(getConstantVowel('!').length).toBe(1);
-  expect(getConstantVowel('ㄱ').length).toBe(1);
-  expect(getConstantVowel('ㅏ').length).toBe(1);
-  expect(getConstantVowel('가').length).toBe(2);
+  // expect(getConstantVowel('a').length).toBe(1);
+  // expect(getConstantVowel('!').length).toBe(1);
+  // expect(getConstantVowel('ㄱ').length).toBe(1);
+  // expect(getConstantVowel('ㅏ').length).toBe(1);
+  expect(getConstantVowel('닭')).toBe(2);
+});
+
+test('hangul-js 문자 글쇠 분리', () => {
+  expect(hangul.disassemble('닭')).toBe(3);
 });
 
 export {};

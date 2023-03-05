@@ -34,9 +34,7 @@ const getCharType = (char: string) => {
 };
 
 export default function PracticeLongTyping({ title, content, currPage, totalPage }: PracticeLongTypingProps) {
-  /**
-   * 원본 긴 글을 분석하여 저장
-   */
+  // 원본 긴 글을 분석하여 저장
   const originalInfo = useRef<CharInfo[]>(
     [...content].map((char) => ({
       char,
@@ -44,10 +42,7 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
       components: [],
     })),
   );
-  /**
-   * 사용자가 타이핑한 문자들을 분석하여 저장
-   * 초기에는 빈 문자로 초기화
-   */
+  // 사용자가 타이핑한 문자들을 분석하여 저장, 초기에는 빈 문자로 초기화
   const typingInfo = useRef<CharInfo[]>(
     [...content].map(() => ({
       char: '',
@@ -56,15 +51,9 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
     })),
   );
   const [textarea, setTextarea] = useState('');
-  /**
-   * 처음 'f'로 초기화되어 가장 먼저 온 글자에 포커싱
-   * 'f' 이외에도 'c'(correct), 'i'(incorrect), 'u'(unknown)로 상태 구분
-   */
+  // 처음 'f'로 초기화되어 가장 먼저 온 글자에 포커싱, 'f' 이외에도 'c'(correct), 'i'(incorrect), 'u'(unknown)로 상태 구분
   const [typingStates, setTypingStates] = useState<string>('f');
-  /**
-   * 사용자가 마지막으로 타이핑한 글쇠 저장
-   * 한글을 타이핑한 경우 의미를 갖는다.
-   */
+  // 사용자가 마지막으로 타이핑한 글쇠 저장, 한글을 타이핑한 경우 의미를 갖는다.
   const [recentChar, setRecentChar] = useState<string>('');
   const [infos, setInfos] = useState(INIT_INFO);
 
@@ -78,6 +67,22 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
   const focusTextarea = () => textareaRef.current?.focus();
 
   /**
+   * 처음 화면이 렌더링될 때 textarea로 포커싱되도록 한다.
+   * textarea는 숨겨두었기 때문에 사용자가 보고 포커싱할 수 없다.
+   */
+  useEffect(() => {
+    focusTextarea();
+  }, []);
+
+  useEffect(() => {
+    if (status === 'stop') return;
+
+    const newWpm = 0;
+    const newAccuracy = 0;
+    const newTypist = 0;
+  }, [time]);
+
+  /**
    * 사용자가 타이핑을 할 경우 상태 변화
    * textarea의 value를 기본적으로 바꾸고
    * 원본 긴 글과 사용자가 타이핑한 글의 정보를 업데이트한다.
@@ -85,7 +90,19 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
    * 해당 경우에 대한 경우의 수 처리
    */
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    // 타이핑 시작시 타이머 동작
+    if (status === 'stop') {
+      timePlay();
+    }
+
     const { value } = e.target;
+
+    // 타이핑 완료시 api 호출
+    if (value.length > originalInfo.current.length) {
+      console.log('finish');
+      return;
+    }
+
     setTextarea(value);
     const currLength = typingStates.length - 1;
 
@@ -197,14 +214,6 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
     });
   };
 
-  /**
-   * 처음 화면이 렌더링될 때 textarea로 포커싱되도록 한다.
-   * textarea는 숨겨두었기 때문에 사용자가 보고 포커싱할 수 없다.
-   */
-  useEffect(() => {
-    focusTextarea();
-  }, []);
-
   return (
     <PracticeLongLayout>
       <Flex gap='24px' mb='28px'>
@@ -225,7 +234,7 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
             </Text>
             <DownArrow />
           </Flex>
-          <InfoBar {...infos} time={time.second} />
+          <InfoBar {...infos} time={time.minute * 60 + time.second} />
         </Box>
       </Flex>
       <Flex
