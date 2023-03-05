@@ -78,7 +78,7 @@ export default function InquiryPw({ handleNextStep }: InquiryPwProps) {
                 onChange={handleInputChange}
               />
             </Flex>
-            <Button size='sm' colorScheme='secondary' variant='outline' onClick={handleReSendClick}>
+            <Button size='sm' colorScheme='gray' variant='outline' onClick={handleReSendClick}>
               다시 받기
             </Button>
           </Flex>
@@ -87,7 +87,7 @@ export default function InquiryPw({ handleNextStep }: InquiryPwProps) {
 
       {isAuthNumberInputWaitStatus ? (
         <Button
-          colorScheme={isAuthComplete ? 'tamago' : 'secondary'}
+          colorScheme={isAuthComplete ? 'primary' : 'gray'}
           size='lg'
           onClick={handleNextStep}
           isDisabled={!isAuthComplete}
@@ -96,7 +96,7 @@ export default function InquiryPw({ handleNextStep }: InquiryPwProps) {
         </Button>
       ) : (
         <Button
-          colorScheme='secondary'
+          colorScheme='gray'
           size='lg'
           onClick={handleReceiveAuthNumberButtonClick}
           isDisabled={isReceiveAuthNumberDisabled}
@@ -114,7 +114,7 @@ export default function InquiryPw({ handleNextStep }: InquiryPwProps) {
       </Alert>
 
       <Flex gap='10px' justifyContent='center' mt='24px'>
-        <Text color='#808080'>계정이 없으신가요?</Text>
+        <Text color='gray.dark'>계정이 없으신가요?</Text>
         <Link href='/signup'>
           <Text>회원가입하기</Text>
         </Link>

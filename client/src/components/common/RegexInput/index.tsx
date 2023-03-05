@@ -37,7 +37,7 @@ function RegexInput(
           ref={ref}
         />
         {errorMessage && value !== '' && !isValid ? (
-          <Text color='#FF0000' mt='17'>
+          <Text color='error.main' mt='17'>
             {errorMessage}
           </Text>
         ) : null}

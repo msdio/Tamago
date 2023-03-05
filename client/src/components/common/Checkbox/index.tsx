@@ -27,7 +27,7 @@ export const CustomCheckbox = (props: UseCheckboxProps & CheckboxProps) => {
     <FormLabel
       display='flex'
       alignItems='center'
-      borderColor='tamago-gray.100'
+      borderColor='gray.main'
       gap={labelText ? '14px' : '0'}
       cursor='pointer'
       m={0}
@@ -37,9 +37,9 @@ export const CustomCheckbox = (props: UseCheckboxProps & CheckboxProps) => {
       <Flex
         alignItems='center'
         justifyContent='center'
-        bg='white'
+        bg='white.light'
         border='0.6px solid'
-        borderColor='tamago.400'
+        borderColor='primary.main'
         borderRadius='5px'
         w='20px'
         h='20px'
