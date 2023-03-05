@@ -14,16 +14,31 @@ export const getTypingAccuracy = (states: string) => {
 /**
  * @param typingInfo 사용자의 타이핑 정보를 담은 배열
  * @param states 사용자의 타이핑 상태(맞는지, 틀린지 등) 문자열
- * @param time 사용자가 타이핑한 시간(분 단위)
+ * @param minute 사용자가 타이핑한 시간(분 단위)
  * @returns wpm
  */
-export const getTypingWpm = (typingInfo: CharInfo[], states: string, time: number) => {
-  if (time === 0) return 0;
-
+export const getTypingWpm = (typingInfo: CharInfo[], states: string, minute: number) => {
+  if (minute === 0) return 0;
   const correctTypingCount = [...states].reduce(
     (count, state, i) => (state === 'c' ? count + typingInfo[i].components.length : count),
     0,
   );
 
-  return Math.floor(correctTypingCount / 5 / time);
+  return Math.floor(correctTypingCount / 5 / minute);
+};
+
+/**
+ * @param typingInfo 사용자의 타이핑 정보를 담은 배열
+ * @param states 사용자의 타이핑 상태(맞는지, 틀린지 등) 문자열
+ * @param minute 사용자가 타이핑한 시간(분 단위)
+ * @returns 타자속도
+ */
+export const getTypingSpeed = (typingInfo: CharInfo[], states: string, minute: number) => {
+  if (minute === 0) return 0;
+  const correctTypingCount = [...states].reduce(
+    (count, state, i) => (state === 'c' ? count + typingInfo[i].components.length : count),
+    0,
+  );
+
+  return Math.floor(correctTypingCount / minute);
 };

@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import DownArrow from '@/icons/DownArrow';
 import type { CharInfo } from '@/types/typing';
 import { getCharType } from '@/utils/char';
-import { getTypingAccuracy, getTypingWpm } from '@/utils/typing';
+import { getTypingAccuracy, getTypingSpeed, getTypingWpm } from '@/utils/typing';
 
 import useStopwatch from '../../short/useStopWatch';
 import TypingLine from '../common/TypingLine';
@@ -68,7 +68,9 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
 
   useEffect(() => {
     if (status === 'stop') return;
-    infos.wpm = getTypingWpm(typingInfo.current, typingStates, time.minute + time.second / 60);
+    console.log('time');
+    infos.wpm = getTypingWpm(typingInfo.current, typingStates, time.minute + time.second / 60 + time.ms / 60000);
+    infos.typist = getTypingSpeed(typingInfo.current, typingStates, time.minute + time.second / 60 + time.ms / 60000);
     setInfos({ ...infos });
   }, [time]);
 
@@ -79,6 +81,7 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
   useEffect(() => {
     infos.accuracy = getTypingAccuracy(typingStates);
     infos.wpm = getTypingWpm(typingInfo.current, typingStates, time.minute + time.second / 60);
+    infos.typist = getTypingSpeed(typingInfo.current, typingStates, time.minute + time.second / 60);
     setInfos({ ...infos });
   }, [typingStates]);
 
