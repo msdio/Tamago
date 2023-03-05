@@ -2,6 +2,8 @@ import { Table, TableContainer, Th, Thead, Tr } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useState } from 'react';
 
+import { PRACTICE_LONG_PATH } from '@/utils/paths';
+
 interface LongTypingItem {
   typingId: number;
   typingTitle: string;
@@ -42,11 +44,11 @@ export default function PracticeLongPage() {
             <Thead key={typingId}>
               <Tr>
                 <Th>
-                  <Link href={`/practice/long/${typingId}/1?isTyping=true`}>{typingTitle}</Link>
+                  <Link href={`${PRACTICE_LONG_PATH}/${typingId}/1?isTyping=true`}>{typingTitle}</Link>
                 </Th>
                 <Th>{typingType}</Th>
                 <Th>
-                  <Link href={`/practice/long/${typingId}/1`}>조회하기</Link>
+                  <Link href={`${PRACTICE_LONG_PATH}/${typingId}/1`}>조회하기</Link>
                 </Th>
               </Tr>
             </Thead>

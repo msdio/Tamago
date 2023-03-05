@@ -4,26 +4,27 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import { TamagoLogo } from '@/icons/TamagoLogo';
+import { LOGIN_PATH, PRACTICE_PATH, PRACTICE_SHORT_PATH, SIGNUP_TERM_PATH } from '@/utils/paths';
 
 export function Header() {
   const [isLogin, setIsLogin] = useState(false);
   const router = useRouter();
 
   const handleLoginClick = () => {
-    router.push('/login');
+    router.push(LOGIN_PATH);
     setIsLogin(true);
   };
 
   const handleSignupClick = () => {
-    router.push('/signup/terms');
+    router.push(SIGNUP_TERM_PATH);
   };
 
   const handlePracticeLongClick = () => {
-    router.push('/practice');
+    router.push(PRACTICE_PATH);
   };
 
   const handlePracticeShortClick = () => {
-    router.push('/practice/short');
+    router.push(PRACTICE_SHORT_PATH);
   };
 
   return (
