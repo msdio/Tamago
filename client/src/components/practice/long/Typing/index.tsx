@@ -139,8 +139,9 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
         }
 
         if (
-          originalInfo.current[value.length - 1].components.length >
-          typingInfo.current[value.length - 1].components.length
+          typingInfo.current[value.length - 1].components.every(
+            (component, i) => component === originalInfo.current[value.length - 1].components[i],
+          )
         ) {
           setTypingStates(`${typingStates.slice(0, -2)}uf`);
         } else {
@@ -167,8 +168,9 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
       }
 
       if (
-        originalInfo.current[value.length - 1].components.length >
-        typingInfo.current[value.length - 1].components.length
+        typingInfo.current[value.length - 1].components.every(
+          (component, i) => component === originalInfo.current[value.length - 1].components[i],
+        )
       ) {
         setTypingStates(`${typingStates.replace('u', 'i').slice(0, -1)}uf`);
         return;
