@@ -52,9 +52,7 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.target;
-    console.log(value);
     setTextarea(value);
-
     const currLength = typingStates.length - 1;
 
     // 한글처럼 여러 글쇠로 이루어진 문자의 경우 타이핑을 해도 길이가 동일한 경우 발생, 빼는 경우도 마찬가지
@@ -64,7 +62,7 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
       // 한글을 뺀 경우 (길이 변화 X)
       if (lastComponent === recentChar) {
         typingInfo.current[value.length - 1].components.pop();
-        setRecentChar(typingInfo.current[value.length - 1].components.at(-1)!);
+        setRecentChar(typingInfo.current[value.length - 1].components.at(-1) || '');
 
         if (originalInfo.current[value.length - 1].char === value[value.length - 1]) {
           setTypingStates(`${typingStates.slice(0, -2)}cf`);
@@ -103,8 +101,6 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
 
     // 타이핑하는 경우
     if (value.length > currLength) {
-      // typingStates = typingStates.replace('u', 'i');
-
       typingInfo.current[value.length - 1].char = value[value.length - 1];
       typingInfo.current[value.length - 1].type = getCharType(value[value.length - 1]);
       typingInfo.current[value.length - 1].components = [recentChar];
@@ -140,14 +136,6 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
       typingInfo.current[value.length - 1].char = '';
       typingInfo.current[value.length - 1].type = 'other';
       typingInfo.current[value.length - 1].components = [];
-
-      // if (
-      //   original[lastIndex].components.length >
-      //   typing[lastIndex].components.length
-      // ) {
-      //   setTypingStates(`${typingStates.slice(0, -3)}if`); // 미완성 문자 처리
-      //   return;
-      // }
 
       setTypingStates(`${typingStates.slice(0, -2)}f`);
     }

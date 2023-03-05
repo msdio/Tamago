@@ -22,7 +22,7 @@ export default function TypingChar({ contentChar, typingChar, state }: TypingCha
 
   return (
     <Text as='span' fontFamily='D2 coding' color={charColor(state)}>
-      {contentChar}
+      {state === 'i' || state === 'u' ? typingChar : contentChar}
     </Text>
   );
 }
