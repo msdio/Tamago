@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,8 +45,9 @@ public class TypingController {
 	}
 
 	@GetMapping("/long/detail")
-	public CustomResponse<LongTypingDetailResDto> findLongTyping(@RequestParam(required = true) Integer typingId,
+	public CustomResponse<LongTypingDetailResDto> findLongTyping(@RequestHeader("Authorization") String jwtToken,
+		@RequestParam(required = true) Integer typingId,
 		@RequestParam(required = false) Integer page) {
-		return new CustomResponse<>(longTypingService.findLongTyping(typingId, page));
+		return new CustomResponse<>(longTypingService.findLongTyping(jwtToken, typingId, page));
 	}
 }
