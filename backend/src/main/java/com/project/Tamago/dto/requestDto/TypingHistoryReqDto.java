@@ -10,12 +10,15 @@ import org.hibernate.validator.constraints.Range;
 import com.project.Tamago.exception.CustomException;
 import com.project.Tamago.exception.exceptionHandler.ErrorCode;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class TypingHistoryReqDto {
 
 	@NotNull
@@ -42,22 +45,6 @@ public class TypingHistoryReqDto {
 
 	@NotNull
 	private Map<Character, WrongKey> wrongKeys;
-
-	@Builder
-	public TypingHistoryReqDto(int typingId, String resultContent, LocalDateTime startTime, LocalDateTime endTime,
-		int typingSpeed, int typingPage, int wpm, int typingAccuracy, String mode,
-		Map<Character, WrongKey> wrongKeys) {
-		this.typingId = typingId;
-		this.resultContent = resultContent;
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.typingSpeed = typingSpeed;
-		this.typingPage = typingPage;
-		this.wpm = wpm;
-		this.typingAccuracy = typingAccuracy;
-		this.mode = mode;
-		this.wrongKeys = wrongKeys;
-	}
 
 	@Getter
 	@NoArgsConstructor
