@@ -93,22 +93,28 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
       content: currentWritingContent,
       resultContent: input,
       elapsedTime: time.second, // 초 단위!
-      typingId: '1231', //TODO : typingId
+      typingId: typingWritings[currentIdx].typingId,
       language: 'Korean', // TODO : 언어 종류
-      contentLength: 24, // TODO 타이핑한 짧은 글 글자 길이 = 총글자수
+      contentLength: currentWritingContent.length,
       wrongKeys: [], // TODO : 오류 단어 체크
     };
 
-    console.log(data);
+    console.log('서버에 전송할 데이터', data);
   };
 
+  const resetTypingData = () => {
+    setTypingCount(0);
+    setTypingSpeed(0);
+    setTypingAccuracy(0);
+    backspaceCount.current = 0;
+    timeReset();
+  };
   const handleEndTyping = async (input: string) => {
     await handleSubmit(input);
 
     // TODO : 오류 단어 체크
 
-    timeReset();
-
+    resetTypingData();
     //? NOTE: 다음 문장으로 넘어간다.
     if (currentIdx < typingWritings.length - 1) {
       setCurrentIdx((prev) => prev + 1);

@@ -9,7 +9,15 @@ interface CalcTypingSpeedRequest {
 const calcTypingSpeed = ({ elapsedTime, backspaceCount, typingCount }: CalcTypingSpeedRequest) => {
   // NOTE: 현재속도 = (타수-백스페이스*2) / 경과시간(초) * 60초
   // TODO : infinite typing speed 나는 문제 확인
-  return Math.floor(((typingCount - backspaceCount * 2) / elapsedTime) * 60);
+  const calcCount = typingCount - backspaceCount * 2;
+
+  if (calcCount === 0) {
+    return 0;
+  }
+  if (elapsedTime === 0) {
+    elapsedTime = 1;
+  }
+  return Math.floor((calcCount / elapsedTime) * 60);
 };
 
 interface calcTypingRequest {
