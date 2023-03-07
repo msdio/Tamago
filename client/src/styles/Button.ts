@@ -35,7 +35,7 @@ const baseVariant = defineStyle((props) => {
   return {
     bg: `${c}.main`,
     border: '0.6px solid',
-    color: 'white.light',
+    color: c === 'primary' ? 'white.light' : 'black.dark',
 
     _hover: {
       bg: `${c}.dark`,
