@@ -38,7 +38,7 @@ const StatCardShadow = styled.div`
   position: absolute;
 `;
 
-const Badge = styled.div`
+const Badge = styled.div<{ trans: string }>`
   width: fit-content;
   height: 3.8125rem;
 
@@ -59,12 +59,7 @@ const Badge = styled.div`
     line-height: 40px;
   }
 
-  :nth-child(2) {
-    transform: translateX(3.1875rem);
-  }
-  :nth-child(3) {
-    transform: translateX(0.9375rem);
-  }
+  transform: translateX(${(props) => props.trans});
 `;
 
 export default function Stats() {
@@ -120,13 +115,13 @@ export default function Stats() {
           gap='1.3125rem'
           position='relative'
         >
-          <Badge>
+          <Badge trans='0'>
             <Text>정확도</Text>
           </Badge>
-          <Badge>
+          <Badge trans='3.1875rem'>
             <Text>소요 시간</Text>
           </Badge>
-          <Badge>
+          <Badge trans='0.9375rem'>
             <Text>속도</Text>
           </Badge>
 
