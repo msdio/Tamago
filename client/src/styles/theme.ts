@@ -5,7 +5,7 @@ import colors from '@/styles/colors';
 import styles from '@/styles/styles';
 
 import { buttonTheme } from './buttons';
-import { inputTheme } from './Input';
+import { inputTheme } from './inputs';
 
 const components: Record<string, StyleConfig> = {
   Button: buttonTheme,
