@@ -1,4 +1,4 @@
-import { Container, Flex, Text } from '@chakra-ui/react';
+import { Box, Container, Flex, Text } from '@chakra-ui/react';
 import { useRef } from 'react';
 
 import { fadeIn } from '@/constants/animations';
@@ -31,12 +31,12 @@ export default function Menus() {
 
       <Flex marginTop='4.6875rem' gap='2.6875rem' w='100%' justifyContent='space-between'>
         <MenuCard language='kr' title='긴 글 연습' content='Lorem ipsum dolor sit amet, consectetu' />
-        <div style={{ transform: 'translateY(-9.3125rem)' }}>
+        <Box transform='translateY(-9.3125rem)'>
           <MenuCard language='en' title='짧은 글 연습' content='Lorem ipsum dolor sit amet, consectetu' />
-        </div>
-        <div style={{ transform: 'translateY(-3.0625rem)' }}>
+        </Box>
+        <Box transform='translateY(-3.0625rem)'>
           <MenuCard language='en' title='글 등록' content='Lorem ipsum dolor sit amet, consectetu' />
-        </div>
+        </Box>
       </Flex>
     </Container>
   );

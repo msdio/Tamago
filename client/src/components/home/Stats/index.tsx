@@ -6,24 +6,6 @@ import { fadeIn } from '@/constants/animations';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import { RightArrowWithCircle } from '@/icons/RightArrowWithCircle';
 
-const StatCard = styled.div`
-  width: 48.25rem;
-  height: 25.25rem;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
-
-  padding: 3.3125rem 3.5625rem;
-
-  background-color: #ffffff;
-  border: 1px solid black;
-  border-radius: 5px;
-
-  z-index: 2;
-`;
-
 const StatCardShadow = styled.div`
   width: 48.25rem;
   height: 25.25rem;
@@ -76,7 +58,18 @@ export default function Stats() {
       animation={animationTrigger ? `${fadeIn} 1s linear` : ''}
     >
       <Container maxW='container.xl' py='6.9375rem' display='flex' gap='1.1875rem'>
-        <StatCard>
+        <Flex
+          w='48.25rem'
+          h='25.25rem'
+          direction='column'
+          justifyContent='space=between'
+          position='relative'
+          p='3.3125rem 3.5625rem'
+          backgroundColor='white.light'
+          border='1px solid black'
+          borderRadius='5px'
+          zIndex='2'
+        >
           <Flex direction='column'>
             <Text fontSize='19px' fontWeight='600' mb='1rem'>
               Statistics
@@ -103,7 +96,7 @@ export default function Stats() {
             bottom='0'
             right='0'
           />
-        </StatCard>
+        </Flex>
 
         <StatCardShadow />
 

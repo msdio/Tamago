@@ -1,4 +1,4 @@
-import { Image, Text } from '@chakra-ui/react';
+import { Flex, Image, Text } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 
 import { cardUp } from '@/constants/animations';
@@ -15,26 +15,6 @@ const Container = styled.div`
       background-color: #ff8a65;
     }
   }
-`;
-
-const Card = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-
-  width: 22.8125rem;
-  height: 16.625rem;
-
-  border: 1px solid black;
-  border-radius: 5px;
-
-  padding: 2.1875rem 2.75rem;
-
-  background-color: #ffffff;
-
-  cursor: pointer;
-
-  z-index: 2;
 `;
 
 const Shadow = styled.div`
@@ -60,7 +40,18 @@ interface CardProps {
 export default function MenuCard({ language, title, content }: CardProps) {
   return (
     <Container>
-      <Card>
+      <Flex
+        direction='column'
+        justifyContent='center'
+        w='22.8125rem'
+        h='16.625rem'
+        p='2.1875rem 2.75rem'
+        border='1px solid black'
+        borderRadius='5px'
+        backgroundColor='white.light'
+        cursor='pointer'
+        zIndex='2'
+      >
         <Image
           w='5.9375rem'
           src={language === 'en' ? '/images/home/abc.png' : '/images/home/ganada.png'}
@@ -75,7 +66,7 @@ export default function MenuCard({ language, title, content }: CardProps) {
         <Text fontSize='1rem' marginTop='.875rem'>
           {content}
         </Text>
-      </Card>
+      </Flex>
       <Shadow />
     </Container>
   );
