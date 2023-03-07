@@ -11,7 +11,7 @@ interface LongTypingItem {
 }
 
 export default function PracticeLongPage() {
-  const [longTypingList, setLongTypingList] = useState<LongTypingItem[]>([
+  const [longTypingList] = useState<LongTypingItem[]>([
     {
       typingId: 1,
       typingTitle: '애국가',

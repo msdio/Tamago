@@ -26,7 +26,7 @@ interface PracticeLongTypingProps {
   totalPage: number;
 }
 
-export default function PracticeLongTyping({ title, content, currPage, totalPage }: PracticeLongTypingProps) {
+export default function PracticeLongTyping({ content }: PracticeLongTypingProps) {
   const router = useRouter();
 
   // 원본 긴 글을 분석하여 저장
@@ -78,7 +78,7 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
     infos.wpm = getTypingWpm(totalTypingCount, time.minute + time.second / 60 + time.ms / 60000);
     infos.typist = getTypingSpeed(totalTypingCount, time.minute + time.second / 60 + time.ms / 60000);
     setInfos({ ...infos });
-  }, [time]);
+  }, [infos, status, time, totalTypingCount]);
 
   /**
    * 타이핑할 때마다 타자 정확도 계산
@@ -89,7 +89,7 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
     infos.wpm = getTypingWpm(totalTypingCount, time.minute + time.second / 60);
     infos.typist = getTypingSpeed(totalTypingCount, time.minute + time.second / 60);
     setInfos({ ...infos });
-  }, [typingStates, totalTypingCount]);
+  }, [typingStates, totalTypingCount, infos, time.minute, time.second]);
 
   /**
    * 사용자가 타이핑을 할 경우 상태 변화
@@ -124,7 +124,6 @@ export default function PracticeLongTyping({ title, content, currPage, totalPage
         wrongKeys: getWrongKeys(contentInfos.current, typingInfos.current),
       };
       alert(JSON.stringify(result));
-      console.log(result);
       return;
     }
 

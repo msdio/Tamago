@@ -34,8 +34,8 @@ export const getTypingSpeed = (typingCount: number, minute: number) => {
 export const getWrongKeys = (contentInfos: CharInfo[], typingInfos: CharInfo[]) => {
   const wrongKeys: Record<string, { total: number; count: number }> = {};
   contentInfos.forEach((contentInfo, i) => {
-    const { char: contentChar, type: contentType, components: contentComponents } = contentInfo;
-    const { char: typingChar, type: typingType, components: typingComponents } = typingInfos[i];
+    const { components: contentComponents } = contentInfo;
+    const { components: typingComponents } = typingInfos[i];
 
     contentComponents.forEach((contentComponent, j) => {
       if (!wrongKeys[contentComponent]) wrongKeys[contentComponent] = { total: 1, count: 0 };

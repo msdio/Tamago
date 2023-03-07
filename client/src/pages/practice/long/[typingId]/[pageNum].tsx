@@ -19,7 +19,7 @@ interface LongTypingResponse {
 }
 
 export const getServerSideProps: GetServerSideProps<{ data: Data }> = async (context) => {
-  const { isTyping, typingId, pageNum } = context.query as { isTyping: string; typingId: string; pageNum: string };
+  const { isTyping, pageNum } = context.query as { isTyping: string; typingId: string; pageNum: string };
 
   const res: { data: LongTypingResponse } = await new Promise((resolve) => {
     setTimeout(() => {

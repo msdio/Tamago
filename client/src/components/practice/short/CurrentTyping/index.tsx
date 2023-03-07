@@ -10,7 +10,7 @@ interface CurrentTypingProps {
   onEnd: () => Promise<void>;
 }
 
-export default function CurrentTyping({ writing, onStart, onEnd }: CurrentTypingProps) {
+export default function CurrentTyping({ writing, onStart }: CurrentTypingProps) {
   const [input, setInput] = useState('');
   // const [errorWordList, setErrorWordList] = useState<ErrorWordType[]>([]);
 

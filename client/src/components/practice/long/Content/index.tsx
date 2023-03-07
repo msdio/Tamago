@@ -10,7 +10,7 @@ interface LongContentProps {
   totalPage: number;
 }
 
-export default function LongContent({ title, content, currPage, totalPage }: LongContentProps) {
+export default function LongContent({ content }: LongContentProps) {
   return (
     <PracticeLongLayout>
       <Flex
