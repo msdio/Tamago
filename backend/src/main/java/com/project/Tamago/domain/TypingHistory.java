@@ -1,5 +1,7 @@
 package com.project.Tamago.domain;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -48,9 +50,11 @@ public class TypingHistory extends BaseTimeEntity {
 	@Enumerated(EnumType.STRING)
 	private Mode mode;
 
+	private LocalDateTime startTime;
+	private LocalDateTime endTime;
+
 	private Integer beforeMmr;
 
 	private Integer increasedValue;
-
 
 }

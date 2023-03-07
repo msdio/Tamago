@@ -5,6 +5,10 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import com.project.Tamago.domain.LongTyping;
+import com.project.Tamago.domain.Typing;
+import com.project.Tamago.domain.TypingHistory;
+import com.project.Tamago.domain.User;
+import com.project.Tamago.dto.requestDto.TypingHistoryReqDto;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
 import com.project.Tamago.dto.responseDto.LongTypingResDto;
 
@@ -21,4 +25,9 @@ public interface DataMapper {
 	@Mapping(target = "language", expression = "java(longTyping.getLanguage().toString())")
 	@Mapping(source = "pageContent", target = "content")
 	LongTypingDetailResDto LongTypingToLongTypingDetailResDto(LongTyping longTyping, String pageContent);
+
+	@Mapping(target = "id", ignore = true)
+	@Mapping(source = "typing", target = "typing")
+	@Mapping(source = "user", target = "user")
+	TypingHistory toTypingHistory(TypingHistoryReqDto typingHistoryReqDto, Typing typing, User user);
 }
