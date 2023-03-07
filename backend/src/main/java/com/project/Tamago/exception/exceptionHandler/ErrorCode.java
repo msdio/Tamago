@@ -19,6 +19,8 @@ public enum ErrorCode {
 	USERS_EXISTS_EMAIL(3001, "중복된 이메일입니다."),
 	USERS_EXISTS_NICKNAME(3002, "중복된 닉네임입니다."),
 	USERS_INFO_NOT_EXISTS(3003, "유저 정보가 존재하지 않습니다."),
+
+	TYPING_INFO_NOT_EXISTS(3004, "존재하지 않는 글입니다."),
 	;
 
 	private final int code;
