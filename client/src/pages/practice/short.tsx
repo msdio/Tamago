@@ -9,6 +9,7 @@ import ShortTypingProvider from '@/components/practice/short/shortTypingContext'
 //   data: ShortTypingResponseType;
 // }
 
+const INIT_LANG = 'korean';
 export default function PracticeShortPage() {
   const [data, setData] = useState<ShortTypingResponseType>({
     typingWritings: [],
@@ -17,7 +18,7 @@ export default function PracticeShortPage() {
   });
 
   const getTypingWritings = async () => {
-    const data = await getShortTypingWritingsAPI();
+    const data = await getShortTypingWritingsAPI(INIT_LANG);
 
     setData(data);
   };
