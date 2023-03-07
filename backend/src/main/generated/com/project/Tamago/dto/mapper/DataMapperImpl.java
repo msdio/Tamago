@@ -6,6 +6,7 @@ import com.project.Tamago.domain.Typing;
 import com.project.Tamago.domain.TypingHistory;
 import com.project.Tamago.domain.TypingHistory.TypingHistoryBuilder;
 import com.project.Tamago.domain.User;
+import com.project.Tamago.dto.PageContentDto;
 import com.project.Tamago.dto.requestDto.TypingHistoryReqDto;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto.LongTypingDetailResDtoBuilder;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-08T01:18:48+0900",
+    date = "2023-03-08T01:47:04+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.17 (Eclipse Adoptium)"
 )
 @Component
@@ -44,8 +45,8 @@ public class DataMapperImpl implements DataMapper {
     }
 
     @Override
-    public LongTypingDetailResDto LongTypingToLongTypingDetailResDto(LongTyping longTyping, String pageContent) {
-        if ( longTyping == null && pageContent == null ) {
+    public LongTypingDetailResDto LongTypingToLongTypingDetailResDto(LongTyping longTyping, PageContentDto pageContentDto) {
+        if ( longTyping == null && pageContentDto == null ) {
             return null;
         }
 
@@ -56,8 +57,9 @@ public class DataMapperImpl implements DataMapper {
             longTypingDetailResDto.title( longTyping.getTitle() );
             longTypingDetailResDto.totalPage( longTyping.getTotalPage() );
         }
-        if ( pageContent != null ) {
-            longTypingDetailResDto.content( pageContent );
+        if ( pageContentDto != null ) {
+            longTypingDetailResDto.content( pageContentDto.getContent() );
+            longTypingDetailResDto.currentPage( pageContentDto.getPage() );
         }
         longTypingDetailResDto.language( longTyping.getLanguage().toString() );
 

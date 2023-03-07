@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.Tamago.domain.LongTyping;
+import com.project.Tamago.dto.PageContentDto;
 import com.project.Tamago.dto.mapper.DataMapper;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
 import com.project.Tamago.dto.responseDto.LongTypingResDto;
@@ -37,17 +38,18 @@ public class LongTypingService {
 	}
 
 	@Transactional(readOnly = true)
-	public LongTypingDetailResDto findLongTyping(String jwtToken, Integer typingId, Integer page) {
+	public LongTypingDetailResDto findLongTyping(Integer typingId, Integer page) {
 		LongTyping longTyping = longTypingRepository.findByIdAndTotalPageGreaterThanEqual(typingId, page)
 			.orElseThrow(() -> new CustomException(LONG_TYPING_INFO_NOT_EXISTS));
-		String pageContent = getPageContent(longTyping.getContent(), page);
-		return DataMapper.INSTANCE.LongTypingToLongTypingDetailResDto(longTyping, pageContent);
+		PageContentDto pageContentDto = getPageContent(longTyping.getContent(), page);
+		return DataMapper.INSTANCE.LongTypingToLongTypingDetailResDto(longTyping, pageContentDto);
 	}
 
-	private String getPageContent(String content, Integer page) {
+	private PageContentDto getPageContent(String content, Integer page) {
 		String[] contentLines = content.split("\r\n");
 		int startIndex = (page - 1) * LINES_PER_PAGE;
 		int endIndex = Math.min(startIndex + LINES_PER_PAGE, contentLines.length);
-		return String.join("\n", Arrays.copyOfRange(contentLines, startIndex, endIndex));
+		String pageContent = String.join("\n", Arrays.copyOfRange(contentLines, startIndex, endIndex));
+		return new PageContentDto(page, pageContent);
 	}
 }

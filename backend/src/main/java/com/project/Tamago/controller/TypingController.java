@@ -48,6 +48,6 @@ public class TypingController {
 	public CustomResponse<LongTypingDetailResDto> findLongTyping(@RequestHeader("Authorization") String jwtToken,
 		@RequestParam(required = true) Integer typingId,
 		@RequestParam(required = false) Integer page) {
-		return new CustomResponse<>(longTypingService.findLongTyping(jwtToken, typingId, page));
+		return new CustomResponse<>(longTypingService.findLongTyping(typingId, page));
 	}
 }
