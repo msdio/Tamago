@@ -4,7 +4,7 @@ export default function Banner() {
   return (
     <Flex w='100%' h='199px' bgColor='primary.main'>
       <Container maxW='container.xl' h='100%' display='flex' alignItems='center' justifyContent='space-between'>
-        <Text fontSize='2.25rem' fontWeight='extrabold' color='primary.white'>
+        <Text fontSize='1.875rem' fontWeight='700' color='white.light'>
           이제는 개발에 재미를 더해요.
         </Text>
 
