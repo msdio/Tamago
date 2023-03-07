@@ -21,5 +21,6 @@ public class CustomResponse<T> {
 	}
 
 	public CustomResponse() {
+		this.result = null;
 	}
 }

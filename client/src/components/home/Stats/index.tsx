@@ -73,7 +73,7 @@ export default function Stats() {
     <Flex
       w='100vw'
       h='653px'
-      bgColor='#FAFAFA'
+      bgColor='background.white'
       ref={observerRef}
       opacity={animationTrigger ? 1 : 0}
       animation={animationTrigger ? `${fadeIn} 1s linear` : ''}

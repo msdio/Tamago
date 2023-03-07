@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.Tamago.dto.CustomResponse;
-import com.project.Tamago.dto.SuccessMessage;
 import com.project.Tamago.dto.requestDto.ModifyProfileReqDto;
 import com.project.Tamago.dto.responseDto.ProfileResDto;
 import com.project.Tamago.exception.InvalidParameterException;
@@ -31,12 +30,12 @@ public class UserController {
 	}
 
 	@PatchMapping("/profile")
-	public SuccessMessage modifyProfile(@RequestHeader("Authorization") String jwtToken,
+	public CustomResponse<Void> modifyProfile(@RequestHeader("Authorization") String jwtToken,
 		@Validated @RequestBody ModifyProfileReqDto modifyProfileReqDto, BindingResult result) {
 		if (result.hasErrors()) {
 			throw new InvalidParameterException(result);
 		}
 		userService.modifyUserByJwtToken(jwtToken, modifyProfileReqDto);
-		return new SuccessMessage();
+		return new CustomResponse<>();
 	}
 }
