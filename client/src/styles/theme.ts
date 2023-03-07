@@ -4,7 +4,7 @@ import { extendTheme } from '@chakra-ui/react';
 import colors from '@/styles/colors';
 import styles from '@/styles/styles';
 
-import { buttonTheme } from './Button';
+import { buttonTheme } from './buttons';
 import { inputTheme } from './Input';
 
 const components: Record<string, StyleConfig> = {
