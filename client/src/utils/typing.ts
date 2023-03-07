@@ -64,9 +64,16 @@ export const getTotalTypingCount = (inputWriting: string) => {
 };
 
 export const calcAccuracy = ({ correctWriting, inputWriting }: calcTypingRequest) => {
-  const wrongCount = calcWrongCount({ correctWriting, inputWriting });
-  const totalCount = getTotalTypingCount(inputWriting);
-
+  const totalCount = inputWriting.length - 1 === 0 ? 0 : inputWriting.length - 1;
+  let wrongCount = 0;
+  for (let i = 0; i < totalCount; i++) {
+    if (inputWriting[i] !== correctWriting[i]) {
+      wrongCount += 1;
+    }
+  }
+  if (totalCount === 0) {
+    return 0;
+  }
   return Math.floor(((totalCount - wrongCount) / totalCount) * 100);
 };
 

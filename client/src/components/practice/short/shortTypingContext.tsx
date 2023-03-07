@@ -103,9 +103,9 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
   };
 
   const resetTypingData = () => {
-    setTypingCount(0);
-    setTypingSpeed(0);
-    setTypingAccuracy(0);
+    setTypingCount(() => 0);
+    setTypingSpeed(() => 0);
+    setTypingAccuracy(() => 0);
     backspaceCount.current = 0;
     timeReset();
   };
