@@ -62,6 +62,9 @@ const Template: ComponentStory<typeof ButtonSample> = (args) => {
         <Button {...args} isDisabled>
           {args.text + ' (Disabled)'}
         </Button>
+        <Button size='xs' colorScheme='' variant='outline'>
+          log in
+        </Button>
       </Flex>
     </ChakraProvider>
   );
