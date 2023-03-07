@@ -12,6 +12,7 @@ const StatCard = styled.div`
 
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   position: relative;
 
   padding: 3.3125rem 3.5625rem;
@@ -41,7 +42,7 @@ const Badge = styled.div`
   width: fit-content;
   height: 3.8125rem;
 
-  padding: 0.875rem 1.8125rem;
+  padding: 11px 42px 10px 42px;
 
   border: 1px solid black;
   border-radius: 40px;
@@ -53,8 +54,9 @@ const Badge = styled.div`
   justify-content: center;
 
   p {
-    font-size: 1.75rem;
-    font-weight: bold;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 40px;
   }
 
   :nth-child(2) {
@@ -78,20 +80,24 @@ export default function Stats() {
       opacity={animationTrigger ? 1 : 0}
       animation={animationTrigger ? `${fadeIn} 1s linear` : ''}
     >
-      <Container maxW='container.xl' py='6.9375rem' display='flex' justifyContent='space-between'>
+      <Container maxW='container.xl' py='6.9375rem' display='flex' gap='1.1875rem'>
         <StatCard>
-          <Text fontSize='1.5625rem' mb='1.3125rem'>
-            Statistics
-          </Text>
-          <Text fontSize='2.25rem' fontWeight='bold' mb='1.4375rem'>
-            타자를 측정하고 분석하여
-            <br />
-            본인의 타이핑 실력을
-            <br />
-            객관적으로 알 수 있어요.
-          </Text>
+          <Flex direction='column'>
+            <Text fontSize='19px' fontWeight='600' mb='1rem'>
+              Statistics
+            </Text>
+            <Text fontSize='1.875rem' fontWeight='700' mb='1.4375rem'>
+              타자를 측정하고 분석하여
+              <br />
+              본인의 타이핑 실력을
+              <br />
+              객관적으로 알 수 있어요.
+            </Text>
+          </Flex>
 
-          <RightArrowWithCircle />
+          <Flex>
+            <RightArrowWithCircle />
+          </Flex>
 
           <Image
             src='/images/home/graph-circle.png'
@@ -106,7 +112,14 @@ export default function Stats() {
 
         <StatCardShadow />
 
-        <Flex w='23.875rem' display='flex' flexDirection='column' gap='1.375rem' position='relative'>
+        <Flex
+          w='23.875rem'
+          p='1.875rem 2.875rem'
+          display='flex'
+          flexDirection='column'
+          gap='1.3125rem'
+          position='relative'
+        >
           <Badge>
             <Text>정확도</Text>
           </Badge>
