@@ -5,15 +5,8 @@ import { useShortTypingContext } from '@/components/practice/short/shortTypingCo
 import DownArrow from '@/icons/DownArrow';
 import { getSecondToMMSSFormat } from '@/utils/time';
 
-interface InfoBarProps {
-  time: number;
-  // wpm: number;
-  // accuracy: number;
-  // typist: number;
-}
-
-function InfoBar({ time }: InfoBarProps) {
-  const { typingAccuracy, typingCount, typingSpeed } = useShortTypingContext();
+function InfoBar() {
+  const { time, typingAccuracy, typingCount, typingSpeed } = useShortTypingContext();
   return (
     <Flex gap='24px'>
       <Box w='118px' bg='#CEF0FF' border=' 0.6px solid #000000' borderRadius={10}></Box>

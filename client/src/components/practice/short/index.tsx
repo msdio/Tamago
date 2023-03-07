@@ -16,42 +16,12 @@ const INIT_INFO = {
 // NOTE: 어떻게 합치면 좋을까
 type PracticeShortProps = ShortTypingResponseType;
 
-export default function PracticeShort({ typingWritings }: PracticeShortProps) {
-  // const { time, status, timePlay, timePause, timeReset } = useStopwatch();
-  const { time, currentWritingContent } = useShortTypingContext();
-  // const [currentIdx, setCurrentIdx] = useState(0);
-  // const [infos, setInfos] = useState(INIT_INFO);
-  // const [typingCnt, setTypingCnt] = useState(0);
-
-  // const handleStartTyping = () => {
-  //   if (status === 'stop') {
-  //     timePlay();
-  //   }
-  // };
-
-  // const handleEndTyping = async ({ correctWriting, input }: SubmitRequestType) => {
-  //   // TODO : 오류 단어 체크
-
-  //   const data = {
-  //     content: input,
-  //     time: time.second,
-  //   };
-
-  //   console.log('handleEndTyping: ', data);
-
-  //   timeReset();
-
-  //   //? NOTE: 다음 문장으로 넘어간다.
-  //   if (currentIdx < typingWritings.length - 1) {
-  //     setCurrentIdx((prev) => prev + 1);
-  //   } else {
-  //     // TODO : 30문장 끝
-  //   }
-  // };
+export default function PracticeShort({}: PracticeShortProps) {
+  const { currentWritingContent } = useShortTypingContext();
 
   return (
     <Box p='35px 120px' minW='1100px'>
-      <InfoBar time={time} wpm={0} accuracy={0} typist={0} />
+      <InfoBar />
 
       {currentWritingContent && (
         <Box position='relative' border='0.6px solid #000000' borderRadius='30px 0px 0px 0px' mt='28px'>
