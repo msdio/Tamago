@@ -11,7 +11,7 @@ export const parameters = {
   },
   options: {
     storySort: {
-      order: ['Design System', 'Components'],
+      order: ['Design System', 'Components', ['common', 'login', 'signup']],
     },
   },
 };
