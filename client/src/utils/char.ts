@@ -13,20 +13,30 @@ export function isHangulChar(word: string) {
 export function isEnglishChar(word: string) {
   if (!word) return false;
   const c = word.charCodeAt(0);
-  if (65 <= c && c <= 90) return true;
-  if (97 <= c && c <= 122) return true;
+  if (65 <= c && c <= 90) {
+    return true;
+  }
+  if (97 <= c && c <= 122) {
+    return true;
+  }
 
   return false;
 }
 
 export const getCharType = (char: string) => {
-  if (isHangulChar(char)) return 'hangul';
-  if (isEnglishChar(char)) return 'english';
+  if (isHangulChar(char)) {
+    return 'hangul';
+  }
+  if (isEnglishChar(char)) {
+    return 'english';
+  }
   return 'other';
 };
 
 export const getConstantVowel = (char: string) => {
-  if (!isHangulChar(char)) return [char];
+  if (!isHangulChar(char)) {
+    return [char];
+  }
 
   const result: string[] = [];
   const ga = 44032;

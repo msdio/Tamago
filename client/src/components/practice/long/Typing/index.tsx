@@ -74,7 +74,9 @@ export default function PracticeLongTyping({ content }: PracticeLongTypingProps)
   }, []);
 
   useEffect(() => {
-    if (status === 'stop') return;
+    if (status === 'stop') {
+      return;
+    }
     infos.wpm = getTypingWpm(totalTypingCount, time.minute + time.second / 60 + time.ms / 60000);
     infos.typist = getTypingSpeed(totalTypingCount, time.minute + time.second / 60 + time.ms / 60000);
     setInfos({ ...infos });
@@ -226,7 +228,9 @@ export default function PracticeLongTyping({ content }: PracticeLongTypingProps)
       currTypingCount.current++;
       return;
     }
-    if (e.key.length > 1) return;
+    if (e.key.length > 1) {
+      return;
+    }
     currTypingCount.current++;
     setRecentChar(e.key);
   };
