@@ -109,6 +109,7 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
     backspaceCount.current = 0;
     timeReset();
   };
+
   const handleEndTyping = async (input: string) => {
     await handleSubmit(input);
 

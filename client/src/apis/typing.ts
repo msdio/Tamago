@@ -14,7 +14,7 @@ export interface ShortTypingResponseType {
 export const getShortTypingWritingsAPI = async (language: 'korean' | 'english'): Promise<ShortTypingResponseType> => {
   const res = await request.get(`/typing/short?language=${language}`);
 
-  return res.data;
+  return res.data.result;
 };
 
 type WrongKeyType = Record<string, { total: number; count: number }>;

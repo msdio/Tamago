@@ -27,6 +27,9 @@ export default function PracticeShortPage() {
     getTypingWritings();
   }, []);
 
+  // TODO: error page
+  if (!data) <>error</>;
+
   return (
     <ShortTypingProvider typingWritings={data.typingWritings}>
       <PracticeShort {...data} />;
