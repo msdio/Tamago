@@ -1,20 +1,22 @@
 import { Text } from '@chakra-ui/react';
 import { memo } from 'react';
 
+import type { TypingState } from '@/types/typing';
+
 interface TypingCharProps {
   contentChar: string;
   typingChar?: string;
-  state?: string;
+  state?: TypingState;
 }
 
-function TypingChar({ contentChar, typingChar, state }: TypingCharProps) {
-  const charColor = (state: string | undefined) => {
+function TypingChar({ contentChar, typingChar, state = 'd' }: TypingCharProps) {
+  const charColor = (state: TypingState) => {
     switch (state) {
       case 'c':
         return 'black';
-      case 'i':
+      case 'i' as unknown as TypingState:
         return '#ff0000';
-      case 'u':
+      case 'u' as unknown as TypingState:
         return '#ff6A3C';
       default:
         return '#757575';
@@ -28,9 +30,7 @@ function TypingChar({ contentChar, typingChar, state }: TypingCharProps) {
 
   return (
     <Text as='span' fontFamily='D2 coding' color={charColor(state)} backgroundColor={state === 'f' ? '#FBE789' : ''}>
-      {state === 'i' || state === 'u'
-        ? convertBlankToVisible(typingChar || contentChar)
-        : convertBlankToVisible(contentChar)}
+      {state === 'i' ? convertBlankToVisible(typingChar || contentChar) : convertBlankToVisible(contentChar)}
     </Text>
   );
 }
