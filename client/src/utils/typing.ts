@@ -18,7 +18,7 @@ export const getTypingAccuracy = (states: string) => {
  * @param minute 사용자가 타이핑한 시간(분 단위)
  * @returns wpm
  */
-export const getTypingWpm = (typingCount: number, minute: number) => {
+export const getTypingWpm = ({ typingCount, minute }: { typingCount: number; minute: number }) => {
   if (minute === 0) {
     return 0;
   }
@@ -30,7 +30,7 @@ export const getTypingWpm = (typingCount: number, minute: number) => {
  * @param minute 사용자가 타이핑한 시간(분 단위)
  * @returns 타자속도
  */
-export const getTypingSpeed = (typingCount: number, minute: number) => {
+export const getTypingSpeed = ({ typingCount, minute }: { typingCount: number; minute: number }) => {
   if (minute === 0) {
     return 0;
   }

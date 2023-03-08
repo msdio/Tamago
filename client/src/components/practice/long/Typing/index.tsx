@@ -1,7 +1,7 @@
 import { Box, Flex, Text, Textarea } from '@chakra-ui/react';
 import { disassemble } from 'hangul-js';
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import DownArrow from '@/icons/DownArrow';
 import type { CharInfo } from '@/types/typing';
@@ -12,12 +12,6 @@ import useStopwatch from '../../short/useStopWatch';
 import TypingLine from '../common/TypingLine';
 import PracticeLongLayout from '../Layout';
 import InfoBar from './InfoBar';
-
-const INIT_INFO = {
-  wpm: 0,
-  accuracy: 0,
-  typist: 0,
-};
 
 interface PracticeLongTypingProps {
   title: string;
@@ -47,10 +41,12 @@ export default function PracticeLongTyping({ content }: PracticeLongTypingProps)
   );
   const [textarea, setTextarea] = useState('');
   // 처음 'f'로 초기화되어 가장 먼저 온 글자에 포커싱, 'f' 이외에도 'c'(correct), 'i'(incorrect), 'u'(unknown)로 상태 구분
-  const [typingStates, setTypingStates] = useState<string>('f');
+  const [typingStates, setTypingStates] = useState('f');
   // 사용자가 마지막으로 타이핑한 글쇠 저장, 한글을 타이핑한 경우 의미를 갖는다.
-  const [recentChar, setRecentChar] = useState<string>('');
-  const [infos, setInfos] = useState(INIT_INFO);
+  const [recentChar, setRecentChar] = useState('');
+  const [typingWpm, setTypingWpm] = useState(0);
+  const [typingSpeed, setTypingSpeed] = useState(0);
+  const [typingAccuracy, setTypingAccuracy] = useState(0);
   // 전체 타수
   const [totalTypingCount, setTotalTypingCount] = useState(0);
   // 현재 문자의 타수, 맞은 경우 전체 타수에 반영하고 틀릴 경우는 반영하지 않는다.
@@ -65,6 +61,19 @@ export default function PracticeLongTyping({ content }: PracticeLongTypingProps)
    */
   const focusTextarea = () => textareaRef.current?.focus();
 
+  const typingAccuracyHandler = useCallback(() => {
+    setTypingAccuracy(getTypingAccuracy(typingStates));
+  }, [typingStates]);
+
+  const typingSpeedHandler = useCallback(() => {
+    setTypingWpm(
+      getTypingWpm({ typingCount: totalTypingCount, minute: time.minute + time.second / 60 + time.ms / 60000 }),
+    );
+    setTypingSpeed(
+      getTypingSpeed({ typingCount: totalTypingCount, minute: time.minute + time.second / 60 + time.ms / 60000 }),
+    );
+  }, [totalTypingCount, time]);
+
   /**
    * 처음 화면이 렌더링될 때 textarea로 포커싱되도록 한다.
    * textarea는 숨겨두었기 때문에 사용자가 보고 포커싱할 수 없다.
@@ -77,21 +86,15 @@ export default function PracticeLongTyping({ content }: PracticeLongTypingProps)
     if (status === 'stop') {
       return;
     }
-    infos.wpm = getTypingWpm(totalTypingCount, time.minute + time.second / 60 + time.ms / 60000);
-    infos.typist = getTypingSpeed(totalTypingCount, time.minute + time.second / 60 + time.ms / 60000);
-    setInfos({ ...infos });
-  }, [infos, status, time, totalTypingCount]);
+    typingAccuracyHandler();
+  }, [status, typingAccuracyHandler]);
 
-  /**
-   * 타이핑할 때마다 타자 정확도 계산
-   * 의존성으로 왜 useEffect로 사용하는 상태를 모두 넣어야되는지 모르겠습니다.
-   */
   useEffect(() => {
-    infos.accuracy = getTypingAccuracy(typingStates);
-    infos.wpm = getTypingWpm(totalTypingCount, time.minute + time.second / 60);
-    infos.typist = getTypingSpeed(totalTypingCount, time.minute + time.second / 60);
-    setInfos({ ...infos });
-  }, [typingStates, totalTypingCount, infos, time.minute, time.second]);
+    if (status === 'stop') {
+      return;
+    }
+    typingSpeedHandler();
+  }, [status, typingSpeedHandler]);
 
   /**
    * 사용자가 타이핑을 할 경우 상태 변화
@@ -119,10 +122,10 @@ export default function PracticeLongTyping({ content }: PracticeLongTypingProps)
         resultContent: textarea,
         startTime: new Date(endTime - typingTime),
         endTime: new Date(endTime),
-        typingSpeed: infos.typist,
+        typingSpeed,
         mode: 'PRACTICE',
-        wpm: infos.wpm,
-        typingAccuracy: infos.accuracy,
+        wpm: typingWpm,
+        typingAccuracy,
         wrongKeys: getWrongKeys(contentInfos.current, typingInfos.current),
       };
       alert(JSON.stringify(result));
@@ -270,7 +273,12 @@ export default function PracticeLongTyping({ content }: PracticeLongTypingProps)
             </Text>
             <DownArrow />
           </Flex>
-          <InfoBar {...infos} time={time.minute * 60 + time.second} />
+          <InfoBar
+            accuracy={typingAccuracy}
+            speed={typingSpeed}
+            wpm={typingWpm}
+            time={time.minute * 60 + time.second}
+          />
         </Box>
       </Flex>
       <Flex
