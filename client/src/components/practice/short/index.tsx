@@ -17,7 +17,7 @@ const INIT_INFO = {
 type PracticeShortProps = ShortTypingResponseType;
 
 export default function PracticeShort({}: PracticeShortProps) {
-  const { currentWritingContent } = useShortTypingContext();
+  const { currentWritingContent, nextWritingContent } = useShortTypingContext();
 
   return (
     <Box p='35px 120px' minW='1100px'>
@@ -32,7 +32,7 @@ export default function PracticeShort({}: PracticeShortProps) {
           <Flex p='24px 40px 32px' alignItems='center' gap='16.18px'>
             <TwoRightArrow />
             <Text fontSize='20px' color='#3C3C3C'>
-              This source code is licensed under the MIT license found in the
+              {nextWritingContent}
             </Text>
           </Flex>
         </Box>

@@ -22,6 +22,7 @@ interface ShortTypingContextType {
 
   prevWritingInput: string;
   prevWritingCorrect: string;
+  nextWritingContent: string;
 }
 
 interface ShortTypingHandlerContextType {
@@ -53,6 +54,11 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
 
   const prevWritingCorrect = useMemo(
     () => (currentIdx > 0 ? typingWritings[currentIdx - 1]?.content : ''),
+    [currentIdx, typingWritings],
+  );
+
+  const nextWritingContent = useMemo(
+    () => (currentIdx < typingWritings.length - 1 ? typingWritings[currentIdx + 1].content : ''),
     [currentIdx, typingWritings],
   );
 
@@ -142,6 +148,7 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
 
     prevWritingInput: prevWritingInput.current,
     prevWritingCorrect,
+    nextWritingContent,
   };
 
   const actions = {
