@@ -1,8 +1,9 @@
-import { Box, Flex, Input, Text } from '@chakra-ui/react';
+import { Box, Input } from '@chakra-ui/react';
 import type { ChangeEvent, KeyboardEvent } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
+import CorrectWriting from '@/components/practice/short/CorrectWriting';
 import { useShortTypingContext, useShortTypingHandlerContext } from '@/components/practice/short/shortTypingContext';
 import { checkAllInputTyping } from '@/utils/typing';
 
@@ -18,21 +19,6 @@ export default function CurrentTyping({}) {
   const { onEndTyping, onBackspace, onTyping } = useShortTypingHandlerContext();
 
   const [input, setInput] = useState(INIT_INPUT);
-
-  //? NOTE: 입력값과 실제 입력해야 하는 값을 비교하고, error를 띄운다
-  const typingWriting = correctWriting?.split('').map((word, idx) => {
-    if (word === ' ') {
-      return <Text key={idx}>&nbsp;</Text>;
-    }
-    if (idx < input.length - 1 && word !== input[idx]) {
-      return (
-        <Text color='red' key={idx}>
-          {word}
-        </Text>
-      );
-    }
-    return <Text key={idx}>{word}</Text>;
-  });
 
   // const setErrorWord = (idx: number, errorWord: ErrorWordType) => {
   //   // NOTE: error word를 index마다 관리하고,
@@ -59,13 +45,6 @@ export default function CurrentTyping({}) {
     if (word.length > correctWriting.length) {
       onEndTyping(word);
     }
-
-    // const currentIdx = word.length - 1;
-    // const lastWord = word[currentIdx];
-    // const correctLastWord = writing.content[currentIdx];
-
-    // const currentErrorWords = checkErrorWord(correctLastWord, lastWord);
-    // setErrorWord(currentIdx, currentErrorWords);
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -77,7 +56,6 @@ export default function CurrentTyping({}) {
 
     // TODO : backspace 누른 경우 -> 타수에 영향
     if (e.key === 'Backspace') {
-      // e.preventDefault();
       onBackspace();
     }
   };
@@ -85,6 +63,8 @@ export default function CurrentTyping({}) {
   useEffect(() => {
     setInput(INIT_INPUT);
   }, [correctWriting]);
+
+  if (!correctWriting) return <></>;
 
   return (
     <Box
@@ -101,9 +81,7 @@ export default function CurrentTyping({}) {
       p='30px 49px'
       bg='#FFF2BA'
     >
-      <Flex pl='5px' mb='10px' fontSize='23px' fontWeight={500}>
-        {typingWriting}
-      </Flex>
+      <CorrectWriting correctWriting={correctWriting} inputWriting={input} />
 
       <Input
         bg='#FFE98B'

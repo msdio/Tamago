@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { useMemo } from 'react';
 import { useRef } from 'react';
 import { useState } from 'react';
 import { useContext } from 'react';
@@ -18,6 +19,9 @@ interface ShortTypingContextType {
   typingCount: number;
   typingSpeed: number;
   typingAccuracy: number;
+
+  prevWritingInput: string;
+  prevWritingCorrect: string;
 }
 
 interface ShortTypingHandlerContextType {
@@ -41,11 +45,16 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
   const [typingCount, setTypingCount] = useState(0);
   const [typingSpeed, setTypingSpeed] = useState(0);
   const [typingAccuracy, setTypingAccuracy] = useState(0);
-  const backspaceCount = useRef(0);
-
   const [currentIdx, setCurrentIdx] = useState(0);
+  const backspaceCount = useRef(0);
+  const prevWritingInput = useRef('');
 
   const currentWritingContent = typingWritings[currentIdx]?.content ?? '';
+
+  const prevWritingCorrect = useMemo(
+    () => (currentIdx > 0 ? typingWritings[currentIdx - 1]?.content : ''),
+    [currentIdx, typingWritings],
+  );
 
   const handleTypingSpeed = () => {
     const newTypingSpeed = calcTypingSpeed({
@@ -81,6 +90,8 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
   };
 
   const handleSubmit = async (input: string) => {
+    prevWritingInput.current = input;
+
     // TODO : error word를 잡는것은 서버에 보낼때만 하면 된다, 이전에는 값이 틀린지 아닌지만 체크하면 된다.
 
     const data: TypingHistoryRequest = {
@@ -113,8 +124,6 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
   const handleEndTyping = async (input: string) => {
     await handleSubmit(input);
 
-    // TODO : 오류 단어 체크
-
     resetTypingData();
     //? NOTE: 다음 문장으로 넘어간다.
     if (currentIdx < typingWritings.length - 1) {
@@ -130,6 +139,9 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
     typingAccuracy,
     typingCount,
     typingSpeed,
+
+    prevWritingInput: prevWritingInput.current,
+    prevWritingCorrect,
   };
 
   const actions = {
