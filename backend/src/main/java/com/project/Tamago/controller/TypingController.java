@@ -28,11 +28,11 @@ public class TypingController {
 	private static final String[] supportLanguage = {"korean", "english", "code"};
 
 	@GetMapping("/short")
-	public ShortTypingListResDto findShortTypings(@RequestParam String language) {
+	public CustomResponse<ShortTypingListResDto> findShortTypings(@RequestParam String language) {
 		if (Stream.of(supportLanguage).noneMatch(element -> element.equals(language)))
 			throw new CustomException(ErrorCode.INVALID_PARAMETER);
 
-		return shortTypingService.findRandomShortTyping(language);
+		return new CustomResponse<>(shortTypingService.findRandomShortTyping(language));
 	}
 
 	@GetMapping("/long")
