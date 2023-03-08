@@ -3,8 +3,9 @@ package com.project.Tamago.controller;
 import java.util.List;
 import java.util.stream.Stream;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,9 +46,10 @@ public class TypingController {
 	}
 
 	@GetMapping("/long/detail")
-	public CustomResponse<LongTypingDetailResDto> findLongTyping(@RequestHeader("Authorization") String jwtToken,
+	public CustomResponse<LongTypingDetailResDto> findLongTyping(HttpServletRequest request,
 		@RequestParam(required = true) Integer typingId,
 		@RequestParam(required = false) Integer page) {
-		return new CustomResponse<>(longTypingService.findLongTyping(typingId, page));
+		String nickname = request.getHeader("nickname");
+		return new CustomResponse<>(longTypingService.findLongTyping(nickname, typingId, page));
 	}
 }

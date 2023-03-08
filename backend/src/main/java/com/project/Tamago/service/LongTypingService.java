@@ -8,8 +8,10 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.project.Tamago.domain.LongTyping;
+import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.PageContentDto;
 import com.project.Tamago.dto.mapper.DataMapper;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
@@ -17,6 +19,7 @@ import com.project.Tamago.dto.responseDto.LongTypingResDto;
 import com.project.Tamago.exception.CustomException;
 import com.project.Tamago.repository.LongTypingRepository;
 import com.project.Tamago.repository.PagePositionRepository;
+import com.project.Tamago.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class LongTypingService {
 	private static final int LINES_PER_PAGE = 20;
+	private final UserRepository userRepository;
 	private final LongTypingRepository longTypingRepository;
 	private final PagePositionRepository pagePositionRepository;
 
@@ -38,7 +42,14 @@ public class LongTypingService {
 	}
 
 	@Transactional(readOnly = true)
-	public LongTypingDetailResDto findLongTyping(Integer typingId, Integer page) {
+	public LongTypingDetailResDto findLongTyping(String nickname, Integer typingId, Integer page) {
+		if (page == null) {
+			page = 1;
+			if (StringUtils.hasText(nickname)) {
+				User user = userRepository.findByNickname(nickname)
+					.orElseThrow(() -> new CustomException(USERS_INFO_NOT_EXISTS));
+			}
+		}
 		LongTyping longTyping = longTypingRepository.findByIdAndTotalPageGreaterThanEqual(typingId, page)
 			.orElseThrow(() -> new CustomException(LONG_TYPING_INFO_NOT_EXISTS));
 		PageContentDto pageContentDto = getPageContent(longTyping.getContent(), page);
