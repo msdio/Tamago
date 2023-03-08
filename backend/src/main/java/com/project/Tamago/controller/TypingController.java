@@ -46,10 +46,8 @@ public class TypingController {
 	}
 
 	@GetMapping("/long/detail")
-	public CustomResponse<LongTypingDetailResDto> findLongTyping(HttpServletRequest request,
-		@RequestParam(required = true) Integer typingId,
+	public CustomResponse<LongTypingDetailResDto> findLongTyping(@RequestParam(required = true) Integer longTypingId,
 		@RequestParam(required = false) Integer page) {
-		String nickname = request.getHeader("nickname");
-		return new CustomResponse<>(longTypingService.findLongTyping(nickname, typingId, page));
+		return new CustomResponse<>(longTypingService.findLongTyping(longTypingId, page));
 	}
 }

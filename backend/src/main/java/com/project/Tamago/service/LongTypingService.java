@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.project.Tamago.domain.LongTyping;
+import com.project.Tamago.domain.PagePosition;
 import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.PageContentDto;
 import com.project.Tamago.dto.mapper.DataMapper;
@@ -42,18 +43,14 @@ public class LongTypingService {
 	}
 
 	@Transactional(readOnly = true)
-	public LongTypingDetailResDto findLongTyping(String nickname, Integer typingId, Integer page) {
+	public LongTypingDetailResDto findLongTyping(Integer longTypingId, Integer page) {
 		if (page == null) {
 			page = 1;
-			if (StringUtils.hasText(nickname)) {
-				User user = userRepository.findByNickname(nickname)
-					.orElseThrow(() -> new CustomException(USERS_INFO_NOT_EXISTS));
-			}
 		}
-		LongTyping longTyping = longTypingRepository.findByIdAndTotalPageGreaterThanEqual(typingId, page)
+		LongTyping longTyping = longTypingRepository.findByIdAndTotalPageGreaterThanEqual(longTypingId, page)
 			.orElseThrow(() -> new CustomException(LONG_TYPING_INFO_NOT_EXISTS));
 		PageContentDto pageContentDto = getPageContent(longTyping.getContent(), page);
-		return DataMapper.INSTANCE.LongTypingToLongTypingDetailResDto(longTyping, pageContentDto);
+		return DataMapper.INSTANCE.LongTypingToLongTypingDetailResDto(longTyping, getPageContent(longTyping.getContent(), page));
 	}
 
 	private PageContentDto getPageContent(String content, Integer page) {
