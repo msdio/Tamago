@@ -3,28 +3,32 @@ INSERT INTO long_typing (title, content, thumbnail, language, length, total_page
                          updated_date)
 VALUES ('애국가 1절', '동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세',
         SUBSTRING(REPLACE(content, '\r', ''), 1, 50),
-        'KOREAN', CHAR_LENGTH(content), ceiling((LENGTH - CHAR_LENGTH(REPLACE(content, '\n', '')) + 1) / 20.0), 0,
+        'KOREAN', CHAR_LENGTH(REPLACE(content, '\r', '')),
+        ceiling((LENGTH - CHAR_LENGTH(REPLACE(content, '\r\n', '')) + 1) / 20.0), 0,
         now(), now());
 
 INSERT INTO long_typing (title, content, thumbnail, language, LENGTH, total_page, VIEW_COUNT, created_date,
                          updated_date)
 VALUES ('애국가 2절', '남산위에 저 소나무 철갑을 두른듯 바람서리 불변함은 우리기상 일세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세',
         SUBSTRING(REPLACE(content, '\r', ''), 1, 50),
-        'KOREAN', CHAR_LENGTH(content), ceiling((LENGTH - CHAR_LENGTH(REPLACE(content, '\n', '')) + 1) / 20.0), 0,
+        'KOREAN', CHAR_LENGTH(REPLACE(content, '\r', '')),
+        ceiling((LENGTH - CHAR_LENGTH(REPLACE(content, '\r\n', '')) + 1) / 20.0), 0,
         now(), now());
 
 INSERT INTO long_typing (title, content, thumbnail, language, LENGTH, total_page, VIEW_COUNT, created_date,
                          updated_date)
 VALUES ('애국가 3절', '가을하늘 공활한데 높고 구름없이 밝은달은 우리가슴 일편단심일세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세',
         SUBSTRING(REPLACE(content, '\r', ''), 1, 50),
-        'KOREAN', CHAR_LENGTH(content), ceiling((LENGTH - CHAR_LENGTH(REPLACE(content, '\n', '')) + 1) / 20.0), 0,
+        'KOREAN', CHAR_LENGTH(REPLACE(content, '\r', '')),
+        ceiling((LENGTH - CHAR_LENGTH(REPLACE(content, '\r\n', '')) + 1) / 20.0), 0,
         now(), now());
 
 INSERT INTO long_typing (title, content, thumbnail, language, LENGTH, total_page, VIEW_COUNT, created_date,
                          updated_date)
 VALUES ('애국가 4절', '이 기상과 이 맘으로 충성을 다하여 괴로우나 즐거우나 나라사랑하세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세',
         SUBSTRING(REPLACE(content, '\r', ''), 1, 50),
-        'KOREAN', CHAR_LENGTH(content), ceiling((LENGTH - CHAR_LENGTH(REPLACE(content, '\n', '')) + 1) / 20.0), 0,
+        'KOREAN', CHAR_LENGTH(REPLACE(content, '\r', '')),
+        ceiling((LENGTH - CHAR_LENGTH(REPLACE(content, '\r\n', '')) + 1) / 20.0), 0,
         now(), now());
 
 INSERT INTO long_typing (title, content, thumbnail, language, LENGTH, total_page, VIEW_COUNT, created_date,
@@ -41,8 +45,9 @@ Like a Diamond in the sky.
 Twinkle, twinkle, little star,
 How I wonder what you are!
 Twinkle, twinkle, little star,
-How I wonder what you are!', SUBSTRING(REPLACE(content, '\r', ''), 1, 50), 'ENGLISH', CHAR_LENGTH(content),
-        ceiling((LENGTH - CHAR_LENGTH(REPLACE(content, '\n', '')) + 1) / 20.0), 0, now(), now());
+How I wonder what you are!', SUBSTRING(REPLACE(content, '\r', ''), 1, 50), 'ENGLISH',
+        CHAR_LENGTH(REPLACE(content, '\r', '')),
+        ceiling((LENGTH - CHAR_LENGTH(REPLACE(content, '\r\n', '')) + 1) / 20.0), 0, now(), now());
 
 INSERT INTO long_typing (title, content, thumbnail, language, LENGTH, total_page, VIEW_COUNT, created_date,
                          updated_date)
@@ -108,8 +113,8 @@ It takes time
 또 시간이 들겠지
 It takes time
 It takes time
-It takes time', SUBSTRING(REPLACE(content, '\r', ''), 1, 50), 'KOREAN', CHAR_LENGTH(content),
-        ceiling((LENGTH - CHAR_LENGTH(REPLACE(content, '\n', '')) + 1) / 20.0), 0, now(), now());
+It takes time', SUBSTRING(REPLACE(content, '\r', ''), 1, 50), 'KOREAN', CHAR_LENGTH(REPLACE(content, '\r', '')),
+        ceiling((LENGTH - CHAR_LENGTH(REPLACE(content, '\r\n', '')) + 1) / 20.0), 0, now(), now());
 
 INSERT INTO long_typing (title, content, thumbnail, language, LENGTH, total_page, VIEW_COUNT, created_date,
                          updated_date)
@@ -154,5 +159,6 @@ VALUES ('Stack', 'public class Stack {
         return top == data.length - 1;
     }
 }', SUBSTRING(REPLACE(content, '\r', ''), 1, 50),
-        'JAVA', CHAR_LENGTH(content), ceiling((LENGTH - CHAR_LENGTH(REPLACE(content, '\n', '')) + 1) / 20.0), 0, now(),
+        'JAVA', CHAR_LENGTH(REPLACE(content, '\r', '')),
+        ceiling((LENGTH - CHAR_LENGTH(REPLACE(content, '\r\n', '')) + 1) / 20.0), 0, now(),
         now());
