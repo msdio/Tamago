@@ -38,12 +38,13 @@ public class UserService {
 
 	@Transactional(readOnly = true)
 	public Integer findCurrentPage(String jwtToken, Integer longTypingId) {
-		return pagePositionRepository.findCurrentPageByUserAndTypingId(getUserByJwtToken(jwtToken), longTypingId)
+		Integer userId = Integer.parseInt(jwtTokenProvider.getAuthenticationFromAcs(jwtToken).getName());
+		return pagePositionRepository.findCurrentPageByUserAndTypingId(userId, longTypingId)
 			.orElseThrow(() -> new CustomException(CURRENT_PAGE_NOT_EXISTS));
 	}
 
 	private User getUserByJwtToken(String jwtToken) {
-		return userRepository.findByNickname(jwtTokenProvider.getAuthenticationFromAcs(jwtToken).getName())
+		return userRepository.findById(Integer.parseInt(jwtTokenProvider.getAuthenticationFromAcs(jwtToken).getName()))
 			.orElseThrow(() -> new CustomException(USERS_INFO_NOT_EXISTS));
 	}
 }

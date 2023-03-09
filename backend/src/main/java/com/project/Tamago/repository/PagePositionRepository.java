@@ -12,6 +12,6 @@ import com.project.Tamago.domain.User;
 
 @Repository
 public interface PagePositionRepository extends JpaRepository<PagePosition, Integer> {
-	@Query("select p.currentPage from PagePosition p where p.user = :user and p.longTyping.id = :longTypingId")
-	Optional<Integer> findCurrentPageByUserAndTypingId(@Param("user") User user, @Param("longTypingId") Integer longTypingId);
+	@Query("select p.currentPage from PagePosition p where p.user.id = :userId and p.longTyping.id = :longTypingId")
+	Optional<Integer> findCurrentPageByUserAndTypingId(@Param("userId") Integer userId, @Param("longTypingId") Integer longTypingId);
 }
