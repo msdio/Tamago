@@ -15,7 +15,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import com.project.Tamago.exception.exceptionHandler.ErrorCode;
 
 public class CustomAuthenticationEntryPointHandler implements AuthenticationEntryPoint {
-	private final ErrorCode[] errorCodes = {EMPTY_JWT, EXPIRED_JWT, INVALID_JWT};
+	private final ErrorCode[] errorCodes = {EMPTY_JWT, EXPIRED_JWT, INVALID_JWT, INVALID_SIGNATURE};
 
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
