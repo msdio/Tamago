@@ -47,7 +47,7 @@ public class TypingController {
 
 	@GetMapping("/long/detail")
 	public CustomResponse<LongTypingDetailResDto> findLongTyping(@RequestParam Integer longTypingId,
-		@RequestParam(required = false) Integer page) {
+		@RequestParam(required = false, defaultValue = "1") int page) {
 		return new CustomResponse<>(longTypingService.findLongTyping(longTypingId, page));
 	}
 }

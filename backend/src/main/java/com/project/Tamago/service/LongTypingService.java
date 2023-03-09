@@ -43,13 +43,9 @@ public class LongTypingService {
 	}
 
 	@Transactional(readOnly = true)
-	public LongTypingDetailResDto findLongTyping(Integer longTypingId, Integer page) {
-		if (page == null) {
-			page = 1;
-		}
+	public LongTypingDetailResDto findLongTyping(Integer longTypingId, int page) {
 		LongTyping longTyping = longTypingRepository.findByIdAndTotalPageGreaterThanEqual(longTypingId, page)
 			.orElseThrow(() -> new CustomException(LONG_TYPING_INFO_NOT_EXISTS));
-		PageContentDto pageContentDto = getPageContent(longTyping.getContent(), page);
 		return DataMapper.INSTANCE.LongTypingToLongTypingDetailResDto(longTyping, getPageContent(longTyping.getContent(), page));
 	}
 
