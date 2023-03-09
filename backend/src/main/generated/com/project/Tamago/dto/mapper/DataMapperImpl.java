@@ -9,13 +9,15 @@ import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.requestDto.TypingHistoryReqDto;
 import com.project.Tamago.dto.responseDto.LongTypingResDto;
 import com.project.Tamago.dto.responseDto.LongTypingResDto.LongTypingResDtoBuilder;
+import java.util.HashMap;
+import java.util.Map;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-06T01:13:59+0900",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.17 (Eclipse Adoptium)"
+    date = "2023-03-10T05:04:21+0900",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.12 (Eclipse Foundation)"
 )
 @Component
 public class DataMapperImpl implements DataMapper {
@@ -42,8 +44,8 @@ public class DataMapperImpl implements DataMapper {
     }
 
     @Override
-    public TypingHistory toTypingHistory(TypingHistoryReqDto typingHistoryReqDto, Typing typing, User user) {
-        if ( typingHistoryReqDto == null && typing == null && user == null ) {
+    public TypingHistory toTypingHistory(TypingHistoryReqDto typingHistoryReqDto, Typing typing, User user, Map<Character, Map<String, Integer>> wrongKeys) {
+        if ( typingHistoryReqDto == null && typing == null && user == null && wrongKeys == null ) {
             return null;
         }
 
@@ -51,6 +53,7 @@ public class DataMapperImpl implements DataMapper {
 
         if ( typingHistoryReqDto != null ) {
             typingHistory.wpm( typingHistoryReqDto.getWpm() );
+            typingHistory.typingAccuracy( (double) typingHistoryReqDto.getTypingAccuracy() );
             if ( typingHistoryReqDto.getMode() != null ) {
                 typingHistory.mode( Enum.valueOf( Mode.class, typingHistoryReqDto.getMode() ) );
             }
@@ -63,6 +66,12 @@ public class DataMapperImpl implements DataMapper {
         }
         if ( user != null ) {
             typingHistory.user( user );
+        }
+        if ( wrongKeys != null ) {
+            Map<Character, Map<String, Integer>> map = wrongKeys;
+            if ( map != null ) {
+                typingHistory.wrongKeys( new HashMap<Character, Map<String, Integer>>( map ) );
+            }
         }
 
         return typingHistory.build();

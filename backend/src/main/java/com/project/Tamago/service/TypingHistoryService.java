@@ -2,6 +2,9 @@ package com.project.Tamago.service;
 
 import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
 
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,8 +31,15 @@ public class TypingHistoryService {
 	private final TypingHistoryRepository typingHistoryRepository;
 
 	public void saveHistory(TypingHistoryReqDto typingHistoryReqDto, String jwtToken) {
+
+		Map<Character, Map<String, Integer>> wrongs = typingHistoryReqDto.getWrongKeys().entrySet().stream()
+			.collect(Collectors.toMap(
+				Map.Entry::getKey,
+				e -> Map.of("total", e.getValue().getTotal(), "count", e.getValue().getCount())
+			));
+
 		typingHistoryRepository.save(DataMapper.INSTANCE.toTypingHistory(typingHistoryReqDto,
-			getTyping(typingHistoryReqDto), getUserByJwtToken(jwtToken)));
+			getTyping(typingHistoryReqDto), getUserByJwtToken(jwtToken), wrongs));
 	}
 
 	private Typing getTyping(TypingHistoryReqDto typingHistoryReqDto) {

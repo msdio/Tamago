@@ -1,5 +1,7 @@
 package com.project.Tamago.dto.mapper;
 
+import java.util.Map;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -23,5 +25,6 @@ public interface DataMapper {
 	@Mapping(target = "id", ignore = true)
 	@Mapping(source = "typing", target = "typing")
 	@Mapping(source = "user", target = "user")
-	TypingHistory toTypingHistory(TypingHistoryReqDto typingHistoryReqDto, Typing typing, User user);
+	@Mapping(source = "wrongKeys", target = "wrongKeys")
+	TypingHistory toTypingHistory(TypingHistoryReqDto typingHistoryReqDto, Typing typing, User user, Map<Character, Map<String,Integer>> wrongKeys);
 }

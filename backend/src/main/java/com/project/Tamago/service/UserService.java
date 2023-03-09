@@ -34,7 +34,7 @@ public class UserService {
 		getUserByJwtToken(jwtToken).modifyUserInfo(modifyProfileReqDto);
 	}
 
-	private User getUserByJwtToken(String jwtToken) {
+	public User getUserByJwtToken(String jwtToken) {
 		return userRepository.findByNickname(jwtTokenProvider.getAuthenticationFromAcs(jwtToken).getName())
 			.orElseThrow(() -> new CustomException(USERS_INFO_NOT_EXISTS));
 	}
