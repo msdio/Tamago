@@ -37,7 +37,7 @@ public class TypingHistoryService {
 	}
 
 	private User getUserByJwtToken(String jwtToken) {
-		return userRepository.findByNickname(jwtTokenProvider.getAuthenticationFromAcs(jwtToken).getName())
+		return userRepository.findById(Integer.parseInt(jwtTokenProvider.getAuthenticationFromAcs(jwtToken).getName()))
 			.orElseThrow(() -> new CustomException(USERS_INFO_NOT_EXISTS));
 	}
 }
