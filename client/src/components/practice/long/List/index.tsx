@@ -3,6 +3,7 @@ import { Box, Flex, Heading, Link, Table, TableContainer, Tbody, Td, Text, Th, T
 import { Document } from '@/icons/Document';
 import DownArrow from '@/icons/DownArrow';
 import { BookmarkOff } from '@/icons/Heart';
+import { SmallLeftArrow, SmallRightArrow } from '@/icons/SmallArrow';
 import UpDownArrow from '@/icons/UpDownArrow';
 import type { LongTypingItem } from '@/types/typing';
 import { PRACTICE_LONG_PATH } from '@/utils/paths';
@@ -92,6 +93,24 @@ export default function PracticeLongList({ list }: PracticeLongListProps) {
             </Tbody>
           </Table>
         </TableContainer>
+        <Flex gap='50px' justifyContent='center' m='43px 0' alignItems='center'>
+          <SmallLeftArrow />
+          <Flex gap='10px'>
+            <Text w='28px' h='28px' textAlign='center' lineHeight='28px' bg='primary.light' borderRadius='50'>
+              1
+            </Text>
+            <Text w='28px' h='28px' textAlign='center' lineHeight='28px'>
+              2
+            </Text>
+            <Text w='28px' h='28px' textAlign='center' lineHeight='28px'>
+              3
+            </Text>
+            <Text w='28px' h='28px' textAlign='center' lineHeight='28px'>
+              4
+            </Text>
+          </Flex>
+          <SmallRightArrow />
+        </Flex>
       </Flex>
     </PracticeLongLayout>
   );
