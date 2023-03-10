@@ -3,20 +3,16 @@ import { defineStyle, defineStyleConfig } from '@chakra-ui/react';
 const sizes = {};
 
 const baseVariant = defineStyle(() => {
-  return {
-    bg: `white`,
-    border: '0.6px solid black',
-  };
+  return {};
 });
 
 const stripedReverseVariant = defineStyle((props) => {
   const { colorScheme: c } = props;
   return {
-    border: '0.6px solid black',
-
     table: {
-      fontWeight: `500`,
+      borderCollapse: 'collapse',
       bg: `white`,
+      fontWeight: `500`,
       thead: {
         background: `${c}.head`,
         borderBottom: `0.6px solid black`,
@@ -24,9 +20,18 @@ const stripedReverseVariant = defineStyle((props) => {
       tbody: {
         tr: {
           _even: {
-            background: `${c}.even`,
+            bg: `${c}.even`,
           },
         },
+      },
+      th: {
+        h: `56px`,
+        color: `${c}.head-text`,
+        fontSize: `16px`,
+      },
+      td: {
+        h: `56px`,
+        fontSize: `16px`,
       },
     },
   };

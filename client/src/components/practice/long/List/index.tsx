@@ -16,18 +16,26 @@ export default function PracticeLongList({ list }: PracticeLongListProps) {
         <Table variant='striped-reverse'>
           <Thead>
             <Tr>
-              <Th>Title</Th>
-              <Th>Type</Th>
-              <Th></Th>
+              <Th textAlign='center' width='9%'>
+                번호
+              </Th>
+              <Th width='50%'>제목명</Th>
+              <Th width='9%'>타입</Th>
+              <Th width='9%'>페이지 수</Th>
+              <Th width='9%'>평균타수</Th>
+              <Th width='14%'></Th>
             </Tr>
           </Thead>
           <Tbody>
-            {list.map(({ language, thumbnail, typingId, title }: LongTypingItem) => (
+            {list.map(({ language, thumbnail, title, totalPage, typingId, viewCount }: LongTypingItem) => (
               <Tr key={typingId}>
+                <Td textAlign='center'>{typingId}</Td>
                 <Td>
                   <Link href={`${PRACTICE_LONG_PATH}/${typingId}/1?isTyping=true`}>{title}</Link>
                 </Td>
                 <Td>{language}</Td>
+                <Td>{totalPage}</Td>
+                <Td>{viewCount}</Td>
                 <Td>
                   <Link href={`${PRACTICE_LONG_PATH}/${typingId}/1`}>조회하기</Link>
                 </Td>

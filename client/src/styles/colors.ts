@@ -34,8 +34,9 @@ const colors: Record<string, ColorType> = {
     slate: '#D9D9D9',
   },
   table: {
-    head: '#FFFAF8',
-    even: '#F8F8F8',
+    'head': '#FFFAF8',
+    'even': '#F8F8F8',
+    'head-text': '#3F3C3B',
   },
 };
 export default colors;
