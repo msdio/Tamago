@@ -22,8 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class ShortTypingService {
 
-	private final TypingRepository typingRepository;
 	private static final int SHORT_TYPING_SIZE = 30;
+	private final TypingRepository typingRepository;
 
 	public ShortTypingListResDto findRandomShortTyping(String language) {
 		List<ShortTypingDto> shortTypingDtos = getRandomLimit30(typingRepository.findByContentTypeIsFalseAndLanguageIs(language));
