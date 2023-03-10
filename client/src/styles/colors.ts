@@ -19,7 +19,6 @@ const colors: Record<string, ColorType> = {
     dark: '#808080',
     main: '#BFBFBF',
     light: '#F5F5F5',
-    table: '#F8F8F8',
   },
   white: {
     light: '#FFFFFF',
@@ -33,6 +32,10 @@ const colors: Record<string, ColorType> = {
     white: '#FAFAFA',
     gray: '#C3C3C3',
     slate: '#D9D9D9',
+  },
+  table: {
+    head: '#FFFAF8',
+    even: '#F8F8F8',
   },
 };
 export default colors;

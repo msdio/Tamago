@@ -1,4 +1,4 @@
-import { Flex, Heading, Link, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import { Link, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 
 import type { LongTypingItem } from '@/types/typing';
 import { PRACTICE_LONG_PATH } from '@/utils/paths';
@@ -13,7 +13,7 @@ export default function PracticeLongList({ list }: PracticeLongListProps) {
   return (
     <PracticeLongLayout>
       <TableContainer border='0.6px solid black' borderRadius='10px'>
-        <Table variant='striped'>
+        <Table variant='striped-reverse'>
           <Thead>
             <Tr>
               <Th>Title</Th>
@@ -36,16 +36,6 @@ export default function PracticeLongList({ list }: PracticeLongListProps) {
           </Tbody>
         </Table>
       </TableContainer>
-      <Flex
-        direction='column'
-        h='390px'
-        border='0.6px solid #000000'
-        borderRadius='10px'
-        backgroundColor='#fff'
-        p='34px 53px'
-      >
-        <Heading>긴글타자</Heading>
-      </Flex>
     </PracticeLongLayout>
   );
 }
