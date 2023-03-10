@@ -1,6 +1,7 @@
-import { Link, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import { Box, Link, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 
-import { ReadContent } from '@/icons/ReadContent';
+import { Document } from '@/icons/Document';
+import { BookmarkOff } from '@/icons/Heart';
 import type { LongTypingItem } from '@/types/typing';
 import { PRACTICE_LONG_PATH } from '@/utils/paths';
 
@@ -39,8 +40,11 @@ export default function PracticeLongList({ list }: PracticeLongListProps) {
                 <Td>{viewCount}</Td>
                 <Td>
                   <Link href={`${PRACTICE_LONG_PATH}/${typingId}/1`}>
-                    <ReadContent />
+                    <Document />
                   </Link>
+                  <Box>
+                    <BookmarkOff />
+                  </Box>
                 </Td>
               </Tr>
             ))}
