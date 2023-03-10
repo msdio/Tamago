@@ -19,6 +19,7 @@ const colors: Record<string, ColorType> = {
     dark: '#808080',
     main: '#BFBFBF',
     light: '#F5F5F5',
+    table: '#F8F8F8',
   },
   white: {
     light: '#FFFFFF',
