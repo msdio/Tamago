@@ -1,34 +1,40 @@
 import { Table, TableContainer, Th, Thead, Tr } from '@chakra-ui/react';
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Link from 'next/link';
-import { useState } from 'react';
 
 import { PRACTICE_LONG_PATH } from '@/utils/paths';
 
 interface LongTypingItem {
+  language: string;
+  thumbnail: string;
+  title: string;
+  totalPage: number;
   typingId: number;
-  typingTitle: string;
-  typingType: string;
+  viewCount: number;
 }
 
-export default function PracticeLongPage() {
-  const [longTypingList] = useState<LongTypingItem[]>([
-    {
-      typingId: 1,
-      typingTitle: '애국가',
-      typingType: 'hangul',
-    },
-    {
-      typingId: 2,
-      typingTitle: '한글 영어 혼합 글',
-      typingType: 'code',
-    },
-    {
-      typingId: 3,
-      typingTitle: 'react',
-      typingType: 'code',
-    },
-  ]);
+interface LongTypingListResponse {
+  code: number;
+  description: string;
+  result: [LongTypingItem];
+}
 
+export const getServerSideProps: GetServerSideProps<{ data: LongTypingItem[] }> = async () => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/typing/long`);
+  const data: LongTypingListResponse = await res.json();
+
+  return {
+    props: {
+      data: data.result,
+    },
+  };
+};
+
+interface PracitionLongPageProps extends InferGetServerSidePropsType<typeof getServerSideProps> {
+  data: LongTypingItem[];
+}
+
+export default function PracticeLongPage({ data }: PracitionLongPageProps) {
   return (
     <>
       <TableContainer>
@@ -40,13 +46,13 @@ export default function PracticeLongPage() {
               <Th></Th>
             </Tr>
           </Thead>
-          {longTypingList.map(({ typingId, typingTitle, typingType }) => (
+          {data.map(({ language, thumbnail, typingId, title }: LongTypingItem) => (
             <Thead key={typingId}>
               <Tr>
                 <Th>
-                  <Link href={`${PRACTICE_LONG_PATH}/${typingId}/1?isTyping=true`}>{typingTitle}</Link>
+                  <Link href={`${PRACTICE_LONG_PATH}/${typingId}/1?isTyping=true`}>{title}</Link>
                 </Th>
-                <Th>{typingType}</Th>
+                <Th>{language}</Th>
                 <Th>
                   <Link href={`${PRACTICE_LONG_PATH}/${typingId}/1`}>조회하기</Link>
                 </Th>
