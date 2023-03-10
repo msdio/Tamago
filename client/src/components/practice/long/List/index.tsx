@@ -38,7 +38,7 @@ export default function PracticeLongList({ list }: PracticeLongListProps) {
                 <Td>{language}</Td>
                 <Td>{totalPage}</Td>
                 <Td>{viewCount}</Td>
-                <Td>
+                <Td display='flex' gap='32.4px' justifyContent='end'>
                   <Link href={`${PRACTICE_LONG_PATH}/${typingId}/1`}>
                     <Document />
                   </Link>
