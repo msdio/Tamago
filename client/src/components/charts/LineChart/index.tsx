@@ -35,7 +35,7 @@ export const LineChart = ({ chartTitle, chartData }: ChartProps) => {
     },
   };
 
-  const chartLabels = Object.keys(chartData);
+  const chartLabels = Object.keys(chartData).sort();
 
   const data = {
     labels: chartLabels,
