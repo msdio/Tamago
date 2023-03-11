@@ -7,8 +7,8 @@ const TopIndicator = () => (
     viewBox='0 0 18 30'
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
-    fontSize='24px'
-    marginBottom='5px'
+    fontSize='2rem'
+    marginBottom='8px'
     animation={bouncingUp + ' 1s infinite ease-in'}
   >
     <rect x='1' y='1' width='16' height='28' rx='8' stroke='black' strokeWidth='2' />
@@ -21,7 +21,7 @@ const BottomIndicator = () => (
     viewBox='0 0 12 7'
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
-    fontSize='10px'
+    fontSize='.875rem'
     animation={bouncingDown + ' 1s infinite ease-in'}
   >
     <path d='M1 1L6 5L11 1' stroke='black' strokeWidth='2' strokeLinecap='round' />
@@ -31,7 +31,7 @@ const BottomIndicator = () => (
 export const ScrollIndicator = () => (
   <Flex
     position='absolute'
-    bottom='5%'
+    bottom='4.625rem'
     flexDirection='column'
     margin='auto'
     alignItems='center'

@@ -33,6 +33,15 @@ export const cardShadow = keyframes`
   }
 `;
 
+export const cardUp = keyframes`
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-10px);
+  }
+`;
+
 export const fadeIn = keyframes`
   from {
     opacity: 0;
