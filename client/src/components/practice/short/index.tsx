@@ -7,12 +7,6 @@ import PrevTyping from '@/components/practice/short/PrevTyping';
 import { useShortTypingContext } from '@/components/practice/short/shortTypingContext';
 import TwoRightArrow from '@/icons/TwoRightArrow';
 
-const INIT_INFO = {
-  wpm: 0,
-  accuracy: 0,
-  typist: 0,
-};
-
 // NOTE: 어떻게 합치면 좋을까
 type PracticeShortProps = ShortTypingResponseType;
 

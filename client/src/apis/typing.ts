@@ -5,16 +5,20 @@ export interface ShortTypingType {
   content: string;
 }
 
-export interface ShortTypingResponseType {
+export interface ShortTypingResultType {
   contentType: '0' | '1';
   typingsType: 'practice';
   typingWritings: ShortTypingType[];
 }
 
-export const getShortTypingWritingsAPI = async (language: 'korean' | 'english'): Promise<ShortTypingResponseType> => {
+export const getShortTypingWritingsAPI = async (
+  language: 'korean' | 'english',
+): Promise<{
+  result: ShortTypingResultType;
+}> => {
   const res = await request.get(`/typing/short?language=${language}`);
 
-  return res.data.result;
+  return res.data;
 };
 
 type WrongKeyType = Record<string, { total: number; count: number }>;
