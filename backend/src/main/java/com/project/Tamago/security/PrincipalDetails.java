@@ -39,7 +39,7 @@ public class PrincipalDetails implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return nickName;
+		return userId.toString();
 	}
 
 	@Override

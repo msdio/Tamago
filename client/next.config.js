@@ -3,6 +3,9 @@
  */
 const nextConfig = {
   reactStrictMode: true,
+  exportPathMap: () => ({
+    '/': { page: '/' },
+  }),
 };
 
 module.exports = nextConfig;

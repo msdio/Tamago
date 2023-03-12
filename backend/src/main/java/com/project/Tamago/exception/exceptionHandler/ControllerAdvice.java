@@ -6,6 +6,9 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -44,12 +47,35 @@ public class ControllerAdvice {
 	}
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(InternalAuthenticationServiceException.class)
+	public ErrorMessage illegalArgumentExceptionHandler(InternalAuthenticationServiceException exception) {
+		log.error(USERS_EMPTY_USER_EMAIL.getDescription());
+		return new ErrorMessage(USERS_EMPTY_USER_EMAIL);
+	}
+
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(BadCredentialsException.class)
+	public ErrorMessage illegalArgumentExceptionHandler(BadCredentialsException exception) {
+		log.error(USERS_EXISTS_PASSWORD.getDescription());
+		return new ErrorMessage(USERS_EXISTS_PASSWORD);
+	}
+
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(CustomException.class)
 	public ErrorMessage customExceptionHandler(CustomException exception) {
 		ErrorCode errorCode = exception.getErrorCode();
 		log.error(errorCode.getDescription());
 		return new ErrorMessage(errorCode);
 	}
+
+
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public ErrorMessage customExceptionHandler(HttpMessageNotReadableException exception) {
+		log.error(INVALID_PARAMETER.getDescription());
+		return new ErrorMessage(INVALID_PARAMETER);
+	}
+
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)

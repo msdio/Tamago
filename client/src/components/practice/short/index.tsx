@@ -19,6 +19,7 @@ type PracticeShortProps = ShortTypingResponseType;
 export default function PracticeShort({}: PracticeShortProps) {
   const { currentWritingContent, nextWritingContent } = useShortTypingContext();
 
+
   return (
     <Box p='35px 120px' minW='1100px'>
       <InfoBar />
