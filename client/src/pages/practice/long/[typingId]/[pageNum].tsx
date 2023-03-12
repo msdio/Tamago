@@ -2,63 +2,30 @@ import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
 import LongTyping from '@/components/practice/long/Content';
 import PracticeLongTyping from '@/components/practice/long/Typing';
-
-interface Data {
-  contentTitle: string;
-  content: string;
-  isTyping: boolean;
-  currPage: number;
-  totalPage: number;
-}
+import type { LongTypingDetail } from '@/types/typing';
 
 interface LongTypingResponse {
-  contentTitle: string;
-  content: string;
-  currPage: number;
-  totalPage: number;
+  code: number;
+  description: string;
+  result: LongTypingDetail;
 }
 
-export const getServerSideProps: GetServerSideProps<{ data: Data }> = async (context) => {
-  const { isTyping, pageNum } = context.query as { isTyping: string; typingId: string; pageNum: string };
+export const getServerSideProps: GetServerSideProps<{ data: LongTypingDetail; mode: string }> = async (context) => {
+  const { typingId, pageNum, mode } = context.query as { typingId: string; pageNum: string; mode: string };
 
-  const res: { data: LongTypingResponse } = await new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        data: {
-          contentTitle: '영어와 한글이 혼합된 글',
-          content: 'str = "test한글";\ncheck = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;\nif(check.test(str)) alert!("한글이 있습니다.")',
-          currPage: parseInt(pageNum),
-          totalPage: 3,
-        },
-      });
-    }, 100);
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/typing/long/detail?longTypingId=${typingId}&page=${pageNum}`,
+  );
+  const data: LongTypingResponse = await res.json();
 
   return {
     props: {
-      data: { ...res.data, isTyping: isTyping === 'true' },
+      data: data.result,
+      mode: mode !== 'practice' ? 'view' : mode,
     },
   };
 };
 
-export default function LongTypingPage({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  return (
-    <>
-      {data.isTyping ? (
-        <PracticeLongTyping
-          title={data.contentTitle}
-          content={data.content}
-          currPage={data.currPage}
-          totalPage={data.totalPage}
-        />
-      ) : (
-        <LongTyping
-          title={data.contentTitle}
-          content={data.content}
-          currPage={data.currPage}
-          totalPage={data.totalPage}
-        />
-      )}
-    </>
-  );
+export default function LongTypingPage({ data, mode }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  return <>{mode === 'practice' ? <PracticeLongTyping {...data} /> : <LongTyping {...data} />}</>;
 }

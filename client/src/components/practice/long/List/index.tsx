@@ -75,7 +75,7 @@ export default function PracticeLongList({ list }: PracticeLongListProps) {
                 <Tr key={typingId}>
                   <Td textAlign='center'>{typingId}</Td>
                   <Td>
-                    <Link href={`${PRACTICE_LONG_PATH}/${typingId}/1?isTyping=true`}>{title}</Link>
+                    <Link href={`${PRACTICE_LONG_PATH}/${typingId}/1?mode=practice`}>{title}</Link>
                   </Td>
                   <Td>{language}</Td>
                   <Td>{totalPage}</Td>

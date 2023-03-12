@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import DownArrow from '@/icons/DownArrow';
-import type { CharInfo } from '@/types/typing';
+import type { CharInfo, LongTypingDetail } from '@/types/typing';
 import { getCharType } from '@/utils/char';
 import { getTypingAccuracy, getTypingSpeed, getTypingWpm, getWrongKeys } from '@/utils/typing';
 
@@ -13,14 +13,14 @@ import TypingLine from '../common/TypingLine';
 import PracticeLongLayout from '../Layout';
 import InfoBar from './InfoBar';
 
-interface PracticeLongTypingProps {
-  title: string;
-  content: string;
-  currPage: number;
-  totalPage: number;
-}
-
-export default function PracticeLongTyping({ content }: PracticeLongTypingProps) {
+export default function PracticeLongTyping({
+  content,
+  currentPage,
+  language,
+  title,
+  totalPage,
+  typingId,
+}: LongTypingDetail) {
   const router = useRouter();
 
   // 원본 긴 글을 분석하여 저장
