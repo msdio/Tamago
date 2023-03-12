@@ -14,7 +14,7 @@ export function Header() {
     router.push(to);
   };
 
-  const handleLoginClick = () => {
+  const onLoginClick = () => {
     onRouting(LOGIN_PATH);
     setIsLogin(true);
   };
@@ -67,7 +67,7 @@ export function Header() {
               borderRadius='4.3038px'
               bg='white.light'
               color='black.dark'
-              onClick={handleLoginClick}
+              onClick={onLoginClick}
               fontSize='14px'
               lineHeight='17px'
             >

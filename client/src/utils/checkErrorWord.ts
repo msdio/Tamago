@@ -27,53 +27,6 @@ export function isHangulChar(word: string) {
   return false;
 }
 
-const checkEqualHangul = (word1: string, word2: string) => {
-  const { f: f1, s: s1, t: t1 } = getConstantVowel(word1);
-  const { f: f2, s: s2, t: t2 } = getConstantVowel(word2);
-  const errorWords: Record<string, number> = {};
-  if (f1 !== f2) {
-    errorWords[f1] = 1;
-  }
-  if (s1 !== s2) {
-    errorWords[s1] = 1;
-  }
-  if (t1 !== t2) {
-    errorWords[t1] = errorWords[t1] ? errorWords[t1] + 1 : 1;
-  }
-
-  return errorWords;
-};
-
-const checkEqualEnglish = (word1: string, word2: string) => {
-  const errorWords: Record<string, number> = {};
-  if (word1 !== word2) {
-    errorWords[word1] = 1;
-  }
-
-  return errorWords;
-};
-
-const checkErrorWord = (correctWord: string, inputWord: string) => {
-  const isCorrectWordHangul = isHangulChar(correctWord);
-  const isInputWordHangul = isHangulChar(inputWord);
-
-  if (isCorrectWordHangul && isInputWordHangul) {
-    const currentErrorWords = checkEqualHangul(correctWord, inputWord);
-    return currentErrorWords;
-  }
-  if (!isCorrectWordHangul && !isInputWordHangul) {
-    const currentErrorWords = checkEqualEnglish(correctWord, inputWord);
-    return currentErrorWords;
-  }
-  if (isCorrectWordHangul) {
-    const currentErrorWords = checkEqualHangul(correctWord, '');
-    return currentErrorWords;
-  } else {
-    const currentErrorWords = checkEqualEnglish(correctWord, '');
-    return currentErrorWords;
-  }
-};
-
 export const getNumberPerChar = (char: string) => {
   const isHangul = isHangulChar(char);
   if (isHangul) {
@@ -83,5 +36,3 @@ export const getNumberPerChar = (char: string) => {
   // 영어인 경우 1자당 1개
   return 1;
 };
-
-export default checkErrorWord;

@@ -1,5 +1,5 @@
 import type { CharInfo } from '@/types/typing';
-import checkErrorWord, { getNumberPerChar, isHangulChar } from '@/utils/checkErrorWord';
+import { getNumberPerChar, isHangulChar } from '@/utils/checkErrorWord';
 
 interface CalcTypingSpeedRequest {
   elapsedTime: number;
@@ -25,17 +25,6 @@ interface calcTypingRequest {
   correctWriting: string;
   inputWriting: string;
 }
-export const calcWrongCount = ({ correctWriting, inputWriting }: calcTypingRequest) => {
-  let wrongCount = 0;
-  for (let i = 0; i < inputWriting.length - 1; i++) {
-    const errorWord = checkErrorWord(correctWriting[i], inputWriting[i]);
-    wrongCount += Object.keys(errorWord).reduce(
-      (accumulator, currentValue) => accumulator + errorWord[currentValue],
-      0,
-    );
-  }
-  return wrongCount;
-};
 
 // TODO : parameter Object로 변경
 export const checkAllInputTyping = (correctWord: string, inputWord: string) => {
@@ -56,14 +45,6 @@ export const checkAllInputTyping = (correctWord: string, inputWord: string) => {
   }
 };
 
-export const getTotalTypingCount = (inputWriting: string) => {
-  let typingCount = 0;
-  for (let i = 0; i < inputWriting.length - 1; i++) {
-    typingCount += getNumberPerChar(inputWriting[i]);
-  }
-  return typingCount;
-};
-
 export const calcAccuracy = ({ correctWriting, inputWriting }: calcTypingRequest) => {
   const totalCount = inputWriting.length - 1 === 0 ? 0 : inputWriting.length - 1;
   let wrongCount = 0;
@@ -77,6 +58,7 @@ export const calcAccuracy = ({ correctWriting, inputWriting }: calcTypingRequest
   }
   return Math.floor(((totalCount - wrongCount) / totalCount) * 100);
 };
+
 export const getTypingAccuracy = (states: string) => {
   // 어떤 문자도 타이핑하지 않은 상태
   if (states === 'f') {
