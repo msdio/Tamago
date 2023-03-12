@@ -60,16 +60,26 @@ export default function PracticeLongTyping({
   const focusTextarea = () => textareaRef.current?.focus();
 
   const typingAccuracyHandler = useCallback(() => {
-    setTypingAccuracy(getTypingAccuracy(typingStates));
+    setTypingAccuracy(
+      getTypingAccuracy({
+        typingLength: typingStates.length - 1,
+        wrongLength: typingStates.replaceAll('c', '').length - 1,
+      }),
+    );
   }, [typingStates]);
 
   const typingSpeedHandler = useCallback(() => {
-    setTypingWpm(getTypingWpm({ typingCount: typingCount, minute: time.minute + time.second / 60 + time.ms / 60000 }));
+    setTypingWpm(
+      getTypingWpm({
+        typingCount: typingCount,
+        millisecond: time.minute * 60000 + time.second * 1000 + time.ms,
+      }),
+    );
     setTypingSpeed(
       getTypingSpeed({
         typingCount: typingCount,
         backspaceCount: backspaceCount,
-        minute: time.minute + time.second / 60 + time.ms / 60000,
+        millisecond: time.minute * 60000 + time.second * 1000 + time.ms,
       }),
     );
   }, [typingCount, backspaceCount, time]);
@@ -183,7 +193,7 @@ export default function PracticeLongTyping({
       typingInfos.current[value.length].type = 'other';
       typingInfos.current[value.length].components = [];
 
-      setBackspaceCount(backspaceCount + 1);
+      setBackspaceCount(backspaceCount + 1); /* TODO : 타이핑을 엄청 틀린 후 지울 경우 예외처리 */
       setTypingStates(`${typingStates.slice(0, -2)}f`);
     }
   };

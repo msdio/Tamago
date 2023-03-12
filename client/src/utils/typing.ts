@@ -1,49 +1,36 @@
 import type { CharInfo } from '@/types/typing';
-
-export const getTypingAccuracy = (states: string) => {
-  // 어떤 문자도 타이핑하지 않은 상태
-  if (states === 'f') {
-    return 0;
-  }
-
-  const totalCharCount = states.length - 1;
-  const incorrectCharCount = states.replaceAll('c', '').length - 1; // 전체 타이핑 상태에서 맞은 것과 포커싱된 것 제외
-  const correctCharCount = totalCharCount - incorrectCharCount; // 전체 타이핑에서 틀린 것과 포커싱된 것 제외
-
-  return Math.round((correctCharCount / totalCharCount) * 100);
-};
-
 /**
- * @param typingCount 타수
- * @param minute 사용자가 타이핑한 시간(분 단위)
- * @returns wpm
+ * 타수: shift => 대문자, 특수문자 (upper -> 2)
+ * 대문자, 특수문자는 2로 측정
+ * 공백, 줄바꿈 타수 1로 측정
+ * apple => onchange
  */
-export const getTypingWpm = ({ typingCount, minute }: { typingCount: number; minute: number }) => {
-  if (minute === 0) {
+export const getTypingWpm = ({ typingCount, millisecond }: { typingCount: number; millisecond: number }) => {
+  if (millisecond === 0) {
     return 0;
   }
+  const minute = millisecond / 60000;
   return Math.floor(typingCount / 5 / minute);
 };
 
-/**
- * @param typingCount 타수
- * @param minute 사용자가 타이핑한 시간(분 단위)
- * @returns 타자속도
- */
 export const getTypingSpeed = ({
   typingCount,
   backspaceCount,
-  minute,
+  millisecond,
 }: {
   typingCount: number;
   backspaceCount: number;
-  minute: number;
+  millisecond: number;
 }) => {
-  if (minute === 0) {
+  if (millisecond === 0) {
     return 0;
   }
-  const totalCount = typingCount - 2 * backspaceCount >= 0 ? typingCount - 2 * backspaceCount : 0;
-  return Math.floor(totalCount / minute);
+  const minute = millisecond / 60000;
+  return Math.floor((typingCount - backspaceCount * 2) / minute);
+};
+
+export const getTypingAccuracy = ({ typingLength, wrongLength }: { typingLength: number; wrongLength: number }) => {
+  return Math.round(((typingLength - wrongLength) / typingLength) * 1000) / 10;
 };
 
 export const getWrongKeys = (contentInfos: CharInfo[], typingInfos: CharInfo[]) => {
