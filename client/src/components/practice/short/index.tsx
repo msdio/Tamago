@@ -19,8 +19,8 @@ const INIT_INFO = {
 type PracticeShortProps = ShortTypingResponseType;
 
 export default function PracticeShort({ typingWritings }: PracticeShortProps) {
-  const [currentIdx, setcurrentIdx] = useState(0);
-  const [infos, setInfos] = useState(INIT_INFO);
+  const [currentIdx] = useState(0);
+  const [infos] = useState(INIT_INFO);
 
   const { time, status, timePlay, timePause } = useStopwatch();
 

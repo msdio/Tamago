@@ -2,7 +2,7 @@
   "compilerOptions": {
     "strict": true,
     "noEmit": true,
-    "target": "es5",
+    "target": "es6",
     "allowJs": true,
     "jsx": "preserve",
     "module": "esnext",
@@ -15,11 +15,12 @@
     "jsxImportSource": "@emotion/react",
     "forceConsistentCasingInFileNames": true,
     "lib": ["dom", "dom.iterable", "esnext"],
-    "typeRoots": [],
+    "typeRoots": ["node_modules/@types"],
     "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "types": ["jest", "node"]
   },
   "include": ["next-env.d.ts", "src"],
   "exclude": ["node_modules"]
