@@ -28,7 +28,7 @@ export default function PracticeShortPage() {
 
   return (
     <ShortTypingProvider typingWritings={data.typingWritings}>
-      <PracticeShort {...data} />;
+      <PracticeShort />;
     </ShortTypingProvider>
   );
 }
