@@ -283,7 +283,6 @@ export default function PracticeLongTyping({
       </Flex>
       <Flex
         direction='column'
-        h='390px'
         border='0.6px solid #000000'
         borderRadius='10px'
         backgroundColor='#fff'

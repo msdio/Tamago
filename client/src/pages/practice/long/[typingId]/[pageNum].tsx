@@ -16,7 +16,7 @@ export const getServerSideProps: GetServerSideProps<{ data: LongTypingDetail; mo
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/typing/long/detail?longTypingId=${typingId}&page=${pageNum}`,
   );
-  const data: LongTypingResponse = await res.json();
+  const data: LongTypingResponse = await res.json(); /* TODO: 에러 핸들링 */
 
   return {
     props: {
