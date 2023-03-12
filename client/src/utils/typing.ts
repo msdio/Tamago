@@ -27,17 +27,23 @@ interface calcTypingRequest {
 }
 
 // TODO : parameter Object로 변경
-export const checkAllInputTyping = (correctWord: string, inputWord: string) => {
-  const isCorrectWordHangul = isHangulChar(correctWord);
-  const isInputWordHangul = isHangulChar(inputWord);
+export const checkAllInputTyping = ({
+  correctWriting,
+  inputWriting,
+}: {
+  correctWriting: string;
+  inputWriting: string;
+}) => {
+  const isCorrectWordHangul = isHangulChar(correctWriting);
+  const isInputWordHangul = isHangulChar(inputWriting);
 
   if (!isCorrectWordHangul) {
-    return correctWord === inputWord;
+    return correctWriting === inputWriting;
   }
   // correctWord가 한글인 경우
   if (isInputWordHangul) {
-    const correctWordCount = getNumberPerChar(correctWord);
-    const inputWordCount = getNumberPerChar(inputWord);
+    const correctWordCount = getNumberPerChar(correctWriting);
+    const inputWordCount = getNumberPerChar(inputWriting);
 
     return correctWordCount === inputWordCount;
   } else {
