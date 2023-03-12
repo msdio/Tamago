@@ -30,11 +30,20 @@ export const getTypingWpm = ({ typingCount, minute }: { typingCount: number; min
  * @param minute 사용자가 타이핑한 시간(분 단위)
  * @returns 타자속도
  */
-export const getTypingSpeed = ({ typingCount, minute }: { typingCount: number; minute: number }) => {
+export const getTypingSpeed = ({
+  typingCount,
+  backspaceCount,
+  minute,
+}: {
+  typingCount: number;
+  backspaceCount: number;
+  minute: number;
+}) => {
   if (minute === 0) {
     return 0;
   }
-  return Math.floor(typingCount / minute);
+  const totalCount = typingCount - 2 * backspaceCount >= 0 ? typingCount - 2 * backspaceCount : 0;
+  return Math.floor(totalCount / minute);
 };
 
 export const getWrongKeys = (contentInfos: CharInfo[], typingInfos: CharInfo[]) => {

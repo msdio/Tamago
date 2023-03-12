@@ -14,10 +14,8 @@ function TypingChar({ contentChar, typingChar, state = 'd' }: TypingCharProps) {
     switch (state) {
       case 'c':
         return 'black';
-      case 'i' as unknown as TypingState:
+      case 'i':
         return '#ff0000';
-      case 'u' as unknown as TypingState:
-        return '#ff6A3C';
       default:
         return '#757575';
     }
