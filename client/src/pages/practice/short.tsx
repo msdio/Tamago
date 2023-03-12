@@ -27,7 +27,7 @@ export default function PracticeShortPage() {
 
   return (
     <>
-      <PracticeShort {...data} />;
+      <PracticeShort {...data} />
     </>
   );
 }
