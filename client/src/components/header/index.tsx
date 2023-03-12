@@ -10,21 +10,13 @@ export function Header() {
   const [isLogin, setIsLogin] = useState(false);
   const router = useRouter();
 
+  const onRouting = (to: string) => {
+    router.push(to);
+  };
+
   const handleLoginClick = () => {
-    router.push(LOGIN_PATH);
+    onRouting(LOGIN_PATH);
     setIsLogin(true);
-  };
-
-  const handleSignupClick = () => {
-    router.push(SIGNUP_TERM_PATH);
-  };
-
-  const handlePracticeLongClick = () => {
-    router.push(PRACTICE_PATH);
-  };
-
-  const handlePracticeShortClick = () => {
-    router.push(PRACTICE_SHORT_PATH);
   };
 
   return (
@@ -46,8 +38,8 @@ export function Header() {
           <TamagoLogo />
         </Link>
         <HStack spacing='62px' w='100%' marginLeft='81px' fontSize='17px' fontWeight='700'>
-          <Text onClick={handlePracticeLongClick}>긴글연습</Text>
-          <Text onClick={handlePracticeShortClick}>짧은글연습</Text>
+          <Text onClick={() => onRouting(PRACTICE_PATH)}>긴글연습</Text>
+          <Text onClick={() => onRouting(PRACTICE_SHORT_PATH)}>짧은글연습</Text>
           <Text>글등록</Text>
           <Text>프로필</Text>
         </HStack>
@@ -60,7 +52,7 @@ export function Header() {
               borderColor='gray.main'
               borderRadius='4.3038px'
               bg='white.light'
-              onClick={handleSignupClick}
+              onClick={() => onRouting(SIGNUP_TERM_PATH)}
               color='black.dark'
               fontSize='14px'
               lineHeight='17px'
