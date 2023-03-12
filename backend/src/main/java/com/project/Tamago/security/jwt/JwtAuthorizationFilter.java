@@ -42,10 +42,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 			if (ObjectUtils.isEmpty(isLogout)) {
 
 				Authentication authentication = jwtTokenProvider.getAuthenticationFromAcs(token);
-				String nickname = authentication.getName();
+				String userId = authentication.getName();
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 
-				request.setAttribute("nickname", nickname);
+				request.setAttribute("userId", userId);
 			}
 		} catch (CustomException e) {
 			request.setAttribute("exception", e.getErrorCode().getCode());

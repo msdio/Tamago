@@ -1,6 +1,15 @@
 package com.project.Tamago.dto.mapper;
 
+import com.project.Tamago.constants.enums.Mode;
 import com.project.Tamago.domain.LongTyping;
+import com.project.Tamago.domain.Typing;
+import com.project.Tamago.domain.TypingHistory;
+import com.project.Tamago.domain.TypingHistory.TypingHistoryBuilder;
+import com.project.Tamago.domain.User;
+import com.project.Tamago.dto.PageContentDto;
+import com.project.Tamago.dto.requestDto.TypingHistoryReqDto;
+import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
+import com.project.Tamago.dto.responseDto.LongTypingDetailResDto.LongTypingDetailResDtoBuilder;
 import com.project.Tamago.dto.responseDto.LongTypingResDto;
 import com.project.Tamago.dto.responseDto.LongTypingResDto.LongTypingResDtoBuilder;
 import javax.annotation.processing.Generated;
@@ -8,8 +17,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-06T00:33:52+0900",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.17 (Eclipse Adoptium)"
+    date = "2023-03-09T23:49:01+0900",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Eclipse Adoptium)"
 )
 @Component
 public class DataMapperImpl implements DataMapper {
@@ -33,5 +42,54 @@ public class DataMapperImpl implements DataMapper {
         longTypingResDto.language( longTyping.getLanguage().toString() );
 
         return longTypingResDto.build();
+    }
+
+    @Override
+    public LongTypingDetailResDto LongTypingToLongTypingDetailResDto(LongTyping longTyping, PageContentDto pageContentDto) {
+        if ( longTyping == null && pageContentDto == null ) {
+            return null;
+        }
+
+        LongTypingDetailResDtoBuilder longTypingDetailResDto = LongTypingDetailResDto.builder();
+
+        if ( longTyping != null ) {
+            longTypingDetailResDto.typingId( longTyping.getId() );
+            longTypingDetailResDto.title( longTyping.getTitle() );
+            longTypingDetailResDto.totalPage( longTyping.getTotalPage() );
+        }
+        if ( pageContentDto != null ) {
+            longTypingDetailResDto.content( pageContentDto.getContent() );
+            longTypingDetailResDto.currentPage( pageContentDto.getPage() );
+        }
+        longTypingDetailResDto.language( longTyping.getLanguage().toString() );
+
+        return longTypingDetailResDto.build();
+    }
+
+    @Override
+    public TypingHistory toTypingHistory(TypingHistoryReqDto typingHistoryReqDto, Typing typing, User user) {
+        if ( typingHistoryReqDto == null && typing == null && user == null ) {
+            return null;
+        }
+
+        TypingHistoryBuilder typingHistory = TypingHistory.builder();
+
+        if ( typingHistoryReqDto != null ) {
+            typingHistory.wpm( typingHistoryReqDto.getWpm() );
+            if ( typingHistoryReqDto.getMode() != null ) {
+                typingHistory.mode( Enum.valueOf( Mode.class, typingHistoryReqDto.getMode() ) );
+            }
+            typingHistory.startTime( typingHistoryReqDto.getStartTime() );
+            typingHistory.endTime( typingHistoryReqDto.getEndTime() );
+        }
+        if ( typing != null ) {
+            typingHistory.typing( typing );
+            typingHistory.contentType( typing.getContentType() );
+        }
+        if ( user != null ) {
+            typingHistory.user( user );
+        }
+
+        return typingHistory.build();
     }
 }

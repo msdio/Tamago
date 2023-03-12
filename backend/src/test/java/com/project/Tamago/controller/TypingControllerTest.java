@@ -32,9 +32,9 @@ public class TypingControllerTest {
 		ResultActions resultActions = mockMvc.perform(get("/typing/short").params(info));
 		// then
 		resultActions.andExpectAll(status().isOk());
-		resultActions.andExpect(jsonPath("$.contentType", notNullValue()));
-		resultActions.andExpect(jsonPath("$.typingsType", notNullValue()));
-		resultActions.andExpect(jsonPath("$.typingWritings").exists());
+		resultActions.andExpect(jsonPath("$.result.contentType", notNullValue()));
+		resultActions.andExpect(jsonPath("$.result.typingsType", notNullValue()));
+		resultActions.andExpect(jsonPath("$.result.typingWritings").exists());
 		resultActions.andReturn();
 	}
 

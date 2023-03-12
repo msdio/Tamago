@@ -4,22 +4,27 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import { TamagoLogo } from '@/icons/TamagoLogo';
+import { LOGIN_PATH, PRACTICE_PATH, PRACTICE_SHORT_PATH, SIGNUP_TERM_PATH } from '@/utils/paths';
 
 export function Header() {
   const [isLogin, setIsLogin] = useState(false);
   const router = useRouter();
 
   const handleLoginClick = () => {
-    router.push('/login');
+    router.push(LOGIN_PATH);
     setIsLogin(true);
   };
 
   const handleSignupClick = () => {
-    router.push('/signup/terms');
+    router.push(SIGNUP_TERM_PATH);
+  };
+
+  const handlePracticeLongClick = () => {
+    router.push(PRACTICE_PATH);
   };
 
   const handlePracticeShortClick = () => {
-    router.push('/practice/short');
+    router.push(PRACTICE_SHORT_PATH);
   };
 
   return (
@@ -41,7 +46,7 @@ export function Header() {
           <TamagoLogo />
         </Link>
         <HStack spacing='62px' w='100%' marginLeft='81px' fontSize='17px' fontWeight='700'>
-          <Text>긴글연습</Text>
+          <Text onClick={handlePracticeLongClick}>긴글연습</Text>
           <Text onClick={handlePracticeShortClick}>짧은글연습</Text>
           <Text>글등록</Text>
           <Text>프로필</Text>
