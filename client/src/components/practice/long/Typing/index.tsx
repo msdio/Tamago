@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import DownArrow from '@/icons/DownArrow';
 import type { CharInfo, LongTypingDetail } from '@/types/typing';
 import { getCharType } from '@/utils/char';
-import { getTypingAccuracy, getTypingSpeed, getTypingWpm, getWrongKeys } from '@/utils/typing';
+import { getTypingAccuracy, getTypingSpeed, getTypingWpm, getWrongKeys, slicedContentAndStrings } from '@/utils/typing';
 
 import useStopwatch from '../../short/useStopWatch';
 import TypingLine from '../common/TypingLine';
@@ -238,21 +238,6 @@ export default function PracticeLongTyping({
     setRecentChar(e.key);
   };
 
-  /**
-   * 원본 글, textarea 글, 글 상태를 원본 글의 각 줄에 대응되게 slice한다.
-   * 이후 slice된 각 문자열을 TypingLine의 params으로 전달한다.
-   */
-  const slicedContentAndTextareaAndStates = (content: string, textarea: string, states: string) => {
-    const spiltedContent = content.split('\n').map((line) => line + '\n');
-    return spiltedContent.map((slicedContent) => {
-      const slicedTextarea = textarea.slice(0, slicedContent.length);
-      const slicedtypingStates = states.slice(0, slicedContent.length);
-      textarea = textarea.slice(slicedContent.length);
-      states = states.slice(slicedContent.length);
-      return [slicedContent, slicedTextarea, slicedtypingStates] as const;
-    });
-  };
-
   return (
     <PracticeLongLayout>
       <Flex gap='24px' mb='28px'>
@@ -303,11 +288,9 @@ export default function PracticeLongTyping({
           onCut={(e) => e.preventDefault()}
           onPaste={(e) => e.preventDefault()}
         />
-        {slicedContentAndTextareaAndStates(content, textarea, typingStates).map(
-          ([contentLine, typingLine, states], i) => (
-            <TypingLine key={i} contentLine={contentLine} typingLine={typingLine} states={states} />
-          ),
-        )}
+        {slicedContentAndStrings(content, textarea, typingStates).map(([contentLine, typingLine, states], i) => (
+          <TypingLine key={i} contentLine={contentLine} typingLine={typingLine} states={states} />
+        ))}
       </Flex>
     </PracticeLongLayout>
   );
