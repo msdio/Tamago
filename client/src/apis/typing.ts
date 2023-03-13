@@ -1,4 +1,4 @@
-import request from '@/apis';
+import request, { authenticationRequest } from '@/apis';
 
 export interface ShortTypingType {
   typingId: string;
@@ -30,12 +30,13 @@ interface TypingHistoryRequest {
   mode: 'PRACTICE' | 'ACTUAL' | string;
   wpm: number;
   typingAccuracy: number;
-  wrongKeys: Record<string, { total: number; count: number }>[];
+  wrongKeys: Record<string, { total: number; count: number }>;
 }
 
 export const getTypingHistoryAPI = async (typingHistory: TypingHistoryRequest) => {
-  // const res = await request.post('/typing/history', typingHistory);
   console.log('서버에 전송할 데이터', typingHistory);
+  const res = await authenticationRequest.post('/typing/history', typingHistory);
+  console.log('res: ', res);
 
-  // return res.data;
+  return res.data;
 };

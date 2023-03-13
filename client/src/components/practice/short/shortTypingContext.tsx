@@ -1,3 +1,4 @@
+import { disassemble } from 'hangul-js';
 import type { ReactNode } from 'react';
 import { useCallback } from 'react';
 import { useEffect } from 'react';
@@ -11,7 +12,8 @@ import type { ShortTypingType } from '@/apis/typing';
 import { getTypingHistoryAPI } from '@/apis/typing';
 import useStopwatch from '@/components/practice/short/useStopWatch';
 import { getWrongLength } from '@/components/practice/short/utils';
-import { getTypingAccuracy, getTypingSpeed, getTypingWpm } from '@/utils/typing';
+import { getCharType } from '@/utils/char';
+import { getTypingAccuracy, getTypingSpeed, getTypingWpm, getWrongKeys } from '@/utils/typing';
 
 export interface SubmitRequestType {
   input: string;
@@ -56,6 +58,7 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
 
   const [currentIdx, setCurrentIdx] = useState(0);
   const prevWritingInput = useRef('');
+  // name 변경
   const currentWritingContent = typingWritings[currentIdx]?.content ?? '';
 
   const prevWritingCorrect = useMemo(
@@ -101,8 +104,18 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
 
   const handleSubmit = async (input: string) => {
     prevWritingInput.current = input;
+    const resultContent = input;
+    const originalInfos = [...currentWritingContent].map((char) => ({
+      char,
+      type: getCharType(char),
+      components: disassemble(char),
+    }));
+    const typingInfos = [...resultContent].map((char) => ({
+      char: '',
+      type: 'other',
+      components: disassemble(char),
+    }));
 
-    // TODO : error word를 잡는것은 서버에 보낼때만 하면 된다, 이전에는 값이 틀린지 아닌지만 체크하면 된다.
     if (startTime.current !== null) {
       const typingHistory = {
         mode: 'PRACTICE',
@@ -111,10 +124,11 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
         typingSpeed,
         typingAccuracy,
         wpm: typingWpm,
-        resultContent: input,
+        resultContent,
         typingId: typingWritings[currentIdx].typingId,
-        wrongKeys: [],
+        wrongKeys: getWrongKeys(originalInfos, typingInfos),
       };
+
       await getTypingHistoryAPI(typingHistory);
     }
   };
