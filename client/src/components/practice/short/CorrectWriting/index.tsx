@@ -10,16 +10,24 @@ export default function CorrectWriting({ correctWriting, inputWriting }: Correct
     <Flex pl='5px' mb='10px' fontSize='23px' fontWeight={500}>
       {correctWriting.split('').map((word, idx) => {
         if (word === ' ') {
-          return <Text key={idx}>&nbsp;</Text>;
+          return (
+            <Text as='span' key={idx}>
+              &nbsp;
+            </Text>
+          );
         }
         if (idx < inputWriting.length - 1 && word !== inputWriting[idx]) {
           return (
-            <Text bg='red' color='#fff' key={idx}>
+            <Text as='span' bg='red' color='#fff' key={idx}>
               {word}
             </Text>
           );
         }
-        return <Text key={idx}>{word}</Text>;
+        return (
+          <Text as='span' key={idx}>
+            {word}
+          </Text>
+        );
       })}
     </Flex>
   );

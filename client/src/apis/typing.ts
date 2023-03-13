@@ -28,6 +28,7 @@ interface TypingHistoryRequest {
   endTime: Date;
   typingSpeed: number;
   mode: 'PRACTICE' | 'ACTUAL' | string;
+  wpm: number;
   typingAccuracy: number;
   wrongKeys: Record<string, { total: number; count: number }>[];
 }

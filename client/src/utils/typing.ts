@@ -77,6 +77,7 @@ export const calcAccuracy = ({ correctWriting, inputWriting }: calcTypingRequest
   }
   return Math.floor(((totalCount - wrongCount) / totalCount) * 100);
 };
+
 export const getTypingAccuracy = (states: string) => {
   // 어떤 문자도 타이핑하지 않은 상태
   if (states === 'f') {

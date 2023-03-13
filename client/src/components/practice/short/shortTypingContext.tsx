@@ -48,6 +48,7 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
   const [typingSpeed, setTypingSpeed] = useState(0);
   const [typingAccuracy, setTypingAccuracy] = useState(0);
   const [currentIdx, setCurrentIdx] = useState(0);
+  const [wpm, setWpm] = useState(0);
   const backspaceCount = useRef(0);
   const prevWritingInput = useRef('');
   const startTime = useRef<Date | null>(null);
@@ -112,6 +113,7 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
         resultContent: input,
         typingId: typingWritings[currentIdx].typingId,
         wrongKeys: [],
+        wpm,
       };
       await getTypingHistoryAPI(typingHistory);
     }
