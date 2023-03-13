@@ -22,7 +22,7 @@ const useStopwatch = () => {
   const startTime = useRef<number | null>(null);
   const pauseTime = useRef<number | null>(null);
 
-  const totalMillisecond = time.minute * 3600 + time.second * 60 + time.ms;
+  const totalMillisecond = time.minute * 60 * 1000 + time.second * 1000 + time.ms;
 
   const timePlay = () => {
     // 최초 시작

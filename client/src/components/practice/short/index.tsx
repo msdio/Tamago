@@ -6,8 +6,6 @@ import PrevTyping from '@/components/practice/short/PrevTyping';
 import { useShortTypingContext } from '@/components/practice/short/shortTypingContext';
 import TwoRightArrow from '@/icons/TwoRightArrow';
 
-// NOTE: 어떻게 합치면 좋을까
-
 export default function PracticeShort() {
   const { originalWriting, nextWritingContent } = useShortTypingContext();
 
