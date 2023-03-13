@@ -10,7 +10,8 @@ import { createContext } from 'react';
 import type { ShortTypingType } from '@/apis/typing';
 import { getTypingHistoryAPI } from '@/apis/typing';
 import useStopwatch from '@/components/practice/short/useStopWatch';
-import { getTypingSpeed } from '@/utils/typing';
+import { getWrongLength } from '@/components/practice/short/utils';
+import { getTypingAccuracy, getTypingSpeed } from '@/utils/typing';
 
 export interface SubmitRequestType {
   input: string;
@@ -68,18 +69,23 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
     [currentIdx, typingWritings],
   );
 
-  const handleTypingSpeed = () => {
-    // const newTypingSpeed = calcTypingSpeed({
-    //   typingCount,
-    //   backspaceCount: backspaceCount.current,
-    //   elapsedTime: time.second,
-    // });
-    // setTypingSpeed(newTypingSpeed);
-  };
-
   const handleBackspace = () => {
     typingCount.current = typingCount.current >= 2 ? typingCount.current - 2 : 0; // backspace시 타수 -2?
     backspaceCount.current += 1;
+  };
+
+  const handleTypingAccuracy = (inputWriting: string) => {
+    const wrongLength = getWrongLength({
+      correctWriting: currentWritingContent,
+      inputWriting: inputWriting.slice(0, inputWriting.length - 1),
+    });
+
+    const newAccuracy = getTypingAccuracy({
+      typingLength: currentWritingContent.length,
+      wrongLength,
+    });
+
+    setTypingAccuracy(parseInt(newAccuracy, 10));
   };
 
   // NOTE: backspace 경우는 이전에 처리
@@ -97,7 +103,7 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
     // //? 타이핑 속도 계산
     // handleTypingSpeed();
     // //? 타이핑 정확도 계산 - 오타 계산
-    // handleTypingAccuracy(input);
+    handleTypingAccuracy(input);
   };
 
   const handleSubmit = async (input: string) => {
@@ -154,11 +160,6 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
   useEffect(() => {
     handleTypingSpeed();
   }, [handleTypingSpeed]);
-
-  const handleTypingAccuracy = (inputWriting: string) => {
-    // const newAccuracy = calcAccuracy({ inputWriting, correctWriting: currentWritingContent });
-    // setTypingAccuracy(newAccuracy);
-  };
 
   const values = {
     time: time.second,
