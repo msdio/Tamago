@@ -8,6 +8,7 @@ export default function DivideWithOr() {
       color='gray.main'
       display='flex'
       alignItems='center'
+      userSelect='none'
       _before={{
         content: '""',
         flexGrow: 1,
