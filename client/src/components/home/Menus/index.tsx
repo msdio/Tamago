@@ -29,7 +29,7 @@ export default function Menus() {
         <br />할 수 있어요.
       </Text>
 
-      <Flex marginTop='4.6875rem' gap='2.6875rem' w='100%' justifyContent='space-between'>
+      <Flex marginTop='4.6875rem' w='100%' justifyContent='space-around'>
         <MenuCard language='kr' title='긴 글 연습' content='Lorem ipsum dolor sit amet, consectetu' />
         <Box transform='translateY(-9.3125rem)'>
           <MenuCard language='en' title='짧은 글 연습' content='Lorem ipsum dolor sit amet, consectetu' />

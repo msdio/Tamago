@@ -1,13 +1,13 @@
-import { Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalOverlay } from '@chakra-ui/react';
-import type { ReactNode } from 'react';
+import { Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalOverlay, Text } from '@chakra-ui/react';
 
 interface AlertProps {
-  children: ReactNode;
+  header: string;
   isOpen: boolean;
   onClose: () => void;
+  subHeader?: string;
 }
 
-export default function Alert({ children, isOpen, onClose }: AlertProps) {
+export default function Alert({ header, subHeader, isOpen, onClose }: AlertProps) {
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -15,7 +15,12 @@ export default function Alert({ children, isOpen, onClose }: AlertProps) {
         <ModalContent m='auto' p='32px' w='432px'>
           <ModalBody>
             <Flex direction='column' alignItems='center' justify='center'>
-              {children}
+              <Box textAlign='center' mt='13px' mb='34px'>
+                <Text fontWeight='700' lineHeight='160%' p='0px 54px' wordBreak='keep-all'>
+                  {header}
+                </Text>
+                {subHeader && <Text mt='11px'>{subHeader}</Text>}
+              </Box>
             </Flex>
           </ModalBody>
           <ModalFooter justifyContent='center' p='0'>

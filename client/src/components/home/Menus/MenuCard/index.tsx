@@ -42,7 +42,7 @@ export default function MenuCard({ language, title, content }: CardProps) {
     <Container>
       <Flex
         direction='column'
-        justifyContent='center'
+        justifyContent='end'
         w='22.8125rem'
         h='16.625rem'
         p='2.1875rem 2.75rem'
@@ -60,10 +60,10 @@ export default function MenuCard({ language, title, content }: CardProps) {
           top='2.0625rem'
           right='2.0625rem'
         />
-        <Text fontSize='1.875rem' fontWeight='bold'>
+        <Text fontSize='1.875rem' fontWeight='700' lineHeight='160%'>
           {title}
         </Text>
-        <Text fontSize='1rem' marginTop='.875rem'>
+        <Text fontSize='1rem' marginTop='.625rem'>
           {content}
         </Text>
       </Flex>
