@@ -33,6 +33,11 @@ export default function CurrentTyping({}) {
     const word = e.target.value;
     setInput(word);
 
+    // NOTE : backspace 누른 경우
+    if (input.length > word.length) {
+      return;
+    }
+
     onTyping(word);
 
     //? NOTE: 마지막 글자까지 입력하면, 제출하고 다음 문장으로 넘어간다.

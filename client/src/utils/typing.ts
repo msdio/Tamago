@@ -1,3 +1,5 @@
+import { disassemble } from 'hangul-js';
+
 import type { CharInfo } from '@/types/typing';
 import checkErrorWord, { getNumberPerChar, isHangulChar } from '@/utils/checkErrorWord';
 
@@ -140,4 +142,8 @@ export const getWrongKeys = (contentInfos: CharInfo[], typingInfos: CharInfo[]) 
   }
 
   return wrongKeys;
+};
+
+export const getDisassembleWord = (word: string) => {
+  return disassemble(word);
 };
