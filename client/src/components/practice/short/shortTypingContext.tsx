@@ -1,23 +1,26 @@
+import { disassemble } from 'hangul-js';
 import type { ReactNode } from 'react';
+import { useCallback } from 'react';
+import { useEffect } from 'react';
 import { useMemo } from 'react';
 import { useRef } from 'react';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { createContext } from 'react';
 
-import type { ShortTypingType, TypingHistoryRequest } from '@/apis/typing';
+import type { ShortTypingType } from '@/apis/typing';
+import { getTypingHistoryAPI } from '@/apis/typing';
 import useStopwatch from '@/components/practice/short/useStopWatch';
-import { calcAccuracy, calcTypingSpeed } from '@/utils/typing';
-
-export interface SubmitRequestType {
-  input: string;
-}
+import { getWrongLength } from '@/components/practice/short/utils';
+import { getCharType } from '@/utils/char';
+import { getTypingAccuracy, getTypingSpeed, getTypingWpm, getWrongKeys } from '@/utils/typing';
 
 interface ShortTypingContextType {
   time: number;
-  currentWritingContent: string;
+  originalWriting: string;
+
   typingCount: number;
-  typingSpeed: number;
+  typingWpm: number;
   typingAccuracy: number;
 
   prevWritingInput: string;
@@ -42,15 +45,17 @@ interface ShortTypingProviderProps {
 
 const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderProps) => {
   // NOTE : state를 하나로 합칠지는 고민중.
-  const { time, status, timePlay, timeReset } = useStopwatch();
-  const [typingCount, setTypingCount] = useState(0);
+  const { time, status, timePlay, timeReset, totalMillisecond, startTime } = useStopwatch();
   const [typingSpeed, setTypingSpeed] = useState(0);
   const [typingAccuracy, setTypingAccuracy] = useState(0);
-  const [currentIdx, setCurrentIdx] = useState(0);
+  const [typingWpm, setTypingWpm] = useState(0);
   const backspaceCount = useRef(0);
-  const prevWritingInput = useRef('');
+  const typingCount = useRef(0); // 타수, 현재 입력한 글의 타수
 
-  const currentWritingContent = typingWritings[currentIdx]?.content ?? '';
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const prevWritingInput = useRef('');
+  // name 변경
+  const originalWriting = typingWritings[currentIdx]?.content ?? '';
 
   const prevWritingCorrect = useMemo(
     () => (currentIdx > 0 ? typingWritings[currentIdx - 1]?.content : ''),
@@ -62,68 +67,75 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
     [currentIdx, typingWritings],
   );
 
-  const handleTypingSpeed = () => {
-    const newTypingSpeed = calcTypingSpeed({
-      typingCount,
-      backspaceCount: backspaceCount.current,
-      elapsedTime: time.second,
-    });
-    setTypingSpeed(newTypingSpeed);
-  };
-
-  const handleTypingAccuracy = (inputWriting: string) => {
-    const newAccuracy = calcAccuracy({ inputWriting, correctWriting: currentWritingContent });
-    setTypingAccuracy(newAccuracy);
-  };
-
   const handleBackspace = () => {
+    typingCount.current = typingCount.current >= 2 ? typingCount.current - 2 : 0; // backspace시 타수 -2?
     backspaceCount.current += 1;
   };
 
+  const handleTypingAccuracy = (inputWriting: string) => {
+    const wrongLength = getWrongLength({
+      originalWriting,
+      inputWriting: inputWriting.slice(0, inputWriting.length - 1),
+    });
+
+    const newAccuracy = getTypingAccuracy({
+      typingLength: originalWriting.length,
+      wrongLength,
+    });
+
+    setTypingAccuracy(parseInt(newAccuracy, 10));
+  };
+
+  // NOTE: backspace 경우는 이전에 처리
   const handleTyping = (input: string) => {
     // 경과 시간 계산 시작
     if (status !== 'play') {
       timePlay();
     }
 
-    // NOTE:  이런 부분들을 1분마다 리렌더링 시켜줄지 고민중
-    //? NOTE: 한글, 영타 구분?, 타자수 계산
-    setTypingCount((prev) => prev + 1);
-    //? 타이핑 속도 계산
-    handleTypingSpeed();
-    //? 타이핑 정확도 계산 - 오타 계산
+    typingCount.current += 1; // 글쇠 1개당 1타
+    // //? 타이핑 정확도 계산 - 오타 계산
     handleTypingAccuracy(input);
   };
 
   const handleSubmit = async (input: string) => {
     prevWritingInput.current = input;
+    const resultContent = input;
+    const originalInfos = [...originalWriting].map((char) => ({
+      char,
+      type: getCharType(char),
+      components: disassemble(char),
+    }));
+    const typingInfos = [...resultContent].map((char) => ({
+      char: '',
+      type: 'other',
+      components: disassemble(char),
+    }));
 
-    // TODO : error word를 잡는것은 서버에 보낼때만 하면 된다, 이전에는 값이 틀린지 아닌지만 체크하면 된다.
+    if (startTime.current !== null) {
+      const typingHistory = {
+        mode: 'PRACTICE',
+        startTime: new Date(startTime.current),
+        endTime: new Date(),
+        typingSpeed,
+        typingAccuracy,
+        wpm: typingWpm,
+        resultContent,
+        typingId: typingWritings[currentIdx].typingId,
+        wrongKeys: getWrongKeys(originalInfos, typingInfos),
+      };
 
-    const data: TypingHistoryRequest = {
-      endTime: new Date(),
-      pageInfo: null, // 짧은 글일 경우 NULL
-      contentType: 0, // 1: 긴글?, 0: 짧은 글
-      typingMode: 'practice',
-      typingSpeed,
-      typingAccuracy,
-      content: currentWritingContent,
-      resultContent: input,
-      elapsedTime: time.second, // 초 단위!
-      typingId: typingWritings[currentIdx].typingId,
-      language: 'Korean', // TODO : 언어 종류
-      contentLength: currentWritingContent.length,
-      wrongKeys: [], // TODO : 오류 단어 체크
-    };
-
-    console.log('서버에 전송할 데이터', data);
+      await getTypingHistoryAPI(typingHistory);
+    }
   };
 
   const resetTypingData = () => {
-    setTypingCount(() => 0);
     setTypingSpeed(() => 0);
     setTypingAccuracy(() => 0);
+    setTypingWpm(() => 0);
     backspaceCount.current = 0;
+    typingCount.current = 0;
+
     timeReset();
   };
 
@@ -139,14 +151,36 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
     }
   };
 
+  const handleTypingWpm = useCallback(() => {
+    const newTypingWpm = getTypingWpm({
+      typingCount: typingCount.current,
+      millisecond: totalMillisecond,
+    });
+    setTypingWpm(newTypingWpm);
+  }, [totalMillisecond]);
+
+  const handleTypingSpeed = useCallback(() => {
+    // NOTE : 타수 계산 방법이 이상한것 같습니다.
+    const newTypingSpeed = getTypingSpeed({
+      typingCount: typingCount.current,
+      backspaceCount: backspaceCount.current,
+      millisecond: totalMillisecond,
+    });
+    setTypingSpeed(newTypingSpeed);
+  }, [totalMillisecond]);
+
+  useEffect(() => {
+    handleTypingSpeed();
+    handleTypingWpm();
+  }, [handleTypingSpeed, handleTypingWpm]);
+
   const values = {
     time: time.second,
-    currentWritingContent,
-    typingAccuracy,
-    typingCount,
-    typingSpeed,
-
+    typingCount: typingCount.current,
     prevWritingInput: prevWritingInput.current,
+    originalWriting,
+    typingAccuracy,
+    typingWpm,
     prevWritingCorrect,
     nextWritingContent,
   };

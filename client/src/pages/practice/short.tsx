@@ -6,6 +6,7 @@ import PracticeShort from '@/components/practice/short';
 import ShortTypingProvider from '@/components/practice/short/shortTypingContext';
 
 const INIT_LANG = 'korean';
+
 export default function PracticeShortPage() {
   const [data, setData] = useState<ShortTypingResultType>({
     typingWritings: [],
