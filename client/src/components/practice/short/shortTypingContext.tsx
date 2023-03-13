@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { useCallback } from 'react';
+import { useEffect } from 'react';
 import { useMemo } from 'react';
 import { useRef } from 'react';
 import { useState } from 'react';
@@ -9,7 +10,7 @@ import { createContext } from 'react';
 import type { ShortTypingType } from '@/apis/typing';
 import { getTypingHistoryAPI } from '@/apis/typing';
 import useStopwatch from '@/components/practice/short/useStopWatch';
-import { calcAccuracy } from '@/utils/typing';
+import { getTypingSpeed } from '@/utils/typing';
 
 export interface SubmitRequestType {
   input: string;
@@ -44,7 +45,7 @@ interface ShortTypingProviderProps {
 
 const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderProps) => {
   // NOTE : state를 하나로 합칠지는 고민중.
-  const { time, status, timePlay, timeReset } = useStopwatch();
+  const { time, status, timePlay, timeReset, totalMillisecond } = useStopwatch();
   const [typingSpeed, setTypingSpeed] = useState(0);
   const [typingAccuracy, setTypingAccuracy] = useState(0);
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -76,13 +77,9 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
     // setTypingSpeed(newTypingSpeed);
   };
 
-  const handleTypingAccuracy = (inputWriting: string) => {
-    const newAccuracy = calcAccuracy({ inputWriting, correctWriting: currentWritingContent });
-    setTypingAccuracy(newAccuracy);
-  };
-
   const handleBackspace = () => {
     typingCount.current = typingCount.current >= 2 ? typingCount.current - 2 : 0; // backspace시 타수 -2?
+    backspaceCount.current += 1;
   };
 
   // NOTE: backspace 경우는 이전에 처리
@@ -125,11 +122,11 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
 
   const resetTypingData = () => {
     // setTypingCount(() => 0);
-    // setTypingSpeed(() => 0);
+    setTypingSpeed(() => 0);
     // setTypingAccuracy(() => 0);
-    // backspaceCount.current = 0;
-    // startTime.current = null;
-    // timeReset();
+    backspaceCount.current = 0;
+    startTime.current = null;
+    timeReset();
   };
 
   const handleEndTyping = async (input: string) => {
@@ -144,14 +141,24 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
     }
   };
 
-  const typingSpeedHandler = useCallback(() => {
-    // setTypingWpm(
-    //   getTypingWpm({ typingCount: totalTypingCount, minute: time.minute + time.second / 60 + time.ms / 60000 }),
-    // );
-    // setTypingSpeed(
-    //   getTypingSpeed({ typingCount: totalTypingCount, minute: time.minute + time.second / 60 + time.ms / 60000 }),
-    // );
-  }, []);
+  const handleTypingSpeed = useCallback(() => {
+    // NOTE : 타수 계산 방법이 이상한것 같습니다.
+    const newTypingSpeed = getTypingSpeed({
+      typingCount: typingCount.current,
+      backspaceCount: backspaceCount.current,
+      millisecond: totalMillisecond,
+    });
+    setTypingSpeed(newTypingSpeed);
+  }, [totalMillisecond]);
+
+  useEffect(() => {
+    handleTypingSpeed();
+  }, [handleTypingSpeed]);
+
+  const handleTypingAccuracy = (inputWriting: string) => {
+    // const newAccuracy = calcAccuracy({ inputWriting, correctWriting: currentWritingContent });
+    // setTypingAccuracy(newAccuracy);
+  };
 
   const values = {
     time: time.second,

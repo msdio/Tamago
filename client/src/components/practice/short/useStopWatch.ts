@@ -22,6 +22,8 @@ const useStopwatch = () => {
   const startTime = useRef<number | null>(null);
   const pauseTime = useRef<number | null>(null);
 
+  const totalMillisecond = time.minute * 3600 + time.second * 60 + time.ms;
+
   const timePlay = () => {
     // 최초 시작
     if (status === 'stop') startTime.current = Date.now();
@@ -73,6 +75,7 @@ const useStopwatch = () => {
     timePlay,
     timePause,
     timeReset,
+    totalMillisecond,
   };
 };
 
