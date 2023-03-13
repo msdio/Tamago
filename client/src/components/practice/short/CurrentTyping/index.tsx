@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 import CorrectWriting from '@/components/practice/short/CorrectWriting';
 import { useShortTypingContext, useShortTypingHandlerContext } from '@/components/practice/short/shortTypingContext';
-import { checkAllInputTyping } from '@/utils/typing';
+import { checkAllInputTyping } from '@/components/practice/short/utils';
 
 const INIT_INPUT = '';
 
@@ -20,15 +20,6 @@ export default function CurrentTyping({}) {
 
   const [input, setInput] = useState(INIT_INPUT);
 
-  // const setErrorWord = (idx: number, errorWord: ErrorWordType) => {
-  //   // NOTE: error word를 index마다 관리하고,
-  //   // 지금 입력하는 index가 아니면 오류를 보여주는 방향으로
-  //   const prevErrorWords = [...errorWordList];
-
-  //   prevErrorWords[idx] = errorWord;
-  //   setErrorWordList(prevErrorWords);
-  // };
-
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     const word = e.target.value;
     setInput(word);
@@ -42,7 +33,11 @@ export default function CurrentTyping({}) {
 
     //? NOTE: 마지막 글자까지 입력하면, 제출하고 다음 문장으로 넘어간다.
     if (word.length === correctWriting.length) {
-      const isLast = checkAllInputTyping(word[correctWriting.length - 1], correctWriting[correctWriting.length - 1]);
+      const isLast = checkAllInputTyping({
+        typingWord: word[correctWriting.length - 1],
+        originalWord: correctWriting[correctWriting.length - 1],
+      });
+
       if (isLast) {
         onEndTyping(word);
       }

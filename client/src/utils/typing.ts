@@ -1,26 +1,4 @@
-import { disassemble } from 'hangul-js';
-
 import type { CharInfo } from '@/types/typing';
-import { getNumberPerChar, isHangulChar } from '@/utils/checkErrorWord';
-
-// TODO : parameter Object로 변경
-export const checkAllInputTyping = (correctWord: string, inputWord: string) => {
-  const isCorrectWordHangul = isHangulChar(correctWord);
-  const isInputWordHangul = isHangulChar(inputWord);
-
-  if (!isCorrectWordHangul) {
-    return correctWord === inputWord;
-  }
-  // correctWord가 한글인 경우
-  if (isInputWordHangul) {
-    const correctWordCount = getNumberPerChar(correctWord);
-    const inputWordCount = getNumberPerChar(inputWord);
-
-    return correctWordCount === inputWordCount;
-  } else {
-    return false;
-  }
-};
 
 export const getTypingAccuracy = ({ typingLength, wrongLength }: { typingLength: number; wrongLength: number }) => {
   return (((typingLength - wrongLength) / typingLength) * 100).toFixed(1);
@@ -76,8 +54,4 @@ export const getWrongKeys = (contentInfos: CharInfo[], typingInfos: CharInfo[]) 
   }
 
   return wrongKeys;
-};
-
-export const getDisassembleWord = (word: string) => {
-  return disassemble(word);
 };
