@@ -1,9 +1,15 @@
 import { disassemble } from 'hangul-js';
 
-export const getWrongLength = ({ correctWriting, inputWriting }: { correctWriting: string; inputWriting: string }) => {
+export const getWrongLength = ({
+  originalWriting,
+  inputWriting,
+}: {
+  originalWriting: string;
+  inputWriting: string;
+}) => {
   let wrongCount = 0;
   for (let i = 0; i < inputWriting.length; i++) {
-    if (inputWriting[i] !== correctWriting[i]) {
+    if (inputWriting[i] !== originalWriting[i]) {
       wrongCount += 1;
     }
   }

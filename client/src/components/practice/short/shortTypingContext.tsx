@@ -15,13 +15,9 @@ import { getWrongLength } from '@/components/practice/short/utils';
 import { getCharType } from '@/utils/char';
 import { getTypingAccuracy, getTypingSpeed, getTypingWpm, getWrongKeys } from '@/utils/typing';
 
-export interface SubmitRequestType {
-  input: string;
-}
-
 interface ShortTypingContextType {
   time: number;
-  currentWritingContent: string;
+  originalWriting: string;
 
   typingCount: number;
   typingWpm: number;
@@ -59,7 +55,7 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
   const [currentIdx, setCurrentIdx] = useState(0);
   const prevWritingInput = useRef('');
   // name 변경
-  const currentWritingContent = typingWritings[currentIdx]?.content ?? '';
+  const originalWriting = typingWritings[currentIdx]?.content ?? '';
 
   const prevWritingCorrect = useMemo(
     () => (currentIdx > 0 ? typingWritings[currentIdx - 1]?.content : ''),
@@ -78,12 +74,12 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
 
   const handleTypingAccuracy = (inputWriting: string) => {
     const wrongLength = getWrongLength({
-      correctWriting: currentWritingContent,
+      originalWriting,
       inputWriting: inputWriting.slice(0, inputWriting.length - 1),
     });
 
     const newAccuracy = getTypingAccuracy({
-      typingLength: currentWritingContent.length,
+      typingLength: originalWriting.length,
       wrongLength,
     });
 
@@ -105,7 +101,7 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
   const handleSubmit = async (input: string) => {
     prevWritingInput.current = input;
     const resultContent = input;
-    const originalInfos = [...currentWritingContent].map((char) => ({
+    const originalInfos = [...originalWriting].map((char) => ({
       char,
       type: getCharType(char),
       components: disassemble(char),
@@ -182,7 +178,7 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
     time: time.second,
     typingCount: typingCount.current,
     prevWritingInput: prevWritingInput.current,
-    currentWritingContent,
+    originalWriting,
     typingAccuracy,
     typingWpm,
     prevWritingCorrect,
