@@ -23,18 +23,18 @@ export default function PracticeLongTyping({
 }: LongTypingDetail) {
   const router = useRouter();
 
-  const [contentInfos, setContentInfos] = useState<CharInfo[]>([]);
-  const [typingInfos, setTypingInfos] = useState<CharInfo[]>([]);
   const [textarea, setTextarea] = useState('');
-  /* 처음 'f'로 초기화되어 가장 먼저 온 글자에 포커싱, 'f' 이외에도 'c'(correct), 'i'(incorrect), 'u'(unknown)로 상태 구분 */
-  const [typingStates, setTypingStates] = useState('');
-  const [typingWpm, setTypingWpm] = useState(0);
-  const [typingSpeed, setTypingSpeed] = useState(0);
-  const [typingAccuracy, setTypingAccuracy] = useState(0);
-  const [typingCount, setTypingCount] = useState(0);
-  const [backspaceCount, setBackspaceCount] = useState(0);
-
   const { time, status, timePlay, timePause, timeReset } = useStopwatch();
+
+  const contentInfos = useRef<CharInfo[]>([]);
+  const typingInfos = useRef<CharInfo[]>([]);
+  /* 처음 'f'로 초기화되어 가장 먼저 온 글자에 포커싱, 'f' 이외에도 'c'(correct), 'i'(incorrect), 'u'(unknown)로 상태 구분 */
+  const typingStates = useRef('f');
+  const typingWpm = useRef(0);
+  const typingSpeed = useRef(0);
+  const typingAccuracy = useRef(0);
+  const typingCount = useRef(0);
+  const backspaceCount = useRef(0);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -44,29 +44,23 @@ export default function PracticeLongTyping({
   const focusTextarea = () => textareaRef.current?.focus();
 
   const typingAccuracyHandler = useCallback(() => {
-    setTypingAccuracy(
-      getTypingAccuracy({
-        typingLength: typingStates.length - 1,
-        wrongLength: typingStates.replaceAll('c', '').length - 1,
-      }),
-    );
-  }, [typingStates]);
+    typingAccuracy.current = getTypingAccuracy({
+      typingLength: typingStates.current.length - 1,
+      wrongLength: typingStates.current.replaceAll('c', '').length - 1,
+    });
+  }, [textarea]);
 
   const typingSpeedHandler = useCallback(() => {
-    setTypingWpm(
-      getTypingWpm({
-        typingCount: typingCount,
-        millisecond: time.minute * 60000 + time.second * 1000 + time.ms,
-      }),
-    );
-    setTypingSpeed(
-      getTypingSpeed({
-        typingCount: typingCount,
-        backspaceCount: backspaceCount,
-        millisecond: time.minute * 60000 + time.second * 1000 + time.ms,
-      }),
-    );
-  }, [typingCount, backspaceCount, time]);
+    typingSpeed.current = getTypingSpeed({
+      typingCount: typingCount.current,
+      backspaceCount: backspaceCount.current,
+      millisecond: time.minute * 60000 + time.second * 1000 + time.ms,
+    });
+    typingWpm.current = getTypingWpm({
+      typingCount: typingCount.current,
+      millisecond: time.minute * 60000 + time.second * 1000 + time.ms,
+    });
+  }, [textarea, time]);
 
   /**
    * 처음 화면이 렌더링될 때 textarea로 포커싱되도록 한다.
@@ -75,28 +69,24 @@ export default function PracticeLongTyping({
    * 기존의 상태들이 모두 그대로 남아있게 되어 리렌더링이 될경우 상태를 모두 초기화해줘야 한다.
    */
   useEffect(() => {
-    setContentInfos(
-      [...content].map((char) => ({
-        char,
-        type: getCharType(char),
-        components: disassemble(char),
-      })),
-    );
-    setTypingInfos(
-      [...content].map(() => ({
-        char: '',
-        type: 'other',
-        components: [],
-      })),
-    );
-    setTextarea('');
-    setTypingStates('f');
-    setTypingCount(0);
-    setBackspaceCount(0);
-    setTypingAccuracy(0);
-    setTypingSpeed(0);
-    setTypingWpm(0);
+    contentInfos.current = [...content].map((char) => ({
+      char,
+      type: getCharType(char),
+      components: disassemble(char),
+    }));
+    typingInfos.current = [...content].map(() => ({
+      char: '',
+      type: 'other',
+      components: [],
+    }));
+    typingStates.current = 'f';
+    typingWpm.current = 0;
+    typingSpeed.current = 0;
+    typingAccuracy.current = 0;
+    typingCount.current = 0;
+    backspaceCount.current = 0;
     timeReset();
+    setTextarea('');
     focusTextarea();
   }, [router.asPath]);
 
@@ -130,7 +120,7 @@ export default function PracticeLongTyping({
     const { value } = e.target;
 
     // 타이핑 완료시 api 호출
-    if (value.length > contentInfos.length) {
+    if (value.length > contentInfos.current.length) {
       timePause();
       // const endTime = Date.now();
       // const typingTime = time.minute * 60000 + time.second * 1000 + time.ms;
@@ -157,61 +147,56 @@ export default function PracticeLongTyping({
     }
 
     setTextarea(value);
-    const currLength = typingStates.length - 1;
+    const currLength = typingStates.current.length - 1;
 
     // 한글처럼 여러 글쇠로 이루어진 문자의 경우 타이핑을 해도 길이가 동일한 경우 발생, 빼는 경우도 마찬가지
     if (value.length === currLength) {
-      typingInfos[value.length - 1].char = value[value.length - 1];
-      typingInfos[value.length - 1].type = getCharType(value[value.length - 1]);
-      const prevComponents = typingInfos[value.length - 1].components;
+      typingInfos.current[value.length - 1].char = value[value.length - 1];
+      typingInfos.current[value.length - 1].type = getCharType(value[value.length - 1]);
+      const prevComponents = typingInfos.current[value.length - 1].components;
       const currComponents = disassemble(value[value.length - 1]);
-      typingInfos[value.length - 1].components = disassemble(value[value.length - 1]);
+      typingInfos.current[value.length - 1].components = disassemble(value[value.length - 1]);
       // 한글을 뺀 경우 (길이 변화 X)
       if (prevComponents > currComponents) {
-        if (contentInfos[value.length - 1].char === value[value.length - 1]) {
-          setTypingStates(`${typingStates.slice(0, -2)}cf`);
-          const count = typingInfos[value.length - 1].components.length;
-          setTypingCount(typingCount + count);
+        if (contentInfos.current[value.length - 1].char === value[value.length - 1]) {
+          typingStates.current = `${typingStates.current.slice(0, -2)}cf`;
+          typingCount.current += typingInfos.current[value.length - 1].components.length;
         } else {
-          setTypingStates(`${typingStates.slice(0, -2)}if`);
+          typingStates.current = `${typingStates.current.slice(0, -2)}if`;
         }
       }
       // 한글을 더한 경우 (길이 변화 X)
       else {
-        if (contentInfos[value.length - 1].char === value[value.length - 1]) {
-          setTypingStates(`${typingStates.slice(0, -2)}cf`);
-          const count = typingInfos[value.length - 1].components.length;
-          setTypingCount(typingCount + count);
+        if (contentInfos.current[value.length - 1].char === value[value.length - 1]) {
+          typingStates.current = `${typingStates.current.slice(0, -2)}cf`;
+          typingCount.current += typingInfos.current[value.length - 1].components.length;
         } else {
-          setTypingStates(`${typingStates.slice(0, -2)}if`);
+          typingStates.current = `${typingStates.current.slice(0, -2)}if`;
         }
       }
     }
     // 타이핑하여 글자가 증가한 경우
     else if (value.length > currLength) {
-      typingInfos[value.length - 1].char = value[value.length - 1];
-      typingInfos[value.length - 1].type = getCharType(value[value.length - 1]);
-      typingInfos[value.length - 1].components = disassemble(value[value.length - 1]);
+      typingInfos.current[value.length - 1].char = value[value.length - 1];
+      typingInfos.current[value.length - 1].type = getCharType(value[value.length - 1]);
+      typingInfos.current[value.length - 1].components = disassemble(value[value.length - 1]);
 
-      if (contentInfos[value.length - 1].char === typingInfos[value.length - 1].char) {
-        setTypingStates(`${typingStates.slice(0, -1)}cf`);
-        const count = typingInfos[value.length - 1].components.length;
-        setTypingCount(typingCount + count);
+      if (contentInfos.current[value.length - 1].char === typingInfos.current[value.length - 1].char) {
+        typingStates.current = `${typingStates.current.slice(0, -1)}cf`;
+        typingCount.current += typingInfos.current[value.length - 1].components.length;
       } else {
-        setTypingStates(`${typingStates.slice(0, -1)}if`);
+        typingStates.current = `${typingStates.current.slice(0, -1)}if`;
       }
     }
     // 빼서 글자가 감소한 경우
     else if (value.length < currLength) {
-      typingInfos[value.length].char = '';
-      typingInfos[value.length].type = 'other';
-      typingInfos[value.length].components = [];
+      typingInfos.current[value.length].char = '';
+      typingInfos.current[value.length].type = 'other';
+      typingInfos.current[value.length].components = [];
 
-      setBackspaceCount(backspaceCount + 1); /* TODO : 타이핑을 엄청 틀린 후 지울 경우 예외처리 */
-      setTypingStates(`${typingStates.slice(0, -2)}f`);
+      backspaceCount.current += 1; /* TODO : 타이핑을 엄청 틀린 후 지울 경우 예외처리 */
+      typingStates.current = `${typingStates.current.slice(0, -2)}f`;
     }
-
-    setTypingInfos(typingInfos);
   };
 
   return (
@@ -235,9 +220,9 @@ export default function PracticeLongTyping({
             <DownArrow />
           </Flex>
           <InfoBar
-            accuracy={typingAccuracy}
-            speed={typingSpeed}
-            wpm={typingWpm}
+            accuracy={typingAccuracy.current}
+            speed={typingSpeed.current}
+            wpm={typingWpm.current}
             time={time.minute * 60 + time.second}
           />
         </Box>
@@ -264,9 +249,11 @@ export default function PracticeLongTyping({
           onCut={(e) => e.preventDefault()}
           onPaste={(e) => e.preventDefault()}
         />
-        {slicedContentAndStrings(content, textarea, typingStates).map(([contentLine, typingLine, states], i) => (
-          <TypingLine key={i} contentLine={contentLine} typingLine={typingLine} states={states} />
-        ))}
+        {slicedContentAndStrings(content, textarea, typingStates.current).map(
+          ([contentLine, typingLine, states], i) => (
+            <TypingLine key={i} contentLine={contentLine} typingLine={typingLine} states={states} />
+          ),
+        )}
       </Flex>
     </PracticeLongLayout>
   );
