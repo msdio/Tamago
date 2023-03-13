@@ -14,20 +14,11 @@ interface InfoBarItemProps {
 
 function InfoBarItem({ label, content }: InfoBarItemProps) {
   return (
-    <Wrapper
-      minW='fit-content'
-      gap='40px'
-      justifyContent='space-between'
-      alignItems='center'
-      pl={22}
-      pr={22}
-      flex={1}
-      color='#000'
-    >
-      <Text fontWeight={800} fontSize={16}>
+    <Wrapper minW='60px' justifyContent='space-between' alignItems='center' pl={22} pr={22} flex={1} color='#000'>
+      <Text minW='60px' fontWeight={800} fontSize={16}>
         {label}
       </Text>
-      <Text fontFamily={'GangwonEduPower'} fontSize={20} fontWeight={900} mt='3px'>
+      <Text minW='60px' textAlign='right' fontFamily={'GangwonEduPower'} fontSize={20} fontWeight={900} mt='3px'>
         {content}
       </Text>
     </Wrapper>
