@@ -8,7 +8,7 @@ export const getTypingWpm = ({ typingCount, millisecond }: { typingCount: number
   if (millisecond === 0) {
     return 0;
   }
-  const minute = millisecond / 3600;
+  const minute = millisecond / 60000;
   return Math.floor(typingCount / 5 / minute);
 };
 
@@ -24,7 +24,7 @@ export const getTypingSpeed = ({
   if (millisecond === 0) {
     return 0;
   }
-  const minute = millisecond / 3600;
+  const minute = millisecond / 60000;
   const calcCount = typingCount - backspaceCount * 2 >= 0 ? typingCount - backspaceCount * 2 : 0;
   return Math.floor(calcCount / minute);
 };

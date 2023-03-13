@@ -25,7 +25,7 @@ export default function useCurrentTyping({
   typingId,
   content: originalWriting,
 }: ShortTypingType): UseCurrentTypingReturns {
-  const { status, timePlay, timeReset, totalMillisecond, startTime } = useStopwatch();
+  const { time, status, timePlay, timeReset, totalMillisecond, startTime } = useStopwatch();
 
   const [typingSpeed, setTypingSpeed] = useState(0);
   const [typingAccuracy, setTypingAccuracy] = useState(0);
@@ -33,7 +33,8 @@ export default function useCurrentTyping({
 
   const backspaceCount = useRef(0);
   const typingCount = useRef(0); // 타수, 현재 입력한 글의 타수
-
+  // typingCount : 정답인 글쇠의 개수
+  // 안녕하 --> 8 // 하 / 아 -> x
   const handleBackspace = useCallback(() => {
     typingCount.current = typingCount.current >= 2 ? typingCount.current - 2 : 0; // backspace시 타수 -2?
     backspaceCount.current += 1;
@@ -119,20 +120,20 @@ export default function useCurrentTyping({
   const handleTypingWpm = useCallback(() => {
     const newTypingWpm = getTypingWpm({
       typingCount: typingCount.current,
-      millisecond: totalMillisecond,
+      millisecond: time.minute * 60 * 1000 + time.second * 1000 + time.ms,
     });
     setTypingWpm(newTypingWpm);
-  }, [totalMillisecond]);
+  }, [time.minute, time.ms, time.second]);
 
   const handleTypingSpeed = useCallback(() => {
     // NOTE : 타수 계산 방법이 이상한것 같습니다.
     const newTypingSpeed = getTypingSpeed({
       typingCount: typingCount.current,
       backspaceCount: backspaceCount.current,
-      millisecond: totalMillisecond,
+      millisecond: time.minute * 60 * 1000 + time.second * 1000 + time.ms,
     });
     setTypingSpeed(newTypingSpeed);
-  }, [totalMillisecond]);
+  }, [time.minute, time.ms, time.second]);
 
   useEffect(() => {
     handleTypingSpeed();
