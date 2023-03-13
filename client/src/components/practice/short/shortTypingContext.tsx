@@ -5,7 +5,8 @@ import { useState } from 'react';
 import { useContext } from 'react';
 import { createContext } from 'react';
 
-import type { ShortTypingType, TypingHistoryRequest } from '@/apis/typing';
+import type { ShortTypingType } from '@/apis/typing';
+import { getTypingHistoryAPI } from '@/apis/typing';
 import useStopwatch from '@/components/practice/short/useStopWatch';
 import { calcAccuracy, calcTypingSpeed } from '@/utils/typing';
 
@@ -49,6 +50,7 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
   const [currentIdx, setCurrentIdx] = useState(0);
   const backspaceCount = useRef(0);
   const prevWritingInput = useRef('');
+  const startTime = useRef<Date | null>(null);
 
   const currentWritingContent = typingWritings[currentIdx]?.content ?? '';
 
@@ -83,6 +85,7 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
   const handleTyping = (input: string) => {
     // 경과 시간 계산 시작
     if (status !== 'play') {
+      startTime.current = new Date();
       timePlay();
     }
 
@@ -99,24 +102,19 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
     prevWritingInput.current = input;
 
     // TODO : error word를 잡는것은 서버에 보낼때만 하면 된다, 이전에는 값이 틀린지 아닌지만 체크하면 된다.
-
-    const data: TypingHistoryRequest = {
-      endTime: new Date(),
-      pageInfo: null, // 짧은 글일 경우 NULL
-      contentType: 0, // 1: 긴글?, 0: 짧은 글
-      typingMode: 'practice',
-      typingSpeed,
-      typingAccuracy,
-      content: currentWritingContent,
-      resultContent: input,
-      elapsedTime: time.second, // 초 단위!
-      typingId: typingWritings[currentIdx].typingId,
-      language: 'Korean', // TODO : 언어 종류
-      contentLength: currentWritingContent.length,
-      wrongKeys: [], // TODO : 오류 단어 체크
-    };
-
-    console.log('서버에 전송할 데이터', data);
+    if (startTime.current !== null) {
+      const typingHistory = {
+        mode: 'PRACTICE',
+        startTime: startTime.current,
+        endTime: new Date(),
+        typingSpeed,
+        typingAccuracy,
+        resultContent: input,
+        typingId: typingWritings[currentIdx].typingId,
+        wrongKeys: [],
+      };
+      await getTypingHistoryAPI(typingHistory);
+    }
   };
 
   const resetTypingData = () => {
@@ -124,6 +122,7 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
     setTypingSpeed(() => 0);
     setTypingAccuracy(() => 0);
     backspaceCount.current = 0;
+    startTime.current = null;
     timeReset();
   };
 
