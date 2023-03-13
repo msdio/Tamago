@@ -5,7 +5,7 @@ import theme from '../../styles/theme';
 import { Footer } from '.';
 
 export default {
-  title: 'components/footer',
+  title: 'components/common/Footer',
   component: Footer,
 } as ComponentMeta<typeof Footer>;
 
@@ -17,4 +17,4 @@ const Template: ComponentStory<typeof Footer> = () => {
   );
 };
 
-export const CheckboxTemplate: ComponentStory<typeof Footer> = Template.bind({});
+export const footer: ComponentStory<typeof Footer> = Template.bind({});

@@ -3,10 +3,10 @@ import type { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import theme from '@/styles/theme';
 
-import EmailInput from './EmailInput';
+import EmailInput from '.';
 
 export default {
-  title: 'components/signup/form/EmailInput',
+  title: 'components/signup/InputEmail',
   component: EmailInput,
 } as ComponentMeta<typeof EmailInput>;
 
@@ -18,9 +18,9 @@ const Template: ComponentStory<typeof EmailInput> = (args) => {
   );
 };
 
-export const EmailInputTemplate: ComponentStory<typeof EmailInput> = Template.bind({});
+export const InputEmail: ComponentStory<typeof EmailInput> = Template.bind({});
 
-EmailInputTemplate.args = {
+InputEmail.args = {
   type: 'email',
   label: '이메일',
   placeholder: '이메일을 입력해 주세요.',
