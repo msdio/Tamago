@@ -11,7 +11,7 @@ import type { ShortTypingType } from '@/apis/typing';
 import { getTypingHistoryAPI } from '@/apis/typing';
 import useStopwatch from '@/components/practice/short/useStopWatch';
 import { getWrongLength } from '@/components/practice/short/utils';
-import { getTypingAccuracy, getTypingSpeed } from '@/utils/typing';
+import { getTypingAccuracy, getTypingSpeed, getTypingWpm } from '@/utils/typing';
 
 export interface SubmitRequestType {
   input: string;
@@ -20,8 +20,9 @@ export interface SubmitRequestType {
 interface ShortTypingContextType {
   time: number;
   currentWritingContent: string;
+
   typingCount: number;
-  typingSpeed: number;
+  typingWpm: number;
   typingAccuracy: number;
 
   prevWritingInput: string;
@@ -46,17 +47,15 @@ interface ShortTypingProviderProps {
 
 const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderProps) => {
   // NOTE : state를 하나로 합칠지는 고민중.
-  const { time, status, timePlay, timeReset, totalMillisecond } = useStopwatch();
+  const { time, status, timePlay, timeReset, totalMillisecond, startTime } = useStopwatch();
   const [typingSpeed, setTypingSpeed] = useState(0);
   const [typingAccuracy, setTypingAccuracy] = useState(0);
-  const [currentIdx, setCurrentIdx] = useState(0);
   const [typingWpm, setTypingWpm] = useState(0);
   const backspaceCount = useRef(0);
-  const prevWritingInput = useRef('');
-  const startTime = useRef<Date | null>(null);
-
   const typingCount = useRef(0); // 타수, 현재 입력한 글의 타수
 
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const prevWritingInput = useRef('');
   const currentWritingContent = typingWritings[currentIdx]?.content ?? '';
 
   const prevWritingCorrect = useMemo(
@@ -92,16 +91,10 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
   const handleTyping = (input: string) => {
     // 경과 시간 계산 시작
     if (status !== 'play') {
-      startTime.current = new Date();
       timePlay();
     }
 
     typingCount.current += 1; // 글쇠 1개당 1타
-    // NOTE:  이런 부분들을 1분마다 리렌더링 시켜줄지 고민중
-    // //? NOTE: 한글, 영타 구분?, 타자수 계산
-    // setTypingCount((prev) => prev + 1);
-    // //? 타이핑 속도 계산
-    // handleTypingSpeed();
     // //? 타이핑 정확도 계산 - 오타 계산
     handleTypingAccuracy(input);
   };
@@ -113,25 +106,26 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
     if (startTime.current !== null) {
       const typingHistory = {
         mode: 'PRACTICE',
-        startTime: startTime.current,
+        startTime: new Date(startTime.current),
         endTime: new Date(),
         typingSpeed,
         typingAccuracy,
+        wpm: typingWpm,
         resultContent: input,
         typingId: typingWritings[currentIdx].typingId,
         wrongKeys: [],
-        wpm: typingWpm,
       };
       await getTypingHistoryAPI(typingHistory);
     }
   };
 
   const resetTypingData = () => {
-    // setTypingCount(() => 0);
     setTypingSpeed(() => 0);
-    // setTypingAccuracy(() => 0);
+    setTypingAccuracy(() => 0);
+    setTypingWpm(() => 0);
     backspaceCount.current = 0;
-    startTime.current = null;
+    typingCount.current = 0;
+
     timeReset();
   };
 
@@ -147,6 +141,14 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
     }
   };
 
+  const handleTypingWpm = useCallback(() => {
+    const newTypingWpm = getTypingWpm({
+      typingCount: typingCount.current,
+      millisecond: totalMillisecond,
+    });
+    setTypingWpm(newTypingWpm);
+  }, [totalMillisecond]);
+
   const handleTypingSpeed = useCallback(() => {
     // NOTE : 타수 계산 방법이 이상한것 같습니다.
     const newTypingSpeed = getTypingSpeed({
@@ -159,16 +161,16 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
 
   useEffect(() => {
     handleTypingSpeed();
-  }, [handleTypingSpeed]);
+    handleTypingWpm();
+  }, [handleTypingSpeed, handleTypingWpm]);
 
   const values = {
     time: time.second,
+    typingCount: typingCount.current,
+    prevWritingInput: prevWritingInput.current,
     currentWritingContent,
     typingAccuracy,
-    typingCount: typingCount.current,
-    typingSpeed,
-
-    prevWritingInput: prevWritingInput.current,
+    typingWpm,
     prevWritingCorrect,
     nextWritingContent,
   };

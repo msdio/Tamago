@@ -26,15 +26,11 @@ export const getTypingAccuracy = ({ typingLength, wrongLength }: { typingLength:
   return (((typingLength - wrongLength) / typingLength) * 100).toFixed(1);
 };
 
-/**
- * @param typingCount 타수
- * @param minute 사용자가 타이핑한 시간(분 단위)
- * @returns wpm
- */
-export const getTypingWpm = ({ typingCount, minute }: { typingCount: number; minute: number }) => {
-  if (minute === 0) {
+export const getTypingWpm = ({ typingCount, millisecond }: { typingCount: number; millisecond: number }) => {
+  if (millisecond === 0) {
     return 0;
   }
+  const minute = millisecond / 3600;
   return Math.floor(typingCount / 5 / minute);
 };
 

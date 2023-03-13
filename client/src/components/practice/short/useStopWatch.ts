@@ -76,6 +76,7 @@ const useStopwatch = () => {
     timePause,
     timeReset,
     totalMillisecond,
+    startTime,
   };
 };
 
