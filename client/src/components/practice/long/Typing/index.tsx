@@ -136,7 +136,7 @@ export default function PracticeLongTyping({
       //   typingAccuracy,
       //   wrongKeys: getWrongKeys(contentInfos, typingInfos),
       // };
-      if (confirm(`정확도: ${typingAccuracy}, wpm: ${typingWpm}, 타속: ${typingSpeed}`)) {
+      if (confirm(`정확도: ${typingAccuracy.current}, wpm: ${typingWpm.current}, 타속: ${typingSpeed.current}`)) {
         if (totalPage > currentPage) {
           router.push(`/practice/long/${typingId}/${currentPage + 1}?mode=practice`);
         } else {
