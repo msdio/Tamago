@@ -1,5 +1,5 @@
 import type { CharInfo } from '@/types/typing';
-import checkErrorWord, { getNumberPerChar, isHangulChar } from '@/utils/checkErrorWord';
+import { getNumberPerChar, isHangulChar } from '@/utils/checkErrorWord';
 
 interface CalcTypingSpeedRequest {
   elapsedTime: number;
@@ -25,43 +25,30 @@ interface calcTypingRequest {
   correctWriting: string;
   inputWriting: string;
 }
-export const calcWrongCount = ({ correctWriting, inputWriting }: calcTypingRequest) => {
-  let wrongCount = 0;
-  for (let i = 0; i < inputWriting.length - 1; i++) {
-    const errorWord = checkErrorWord(correctWriting[i], inputWriting[i]);
-    wrongCount += Object.keys(errorWord).reduce(
-      (accumulator, currentValue) => accumulator + errorWord[currentValue],
-      0,
-    );
-  }
-  return wrongCount;
-};
 
 // TODO : parameter Object로 변경
-export const checkAllInputTyping = (correctWord: string, inputWord: string) => {
-  const isCorrectWordHangul = isHangulChar(correctWord);
-  const isInputWordHangul = isHangulChar(inputWord);
+export const checkAllInputTyping = ({
+  correctWriting,
+  inputWriting,
+}: {
+  correctWriting: string;
+  inputWriting: string;
+}) => {
+  const isCorrectWordHangul = isHangulChar(correctWriting);
+  const isInputWordHangul = isHangulChar(inputWriting);
 
   if (!isCorrectWordHangul) {
-    return correctWord === inputWord;
+    return correctWriting === inputWriting;
   }
   // correctWord가 한글인 경우
   if (isInputWordHangul) {
-    const correctWordCount = getNumberPerChar(correctWord);
-    const inputWordCount = getNumberPerChar(inputWord);
+    const correctWordCount = getNumberPerChar(correctWriting);
+    const inputWordCount = getNumberPerChar(inputWriting);
 
     return correctWordCount === inputWordCount;
   } else {
     return false;
   }
-};
-
-export const getTotalTypingCount = (inputWriting: string) => {
-  let typingCount = 0;
-  for (let i = 0; i < inputWriting.length - 1; i++) {
-    typingCount += getNumberPerChar(inputWriting[i]);
-  }
-  return typingCount;
 };
 
 export const calcAccuracy = ({ correctWriting, inputWriting }: calcTypingRequest) => {
@@ -77,6 +64,7 @@ export const calcAccuracy = ({ correctWriting, inputWriting }: calcTypingRequest
   }
   return Math.floor(((totalCount - wrongCount) / totalCount) * 100);
 };
+
 export const getTypingAccuracy = (states: string) => {
   // 어떤 문자도 타이핑하지 않은 상태
   if (states === 'f') {
