@@ -33,6 +33,7 @@ export default function useCurrentTyping({
 
   const backspaceCount = useRef(0);
   const typingCount = useRef(0); // 타수, 현재 입력한 글의 타수
+
   // typingCount : 정답인 글쇠의 개수
   // 안녕하 --> 8 // 하 / 아 -> x
   const handleBackspace = useCallback(() => {
@@ -57,7 +58,6 @@ export default function useCurrentTyping({
     [originalWriting],
   );
 
-  // NOTE: backspace 경우는 이전에 처리
   const handleTyping = useCallback(
     (input: string) => {
       // 경과 시간 계산 시작
@@ -82,39 +82,45 @@ export default function useCurrentTyping({
     timeReset();
   }, [timeReset]);
 
-  const handleSubmit = useCallback(
-    async (inputWriting: string) => {
-      const resultContent = inputWriting;
+  const generateTypingInfo = useCallback(
+    (resultContent: string) => {
       const originalInfos = [...originalWriting].map((char) => ({
         char,
         type: getCharType(char),
         components: disassemble(char),
       }));
+
       const typingInfos = [...resultContent].map((char) => ({
         char: '',
         type: 'other',
         components: disassemble(char),
       }));
 
-      if (startTime.current !== null) {
-        const typingHistory = {
-          mode: 'PRACTICE',
-          startTime: new Date(startTime.current),
-          endTime: new Date(),
-          typingSpeed,
-          typingAccuracy,
-          wpm: typingWpm,
-          resultContent,
-          typingId,
-          wrongKeys: getWrongKeys(originalInfos, typingInfos),
-        };
+      const typingHistory = {
+        mode: 'PRACTICE',
+        startTime: new Date(startTime.current as number),
+        endTime: new Date(),
+        typingSpeed,
+        typingAccuracy,
+        wpm: typingWpm,
+        resultContent,
+        typingId,
+        wrongKeys: getWrongKeys(originalInfos, typingInfos),
+      };
 
-        await getTypingHistoryAPI(typingHistory);
-      }
+      return typingHistory;
+    },
+    [originalWriting, startTime, typingAccuracy, typingId, typingSpeed, typingWpm],
+  );
+
+  const handleSubmit = useCallback(
+    async (resultContent: string) => {
+      const typingHistory = generateTypingInfo(resultContent);
+      await getTypingHistoryAPI(typingHistory);
 
       resetTypingData();
     },
-    [originalWriting, resetTypingData, startTime, typingAccuracy, typingId, typingSpeed, typingWpm],
+    [generateTypingInfo, resetTypingData],
   );
 
   const handleTypingWpm = useCallback(() => {
