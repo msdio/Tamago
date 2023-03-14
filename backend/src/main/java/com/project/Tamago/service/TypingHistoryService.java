@@ -5,11 +5,14 @@ import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.Tamago.domain.LongTyping;
 import com.project.Tamago.domain.Typing;
+import com.project.Tamago.domain.TypingHistory;
 import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.mapper.DataMapper;
 import com.project.Tamago.dto.requestDto.TypingHistoryReqDto;
 import com.project.Tamago.exception.CustomException;
+import com.project.Tamago.repository.LongTypingRepository;
 import com.project.Tamago.repository.TypingHistoryRepository;
 import com.project.Tamago.repository.TypingRepository;
 import com.project.Tamago.repository.UserRepository;
@@ -24,16 +27,22 @@ public class TypingHistoryService {
 
 	private final JwtTokenProvider jwtTokenProvider;
 	private final TypingRepository typingRepository;
+	private final LongTypingRepository longTypingRepository;
 	private final UserRepository userRepository;
 	private final TypingHistoryRepository typingHistoryRepository;
 
 	public void saveHistory(TypingHistoryReqDto typingHistoryReqDto, String jwtToken) {
-		typingHistoryRepository.save(DataMapper.INSTANCE.toTypingHistory(typingHistoryReqDto,
-			getTyping(typingHistoryReqDto), getUserByJwtToken(jwtToken)));
-	}
+		LongTyping longTyping = null;
+		Typing typing = null;
 
-	private Typing getTyping(TypingHistoryReqDto typingHistoryReqDto) {
-		return typingRepository.findById(typingHistoryReqDto.getTypingId()).orElseThrow(() -> new CustomException(TYPING_INFO_NOT_EXISTS));
+		if (typingHistoryReqDto.getContentType()) {
+			longTyping = longTypingRepository.getReferenceById(typingHistoryReqDto.getTypingId());
+		}
+		if (!typingHistoryReqDto.getContentType()) {
+			typing = typingRepository.getReferenceById(typingHistoryReqDto.getTypingId());
+		}
+		typingHistoryRepository.save(DataMapper.INSTANCE.toTypingHistory(typingHistoryReqDto,
+			longTyping, typing, getUserByJwtToken(jwtToken)));
 	}
 
 	private User getUserByJwtToken(String jwtToken) {
