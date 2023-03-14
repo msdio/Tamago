@@ -37,7 +37,7 @@ const stripedReverseVariant = defineStyle((props) => {
   };
 });
 
-export const TableTheme = defineStyleConfig({
+export const tableTheme = defineStyleConfig({
   sizes,
   variants: {
     'base': baseVariant,
