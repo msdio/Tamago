@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Image, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, Flex, Image, useDisclosure } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 
@@ -163,13 +163,11 @@ export default function SignupForm() {
           </Button>
         </Flex>
       </Flex>
-      <Alert isOpen={isOpen} onClose={onClose}>
-        <Box textAlign='center' mt='34px' mb='54px'>
-          <Text fontWeight='700'>
-            {isEmailDuplicated ? '이미 사용 중인 이메일 입니다.' : '사용 가능한 이메일 입니다.'}
-          </Text>
-        </Box>
-      </Alert>
+      <Alert
+        header={isEmailDuplicated ? '이미 사용 중인 이메일 입니다.' : '사용 가능한 이메일 입니다.'}
+        isOpen={isOpen}
+        onClose={onClose}
+      />
     </>
   );
 }

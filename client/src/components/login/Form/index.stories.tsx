@@ -4,7 +4,7 @@ import type { ComponentMeta, ComponentStory } from '@storybook/react';
 import LoginForm from '@/components/login/Form';
 
 export default {
-  title: 'components/loginForm',
+  title: 'components/login/Form',
   component: LoginForm,
 } as ComponentMeta<typeof LoginForm>;
 
@@ -16,8 +16,8 @@ const Template: ComponentStory<typeof LoginForm> = (args) => {
   );
 };
 
-export const LoginFormTemplate: ComponentStory<typeof LoginForm> = Template.bind({});
+export const Form: ComponentStory<typeof LoginForm> = Template.bind({});
 
-LoginFormTemplate.args = {
+Form.args = {
   onLogin: async () => undefined,
 };

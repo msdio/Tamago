@@ -34,7 +34,7 @@ const baseVariant = defineStyle((props) => {
         color: 'gray.main',
       },
       _focus: {
-        borderColor: `${c}.500`,
+        borderColor: `${c}.main`,
       },
       _disabled: {
         bg: 'gray.light',
