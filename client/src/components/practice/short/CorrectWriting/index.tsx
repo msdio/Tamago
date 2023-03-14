@@ -7,7 +7,7 @@ interface CorrectWritingProps {
 
 export default function CorrectWriting({ correctWriting, inputWriting }: CorrectWritingProps) {
   return (
-    <Flex pl='5px' mb='10px' fontSize='23px' fontWeight={500}>
+    <Flex pl='5px' mb='10px' fontSize='23px' fontWeight={500} userSelect='none'>
       {correctWriting.split('').map((word, idx) => {
         if (word === ' ') {
           return <Text key={idx}>&nbsp;</Text>;
