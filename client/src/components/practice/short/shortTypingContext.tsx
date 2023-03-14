@@ -1,12 +1,6 @@
 import { disassemble } from 'hangul-js';
 import type { ReactNode } from 'react';
-import { useCallback } from 'react';
-import { useEffect } from 'react';
-import { useMemo } from 'react';
-import { useRef } from 'react';
-import { useState } from 'react';
-import { useContext } from 'react';
-import { createContext } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import type { ShortTypingType } from '@/apis/typing';
 import { getTypingHistoryAPI } from '@/apis/typing';
