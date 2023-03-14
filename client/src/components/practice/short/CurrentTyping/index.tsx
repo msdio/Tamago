@@ -1,35 +1,25 @@
-import { Box, Flex, Input, Text } from '@chakra-ui/react';
-import type { ChangeEvent } from 'react';
+import { Box, Input } from '@chakra-ui/react';
+import type { ChangeEvent, KeyboardEvent } from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
 
-import type { ShortTypingType } from '@/apis/typing';
+import CorrectWriting from '@/components/practice/short/CorrectWriting';
+import { useShortTypingContext, useShortTypingHandlerContext } from '@/components/practice/short/shortTypingContext';
+import { checkAllInputTyping } from '@/utils/typing';
 
-interface CurrentTypingProps {
-  writing: ShortTypingType;
-  onStart: () => void;
-  onEnd: () => Promise<void>;
+const INIT_INPUT = '';
+
+export interface SubmitRequestType {
+  correctWriting: string;
+  input: string;
 }
 
-export default function CurrentTyping({ writing, onStart }: CurrentTypingProps) {
-  const [input, setInput] = useState('');
-  // const [errorWordList, setErrorWordList] = useState<ErrorWordType[]>([]);
+export default function CurrentTyping({}) {
+  const { currentWritingContent: correctWriting } = useShortTypingContext();
+  const { onEndTyping, onBackspace, onTyping } = useShortTypingHandlerContext();
 
-  //? NOTE: 입력값과 실제 입력해야 하는 값을 비교하고, error를 띄운다
-  const typingWriting = writing.content.split('').map((word, idx) => {
-    if (word === ' ') {
-      return <Text key={idx}>&nbsp;</Text>;
-    }
-    if (idx < input.length - 1 && word !== input[idx]) {
-      return (
-        <Text color='red' key={idx}>
-          {word}
-        </Text>
-      );
-    }
-    return <Text key={idx}>{word}</Text>;
-  });
+  const [input, setInput] = useState(INIT_INPUT);
 
-  // TODO : error word를 잡는것은 서버에 보낼때만 하면 된다, 이전에는 값이 틀린지 아닌지만 체크하면 된다.
   // const setErrorWord = (idx: number, errorWord: ErrorWordType) => {
   //   // NOTE: error word를 index마다 관리하고,
   //   // 지금 입력하는 index가 아니면 오류를 보여주는 방향으로
@@ -43,15 +33,38 @@ export default function CurrentTyping({ writing, onStart }: CurrentTypingProps) 
     const word = e.target.value;
     setInput(word);
 
-    onStart();
+    onTyping(word);
 
-    // const currentIdx = word.length - 1;
-    // const lastWord = word[currentIdx];
-    // const correctLastWord = writing.content[currentIdx];
-
-    // const currentErrorWords = checkErrorWord(correctLastWord, lastWord);
-    // setErrorWord(currentIdx, currentErrorWords);
+    //? NOTE: 마지막 글자까지 입력하면, 제출하고 다음 문장으로 넘어간다.
+    if (word.length === correctWriting.length) {
+      const isLast = checkAllInputTyping(word[correctWriting.length - 1], correctWriting[correctWriting.length - 1]);
+      if (isLast) {
+        onEndTyping(word);
+      }
+    }
+    if (word.length > correctWriting.length) {
+      onEndTyping(word);
+    }
   };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    //? NOTE: enter 누른 경우 -> submit
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      onEndTyping(input);
+    }
+
+    // TODO : backspace 누른 경우 -> 타수에 영향
+    if (e.key === 'Backspace') {
+      onBackspace();
+    }
+  };
+
+  useEffect(() => {
+    setInput(INIT_INPUT);
+  }, [correctWriting]);
+
+  if (!correctWriting) return <></>;
 
   return (
     <Box
@@ -68,9 +81,7 @@ export default function CurrentTyping({ writing, onStart }: CurrentTypingProps) 
       p='30px 49px'
       bg='#FFF2BA'
     >
-      <Flex pl='5px' mb='10px' fontSize='23px' fontWeight={500}>
-        {typingWriting}
-      </Flex>
+      <CorrectWriting correctWriting={correctWriting} inputWriting={input} />
 
       <Input
         bg='#FFE98B'
@@ -79,6 +90,7 @@ export default function CurrentTyping({ writing, onStart }: CurrentTypingProps) 
         type='text'
         value={input}
         onChange={handleInput}
+        onKeyDown={handleKeyDown}
         w='100%'
         p='11px 5px'
         height='48px'

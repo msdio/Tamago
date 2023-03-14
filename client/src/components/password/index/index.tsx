@@ -105,13 +105,12 @@ export default function InquiryPw({ handleNextStep }: InquiryPwProps) {
         </Button>
       )}
 
-      <Alert isOpen={isOpen} onClose={onClose}>
-        <Box textAlign='center' mt='13px' mb='34px'>
-          <Text fontWeight='700'>asdf123@naver.com 으로</Text>
-          <Text fontWeight='700'>인증메일이 발송되었습니다.</Text>
-          <Text mt='6px'>메일이 오지 않는다면 스팸함을 확인해 주세요.</Text>
-        </Box>
-      </Alert>
+      <Alert
+        header='asdf123@naver.com 으로 인증메일이 발송되었습니다.'
+        subHeader='메일이 오지 않는다면 스팸함을 확인해 주세요.'
+        isOpen={isOpen}
+        onClose={onClose}
+      />
 
       <Flex gap='10px' justifyContent='center' mt='24px'>
         <Text color='gray.dark'>계정이 없으신가요?</Text>

@@ -6,7 +6,7 @@ import theme from '@/styles/theme';
 import FormOr from '.';
 
 export default {
-  title: 'components/common/FormOr',
+  title: 'components/common/Or',
   component: FormOr,
 } as ComponentMeta<typeof FormOr>;
 
@@ -18,4 +18,4 @@ const Template: ComponentStory<typeof FormOr> = () => {
   );
 };
 
-export const FormOrTemplate: ComponentStory<typeof FormOr> = Template.bind({});
+export const Or: ComponentStory<typeof FormOr> = Template.bind({});

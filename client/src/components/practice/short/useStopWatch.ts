@@ -59,7 +59,7 @@ const useStopwatch = () => {
           minute: now.getUTCMinutes(),
           hour: now.getUTCHours(),
         });
-      }, 10);
+      }, 100);
     }
     // clean-up 함수의 실행 순서는 "state 업데이트 -> 리렌더링 -> 클린업 -> 새로운 이펙트 실행" 이기 때문에 useEffect의 동작에는 문제가 없다!
     return () => {

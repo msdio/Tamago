@@ -34,24 +34,20 @@ const baseVariant = defineStyle((props) => {
   const { colorScheme: c } = props;
   return {
     bg: `${c}.main`,
-    border: '0.6px solid',
-    color: c === 'primary' ? 'white.light' : 'black.dark',
+    color: 'white.light',
 
     _hover: {
       bg: `${c}.dark`,
-      border: '0.6px solid',
       _disabled: {
         bg: 'gray.main',
       },
     },
     _active: {
       bg: `${c}.dark`,
-      border: '0.6px solid',
       borderColor: `${c}.dark`,
     },
     _disabled: {
       bg: 'gray.main',
-      border: '0.6px solid',
       borderColor: 'gray.main',
     },
   };
@@ -61,17 +57,17 @@ const outlineVariant = defineStyle((props) => {
   const { colorScheme: c } = props;
   return {
     bg: `${c}.light`,
-    color: `${c}.main`,
+    color: c === 'primary' ? 'white.light' : 'gray.dark',
     border: '0.6px solid',
 
     _hover: {
-      bg: `${c}.light`,
+      bg: `${c}.main`,
       _disabled: {
         bg: 'gray.main',
       },
     },
     _active: {
-      bg: `${c}.light`,
+      bg: `${c}.main`,
     },
     _disabled: {
       bg: 'gray.main',
