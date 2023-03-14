@@ -1,4 +1,5 @@
 import request from '@/apis';
+import type { LongTypingItem } from '@/types/typing';
 
 export interface ShortTypingType {
   typingId: string;
@@ -11,12 +12,24 @@ export interface ShortTypingResultType {
   typingWritings: ShortTypingType[];
 }
 
+interface LongTypingListResultType {
+  code: number;
+  description: string;
+  result: [LongTypingItem];
+}
+
 export const getShortTypingWritingsAPI = async (
   language: 'korean' | 'english',
 ): Promise<{
   result: ShortTypingResultType;
 }> => {
   const res = await request.get(`/typing/short?language=${language}`);
+
+  return res.data;
+};
+
+export const getLongTypingWritingsAPI = async (): Promise<LongTypingListResultType> => {
+  const res = await request.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/typing/long`);
 
   return res.data;
 };

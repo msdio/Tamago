@@ -11,10 +11,10 @@ import { PRACTICE_LONG_PATH } from '@/utils/paths';
 import PracticeLongLayout from '../Layout';
 
 interface PracticeLongListProps {
-  list: LongTypingItem[];
+  typingList: LongTypingItem[];
 }
 
-export default function PracticeLongList({ list }: PracticeLongListProps) {
+export default function PracticeLongList({ typingList }: PracticeLongListProps) {
   return (
     <PracticeLongLayout>
       <Flex direction='column'>
@@ -71,7 +71,7 @@ export default function PracticeLongList({ list }: PracticeLongListProps) {
               </Tr>
             </Thead>
             <Tbody>
-              {list.map(({ language, thumbnail, title, totalPage, typingId, viewCount }: LongTypingItem) => (
+              {typingList.map(({ language, thumbnail, title, totalPage, typingId, viewCount }: LongTypingItem) => (
                 <Tr key={typingId}>
                   <Td textAlign='center'>{typingId}</Td>
                   <Td>
