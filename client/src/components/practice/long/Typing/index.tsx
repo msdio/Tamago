@@ -1,7 +1,7 @@
 import { Box, Flex, Text, Textarea } from '@chakra-ui/react';
 import { disassemble } from 'hangul-js';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import DownArrow from '@/icons/DownArrow';
 import type { CharInfo, LongTypingDetail } from '@/types/typing';
@@ -43,7 +43,7 @@ export default function PracticeLongTyping({
    */
   const focusTextarea = () => textareaRef.current?.focus();
 
-  const initLongTypingInfo = useCallback(() => {
+  const initLongTypingInfo = () => {
     contentInfos.current = [...content].map((char) => ({
       char,
       type: getCharType(char),
@@ -60,9 +60,7 @@ export default function PracticeLongTyping({
     typingAccuracy.current = 0;
     typingCount.current = 0;
     backspaceCount.current = 0;
-    timeReset();
-    setTextarea('');
-  }, [content, timeReset]);
+  };
 
   /**
    * 처음 화면이 렌더링될 때 textarea로 포커싱되도록 한다.
@@ -72,8 +70,10 @@ export default function PracticeLongTyping({
    */
   useEffect(() => {
     initLongTypingInfo();
+    timeReset();
+    setTextarea('');
     focusTextarea();
-  }, [router.asPath, initLongTypingInfo]);
+  }, [router.asPath]);
 
   useEffect(() => {
     typingAccuracy.current = getTypingAccuracy({
@@ -92,7 +92,7 @@ export default function PracticeLongTyping({
       typingCount: typingCount.current,
       millisecond: time.minute * 60000 + time.second * 1000 + time.ms,
     });
-  }, [textarea, time]);
+  }, [status, textarea, time]);
 
   /**
    * 사용자가 타이핑을 할 경우 상태 변화
