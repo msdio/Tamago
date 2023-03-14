@@ -6,11 +6,12 @@ import { useEffect, useRef, useState } from 'react';
 import DownArrow from '@/icons/DownArrow';
 import type { CharInfo, LongTypingDetail } from '@/types/typing';
 import { getCharType } from '@/utils/char';
-import { getTypingAccuracy, getTypingSpeed, getTypingWpm, slicedContentAndStrings } from '@/utils/typing';
+import { getTypingAccuracy, getTypingSpeed, getTypingWpm } from '@/utils/typing';
 
 import useStopwatch from '../../short/useStopWatch';
 import TypingLine from '../common/TypingLine';
 import PracticeLongLayout from '../Layout';
+import { slicedContentAndStrings } from '../utils';
 import InfoBar from './InfoBar';
 
 export default function PracticeLongTyping({
