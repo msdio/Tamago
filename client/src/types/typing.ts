@@ -14,7 +14,7 @@ export interface CharInfo {
 export type TypingState = 'f' | 'c' | 'i' | 'd';
 
 export interface LongTypingItem {
-  language: string;
+  language: 'ENGLISH' | 'KOREAN' | 'JAVA' | string;
   thumbnail: string;
   title: string;
   totalPage: number;
