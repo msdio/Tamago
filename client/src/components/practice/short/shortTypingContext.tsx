@@ -1,9 +1,5 @@
 import type { ReactNode } from 'react';
-import { useMemo } from 'react';
-import { useRef } from 'react';
-import { useState } from 'react';
-import { useContext } from 'react';
-import { createContext } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import type { ShortTypingType } from '@/apis/typing';
 import useCurrentTyping from '@/components/practice/short/currentTypingContext';
