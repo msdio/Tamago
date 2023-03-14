@@ -30,6 +30,9 @@ export const getTypingSpeed = ({
 };
 
 export const getTypingAccuracy = ({ typingLength, wrongLength }: { typingLength: number; wrongLength: number }) => {
+  if (typingLength === 0) {
+    return 0;
+  }
   return Math.round(((typingLength - wrongLength) / typingLength) * 1000) / 10;
 };
 

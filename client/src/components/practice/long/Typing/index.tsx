@@ -43,32 +43,7 @@ export default function PracticeLongTyping({
    */
   const focusTextarea = () => textareaRef.current?.focus();
 
-  const typingAccuracyHandler = useCallback(() => {
-    typingAccuracy.current = getTypingAccuracy({
-      typingLength: typingStates.current.length - 1,
-      wrongLength: typingStates.current.replaceAll('c', '').length - 1,
-    });
-  }, [textarea]);
-
-  const typingSpeedHandler = useCallback(() => {
-    typingSpeed.current = getTypingSpeed({
-      typingCount: typingCount.current,
-      backspaceCount: backspaceCount.current,
-      millisecond: time.minute * 60000 + time.second * 1000 + time.ms,
-    });
-    typingWpm.current = getTypingWpm({
-      typingCount: typingCount.current,
-      millisecond: time.minute * 60000 + time.second * 1000 + time.ms,
-    });
-  }, [textarea, time]);
-
-  /**
-   * 처음 화면이 렌더링될 때 textarea로 포커싱되도록 한다.
-   * textarea는 숨겨두었기 때문에 사용자가 보고 포커싱할 수 없다.
-   * router.push를 사용해 동적 라우팅 간 이동을 할 경우 새로고침이 일어나지 않기 때문에
-   * 기존의 상태들이 모두 그대로 남아있게 되어 리렌더링이 될경우 상태를 모두 초기화해줘야 한다.
-   */
-  useEffect(() => {
+  const initLongTypingInfo = useCallback(() => {
     contentInfos.current = [...content].map((char) => ({
       char,
       type: getCharType(char),
@@ -87,22 +62,37 @@ export default function PracticeLongTyping({
     backspaceCount.current = 0;
     timeReset();
     setTextarea('');
+  }, [content, timeReset]);
+
+  /**
+   * 처음 화면이 렌더링될 때 textarea로 포커싱되도록 한다.
+   * textarea는 숨겨두었기 때문에 사용자가 보고 포커싱할 수 없다.
+   * router.push를 사용해 동적 라우팅 간 이동을 할 경우 새로고침이 일어나지 않기 때문에
+   * 기존의 상태들이 모두 그대로 남아있게 되어 리렌더링이 될경우 상태를 모두 초기화해줘야 한다.
+   */
+  useEffect(() => {
+    initLongTypingInfo();
     focusTextarea();
-  }, [router.asPath]);
+  }, [router.asPath, initLongTypingInfo]);
 
   useEffect(() => {
-    if (status === 'stop') {
-      return;
-    }
-    typingAccuracyHandler();
-  }, [status, typingAccuracyHandler]);
+    typingAccuracy.current = getTypingAccuracy({
+      typingLength: typingStates.current.length - 1,
+      wrongLength: typingStates.current.replaceAll('c', '').length - 1,
+    });
+  }, [textarea]);
 
   useEffect(() => {
-    if (status === 'stop') {
-      return;
-    }
-    typingSpeedHandler();
-  }, [status, typingSpeedHandler]);
+    typingSpeed.current = getTypingSpeed({
+      typingCount: typingCount.current,
+      backspaceCount: backspaceCount.current,
+      millisecond: time.minute * 60000 + time.second * 1000 + time.ms,
+    });
+    typingWpm.current = getTypingWpm({
+      typingCount: typingCount.current,
+      millisecond: time.minute * 60000 + time.second * 1000 + time.ms,
+    });
+  }, [textarea, time]);
 
   /**
    * 사용자가 타이핑을 할 경우 상태 변화
