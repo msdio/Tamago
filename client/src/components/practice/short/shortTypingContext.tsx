@@ -98,8 +98,7 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
     handleTypingAccuracy(input);
   };
 
-  const handleSubmit = async (input: string) => {
-    prevWritingInput.current = input;
+  const generateTypingInfo = (input: string) => {
     const resultContent = input;
     const originalInfos = [...originalWriting].map((char) => ({
       char,
@@ -112,21 +111,26 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
       components: disassemble(char),
     }));
 
-    if (startTime.current !== null) {
-      const typingHistory = {
-        mode: 'PRACTICE',
-        startTime: new Date(startTime.current),
-        endTime: new Date(),
-        typingSpeed,
-        typingAccuracy,
-        wpm: typingWpm,
-        resultContent,
-        typingId: typingWritings[currentIdx].typingId,
-        wrongKeys: getWrongKeys(originalInfos, typingInfos),
-      };
+    const typingHistory = {
+      mode: 'PRACTICE',
+      startTime: new Date(startTime.current as number),
+      endTime: new Date(),
+      typingSpeed,
+      typingAccuracy,
+      wpm: typingWpm,
+      resultContent,
+      typingId: typingWritings[currentIdx].typingId,
+      wrongKeys: getWrongKeys(originalInfos, typingInfos),
+    };
 
-      await getTypingHistoryAPI(typingHistory);
-    }
+    return typingHistory;
+  };
+
+  const handleSubmit = async (input: string) => {
+    prevWritingInput.current = input;
+
+    const typingHistory = generateTypingInfo(input);
+    await getTypingHistoryAPI(typingHistory);
   };
 
   const resetTypingData = () => {
