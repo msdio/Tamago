@@ -1,22 +1,14 @@
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
+import { getLongTypingAPI } from '@/apis/typing';
 import LongTyping from '@/components/practice/long/Content';
 import PracticeLongTyping from '@/components/practice/long/Typing';
 import type { LongTypingDetail } from '@/types/typing';
 
-interface LongTypingResponse {
-  code: number;
-  description: string;
-  result: LongTypingDetail;
-}
-
 export const getServerSideProps: GetServerSideProps<{ data: LongTypingDetail; mode: string }> = async (context) => {
   const { typingId, pageNum, mode } = context.query as { typingId: string; pageNum: string; mode: string };
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/typing/long/detail?longTypingId=${typingId}&page=${pageNum}`,
-  );
-  const data: LongTypingResponse = await res.json(); /* TODO: 에러 핸들링 */
+  const data = await getLongTypingAPI({ typingId, pageNum }); /* TODO: 에러 핸들링 */
 
   return {
     props: {
