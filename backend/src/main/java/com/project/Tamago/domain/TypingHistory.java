@@ -56,5 +56,6 @@ public class TypingHistory extends BaseTimeEntity {
 	private Integer beforeMmr;
 
 	private Integer increasedValue;
+	private Integer page;
 
 }
