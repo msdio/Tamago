@@ -75,7 +75,7 @@ public class TypingHistoryServiceTest {
 			.typing(typing)
 			.startTime(LocalDateTime.now())
 			.endTime(LocalDateTime.now())
-			.accuracy(10.0)
+			.typingAccuracy(10.0)
 			.wpm(10)
 			.build();
 		// when

@@ -1,8 +1,13 @@
 package com.project.Tamago.service;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -10,13 +15,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
-import com.project.Tamago.domain.TypingHistory;
+import com.project.Tamago.domain.StatisticsAll;
 import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.responseDto.StatisticsAllResDto;
+import com.project.Tamago.repository.StatisticAllRepository;
 import com.project.Tamago.repository.TypingHistoryRepository;
-import com.project.Tamago.util.TypingHistoryGenerator;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -24,20 +29,10 @@ class StatisticServiceTest {
 
 	@Autowired
 	StatisticService statisticService;
-	@Autowired
+	@MockBean
 	TypingHistoryRepository typingHistoryRepository;
-
-	@Test
-	@Transactional
-	@Rollback(value = false)
-	void test() {
-		ArrayList<TypingHistory> histories = new ArrayList<>();
-		for (int i = 0; i < 100000; i++) {
-			histories.add(TypingHistoryGenerator.generateRandomTypingHistory());
-		}
-		typingHistoryRepository.saveAll(histories);
-	}
-
+	@MockBean
+	StatisticAllRepository statisticAllRepository;
 
 	@Test
 	@Transactional
@@ -45,17 +40,18 @@ class StatisticServiceTest {
 
 		// given
 		User user = mock(User.class);
-		User build = User.builder()
-			.id(1)
-			.build();
-
+		StatisticsAll statisticsAllMock = mock(StatisticsAll.class);
+		LocalDateTime time = LocalDateTime.MIN;
 		// when
-		when(user.getId()).thenReturn(1);
-
+		when(statisticsAllMock.getAccuracyAverage()).thenReturn(3.14);
+		when(statisticsAllMock.getUpdatedDate()).thenReturn(time);
+		when(statisticsAllMock.getWpmAverage()).thenReturn(5.14);
+		when(statisticsAllMock.getWrongKeyInfo()).thenReturn(Map.of('a', Map.of("count", 1, "total", 2)));
+		when(statisticAllRepository.findByUser(any())).thenReturn(Optional.of(statisticsAllMock));
+		when(typingHistoryRepository.findAllByUserAndCreatedDateIsAfter(user, time)).thenReturn(List.of());
 		// then
-		StatisticsAllResDto statisticsAllResDto = statisticService.totalStatisticsAll(build);
-		System.out.println("statisticsAllResDto.getAccuracyAverage() = " + statisticsAllResDto.getAccuracyAverage());
-		System.out.println("statisticsAllResDto.getWpmAverage() = " + statisticsAllResDto.getWpmAverage());
-		System.out.println("statisticsAllResDto.getCharacterErrorMap() = " + statisticsAllResDto.getCharacterErrorMap());
+		StatisticsAllResDto statisticsAllResDto = statisticService.totalStatisticsAll(user);
+		assertEquals(statisticsAllResDto.getAccuracyAverage(), 3.14);
+		assertEquals(statisticsAllResDto.getWpmAverage(), 5.14);
 	}
 }
