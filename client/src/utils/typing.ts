@@ -1,105 +1,32 @@
 import type { CharInfo } from '@/types/typing';
-import { getNumberPerChar, isHangulChar } from '@/utils/checkErrorWord';
 
-interface CalcTypingSpeedRequest {
-  elapsedTime: number;
-  backspaceCount: number;
-  typingCount: number;
-}
-
-export const calcTypingSpeed = ({ elapsedTime, backspaceCount, typingCount }: CalcTypingSpeedRequest) => {
-  // NOTE: 현재속도 = (타수-백스페이스*2) / 경과시간(초) * 60초
-  // TODO : infinite typing speed 나는 문제 확인
-  const calcCount = typingCount - backspaceCount * 2;
-
-  if (calcCount === 0) {
-    return 0;
-  }
-  if (elapsedTime === 0) {
-    elapsedTime = 1;
-  }
-  return Math.floor((calcCount / elapsedTime) * 60);
+export const getTypingAccuracy = ({ typingLength, wrongLength }: { typingLength: number; wrongLength: number }) => {
+  return (((typingLength - wrongLength) / typingLength) * 100).toFixed(1);
 };
 
-interface calcTypingRequest {
-  correctWriting: string;
-  inputWriting: string;
-}
-
-// TODO : parameter Object로 변경
-export const checkAllInputTyping = ({
-  correctWriting,
-  inputWriting,
-}: {
-  correctWriting: string;
-  inputWriting: string;
-}) => {
-  const isCorrectWordHangul = isHangulChar(correctWriting);
-  const isInputWordHangul = isHangulChar(inputWriting);
-
-  if (!isCorrectWordHangul) {
-    return correctWriting === inputWriting;
-  }
-  // correctWord가 한글인 경우
-  if (isInputWordHangul) {
-    const correctWordCount = getNumberPerChar(correctWriting);
-    const inputWordCount = getNumberPerChar(inputWriting);
-
-    return correctWordCount === inputWordCount;
-  } else {
-    return false;
-  }
-};
-
-export const calcAccuracy = ({ correctWriting, inputWriting }: calcTypingRequest) => {
-  const totalCount = inputWriting.length - 1 === 0 ? 0 : inputWriting.length - 1;
-  let wrongCount = 0;
-  for (let i = 0; i < totalCount; i++) {
-    if (inputWriting[i] !== correctWriting[i]) {
-      wrongCount += 1;
-    }
-  }
-  if (totalCount === 0) {
+export const getTypingWpm = ({ typingCount, millisecond }: { typingCount: number; millisecond: number }) => {
+  if (millisecond === 0) {
     return 0;
   }
-  return Math.floor(((totalCount - wrongCount) / totalCount) * 100);
-};
-
-export const getTypingAccuracy = (states: string) => {
-  // 어떤 문자도 타이핑하지 않은 상태
-  if (states === 'f') {
-    return 0;
-  }
-
-  const totalCharCount = states.length - 1;
-  const incorrectCharCount = states.replaceAll('c', '').length - 1; // 전체 타이핑 상태에서 맞은 것과 포커싱된 것 제외
-  const correctCharCount = totalCharCount - incorrectCharCount; // 전체 타이핑에서 틀린 것과 포커싱된 것 제외
-
-  return Math.round((correctCharCount / totalCharCount) * 100);
-};
-
-/**
- * @param typingCount 타수
- * @param minute 사용자가 타이핑한 시간(분 단위)
- * @returns wpm
- */
-export const getTypingWpm = ({ typingCount, minute }: { typingCount: number; minute: number }) => {
-  if (minute === 0) {
-    return 0;
-  }
+  const minute = millisecond / 60000;
   return Math.floor(typingCount / 5 / minute);
 };
 
-/**
- * @param typingCount 타수
- * @param minute 사용자가 타이핑한 시간(분 단위)
- * @returns 타자속도
- */
-export const getTypingSpeed = ({ typingCount, minute }: { typingCount: number; minute: number }) => {
-  if (minute === 0) {
+export const getTypingSpeed = ({
+  typingCount,
+  backspaceCount,
+  millisecond,
+}: {
+  typingCount: number;
+  backspaceCount: number;
+  millisecond: number;
+}) => {
+  if (millisecond === 0) {
     return 0;
   }
-  return Math.floor(typingCount / minute);
+  const minute = millisecond / 60000;
+  const calcCount = typingCount - backspaceCount * 2 >= 0 ? typingCount - backspaceCount * 2 : 0;
+  return Math.floor(calcCount / minute);
 };
 
 export const getWrongKeys = (contentInfos: CharInfo[], typingInfos: CharInfo[]) => {

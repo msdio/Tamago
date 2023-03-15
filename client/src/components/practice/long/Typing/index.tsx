@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import DownArrow from '@/icons/DownArrow';
 import type { CharInfo } from '@/types/typing';
 import { getCharType } from '@/utils/char';
-import { getTypingAccuracy, getTypingSpeed, getTypingWpm, getWrongKeys } from '@/utils/typing';
+import { getWrongKeys } from '@/utils/typing';
 
 import useStopwatch from '../../short/useStopWatch';
 import TypingLine from '../common/TypingLine';
@@ -62,16 +62,16 @@ export default function PracticeLongTyping({ content }: PracticeLongTypingProps)
   const focusTextarea = () => textareaRef.current?.focus();
 
   const typingAccuracyHandler = useCallback(() => {
-    setTypingAccuracy(getTypingAccuracy(typingStates));
+    // setTypingAccuracy(getTypingAccuracy(typingStates));
   }, [typingStates]);
 
   const typingSpeedHandler = useCallback(() => {
-    setTypingWpm(
-      getTypingWpm({ typingCount: totalTypingCount, minute: time.minute + time.second / 60 + time.ms / 60000 }),
-    );
-    setTypingSpeed(
-      getTypingSpeed({ typingCount: totalTypingCount, minute: time.minute + time.second / 60 + time.ms / 60000 }),
-    );
+    // setTypingWpm(
+    //   getTypingWpm({ typingCount: totalTypingCount, minute: time.minute + time.second / 60 + time.ms / 60000 }),
+    // );
+    // setTypingSpeed(
+    //   getTypingSpeed({ typingCount: totalTypingCount, minute: time.minute + time.second / 60 + time.ms / 60000 }),
+    // );
   }, [totalTypingCount, time]);
 
   /**
