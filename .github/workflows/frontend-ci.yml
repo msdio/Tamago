@@ -11,19 +11,32 @@ on:
       - "client/**"
 
 jobs:
-  test:
+  ci:
     runs-on: ubuntu-latest
 
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: "16.x"
 
+      - name: Cache Dependencies
+        id: cache-yarn
+        uses: actions/cache@v3
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            ${{ runner.os }}-
+      - if: ${{ steps.cache-yarn.outputs.cache-hit == 'true' }}
+        run: echo "node modules cache hit!"
+
       - name: Install Dependencies
+        if: ${{ steps.cache-yarn.outputs.cache-hit != 'true' }}
         run: |
           cd ./client
           yarn
