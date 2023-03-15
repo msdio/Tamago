@@ -6,7 +6,10 @@ import com.project.Tamago.domain.Typing;
 import com.project.Tamago.domain.TypingHistory;
 import com.project.Tamago.domain.TypingHistory.TypingHistoryBuilder;
 import com.project.Tamago.domain.User;
+import com.project.Tamago.dto.PageContentDto;
 import com.project.Tamago.dto.requestDto.TypingHistoryReqDto;
+import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
+import com.project.Tamago.dto.responseDto.LongTypingDetailResDto.LongTypingDetailResDtoBuilder;
 import com.project.Tamago.dto.responseDto.LongTypingResDto;
 import com.project.Tamago.dto.responseDto.LongTypingResDto.LongTypingResDtoBuilder;
 import java.util.HashMap;
@@ -16,7 +19,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-10T05:04:21+0900",
+    date = "2023-03-16T01:42:09+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.12 (Eclipse Foundation)"
 )
 @Component
@@ -41,6 +44,28 @@ public class DataMapperImpl implements DataMapper {
         longTypingResDto.language( longTyping.getLanguage().toString() );
 
         return longTypingResDto.build();
+    }
+
+    @Override
+    public LongTypingDetailResDto LongTypingToLongTypingDetailResDto(LongTyping longTyping, PageContentDto pageContentDto) {
+        if ( longTyping == null && pageContentDto == null ) {
+            return null;
+        }
+
+        LongTypingDetailResDtoBuilder longTypingDetailResDto = LongTypingDetailResDto.builder();
+
+        if ( longTyping != null ) {
+            longTypingDetailResDto.typingId( longTyping.getId() );
+            longTypingDetailResDto.title( longTyping.getTitle() );
+            longTypingDetailResDto.totalPage( longTyping.getTotalPage() );
+        }
+        if ( pageContentDto != null ) {
+            longTypingDetailResDto.content( pageContentDto.getContent() );
+            longTypingDetailResDto.currentPage( pageContentDto.getPage() );
+        }
+        longTypingDetailResDto.language( longTyping.getLanguage().toString() );
+
+        return longTypingDetailResDto.build();
     }
 
     @Override

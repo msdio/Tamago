@@ -9,6 +9,7 @@ import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.requestDto.ModifyProfileReqDto;
 import com.project.Tamago.dto.responseDto.ProfileResDto;
 import com.project.Tamago.exception.CustomException;
+import com.project.Tamago.repository.PagePositionRepository;
 import com.project.Tamago.security.jwt.JwtTokenProvider;
 import com.project.Tamago.dto.mapper.UserMapper;
 import com.project.Tamago.repository.UserRepository;
@@ -23,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserService {
 
 	private final UserRepository userRepository;
+	private final PagePositionRepository pagePositionRepository;
 	private final JwtTokenProvider jwtTokenProvider;
 
 	@Transactional(readOnly = true)
@@ -34,8 +36,15 @@ public class UserService {
 		getUserByJwtToken(jwtToken).modifyUserInfo(modifyProfileReqDto);
 	}
 
+	@Transactional(readOnly = true)
+	public Integer findCurrentPage(String jwtToken, Integer longTypingId) {
+		Integer userId = Integer.parseInt(jwtTokenProvider.getAuthenticationFromAcs(jwtToken).getName());
+		return pagePositionRepository.findCurrentPageByUserAndTypingId(userId, longTypingId)
+			.orElseThrow(() -> new CustomException(CURRENT_PAGE_NOT_EXISTS));
+	}
+
 	public User getUserByJwtToken(String jwtToken) {
-		return userRepository.findByNickname(jwtTokenProvider.getAuthenticationFromAcs(jwtToken).getName())
+		return userRepository.findById(Integer.parseInt(jwtTokenProvider.getAuthenticationFromAcs(jwtToken).getName()))
 			.orElseThrow(() -> new CustomException(USERS_INFO_NOT_EXISTS));
 	}
 }

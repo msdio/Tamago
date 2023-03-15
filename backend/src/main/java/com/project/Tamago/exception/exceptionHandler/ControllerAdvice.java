@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -42,6 +44,20 @@ public class ControllerAdvice {
 	public ErrorMessage illegalArgumentExceptionHandler(IllegalArgumentException exception) {
 		log.error(INVALID_INPUT_VALUE.getDescription());
 		return new ErrorMessage(INVALID_INPUT_VALUE);
+	}
+
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(InternalAuthenticationServiceException.class)
+	public ErrorMessage illegalArgumentExceptionHandler(InternalAuthenticationServiceException exception) {
+		log.error(USERS_EMPTY_USER_EMAIL.getDescription());
+		return new ErrorMessage(USERS_EMPTY_USER_EMAIL);
+	}
+
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(BadCredentialsException.class)
+	public ErrorMessage illegalArgumentExceptionHandler(BadCredentialsException exception) {
+		log.error(USERS_EXISTS_PASSWORD.getDescription());
+		return new ErrorMessage(USERS_EXISTS_PASSWORD);
 	}
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)

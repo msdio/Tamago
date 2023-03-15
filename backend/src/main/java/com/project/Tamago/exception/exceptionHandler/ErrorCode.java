@@ -19,8 +19,10 @@ public enum ErrorCode {
 	USERS_EXISTS_EMAIL(3001, "중복된 이메일입니다."),
 	USERS_EXISTS_NICKNAME(3002, "중복된 닉네임입니다."),
 	USERS_INFO_NOT_EXISTS(3003, "유저 정보가 존재하지 않습니다."),
-
 	TYPING_INFO_NOT_EXISTS(3004, "존재하지 않는 글입니다."),
+	USERS_EXISTS_PASSWORD(3005, "유저 비밀번호 값을 확인해주세요."),
+	LONG_TYPING_INFO_NOT_EXISTS(4001, "해당 긴 글이 존재하지 않습니다."),
+	CURRENT_PAGE_NOT_EXISTS(4002, "연습한 페이지가 없습니다"),
 	;
 
 	private final int code;
