@@ -69,7 +69,6 @@ export default function PracticeLongTyping({ content }: PracticeLongTypingProps)
     // setTypingWpm(
     //   getTypingWpm({ typingCount: totalTypingCount, minute: time.minute + time.second / 60 + time.ms / 60000 }),
     // );
-    // TODO : error
     // setTypingSpeed(
     //   getTypingSpeed({ typingCount: totalTypingCount, minute: time.minute + time.second / 60 + time.ms / 60000 }),
     // );
