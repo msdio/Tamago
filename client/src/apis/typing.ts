@@ -1,4 +1,5 @@
 import request, { authenticationRequest } from '@/apis';
+import type { LongTypingItem } from '@/types/typing';
 import type { TypingMode } from '@/types/typing';
 
 export interface ShortTypingType {
@@ -12,6 +13,12 @@ export interface ShortTypingResultType {
   typingWritings: ShortTypingType[];
 }
 
+interface LongTypingListResultType {
+  code: number;
+  description: string;
+  result: [LongTypingItem];
+}
+
 export const getShortTypingWritingsAPI = async (
   language: 'korean' | 'english',
 ): Promise<{
@@ -21,6 +28,14 @@ export const getShortTypingWritingsAPI = async (
 
   return res.data;
 };
+
+export const getLongTypingWritingsAPI = async (): Promise<LongTypingListResultType> => {
+  const res = await request.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/typing/long`);
+
+  return res.data;
+};
+
+type WrongKeyType = Record<string, { total: number; count: number }>;
 
 interface TypingHistoryRequest {
   typingId: string;

@@ -6,10 +6,12 @@ import styles from '@/styles/styles';
 
 import { buttonTheme } from './buttons';
 import { inputTheme } from './inputs';
+import { tableTheme } from './table';
 
 const components: Record<string, StyleConfig> = {
   Button: buttonTheme,
   Input: inputTheme,
+  Table: tableTheme,
 };
 
 const theme = extendTheme({
