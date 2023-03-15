@@ -6,16 +6,14 @@ import PrevTyping from '@/components/practice/short/PrevTyping';
 import { useShortTypingContext } from '@/components/practice/short/shortTypingContext';
 import TwoRightArrow from '@/icons/TwoRightArrow';
 
-// NOTE: 어떻게 합치면 좋을까
-
 export default function PracticeShort() {
-  const { currentWritingContent, nextWritingContent } = useShortTypingContext();
+  const { originalWriting, nextWritingContent } = useShortTypingContext();
 
   return (
     <Box p='35px 120px' minW='1100px'>
       <InfoBar />
 
-      {currentWritingContent && (
+      {originalWriting && (
         <Box position='relative' border='0.6px solid #000000' borderRadius='30px 0px 0px 0px' mt='28px'>
           <PrevTyping />
 

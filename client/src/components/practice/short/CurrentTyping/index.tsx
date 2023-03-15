@@ -3,40 +3,39 @@ import type { ChangeEvent, KeyboardEvent } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
-import CorrectWriting from '@/components/practice/short/CorrectWriting';
+import OriginalWriting from '@/components/practice/short/OriginalWriting';
 import { useShortTypingContext, useShortTypingHandlerContext } from '@/components/practice/short/shortTypingContext';
-import { checkAllInputTyping } from '@/utils/typing';
-
-const INIT_INPUT = '';
-
-export interface SubmitRequestType {
-  correctWriting: string;
-  input: string;
-}
+import { checkAllInputTyping } from '@/components/practice/short/utils';
 
 export default function CurrentTyping({}) {
-  const { currentWritingContent: correctWriting } = useShortTypingContext();
+  const { originalWriting } = useShortTypingContext();
   const { onEndTyping, onBackspace, onTyping } = useShortTypingHandlerContext();
 
-  const [input, setInput] = useState(INIT_INPUT);
+  const [input, setInput] = useState('');
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     const word = e.target.value;
     setInput(word);
 
+    // NOTE : backspace 누른 경우
+    if (input.length > word.length) {
+      return;
+    }
+
     onTyping(word);
 
     //? NOTE: 마지막 글자까지 입력하면, 제출하고 다음 문장으로 넘어간다.
-    if (word.length === correctWriting.length) {
+    if (word.length === originalWriting.length) {
       const isLast = checkAllInputTyping({
-        inputWriting: word[correctWriting.length - 1],
-        correctWriting: correctWriting[correctWriting.length - 1],
+        typingWord: word[originalWriting.length - 1],
+        originalWord: originalWriting[originalWriting.length - 1],
       });
+
       if (isLast) {
         onEndTyping(word);
       }
     }
-    if (word.length > correctWriting.length) {
+    if (word.length > originalWriting.length) {
       onEndTyping(word);
     }
   };
@@ -55,10 +54,10 @@ export default function CurrentTyping({}) {
   };
 
   useEffect(() => {
-    setInput(INIT_INPUT);
-  }, [correctWriting]);
+    setInput('');
+  }, [originalWriting]);
 
-  if (!correctWriting) return <></>;
+  if (!originalWriting) return <></>;
 
   return (
     <Box
@@ -75,7 +74,7 @@ export default function CurrentTyping({}) {
       p='30px 49px'
       bg='#FFF2BA'
     >
-      <CorrectWriting correctWriting={correctWriting} inputWriting={input} />
+      <OriginalWriting originalWriting={originalWriting} inputWriting={input} />
 
       <Input
         bg='#FFE98B'
