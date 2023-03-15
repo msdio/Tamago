@@ -45,7 +45,7 @@ public class AuthControllerTest {
 		// given
 		JoinReqDto joinReqDto = JoinReqDto.builder()
 			.email("existing_email@example.com")
-			.password("password")
+			.password("password12")
 			.nickname("nickname").build();
 		// when
 		ResultActions resultActions = mockMvc.perform(post("/auth/join")
@@ -61,7 +61,7 @@ public class AuthControllerTest {
 		// given
 		JoinReqDto joinReqDto = JoinReqDto.builder()
 			.email("existing_email@example.com")
-			.password("password")
+			.password("password12")
 			.nickname("nickname").build();
 
 		doThrow(new CustomException(USERS_EXISTS_EMAIL)).when(authService).join(joinReqDto);
@@ -80,7 +80,7 @@ public class AuthControllerTest {
 		// given
 		JoinReqDto joinReqDto = JoinReqDto.builder()
 			.email("existing_email@example.com")
-			.password("password")
+			.password("password12")
 			.nickname("nickname").build();
 		doThrow(new CustomException(USERS_EXISTS_NICKNAME)).when(authService).join(joinReqDto);
 		// when
@@ -90,6 +90,42 @@ public class AuthControllerTest {
 		// then
 		resultActions.andExpect(status().isBadRequest())
 			.andExpect(jsonPath("$.code").value(USERS_EXISTS_NICKNAME.getCode()));
+	}
+
+	@Test
+	@DisplayName("회원가입 실패: 이메일 형식 오류")
+	public void joinWithInvalidEmail() throws Exception {
+		// given
+		JoinReqDto joinReqDto = JoinReqDto.builder()
+			.email("invalidEmail")
+			.password("validEmail23")
+			.nickname("nickname").build();
+		// when
+		ResultActions resultActions = mockMvc.perform(post("/auth/join")
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(new ObjectMapper().writeValueAsString(joinReqDto)));
+		// then
+		resultActions.andExpect(status().isBadRequest())
+			.andExpect(jsonPath("$.code").value(INVALID_PARAMETER.getCode()))
+			.andExpect(jsonPath("$.errors").value("이메일 형식을 지켜주세요."));
+	}
+
+	@Test
+	@DisplayName("회원가입 실패: 비밀번호 형식 오류")
+	public void joinWithInvalidPassword() throws Exception {
+		// given
+		JoinReqDto joinReqDto = JoinReqDto.builder()
+			.email("test@gmail.com")
+			.password("invalidEmail")
+			.nickname("nickname").build();
+		// when
+		ResultActions resultActions = mockMvc.perform(post("/auth/join")
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(new ObjectMapper().writeValueAsString(joinReqDto)));
+		// then
+		resultActions.andExpect(status().isBadRequest())
+			.andExpect(jsonPath("$.code").value(INVALID_PARAMETER.getCode()))
+			.andExpect(jsonPath("$.errors").value("패스워드 형식을 지켜주세요."));
 	}
 
 	@Test
