@@ -1,4 +1,5 @@
 import request, { authenticationRequest } from '@/apis';
+import type { TypingMode } from '@/types/typing';
 
 export interface ShortTypingType {
   typingId: string;
@@ -27,7 +28,7 @@ interface TypingHistoryRequest {
   startTime: Date;
   endTime: Date;
   typingSpeed: number;
-  mode: 'PRACTICE' | 'ACTUAL' | string;
+  mode: TypingMode | string;
   wpm: number;
   typingAccuracy: number;
   wrongKeys: Record<string, { total: number; count: number }>;
