@@ -11,18 +11,12 @@ export default function CurrentTyping() {
   const { originalTyping } = useShortTypingContext();
   const { onEndTyping, onBackspace, onTyping } = useShortTypingHandlerContext();
 
-  const [userTyping, setUserTyping] = useState('');
+  // const [userTyping, setUserTyping] = useState('');
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
-    const word = e.target.value;
-    setUserTyping(word);
+    const input = e.target.value;
 
-    // NOTE : backspace 누른 경우
-    if (userTyping.length > word.length) {
-      return;
-    }
-
-    onTyping(word);
+    onTyping(input);
 
     //? NOTE: 마지막 글자까지 입력하면, 제출하고 다음 문장으로 넘어간다.
     if (word.length === originalTyping.length) {
@@ -46,16 +40,7 @@ export default function CurrentTyping() {
       e.preventDefault();
       onEndTyping(userTyping);
     }
-
-    // TODO : backspace 누른 경우 -> 타수에 영향
-    if (e.key === 'Backspace') {
-      onBackspace();
-    }
   };
-
-  useEffect(() => {
-    setUserTyping('');
-  }, [originalTyping]);
 
   if (!originalTyping) return <></>;
 

@@ -5,9 +5,10 @@ import type { ShortTypingType } from '@/apis/typing';
 import useCurrentTyping from '@/components/practice/short/currentTypingContext';
 
 interface ShortTypingContextType {
-  time: number;
   originalTyping: string;
+  userTyping: string;
 
+  time: number;
   typingCount: number;
   typingWpm: number;
   typingAccuracy: number;
@@ -19,7 +20,7 @@ interface ShortTypingContextType {
 
 interface ShortTypingHandlerContextType {
   onEndTyping: (input: string) => Promise<void>;
-  onBackspace: () => void;
+  onBackspace: (userTyping: string) => void;
   onTyping: (inputChar: string) => void;
 }
 
@@ -36,6 +37,7 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
   const prevUserTyping = useRef('');
   const {
     originalTyping,
+    userTyping,
     time,
     typingCount,
     typingAccuracy,
@@ -61,9 +63,9 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
   );
 
   const handleSubmit = async (input: string) => {
-    prevUserTyping.current = input;
+    await handleTypingSubmit(input);
 
-    handleTypingSubmit(input);
+    prevUserTyping.current = input;
   };
 
   const handleEndTyping = async (input: string) => {
@@ -77,11 +79,12 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
   };
 
   const values = {
+    originalTyping,
+    userTyping,
     time: time,
     typingCount: typingCount,
     typingWpm,
     typingAccuracy,
-    originalTyping,
     prevUserTyping: prevUserTyping.current,
     prevOriginalTyping,
     nextOriginalTyping,
