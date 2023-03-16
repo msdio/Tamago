@@ -20,7 +20,6 @@ interface ShortTypingContextType {
 
 interface ShortTypingHandlerContextType {
   onEndTyping: (input: string) => Promise<void>;
-  onBackspace: (userTyping: string) => void;
   onTyping: (inputChar: string) => void;
 }
 
@@ -35,22 +34,13 @@ interface ShortTypingProviderProps {
 const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderProps) => {
   const [currentIdx, setCurrentIdx] = useState(0);
   const prevUserTyping = useRef('');
-  const {
-    originalTyping,
-    userTyping,
-    time,
-    typingCount,
-    typingAccuracy,
-    typingWpm,
-    handleBackspace,
-    handleTypingSubmit,
-    handleTyping,
-  } = useCurrentTyping(
-    originalTypings[currentIdx] ?? {
-      typingId: 0,
-      content: '',
-    },
-  );
+  const { originalTyping, userTyping, time, typingCount, typingAccuracy, typingWpm, handleTypingSubmit, handleTyping } =
+    useCurrentTyping(
+      originalTypings[currentIdx] ?? {
+        typingId: 0,
+        content: '',
+      },
+    );
 
   const prevOriginalTyping = useMemo(
     () => (currentIdx > 0 ? originalTypings[currentIdx - 1]?.content : ''),
@@ -92,7 +82,6 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
 
   const actions = {
     onEndTyping: handleEndTyping,
-    onBackspace: handleBackspace,
     onTyping: handleTyping,
   };
 

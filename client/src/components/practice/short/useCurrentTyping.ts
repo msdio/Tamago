@@ -16,7 +16,6 @@ interface UseCurrentTypingReturns {
   typingWpm: number;
   typingAccuracy: number;
 
-  handleBackspace: (userTyping: string) => void;
   handleTyping: (userTyping: string) => void;
   handleTypingSubmit: (userTyping: string) => Promise<void>;
 }
@@ -34,10 +33,6 @@ export default function useCurrentTyping({
 
   const backspaceCount = useRef(0);
   const typingCount = getTypingCount({ originalTyping, userTyping });
-
-  const handleBackspace = useCallback((input: string) => {
-    backspaceCount.current += 1;
-  }, []);
 
   const handleTypingAccuracy = useCallback(
     (userTyping: string) => {
@@ -158,7 +153,6 @@ export default function useCurrentTyping({
     typingCount,
     typingWpm,
     typingAccuracy,
-    handleBackspace,
     handleTyping,
     handleTypingSubmit: handleSubmit,
   };

@@ -6,9 +6,7 @@ import { useShortTypingContext, useShortTypingHandlerContext } from '@/component
 
 export default function CurrentTyping() {
   const { originalTyping, userTyping } = useShortTypingContext();
-  const { onEndTyping, onBackspace, onTyping } = useShortTypingHandlerContext();
-
-  // const [userTyping, setUserTyping] = useState('');
+  const { onEndTyping, onTyping } = useShortTypingHandlerContext();
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
