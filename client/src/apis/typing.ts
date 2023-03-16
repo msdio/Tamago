@@ -1,4 +1,4 @@
-import request, { authenticationRequest } from '@/apis';
+import request from '@/apis';
 import type { LongTypingItem } from '@/types/typing';
 import type { TypingMode } from '@/types/typing';
 
@@ -52,8 +52,8 @@ interface TypingHistoryRequest {
 
 export const getTypingHistoryAPI = async (typingHistory: TypingHistoryRequest) => {
   console.log('서버에 전송할 데이터', typingHistory);
-  const res = await authenticationRequest.post('/typing/history', typingHistory);
-  console.log('res: ', res);
-
-  return res.data;
+  // const res = await authenticationRequest.post('/typing/history', typingHistory);
+  // console.log('res: ', res);
+  return true;
+  // return res.data;
 };
