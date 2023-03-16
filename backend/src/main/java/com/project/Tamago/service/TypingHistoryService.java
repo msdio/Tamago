@@ -32,17 +32,15 @@ public class TypingHistoryService {
 	private final TypingHistoryRepository typingHistoryRepository;
 
 	public void saveHistory(TypingHistoryReqDto typingHistoryReqDto, String jwtToken) {
-		LongTyping longTyping = null;
-		Typing typing = null;
-
 		if (typingHistoryReqDto.getContentType()) {
-			longTyping = longTypingRepository.getReferenceById(typingHistoryReqDto.getTypingId());
-		}
-		if (!typingHistoryReqDto.getContentType()) {
-			typing = typingRepository.getReferenceById(typingHistoryReqDto.getTypingId());
+			typingHistoryRepository.save(DataMapper.INSTANCE.toTypingHistory(typingHistoryReqDto,
+				longTypingRepository.getReferenceById(typingHistoryReqDto.getTypingId()), null,
+				getUserByJwtToken(jwtToken)));
+			return ;
 		}
 		typingHistoryRepository.save(DataMapper.INSTANCE.toTypingHistory(typingHistoryReqDto,
-			longTyping, typing, getUserByJwtToken(jwtToken)));
+			null, typingRepository.getReferenceById(typingHistoryReqDto.getTypingId()),
+			getUserByJwtToken(jwtToken)));
 	}
 
 	private User getUserByJwtToken(String jwtToken) {
