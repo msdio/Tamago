@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import type { ShortTypingType } from '@/apis/typing';
 import { getTypingHistoryAPI } from '@/apis/typing';
 import useStopwatch from '@/components/practice/short/useStopWatch';
-import { getWrongLength } from '@/components/practice/short/utils';
+import { getTypingCount, getWrongLength } from '@/components/practice/short/utils';
 import { getCharType } from '@/utils/char';
 import { getTypingAccuracy, getTypingSpeed, getTypingWpm, getWrongKeys } from '@/utils/typing';
 
@@ -33,12 +33,9 @@ export default function useCurrentTyping({
   const [typingWpm, setTypingWpm] = useState(0);
 
   const backspaceCount = useRef(0);
-  const typingCount = useRef(0); // 타수, 현재 입력한 글의 타수
+  const typingCount = getTypingCount({ originalTyping, userTyping });
 
-  // typingCount : 정답인 글쇠의 개수
-  // 안녕하 --> 8 // 하 / 아 -> x
   const handleBackspace = useCallback((input: string) => {
-    // typingCount.current = typingCount.current >= 2 ? typingCount.current - 2 : 0; // backspace시 타수 -2?
     backspaceCount.current += 1;
   }, []);
 
@@ -65,7 +62,8 @@ export default function useCurrentTyping({
 
       // NOTE : backspace 누른 경우
       if (userTyping.length > input.length) {
-        handleBackspace(input);
+        backspaceCount.current += 1;
+
         return;
       }
 
@@ -74,11 +72,10 @@ export default function useCurrentTyping({
         timePlay();
       }
 
-      // typingCount.current += 1; // 글쇠 1개당 1타
       // //? 타이핑 정확도 계산 - 오타 계산
       handleTypingAccuracy(userTyping);
     },
-    [handleBackspace, handleTypingAccuracy, status, timePlay, userTyping],
+    [handleTypingAccuracy, status, timePlay, userTyping],
   );
 
   const resetTypingData = useCallback(() => {
@@ -87,7 +84,7 @@ export default function useCurrentTyping({
     setTypingWpm(() => 0);
     setUserTyping(() => '');
     backspaceCount.current = 0;
-    // typingCount.current = 0;
+
     timeReset();
   }, [timeReset]);
 
@@ -134,20 +131,20 @@ export default function useCurrentTyping({
 
   const handleTypingWpm = useCallback(() => {
     const newTypingWpm = getTypingWpm({
-      typingCount: typingCount.current,
+      typingCount,
       millisecond: time.minute * 60 * 1000 + time.second * 1000 + time.ms,
     });
     setTypingWpm(newTypingWpm);
-  }, [time.minute, time.ms, time.second]);
+  }, [time.minute, time.ms, time.second, typingCount]);
 
   const handleTypingSpeed = useCallback(() => {
     const newTypingSpeed = getTypingSpeed({
-      typingCount: typingCount.current,
+      typingCount,
       backspaceCount: backspaceCount.current,
       millisecond: time.minute * 60 * 1000 + time.second * 1000 + time.ms,
     });
     setTypingSpeed(newTypingSpeed);
-  }, [time.minute, time.ms, time.second]);
+  }, [time.minute, time.ms, time.second, typingCount]);
 
   useEffect(() => {
     handleTypingSpeed();
@@ -158,7 +155,7 @@ export default function useCurrentTyping({
     userTyping,
     originalTyping,
     time: parseInt(String(totalMillisecond / 1000), 10),
-    typingCount: typingCount.current,
+    typingCount,
     typingWpm,
     typingAccuracy,
     handleBackspace,
