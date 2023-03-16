@@ -6,20 +6,19 @@ import useCurrentTyping from '@/components/practice/short/currentTypingContext';
 
 interface ShortTypingContextType {
   time: number;
-  originalWriting: string;
+  originalTyping: string;
 
   typingCount: number;
   typingWpm: number;
   typingAccuracy: number;
 
-  prevWritingInput: string;
-  prevWritingCorrect: string;
-  nextWritingContent: string;
+  prevUserTyping: string;
+  prevOriginalTyping: string;
+  nextOriginalTyping: string;
 }
 
 interface ShortTypingHandlerContextType {
   onEndTyping: (input: string) => Promise<void>;
-
   onBackspace: () => void;
   onTyping: (inputChar: string) => void;
 }
@@ -29,14 +28,14 @@ const ShortTypingHandlerContext = createContext<ShortTypingHandlerContextType | 
 
 interface ShortTypingProviderProps {
   children: ReactNode;
-  typingWritings: ShortTypingType[];
+  originalTypings: ShortTypingType[];
 }
 
-const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderProps) => {
+const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderProps) => {
   const [currentIdx, setCurrentIdx] = useState(0);
-  const prevWritingInput = useRef('');
+  const prevUserTyping = useRef('');
   const {
-    originalWriting,
+    originalTyping,
     time,
     typingCount,
     typingAccuracy,
@@ -45,24 +44,24 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
     handleTypingSubmit,
     handleTyping,
   } = useCurrentTyping(
-    typingWritings[currentIdx] ?? {
+    originalTypings[currentIdx] ?? {
       typingId: 0,
       content: '',
     },
   );
 
-  const prevWritingCorrect = useMemo(
-    () => (currentIdx > 0 ? typingWritings[currentIdx - 1]?.content : ''),
-    [currentIdx, typingWritings],
+  const prevOriginalTyping = useMemo(
+    () => (currentIdx > 0 ? originalTypings[currentIdx - 1]?.content : ''),
+    [currentIdx, originalTypings],
   );
 
-  const nextWritingContent = useMemo(
-    () => (currentIdx < typingWritings.length - 1 ? typingWritings[currentIdx + 1].content : ''),
-    [currentIdx, typingWritings],
+  const nextOriginalTyping = useMemo(
+    () => (currentIdx < originalTypings.length - 1 ? originalTypings[currentIdx + 1].content : ''),
+    [currentIdx, originalTypings],
   );
 
   const handleSubmit = async (input: string) => {
-    prevWritingInput.current = input;
+    prevUserTyping.current = input;
 
     handleTypingSubmit(input);
   };
@@ -70,7 +69,7 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
   const handleEndTyping = async (input: string) => {
     await handleSubmit(input);
 
-    if (currentIdx < typingWritings.length - 1) {
+    if (currentIdx < originalTypings.length - 1) {
       setCurrentIdx((prev) => prev + 1);
     } else {
       // TODO : 30문장 끝
@@ -82,10 +81,10 @@ const ShortTypingProvider = ({ children, typingWritings }: ShortTypingProviderPr
     typingCount: typingCount,
     typingWpm,
     typingAccuracy,
-    originalWriting,
-    prevWritingInput: prevWritingInput.current,
-    prevWritingCorrect,
-    nextWritingContent,
+    originalTyping,
+    prevUserTyping: prevUserTyping.current,
+    prevOriginalTyping,
+    nextOriginalTyping,
   };
 
   const actions = {

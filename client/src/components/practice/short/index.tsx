@@ -7,13 +7,13 @@ import { useShortTypingContext } from '@/components/practice/short/shortTypingCo
 import TwoRightArrow from '@/icons/TwoRightArrow';
 
 export default function PracticeShort() {
-  const { originalWriting, nextWritingContent } = useShortTypingContext();
+  const { originalTyping, nextOriginalTyping } = useShortTypingContext();
 
   return (
     <Box p='35px 120px' minW='1100px'>
       <InfoBar />
 
-      {originalWriting && (
+      {originalTyping && (
         <Box position='relative' border='0.6px solid #000000' borderRadius='30px 0px 0px 0px' mt='28px'>
           <PrevTyping />
 
@@ -22,7 +22,7 @@ export default function PracticeShort() {
           <Flex p='24px 40px 32px' alignItems='center' gap='16.18px'>
             <TwoRightArrow />
             <Text fontSize='20px' color='#3C3C3C'>
-              {nextWritingContent}
+              {nextOriginalTyping}
             </Text>
           </Flex>
         </Box>

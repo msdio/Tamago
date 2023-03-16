@@ -10,6 +10,7 @@ export interface ShortTypingType {
 export interface ShortTypingResultType {
   contentType: '0' | '1';
   typingsType: 'practice';
+  // TODO: backend와 상의하기 ->  originalTyping: string;
   typingWritings: ShortTypingType[];
 }
 
