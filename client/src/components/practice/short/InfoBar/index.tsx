@@ -1,12 +1,12 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 
+import { useContextShortTyping } from '@/components/practice/short/_hook/contextShortTyping';
 import InfoBarItem from '@/components/practice/short/InfoBar/InfoBarItem';
-import { useShortTypingContext } from '@/components/practice/short/shortTypingContext';
 import DownArrow from '@/icons/DownArrow';
 import { getSecondToMMSSFormat } from '@/utils/time';
 
 function InfoBar() {
-  const { time, typingAccuracy, typingCount, typingWpm } = useShortTypingContext();
+  const { time, typingAccuracy, typingCount, typingWpm } = useContextShortTyping();
   return (
     <Flex gap='24px'>
       <Box w='118px' bg='#CEF0FF' border=' 0.6px solid #000000' borderRadius={10}></Box>

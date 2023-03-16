@@ -3,8 +3,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import type { ShortTypingType } from '@/apis/typing';
 import { getTypingHistoryAPI } from '@/apis/typing';
-import useStopwatch from '@/components/practice/short/useStopWatch';
-import { getTypingCount, getWrongLength } from '@/components/practice/short/utils';
+import useStopwatch from '@/components/practice/short/_hook/useStopWatch';
+import { getTypingCount, getWrongLength } from '@/components/practice/short/_utils/utils';
 import { getCharType } from '@/utils/char';
 import { getTypingAccuracy, getTypingSpeed, getTypingWpm, getWrongKeys } from '@/utils/typing';
 

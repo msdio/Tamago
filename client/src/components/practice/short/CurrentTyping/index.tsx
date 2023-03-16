@@ -1,12 +1,15 @@
 import { Box, Input } from '@chakra-ui/react';
 import type { ChangeEvent, KeyboardEvent } from 'react';
 
+import {
+  useContextShortTyping,
+  useContextShortTypingHandler,
+} from '@/components/practice/short/_hook/contextShortTyping';
 import OriginalTyping from '@/components/practice/short/OriginalTyping';
-import { useShortTypingContext, useShortTypingHandlerContext } from '@/components/practice/short/shortTypingContext';
 
 export default function CurrentTyping() {
-  const { originalTyping, userTyping } = useShortTypingContext();
-  const { onEndTyping, onTyping } = useShortTypingHandlerContext();
+  const { originalTyping, userTyping } = useContextShortTyping();
+  const { onEndTyping, onTyping } = useContextShortTypingHandler();
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;

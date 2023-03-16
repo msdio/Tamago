@@ -1,4 +1,4 @@
-import { getTypingCount, getWrongLength } from '@/components/practice/short/utils';
+import { getTypingCount, getWrongLength } from '@/components/practice/short/_utils/utils';
 
 test('잘못된 입력 개수 확인', () => {
   const answerList = [
