@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { createContext, useContext, useMemo, useRef, useState } from 'react';
 
 import type { ShortTypingType } from '@/apis/typing';
-import useCurrentTyping from '@/components/practice/short/currentTypingContext';
+import useCurrentTyping from '@/components/practice/short/useCurrentTyping';
 
 interface ShortTypingContextType {
   originalTyping: string;
