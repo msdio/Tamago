@@ -1,14 +1,11 @@
 import { Box, Input } from '@chakra-ui/react';
 import type { ChangeEvent, KeyboardEvent } from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
 
 import OriginalTyping from '@/components/practice/short/OriginalTyping';
 import { useShortTypingContext, useShortTypingHandlerContext } from '@/components/practice/short/shortTypingContext';
-import { checkAllInputTyping } from '@/components/practice/short/utils';
 
 export default function CurrentTyping() {
-  const { originalTyping } = useShortTypingContext();
+  const { originalTyping, userTyping } = useShortTypingContext();
   const { onEndTyping, onBackspace, onTyping } = useShortTypingHandlerContext();
 
   // const [userTyping, setUserTyping] = useState('');
@@ -18,19 +15,8 @@ export default function CurrentTyping() {
 
     onTyping(input);
 
-    //? NOTE: 마지막 글자까지 입력하면, 제출하고 다음 문장으로 넘어간다.
-    if (word.length === originalTyping.length) {
-      const isLast = checkAllInputTyping({
-        typingWord: word[originalTyping.length - 1],
-        originalWord: originalTyping[originalTyping.length - 1],
-      });
-
-      if (isLast) {
-        onEndTyping(word);
-      }
-    }
-    if (word.length > originalTyping.length) {
-      onEndTyping(word);
+    if (input.length > originalTyping.length) {
+      onEndTyping(input.slice(0, originalTyping.length));
     }
   };
 
