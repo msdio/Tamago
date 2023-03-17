@@ -1,23 +1,21 @@
-import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { useEffect, useState } from 'react';
 
 import { getLongTypingListAPI } from '@/apis/typing';
 import PracticeLongList from '@/components/practice/long/List';
 import type { LongTypingItem } from '@/types/typing';
 
-export const getServerSideProps: GetServerSideProps<{ data: LongTypingItem[] }> = async () => {
-  const data = await getLongTypingListAPI();
+export default function PracticeLongPage() {
+  const [data, setData] = useState<LongTypingItem[]>([]);
 
-  return {
-    props: {
-      data: data.result,
-    },
+  const getLongTypingList = async () => {
+    const { result } = await getLongTypingListAPI();
+
+    setData(result);
   };
-};
 
-interface PracitionLongPageProps extends InferGetServerSidePropsType<typeof getServerSideProps> {
-  data: LongTypingItem[];
-}
+  useEffect(() => {
+    getLongTypingList();
+  }, []);
 
-export default function PracticeLongPage({ data }: PracitionLongPageProps) {
   return <PracticeLongList typingList={data} />;
 }
