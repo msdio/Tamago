@@ -3,7 +3,7 @@ import { memo } from 'react';
 
 import type { TypingState } from '@/types/typing';
 
-import TypingChar from './TypingChar';
+import TypingChar from '../TypingChar';
 
 interface TypingLineProps {
   contentLine: string;

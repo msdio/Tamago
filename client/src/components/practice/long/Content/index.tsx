@@ -2,8 +2,8 @@ import { Flex } from '@chakra-ui/react';
 
 import type { LongTypingDetail } from '@/types/typing';
 
-import TypingLine from '../common/TypingLine';
 import PracticeLongLayout from '../Layout';
+import TypingLine from '../TypingLine';
 import { slicedContentAndStrings } from '../utils';
 
 export default function LongContent({ content, currentPage, language, title, totalPage, typingId }: LongTypingDetail) {

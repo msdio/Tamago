@@ -9,8 +9,8 @@ import { getCharType } from '@/utils/char';
 import { getTypingAccuracy, getTypingSpeed, getTypingWpm } from '@/utils/typing';
 
 import useStopwatch from '../../short/useStopWatch';
-import TypingLine from '../common/TypingLine';
 import PracticeLongLayout from '../Layout';
+import TypingLine from '../TypingLine';
 import { slicedContentAndStrings } from '../utils';
 import InfoBar from './InfoBar';
 
