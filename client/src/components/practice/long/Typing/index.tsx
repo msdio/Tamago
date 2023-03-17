@@ -7,12 +7,11 @@ import DownArrow from '@/icons/DownArrow';
 import type { CharInfo, LongTypingDetail } from '@/types/typing';
 import { TypingState } from '@/types/typing';
 import { getCharType } from '@/utils/char';
-import { getTypingAccuracy, getTypingSpeed, getTypingWpm } from '@/utils/typing';
+import { getTypingAccuracy, getTypingSpeed, getTypingWpm, slicedContentAndStrings } from '@/utils/typing';
 
 import useStopwatch from '../../short/useStopWatch';
 import PracticeLongLayout from '../Layout';
 import TypingLine from '../TypingLine';
-import { slicedContentAndStrings } from '../utils';
 import InfoBar from './InfoBar';
 
 export default function PracticeLongTyping({
