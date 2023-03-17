@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import DownArrow from '@/icons/DownArrow';
 import type { CharInfo, LongTypingDetail } from '@/types/typing';
+import { TypingState } from '@/types/typing';
 import { getCharType } from '@/utils/char';
 import { getTypingAccuracy, getTypingSpeed, getTypingWpm } from '@/utils/typing';
 
@@ -30,7 +31,7 @@ export default function PracticeLongTyping({
   const contentInfos = useRef<CharInfo[]>([]);
   const typingInfos = useRef<CharInfo[]>([]);
   /* 처음 'f'로 초기화되어 가장 먼저 온 글자에 포커싱, 'f' 이외에도 'c'(correct), 'i'(incorrect), 'u'(unknown)로 상태 구분 */
-  const typingStates = useRef('f');
+  const typingStates = useRef<string>(TypingState.FOCUS);
   const typingWpm = useRef(0);
   const typingSpeed = useRef(0);
   const typingAccuracy = useRef(0);
@@ -55,7 +56,7 @@ export default function PracticeLongTyping({
       type: 'other',
       components: [],
     }));
-    typingStates.current = 'f';
+    typingStates.current = TypingState.FOCUS;
     typingWpm.current = 0;
     typingSpeed.current = 0;
     typingAccuracy.current = 0;
@@ -79,7 +80,7 @@ export default function PracticeLongTyping({
   useEffect(() => {
     typingAccuracy.current = getTypingAccuracy({
       typingLength: typingStates.current.length - 1,
-      wrongLength: typingStates.current.replaceAll('c', '').length - 1,
+      wrongLength: typingStates.current.replaceAll(TypingState.CORRECT, '').length - 1,
     });
   }, [textarea]);
 
@@ -110,8 +111,12 @@ export default function PracticeLongTyping({
 
     const { value } = e.target;
 
+    const textareaLength = value.length;
+    const typingLength = typingStates.current.length - 1;
+    const contentLength = contentInfos.current.length;
+
     // 타이핑 완료시 api 호출
-    if (value.length > contentInfos.current.length) {
+    if (textareaLength > contentLength) {
       timePause();
       // const endTime = Date.now();
       // const typingTime = time.minute * 60000 + time.second * 1000 + time.ms;
@@ -138,55 +143,64 @@ export default function PracticeLongTyping({
     }
 
     setTextarea(value);
-    const currLength = typingStates.current.length - 1;
 
     // 한글처럼 여러 글쇠로 이루어진 문자의 경우 타이핑을 해도 길이가 동일한 경우 발생, 빼는 경우도 마찬가지
-    if (value.length === currLength) {
-      typingInfos.current[value.length - 1].char = value[value.length - 1];
-      typingInfos.current[value.length - 1].type = getCharType(value[value.length - 1]);
-      const prevComponents = typingInfos.current[value.length - 1].components;
-      const currComponents = disassemble(value[value.length - 1]);
-      typingInfos.current[value.length - 1].components = disassemble(value[value.length - 1]);
+    if (textareaLength === typingLength) {
+      const prevComponents = typingInfos.current[textareaLength - 1].components;
+
+      typingInfos.current[textareaLength - 1] = {
+        char: textarea[textareaLength - 1],
+        type: getCharType(textarea[textareaLength - 1]),
+        components: disassemble(textarea[textareaLength - 1]),
+      };
+
+      const currComponents = typingInfos.current[textareaLength - 1].components;
+
       // 한글을 뺀 경우 (길이 변화 X)
       if (prevComponents > currComponents) {
-        if (contentInfos.current[value.length - 1].char === value[value.length - 1]) {
-          typingStates.current = `${typingStates.current.slice(0, -2)}cf`;
-          typingCount.current += typingInfos.current[value.length - 1].components.length;
+        if (contentInfos.current[textareaLength - 1].char === value[textareaLength - 1]) {
+          typingStates.current = typingStates.current.slice(0, -2) + TypingState.CORRECT + TypingState.FOCUS;
+          typingCount.current +=
+            typingInfos.current[textareaLength - 1].components.length; /* 현재 글자의 글쇠를 타수에 더함 */
         } else {
-          typingStates.current = `${typingStates.current.slice(0, -2)}if`;
+          typingStates.current = typingStates.current.slice(0, -2) + TypingState.INCORRECT + TypingState.FOCUS;
         }
       }
       // 한글을 더한 경우 (길이 변화 X)
       else {
-        if (contentInfos.current[value.length - 1].char === value[value.length - 1]) {
-          typingStates.current = `${typingStates.current.slice(0, -2)}cf`;
-          typingCount.current += typingInfos.current[value.length - 1].components.length;
+        if (contentInfos.current[textareaLength - 1].char === value[textareaLength - 1]) {
+          typingStates.current = typingStates.current.slice(0, -2) + TypingState.CORRECT + TypingState.FOCUS;
+          typingCount.current += typingInfos.current[textareaLength - 1].components.length;
         } else {
-          typingStates.current = `${typingStates.current.slice(0, -2)}if`;
+          typingStates.current = typingStates.current.slice(0, -2) + TypingState.INCORRECT + TypingState.FOCUS;
         }
       }
     }
     // 타이핑하여 글자가 증가한 경우
-    else if (value.length > currLength) {
-      typingInfos.current[value.length - 1].char = value[value.length - 1];
-      typingInfos.current[value.length - 1].type = getCharType(value[value.length - 1]);
-      typingInfos.current[value.length - 1].components = disassemble(value[value.length - 1]);
+    else if (textareaLength > typingLength) {
+      typingInfos.current[textareaLength - 1] = {
+        char: value[textareaLength - 1],
+        type: getCharType(value[textareaLength - 1]),
+        components: disassemble(value[textareaLength - 1]),
+      };
 
-      if (contentInfos.current[value.length - 1].char === typingInfos.current[value.length - 1].char) {
-        typingStates.current = `${typingStates.current.slice(0, -1)}cf`;
-        typingCount.current += typingInfos.current[value.length - 1].components.length;
+      if (contentInfos.current[textareaLength - 1].char === typingInfos.current[textareaLength - 1].char) {
+        typingStates.current = typingStates.current.slice(0, -1) + TypingState.CORRECT + TypingState.FOCUS;
+        typingCount.current += typingInfos.current[textareaLength - 1].components.length;
       } else {
-        typingStates.current = `${typingStates.current.slice(0, -1)}if`;
+        typingStates.current = typingStates.current.slice(0, -1) + TypingState.INCORRECT + TypingState.FOCUS;
       }
     }
     // 빼서 글자가 감소한 경우
-    else if (value.length < currLength) {
-      typingInfos.current[value.length].char = '';
-      typingInfos.current[value.length].type = 'other';
-      typingInfos.current[value.length].components = [];
+    else if (textareaLength < typingLength) {
+      typingInfos.current[textareaLength] = {
+        char: '',
+        type: 'other',
+        components: [],
+      };
 
       backspaceCount.current += 1; /* TODO : 타이핑을 엄청 틀린 후 지울 경우 예외처리 */
-      typingStates.current = `${typingStates.current.slice(0, -2)}f`;
+      typingStates.current = typingStates.current.slice(0, -2) + TypingState.FOCUS;
     }
   };
 
