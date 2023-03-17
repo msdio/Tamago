@@ -3,39 +3,39 @@ import type { ChangeEvent, KeyboardEvent } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
-import OriginalWriting from '@/components/practice/short/OriginalWriting';
+import OriginalTyping from '@/components/practice/short/OriginalTyping';
 import { useShortTypingContext, useShortTypingHandlerContext } from '@/components/practice/short/shortTypingContext';
 import { checkAllInputTyping } from '@/components/practice/short/utils';
 
-export default function CurrentTyping({}) {
-  const { originalWriting } = useShortTypingContext();
+export default function CurrentTyping() {
+  const { originalTyping } = useShortTypingContext();
   const { onEndTyping, onBackspace, onTyping } = useShortTypingHandlerContext();
 
-  const [input, setInput] = useState('');
+  const [userTyping, setUserTyping] = useState('');
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     const word = e.target.value;
-    setInput(word);
+    setUserTyping(word);
 
     // NOTE : backspace 누른 경우
-    if (input.length > word.length) {
+    if (userTyping.length > word.length) {
       return;
     }
 
     onTyping(word);
 
     //? NOTE: 마지막 글자까지 입력하면, 제출하고 다음 문장으로 넘어간다.
-    if (word.length === originalWriting.length) {
+    if (word.length === originalTyping.length) {
       const isLast = checkAllInputTyping({
-        typingWord: word[originalWriting.length - 1],
-        originalWord: originalWriting[originalWriting.length - 1],
+        typingWord: word[originalTyping.length - 1],
+        originalWord: originalTyping[originalTyping.length - 1],
       });
 
       if (isLast) {
         onEndTyping(word);
       }
     }
-    if (word.length > originalWriting.length) {
+    if (word.length > originalTyping.length) {
       onEndTyping(word);
     }
   };
@@ -44,7 +44,7 @@ export default function CurrentTyping({}) {
     //? NOTE: enter 누른 경우 -> submit
     if (e.key === 'Enter') {
       e.preventDefault();
-      onEndTyping(input);
+      onEndTyping(userTyping);
     }
 
     // TODO : backspace 누른 경우 -> 타수에 영향
@@ -54,10 +54,10 @@ export default function CurrentTyping({}) {
   };
 
   useEffect(() => {
-    setInput('');
-  }, [originalWriting]);
+    setUserTyping('');
+  }, [originalTyping]);
 
-  if (!originalWriting) return <></>;
+  if (!originalTyping) return <></>;
 
   return (
     <Box
@@ -74,14 +74,14 @@ export default function CurrentTyping({}) {
       p='30px 49px'
       bg='#FFF2BA'
     >
-      <OriginalWriting originalWriting={originalWriting} inputWriting={input} />
+      <OriginalTyping originalTyping={originalTyping} userTyping={userTyping} />
 
       <Input
         bg='#FFE98B'
         variant='flushed'
         placeholder=' '
         type='text'
-        value={input}
+        value={userTyping}
         onChange={handleInput}
         onKeyDown={handleKeyDown}
         w='100%'

@@ -1,14 +1,14 @@
 import { Flex, Text } from '@chakra-ui/react';
 
-interface OriginalWritingProps {
-  originalWriting: string;
-  inputWriting: string;
+interface OriginalTypingProps {
+  originalTyping: string;
+  userTyping: string;
 }
 
-export default function OriginalWriting({ originalWriting, inputWriting }: OriginalWritingProps) {
+export default function OriginalTyping({ originalTyping, userTyping }: OriginalTypingProps) {
   return (
     <Flex pl='5px' mb='10px' fontSize='23px' fontWeight={500}>
-      {originalWriting.split('').map((word, idx) => {
+      {originalTyping.split('').map((word, idx) => {
         if (word === ' ') {
           return (
             <Text as='span' key={idx}>
@@ -16,7 +16,7 @@ export default function OriginalWriting({ originalWriting, inputWriting }: Origi
             </Text>
           );
         }
-        if (idx < inputWriting.length - 1 && word !== inputWriting[idx]) {
+        if (idx < userTyping.length - 1 && word !== userTyping[idx]) {
           return (
             <Text as='span' bg='red' color='#fff' key={idx}>
               {word}
