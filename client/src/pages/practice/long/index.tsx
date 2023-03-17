@@ -1,11 +1,11 @@
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
-import { getLongTypingWritingsAPI } from '@/apis/typing';
+import { getLongTypingListAPI } from '@/apis/typing';
 import PracticeLongList from '@/components/practice/long/List';
 import type { LongTypingItem } from '@/types/typing';
 
 export const getServerSideProps: GetServerSideProps<{ data: LongTypingItem[] }> = async () => {
-  const data = await getLongTypingWritingsAPI();
+  const data = await getLongTypingListAPI();
 
   return {
     props: {

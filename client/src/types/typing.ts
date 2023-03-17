@@ -23,3 +23,12 @@ export interface LongTypingItem {
   typingId: number;
   viewCount: number;
 }
+
+export interface LongTypingDetail {
+  content: string;
+  currentPage: number;
+  language: string;
+  title: string;
+  totalPage: number;
+  typingId: number;
+}
