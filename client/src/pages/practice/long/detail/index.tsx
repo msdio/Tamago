@@ -26,11 +26,15 @@ export default function LongTypingPage() {
     setIsTyping(isTyping === 'true');
   };
 
+  const initLongTyping = () => {
+    setData(null);
+    setIsTyping(false);
+  };
+
   // 페이지 이동시 해당 컴포넌트는 새롭게 렌더링이 되지 않고 리렌더링이 된다.
   // 그렇기 때문에 url이 바뀔 때 상태를 초기화해주어 자식컴포넌트들이 새롭게 렌더링되도록 초기화해준다.
   useEffect(() => {
-    setData(null);
-    setIsTyping(false);
+    initLongTyping();
   }, [router.asPath]);
 
   useEffect(() => {

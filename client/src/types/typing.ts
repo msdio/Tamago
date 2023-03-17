@@ -4,6 +4,8 @@ export interface CharInfo {
   components: string[];
 }
 
+export type TypingMode = 'PRACTICE' | 'ACTUAL';
+
 export enum TypingState {
   'DEFAULT' = 'd',
   'CORRECT' = 'c',

@@ -59,8 +59,6 @@ export default function PracticeLongTyping({
   /**
    * 처음 화면이 렌더링될 때 textarea로 포커싱되도록 한다.
    * textarea는 숨겨두었기 때문에 사용자가 보고 포커싱할 수 없다.
-   * router.push를 사용해 동적 라우팅 간 이동을 할 경우 새로고침이 일어나지 않기 때문에
-   * 기존의 상태들이 모두 그대로 남아있게 되어 리렌더링이 될경우 상태를 모두 초기화해줘야 한다.
    */
   useEffect(() => {
     focusTextarea();
