@@ -22,16 +22,29 @@ export default function LongTypingPage() {
     isTyping: string;
   }) => {
     const { result } = await getLongTypingAPI({ typingId, pageNum });
-
     setData(result);
     setIsTyping(isTyping === 'true');
   };
 
+  // 페이지 이동시 해당 컴포넌트는 새롭게 렌더링이 되지 않고 리렌더링이 된다.
+  // 그렇기 때문에 url이 바뀔 때 상태를 초기화해주어 자식컴포넌트들이 새롭게 렌더링되도록 초기화해준다.
   useEffect(() => {
-    if (!router.isReady) return;
+    setData(null);
+    setIsTyping(false);
+  }, [router.asPath]);
+
+  useEffect(() => {
+    if (!router.isReady) {
+      return;
+    }
     const { typingId, pageNum, isTyping } = router.query as { typingId: string; pageNum: string; isTyping: string };
     getLongTyping({ typingId, pageNum, isTyping });
-  }, [router.isReady]);
+  }, [router.isReady, router.asPath]);
 
-  return <>{data ? isTyping ? <PracticeLongTyping {...data} /> : <LongContent {...data} /> : <div>로딩 중</div>}</>;
+  // TODO: 로딩창
+  if (!router.isReady || !data) {
+    return <div>로딩중...</div>;
+  }
+
+  return <>{isTyping ? <PracticeLongTyping {...data} /> : <LongContent {...data} />}</>;
 }

@@ -6,7 +6,7 @@ import { BookmarkOff } from '@/icons/Heart';
 import { SmallLeftArrow, SmallRightArrow } from '@/icons/SmallArrow';
 import UpDownArrow from '@/icons/UpDownArrow';
 import type { LongTypingItem } from '@/types/typing';
-import { PRACTICE_LONG_PATH } from '@/utils/paths';
+import { PRACTICE_LONG_PATH_DETAIL } from '@/utils/paths';
 
 import PracticeLongLayout from '../Layout';
 
@@ -75,13 +75,15 @@ export default function PracticeLongList({ typingList }: PracticeLongListProps) 
                 <Tr key={typingId}>
                   <Td textAlign='center'>{typingId}</Td>
                   <Td>
-                    <Link href={`${PRACTICE_LONG_PATH}/${typingId}/1?mode=practice`}>{title}</Link>
+                    <Link href={`${PRACTICE_LONG_PATH_DETAIL}?typingId=${typingId}&pageNum=1&isTyping=true`}>
+                      {title}
+                    </Link>
                   </Td>
                   <Td>{language}</Td>
                   <Td>{totalPage}</Td>
                   <Td>{viewCount}</Td>
                   <Td display='flex' gap='32.4px' justifyContent='end'>
-                    <Link href={`${PRACTICE_LONG_PATH}/${typingId}/1`}>
+                    <Link href={`${PRACTICE_LONG_PATH_DETAIL}?typingId=${typingId}&pageNum=1`}>
                       <Document />
                     </Link>
                     <Box>
