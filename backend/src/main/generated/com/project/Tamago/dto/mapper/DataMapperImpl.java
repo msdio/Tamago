@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-09T23:49:01+0900",
+    date = "2023-03-15T04:42:15+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Eclipse Adoptium)"
 )
 @Component
@@ -67,24 +67,28 @@ public class DataMapperImpl implements DataMapper {
     }
 
     @Override
-    public TypingHistory toTypingHistory(TypingHistoryReqDto typingHistoryReqDto, Typing typing, User user) {
-        if ( typingHistoryReqDto == null && typing == null && user == null ) {
+    public TypingHistory toTypingHistory(TypingHistoryReqDto typingHistoryReqDto, LongTyping longTyping, Typing typing, User user) {
+        if ( typingHistoryReqDto == null && longTyping == null && typing == null && user == null ) {
             return null;
         }
 
         TypingHistoryBuilder typingHistory = TypingHistory.builder();
 
         if ( typingHistoryReqDto != null ) {
+            typingHistory.accuracy( typingHistoryReqDto.getTypingAccuracy() );
             typingHistory.wpm( typingHistoryReqDto.getWpm() );
             if ( typingHistoryReqDto.getMode() != null ) {
                 typingHistory.mode( Enum.valueOf( Mode.class, typingHistoryReqDto.getMode() ) );
             }
             typingHistory.startTime( typingHistoryReqDto.getStartTime() );
             typingHistory.endTime( typingHistoryReqDto.getEndTime() );
+            typingHistory.page( typingHistoryReqDto.getPage() );
+        }
+        if ( longTyping != null ) {
+            typingHistory.longTyping( longTyping );
         }
         if ( typing != null ) {
             typingHistory.typing( typing );
-            typingHistory.contentType( typing.getContentType() );
         }
         if ( user != null ) {
             typingHistory.user( user );

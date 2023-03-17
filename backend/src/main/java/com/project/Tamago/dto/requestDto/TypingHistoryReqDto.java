@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class TypingHistoryReqDto {
 
 	@NotNull
-	private int typingId;
+	private Integer typingId;
 	@NotNull
 	private String resultContent;
 	@NotNull
@@ -31,17 +31,20 @@ public class TypingHistoryReqDto {
 	private LocalDateTime endTime;
 	@NotNull
 	@Range(min = 0, max = 2000)
-	private int typingSpeed;
+	private Integer typingSpeed;
 
-	private int typingPage;
-
-	private int wpm;
+	private Integer wpm;
 
 	@NotNull
 	@Range(min = 0, max = 100)
-	private int typingAccuracy;
+	private Integer typingAccuracy;
 	@NotNull
 	private String mode;
+
+	private Integer page;
+
+	@NotNull
+	private Boolean contentType;
 
 	@NotNull
 	private Map<Character, WrongKey> wrongKeys;
@@ -54,14 +57,14 @@ public class TypingHistoryReqDto {
 		private int count;
 
 		public void setTotal(int total) {
-			if(total < 0 ) {
+			if (total < 0) {
 				throw new CustomException(ErrorCode.INVALID_PARAMETER);
 			}
 			this.total = total;
 		}
 
 		public void setCount(int count) {
-			if(count < 0 || count > this.total) {
+			if (count < 0 || count > this.total) {
 				throw new CustomException(ErrorCode.INVALID_PARAMETER);
 			}
 			this.count = count;

@@ -3,46 +3,39 @@ import type { ChangeEvent, KeyboardEvent } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
-import CorrectWriting from '@/components/practice/short/CorrectWriting';
+import OriginalTyping from '@/components/practice/short/OriginalTyping';
 import { useShortTypingContext, useShortTypingHandlerContext } from '@/components/practice/short/shortTypingContext';
-import { checkAllInputTyping } from '@/utils/typing';
+import { checkAllInputTyping } from '@/components/practice/short/utils';
 
-const INIT_INPUT = '';
-
-export interface SubmitRequestType {
-  correctWriting: string;
-  input: string;
-}
-
-export default function CurrentTyping({}) {
-  const { currentWritingContent: correctWriting } = useShortTypingContext();
+export default function CurrentTyping() {
+  const { originalTyping } = useShortTypingContext();
   const { onEndTyping, onBackspace, onTyping } = useShortTypingHandlerContext();
 
-  const [input, setInput] = useState(INIT_INPUT);
-
-  // const setErrorWord = (idx: number, errorWord: ErrorWordType) => {
-  //   // NOTE: error word를 index마다 관리하고,
-  //   // 지금 입력하는 index가 아니면 오류를 보여주는 방향으로
-  //   const prevErrorWords = [...errorWordList];
-
-  //   prevErrorWords[idx] = errorWord;
-  //   setErrorWordList(prevErrorWords);
-  // };
+  const [userTyping, setUserTyping] = useState('');
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     const word = e.target.value;
-    setInput(word);
+    setUserTyping(word);
+
+    // NOTE : backspace 누른 경우
+    if (userTyping.length > word.length) {
+      return;
+    }
 
     onTyping(word);
 
     //? NOTE: 마지막 글자까지 입력하면, 제출하고 다음 문장으로 넘어간다.
-    if (word.length === correctWriting.length) {
-      const isLast = checkAllInputTyping(word[correctWriting.length - 1], correctWriting[correctWriting.length - 1]);
+    if (word.length === originalTyping.length) {
+      const isLast = checkAllInputTyping({
+        typingWord: word[originalTyping.length - 1],
+        originalWord: originalTyping[originalTyping.length - 1],
+      });
+
       if (isLast) {
         onEndTyping(word);
       }
     }
-    if (word.length > correctWriting.length) {
+    if (word.length > originalTyping.length) {
       onEndTyping(word);
     }
   };
@@ -51,7 +44,7 @@ export default function CurrentTyping({}) {
     //? NOTE: enter 누른 경우 -> submit
     if (e.key === 'Enter') {
       e.preventDefault();
-      onEndTyping(input);
+      onEndTyping(userTyping);
     }
 
     // TODO : backspace 누른 경우 -> 타수에 영향
@@ -61,10 +54,10 @@ export default function CurrentTyping({}) {
   };
 
   useEffect(() => {
-    setInput(INIT_INPUT);
-  }, [correctWriting]);
+    setUserTyping('');
+  }, [originalTyping]);
 
-  if (!correctWriting) return <></>;
+  if (!originalTyping) return <></>;
 
   return (
     <Box
@@ -81,14 +74,14 @@ export default function CurrentTyping({}) {
       p='30px 49px'
       bg='#FFF2BA'
     >
-      <CorrectWriting correctWriting={correctWriting} inputWriting={input} />
+      <OriginalTyping originalTyping={originalTyping} userTyping={userTyping} />
 
       <Input
         bg='#FFE98B'
         variant='flushed'
         placeholder=' '
         type='text'
-        value={input}
+        value={userTyping}
         onChange={handleInput}
         onKeyDown={handleKeyDown}
         w='100%'

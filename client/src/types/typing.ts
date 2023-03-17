@@ -4,6 +4,8 @@ export interface CharInfo {
   components: string[];
 }
 
+export type TypingMode = 'PRACTICE' | 'ACTUAL';
+
 /**
  * f: focus
  * c: correct

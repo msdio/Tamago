@@ -1,5 +1,6 @@
-import request from '@/apis';
+import request, { authenticationRequest } from '@/apis';
 import type { LongTypingDetail, LongTypingItem } from '@/types/typing';
+import type { TypingMode } from '@/types/typing';
 
 export interface ShortTypingType {
   typingId: string;
@@ -9,6 +10,7 @@ export interface ShortTypingType {
 export interface ShortTypingResultType {
   contentType: '0' | '1';
   typingsType: 'practice';
+  // TODO: backend와 상의하기 ->  originalTyping: string;
   typingWritings: ShortTypingType[];
 }
 
@@ -26,20 +28,16 @@ export interface LongTypingResultType {
 
 type WrongKeyType = Record<string, { total: number; count: number }>;
 
-export interface TypingHistoryRequest {
+interface TypingHistoryRequest {
   typingId: string;
-  contentType: 1 | 0; // 1: 긴글?, 0: 짧은 글
-  contentLength: number; // 타이핑한 짧은 글 글자 길이 = 총글자수
-  pageInfo: 1 | null; // 짧은 글일 경우 NULL
-  elapsedTime: number; // 초 단위!
-  endTime: Date;
-  language: 'Korean'; // 언어 종류
-  content: string;
-  typingMode: 'practice';
-  typingSpeed: number;
-  typingAccuracy: number;
-  wrongKeys: WrongKeyType[];
   resultContent: string;
+  startTime: Date;
+  endTime: Date;
+  typingSpeed: number;
+  mode: TypingMode | string;
+  wpm: number;
+  typingAccuracy: number;
+  wrongKeys: Record<string, { total: number; count: number }>;
 }
 
 export const getShortTypingWritingsAPI = async (
@@ -68,6 +66,14 @@ export const getLongTypingAPI = async ({
   const res = await request.get(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/typing/long/detail?longTypingId=${typingId}&page=${pageNum}`,
   );
+
+  return res.data;
+};
+
+export const getTypingHistoryAPI = async (typingHistory: TypingHistoryRequest) => {
+  console.log('서버에 전송할 데이터', typingHistory);
+  const res = await authenticationRequest.post('/typing/history', typingHistory);
+  console.log('res: ', res);
 
   return res.data;
 };

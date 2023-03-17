@@ -156,5 +156,12 @@ test('틀린 문자 추출', () => {
     'ㅈ': { total: 1, count: 1 },
   });
 });
+// test('wpm 계산', () => {
+//   expect(getTypingWpm({ typingCount: 10, minute: 1 / 60 })).toBe(120);
+// });
+
+// test('타속 계산', () => {
+//   expect(getTypingSpeed({ typingCount: 10, minute: 1 / 60 })).toBe(600);
+// });
 
 export {};
