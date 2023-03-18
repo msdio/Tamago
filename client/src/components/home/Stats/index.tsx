@@ -57,48 +57,50 @@ export default function Stats() {
       opacity={animationTrigger ? 1 : 0}
       animation={animationTrigger ? `${fadeIn} 1s linear` : ''}
     >
-      <Container maxW='container.xl' py='6.9375rem' display='flex' gap='1.1875rem'>
-        <Flex
-          w='48.25rem'
-          h='25.25rem'
-          direction='column'
-          justifyContent='space=between'
-          position='relative'
-          p='3.3125rem 3.5625rem'
-          backgroundColor='white.light'
-          border='1px solid black'
-          borderRadius='5px'
-          zIndex='2'
-        >
-          <Flex direction='column'>
-            <Text fontSize='19px' fontWeight='600' mb='1rem'>
-              Statistics
-            </Text>
-            <Text fontSize='1.875rem' fontWeight='700' mb='1.4375rem'>
-              타자를 측정하고 분석하여
-              <br />
-              본인의 타이핑 실력을
-              <br />
-              객관적으로 알 수 있어요.
-            </Text>
+      <Container maxW='container.xl' py='6.9375rem' display='flex' gap='1.1875rem' justifyContent='space-evenly'>
+        <Flex>
+          <Flex
+            w='48.25rem'
+            h='25.25rem'
+            direction='column'
+            justifyContent='space-between'
+            position='relative'
+            p='3.3125rem 3.5625rem'
+            backgroundColor='white.light'
+            border='1px solid black'
+            borderRadius='5px'
+            zIndex='2'
+          >
+            <Flex direction='column'>
+              <Text fontSize='1.1875rem' fontWeight='600' mb='1rem'>
+                Statistics
+              </Text>
+              <Text fontSize='1.875rem' fontWeight='700' mb='1.4375rem'>
+                타자를 측정하고 분석하여
+                <br />
+                본인의 타이핑 실력을
+                <br />
+                객관적으로 알 수 있어요.
+              </Text>
+            </Flex>
+
+            <Flex>
+              <RightArrowWithCircle />
+            </Flex>
+
+            <Image
+              src='/images/home/graph-circle.png'
+              alt='circle graph'
+              w='15.75rem'
+              h='15.5rem'
+              position='absolute'
+              bottom='0'
+              right='0'
+            />
           </Flex>
 
-          <Flex>
-            <RightArrowWithCircle />
-          </Flex>
-
-          <Image
-            src='/images/home/graph-circle.png'
-            alt='circle graph'
-            w='15.75rem'
-            h='15.5rem'
-            position='absolute'
-            bottom='0'
-            right='0'
-          />
+          <StatCardShadow />
         </Flex>
-
-        <StatCardShadow />
 
         <Flex
           w='23.875rem'
