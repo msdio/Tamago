@@ -1,9 +1,8 @@
-import { Box, Flex, Text, Textarea } from '@chakra-ui/react';
+import { Flex, Textarea } from '@chakra-ui/react';
 import { disassemble } from 'hangul-js';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 
-import DownArrow from '@/icons/DownArrow';
 import type { CharInfo, LongTypingDetail } from '@/types/typing';
 import { TypingState } from '@/types/typing';
 import { getCharType } from '@/utils/char';
@@ -12,10 +11,9 @@ import { getTypingAccuracy, getTypingSpeed, getTypingWpm, slicedContentAndString
 
 import useStopwatch from '../../short/useStopWatch';
 import PracticeLongLayout from '../Layout';
-import TypingExit from '../TypingExit';
 import TypingLine from '../TypingLine';
 import TypingPagination from '../TypingPagination';
-import InfoBar from './InfoBar';
+import TypingHeader from './TypingHeader';
 
 export default function PracticeLongTyping({
   content,
@@ -199,37 +197,12 @@ export default function PracticeLongTyping({
 
   return (
     <PracticeLongLayout>
-      <Flex gap='24px' mb='28px'>
-        <Box w='118px' bg='#CEF0FF' border=' 0.6px solid #000000' borderRadius={10}></Box>
-        <Box flex={1}>
-          <Flex alignItems='center' justifyContent='space-between'>
-            <Flex
-              mb='21px'
-              alignItems='center'
-              gap='8.5px'
-              border='0.6px solid #000000'
-              bg='#BCF075'
-              w='fit-content'
-              p='10px 23px'
-              borderRadius={30}
-            >
-              <Text fontSize='18px' fontWeight={500}>
-                긴 글 연습모드
-              </Text>
-              <DownArrow />
-            </Flex>
-            <Box mb='21px'>
-              <TypingExit />
-            </Box>
-          </Flex>
-          <InfoBar
-            accuracy={typingAccuracy.current}
-            speed={typingSpeed.current}
-            wpm={typingWpm.current}
-            time={time.minute * 60 + time.second}
-          />
-        </Box>
-      </Flex>
+      <TypingHeader
+        accuracy={typingAccuracy.current}
+        speed={typingSpeed.current}
+        wpm={typingWpm.current}
+        time={time.minute * 60 + time.second}
+      />
       <Flex
         h='550px'
         direction='column'
