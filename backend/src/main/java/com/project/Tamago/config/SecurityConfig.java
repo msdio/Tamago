@@ -54,6 +54,7 @@ public class SecurityConfig {
 			.authorizeRequests()
 			// swagger
 			.antMatchers("/typing/history").authenticated()
+			.antMatchers("/statistics/**").permitAll()
 			.antMatchers("/auth/**").permitAll()
 			.antMatchers("/test/**").permitAll()
 			.antMatchers("/swagger-ui/**").permitAll()

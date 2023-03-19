@@ -17,8 +17,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-15T04:42:15+0900",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Eclipse Adoptium)"
+    date = "2023-03-19T20:58:05+0900",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.12 (Eclipse Foundation)"
 )
 @Component
 public class DataMapperImpl implements DataMapper {
@@ -75,7 +75,10 @@ public class DataMapperImpl implements DataMapper {
         TypingHistoryBuilder typingHistory = TypingHistory.builder();
 
         if ( typingHistoryReqDto != null ) {
-            typingHistory.accuracy( typingHistoryReqDto.getTypingAccuracy() );
+            if ( typingHistoryReqDto.getTypingAccuracy() != null ) {
+                typingHistory.typingAccuracy( typingHistoryReqDto.getTypingAccuracy().doubleValue() );
+            }
+            typingHistory.contentType( typingHistoryReqDto.getContentType() );
             typingHistory.wpm( typingHistoryReqDto.getWpm() );
             if ( typingHistoryReqDto.getMode() != null ) {
                 typingHistory.mode( Enum.valueOf( Mode.class, typingHistoryReqDto.getMode() ) );
@@ -93,6 +96,7 @@ public class DataMapperImpl implements DataMapper {
         if ( user != null ) {
             typingHistory.user( user );
         }
+        typingHistory.wrongKeys( typingHistoryReqDto.wrongKeysChangeType() );
 
         return typingHistory.build();
     }
