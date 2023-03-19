@@ -4,12 +4,16 @@ import type { LongTypingDetail } from '@/types/typing';
 import { slicedContentAndStrings } from '@/utils/typing';
 
 import PracticeLongLayout from '../Layout';
+import TypingExit from '../TypingExit';
 import TypingLine from '../TypingLine';
 import TypingPagination from '../TypingPagination';
 
 export default function LongContent({ content, currentPage, language, title, totalPage, typingId }: LongTypingDetail) {
   return (
     <PracticeLongLayout>
+      <Flex mb='21px' justifyContent='right'>
+        <TypingExit />
+      </Flex>
       <Flex
         h='550px'
         direction='column'
