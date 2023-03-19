@@ -29,11 +29,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@Getter
 @TypeDef(name = "json", typeClass = JsonType.class)
 public class TypingHistory extends BaseTimeEntity {
 	@Id
@@ -45,8 +45,12 @@ public class TypingHistory extends BaseTimeEntity {
 	private User user;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "typing_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+	@JoinColumn(name = "typing_id", nullable = true, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
 	private Typing typing;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "longTyping_id", nullable = true, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+	private LongTyping longTyping;
 
 	private Integer wpm;
 
@@ -55,15 +59,18 @@ public class TypingHistory extends BaseTimeEntity {
 	@ColumnDefault("true")
 	private Boolean contentType;
 
+
 	@Enumerated(EnumType.STRING)
 	private Mode mode;
 
 	private LocalDateTime startTime;
+
 	private LocalDateTime endTime;
 
 	private Integer beforeMmr;
 
 	private Integer increasedValue;
+	private Integer page;
 
 	@Type(type = "json")
 	@Column(columnDefinition = "json")

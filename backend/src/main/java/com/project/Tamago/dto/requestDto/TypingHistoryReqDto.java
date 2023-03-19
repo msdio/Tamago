@@ -1,7 +1,9 @@
 package com.project.Tamago.dto.requestDto;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotNull;
 
@@ -21,7 +23,7 @@ import lombok.NoArgsConstructor;
 public class TypingHistoryReqDto {
 
 	@NotNull
-	private int typingId;
+	private Integer typingId;
 	@NotNull
 	private String resultContent;
 	@NotNull
@@ -30,19 +32,36 @@ public class TypingHistoryReqDto {
 	private LocalDateTime endTime;
 	@NotNull
 	@Range(min = 0, max = 2000)
-	private int typingSpeed;
+	private Integer typingSpeed;
 
-	private int typingPage;
-
-	private int wpm;
+	private Integer wpm;
 
 	@NotNull
 	@Range(min = 0, max = 100)
-	private int typingAccuracy;
+	private Integer typingAccuracy;
 	@NotNull
 	private String mode;
+
+	private Integer page;
+
+	@NotNull
+	private Boolean contentType;
 
 	@NotNull
 	private Map<Character, WrongKey> wrongKeys;
 
+	public Map<Character, Map<String, Integer>> wrongKeysChangeType() {
+		Map<Character, Map<String, Integer>> collect = wrongKeys.entrySet().stream()
+			.collect(Collectors.toMap(
+				Map.Entry::getKey,
+				entry -> {
+					HashMap<String, Integer> map = new HashMap<>();
+					int count = entry.getValue().getCount();
+					int total = entry.getValue().getTotal();
+					map.put("count", count);
+					map.put("total", total);
+					return map;
+				}));
+		return collect;
+	}
 }

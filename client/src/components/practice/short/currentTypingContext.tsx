@@ -10,20 +10,20 @@ import { getTypingAccuracy, getTypingSpeed, getTypingWpm, getWrongKeys } from '@
 
 interface UseCurrentTypingReturns {
   time: number;
-  originalWriting: string;
+  originalTyping: string;
 
   typingCount: number;
   typingWpm: number;
   typingAccuracy: number;
 
   handleBackspace: () => void;
-  handleTyping: (input: string) => void;
-  handleTypingSubmit: (inputWriting: string) => Promise<void>;
+  handleTyping: (userTyping: string) => void;
+  handleTypingSubmit: (userTyping: string) => Promise<void>;
 }
 
 export default function useCurrentTyping({
   typingId,
-  content: originalWriting,
+  content: originalTyping,
 }: ShortTypingType): UseCurrentTypingReturns {
   const { time, status, timePlay, timeReset, totalMillisecond, startTime } = useStopwatch();
 
@@ -42,24 +42,24 @@ export default function useCurrentTyping({
   }, []);
 
   const handleTypingAccuracy = useCallback(
-    (inputWriting: string) => {
+    (userTyping: string) => {
       const wrongLength = getWrongLength({
-        originalWriting,
-        inputWriting: inputWriting.slice(0, inputWriting.length - 1),
+        originalTyping: originalTyping,
+        userTyping: userTyping.slice(0, userTyping.length - 1),
       });
 
       const newAccuracy = getTypingAccuracy({
-        typingLength: originalWriting.length,
+        typingLength: originalTyping.length,
         wrongLength,
       });
 
-      setTypingAccuracy(parseInt(newAccuracy, 10));
+      // setTypingAccuracy(parseInt(newAccuracy, 10));
     },
-    [originalWriting],
+    [originalTyping],
   );
 
   const handleTyping = useCallback(
-    (input: string) => {
+    (userTyping: string) => {
       // 경과 시간 계산 시작
       if (status !== 'play') {
         timePlay();
@@ -67,7 +67,7 @@ export default function useCurrentTyping({
 
       typingCount.current += 1; // 글쇠 1개당 1타
       // //? 타이핑 정확도 계산 - 오타 계산
-      handleTypingAccuracy(input);
+      handleTypingAccuracy(userTyping);
     },
     [handleTypingAccuracy, status, timePlay],
   );
@@ -84,7 +84,7 @@ export default function useCurrentTyping({
 
   const generateTypingInfo = useCallback(
     (resultContent: string) => {
-      const originalInfos = [...originalWriting].map((char) => ({
+      const originalInfos = [...originalTyping].map((char) => ({
         char,
         type: getCharType(char),
         components: disassemble(char),
@@ -110,7 +110,7 @@ export default function useCurrentTyping({
 
       return typingHistory;
     },
-    [originalWriting, startTime, typingAccuracy, typingId, typingSpeed, typingWpm],
+    [originalTyping, startTime, typingAccuracy, typingId, typingSpeed, typingWpm],
   );
 
   const handleSubmit = useCallback(
@@ -148,7 +148,7 @@ export default function useCurrentTyping({
 
   return {
     time: parseInt(String(totalMillisecond / 1000), 10),
-    originalWriting,
+    originalTyping,
     typingCount: typingCount.current,
     typingWpm,
     typingAccuracy,

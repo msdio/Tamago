@@ -12,14 +12,12 @@ import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto.LongTypingDetailResDtoBuilder;
 import com.project.Tamago.dto.responseDto.LongTypingResDto;
 import com.project.Tamago.dto.responseDto.LongTypingResDto.LongTypingResDtoBuilder;
-import java.util.HashMap;
-import java.util.Map;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-16T01:42:09+0900",
+    date = "2023-03-19T20:58:05+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.12 (Eclipse Foundation)"
 )
 @Component
@@ -69,35 +67,36 @@ public class DataMapperImpl implements DataMapper {
     }
 
     @Override
-    public TypingHistory toTypingHistory(TypingHistoryReqDto typingHistoryReqDto, Typing typing, User user, Map<Character, Map<String, Integer>> wrongKeys) {
-        if ( typingHistoryReqDto == null && typing == null && user == null && wrongKeys == null ) {
+    public TypingHistory toTypingHistory(TypingHistoryReqDto typingHistoryReqDto, LongTyping longTyping, Typing typing, User user) {
+        if ( typingHistoryReqDto == null && longTyping == null && typing == null && user == null ) {
             return null;
         }
 
         TypingHistoryBuilder typingHistory = TypingHistory.builder();
 
         if ( typingHistoryReqDto != null ) {
+            if ( typingHistoryReqDto.getTypingAccuracy() != null ) {
+                typingHistory.typingAccuracy( typingHistoryReqDto.getTypingAccuracy().doubleValue() );
+            }
+            typingHistory.contentType( typingHistoryReqDto.getContentType() );
             typingHistory.wpm( typingHistoryReqDto.getWpm() );
-            typingHistory.typingAccuracy( (double) typingHistoryReqDto.getTypingAccuracy() );
             if ( typingHistoryReqDto.getMode() != null ) {
                 typingHistory.mode( Enum.valueOf( Mode.class, typingHistoryReqDto.getMode() ) );
             }
             typingHistory.startTime( typingHistoryReqDto.getStartTime() );
             typingHistory.endTime( typingHistoryReqDto.getEndTime() );
+            typingHistory.page( typingHistoryReqDto.getPage() );
+        }
+        if ( longTyping != null ) {
+            typingHistory.longTyping( longTyping );
         }
         if ( typing != null ) {
             typingHistory.typing( typing );
-            typingHistory.contentType( typing.getContentType() );
         }
         if ( user != null ) {
             typingHistory.user( user );
         }
-        if ( wrongKeys != null ) {
-            Map<Character, Map<String, Integer>> map = wrongKeys;
-            if ( map != null ) {
-                typingHistory.wrongKeys( new HashMap<Character, Map<String, Integer>>( map ) );
-            }
-        }
+        typingHistory.wrongKeys( typingHistoryReqDto.wrongKeysChangeType() );
 
         return typingHistory.build();
     }

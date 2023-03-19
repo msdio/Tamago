@@ -5,6 +5,8 @@ import static org.mockito.Mockito.*;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Disabled;
@@ -14,15 +16,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.Tamago.constants.enums.Language;
+import com.project.Tamago.domain.LongTyping;
 import com.project.Tamago.domain.Typing;
 import com.project.Tamago.domain.TypingHistory;
 import com.project.Tamago.domain.User;
+import com.project.Tamago.dto.WrongKey;
 import com.project.Tamago.dto.requestDto.TypingHistoryReqDto;
+import com.project.Tamago.repository.LongTypingRepository;
 import com.project.Tamago.repository.TypingHistoryRepository;
 import com.project.Tamago.repository.TypingRepository;
 import com.project.Tamago.repository.UserRepository;
@@ -30,15 +37,17 @@ import com.project.Tamago.security.jwt.JwtTokenProvider;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 public class TypingHistoryServiceTest {
 
 	@Autowired
 	private TypingHistoryService typingHistoryService;
-
 	@Autowired
 	private TypingHistoryRepository typingHistoryRepository;
 	@MockBean
 	private UserRepository userRepository;
+	@MockBean
+	private LongTypingRepository longTypingRepository;
 	@MockBean
 	private TypingRepository typingRepository;
 	@MockBean
@@ -120,6 +129,103 @@ public class TypingHistoryServiceTest {
 		typingHistoryService.saveHistory(typingHistoryReqDto, "test");
 		//then
 		assertTrue(typingHistoryRepository.findAll().contains(typingHistory));
+	}
+
+	@Test
+	@DisplayName("짧은글 전적 저장 성공")
+	@WithMockUser(username = "test", authorities = {"ROLE_USER"})
+	void testSaveHistoryWithTyping() {
+		// given
+		WrongKey key = new WrongKey();
+		key.setTotal(10);
+		key.setCount(1);
+
+		TypingHistoryReqDto typingHistoryReqDto = TypingHistoryReqDto.builder()
+			.typingId(1)
+			.resultContent("shortTest")
+			.typingSpeed(500)
+			.mode("PRACTICE")
+			.wpm(100)
+			.typingAccuracy(90)
+			.contentType(false)
+			.wrongKeys(Map.of('a',key, 'b', key))
+			.build();
+		User user = User.builder()
+			.id(1)
+			.email("test@naver.com")
+			.nickname("test")
+			.password("1234")
+			.build();
+		Typing typing = Typing.builder()
+			.id(1)
+			.content("Test1")
+			.build();
+		LongTyping longTyping = null;
+
+		when(typingRepository.getReferenceById(any())).thenReturn(typing);
+		when(userRepository.findById(any())).thenReturn(Optional.of(user));
+		when(jwtTokenProvider.getAuthenticationFromAcs(anyString())).thenReturn(
+			new UsernamePasswordAuthenticationToken(1, new Object()));
+		// when
+		typingHistoryService.saveHistory(typingHistoryReqDto, "test");
+
+		// then
+		List<TypingHistory> typingHistory = typingHistoryRepository.findByTyping(typing);
+		assertEquals(typingHistoryReqDto.getTypingId(), typingHistory.get(typingHistory.size()-1).getTyping().getId());
+
+	}
+
+	@Test
+	@DisplayName("긴글 전적 저장 성공")
+	@WithMockUser(username = "test", authorities = {"ROLE_USER"})
+	void testSaveHistoryWithLongTyping() {
+		// given
+		WrongKey key = new WrongKey();
+		key.setTotal(10);
+		key.setCount(1);
+
+		TypingHistoryReqDto typingHistoryReqDto = TypingHistoryReqDto.builder()
+			.typingId(1)
+			.resultContent("shortTest")
+			.typingSpeed(500)
+			.mode("PRACTICE")
+			.wpm(100)
+			.typingAccuracy(90)
+			.page(1)
+			.contentType(true)
+			.wrongKeys(Map.of('a',key, 'b', key))
+			.build();
+		User user = User.builder()
+			.id(1)
+			.email("test@naver.com")
+			.nickname("test")
+			.password("1234")
+			.build();
+		Typing typing = Typing.builder()
+			.id(1)
+			.content("Test1")
+			.build();
+		LongTyping longTyping = LongTyping.builder()
+			.id(1)
+			.title("Test title 1")
+			.thumbnail("test_thumbnail1")
+			.language(Language.ENGLISH)
+			.totalPage(10)
+			.viewCount(100)
+			.build();
+
+		when(longTypingRepository.getReferenceById(any())).thenReturn(longTyping);
+		when(typingRepository.getReferenceById(any())).thenReturn(typing);
+		when(userRepository.findById(any())).thenReturn(Optional.of(user));
+		when(jwtTokenProvider.getAuthenticationFromAcs(anyString())).thenReturn(
+			new UsernamePasswordAuthenticationToken(1, new Object()));
+		// when
+		typingHistoryService.saveHistory(typingHistoryReqDto, "test");
+
+		// then
+		List<TypingHistory> typingHistory = typingHistoryRepository.findByLongTyping(longTyping);
+		assertEquals(typingHistoryReqDto.getTypingId(), typingHistory.get(typingHistory.size()-1).getLongTyping().getId());
+
 	}
 
 }
