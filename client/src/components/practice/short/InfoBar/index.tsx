@@ -1,15 +1,34 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
+import Image from 'next/image';
 
 import { useContextShortTyping } from '@/components/practice/short/_hook/contextShortTyping';
+import GrassEllipse from '@/components/practice/short/InfoBar/GrassEllipse';
 import InfoBarItem from '@/components/practice/short/InfoBar/InfoBarItem';
 import DownArrow from '@/icons/DownArrow';
 import { getSecondToMMSSFormat } from '@/utils/time';
 
-function InfoBar() {
+export default function InfoBar() {
   const { time, typingAccuracy, typingCount, typingWpm } = useContextShortTyping();
+
   return (
     <Flex gap='24px'>
-      <Box w='118px' bg='#CEF0FF' border=' 0.6px solid #000000' borderRadius={10}></Box>
+      <Flex
+        justifyContent='center'
+        alignItems='center'
+        w='118px'
+        bg='#CEF0FF'
+        border=' 0.6px solid #000000'
+        borderRadius={10}
+        pos='relative'
+        overflow='hidden'
+      >
+        <Box pos='absolute' top='52px'>
+          <GrassEllipse />
+        </Box>
+        <Box pos='absolute' top='32px'>
+          <Image src='/images/home/white-chicken.png' alt='white-chicken' width={70} height={70} />
+        </Box>
+      </Flex>
       <Box flex={1}>
         <Flex
           mb='21px'
@@ -47,4 +66,3 @@ function InfoBar() {
     </Flex>
   );
 }
-export default InfoBar;
