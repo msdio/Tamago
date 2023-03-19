@@ -23,7 +23,7 @@ export interface LongTypingListResultType {
 export interface LongTypingResultType {
   code: number;
   description: string;
-  result: LongTypingDetail;
+  result: any;
 }
 
 type WrongKeyType = Record<string, { total: number; count: number }>;
@@ -63,7 +63,7 @@ export const getLongTypingAPI = async ({
   typingId: string;
   pageNum: string;
 }): Promise<LongTypingResultType> => {
-  const res = await request.get(
+  const res = await requestWithoutAuth.get(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/typing/long/detail?longTypingId=${typingId}&page=${pageNum}`,
   );
 
