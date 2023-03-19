@@ -1,14 +1,18 @@
 import { disassemble } from 'hangul-js';
 
-export const getWrongLength = ({ originalTyping, userTyping }: { originalTyping: string; userTyping: string }) => {
-  let wrongCount = 0;
-  for (let i = 0; i < userTyping.length; i++) {
-    if (userTyping[i] !== originalTyping[i]) {
-      wrongCount += 1;
-    }
-  }
+interface GetWrongLengthProps {
+  originalTyping: string;
+  userTyping: string;
+}
 
-  return wrongCount;
+export const getWrongLength = ({ originalTyping, userTyping }: GetWrongLengthProps) => {
+  return userTyping.split('').reduce((wrongCount, currentInput, index) => {
+    if (currentInput !== originalTyping[index]) {
+      return wrongCount + 1;
+    }
+
+    return wrongCount;
+  }, 0);
 };
 
 export const checkAllInputTyping = ({ originalWord, typingWord }: { originalWord: string; typingWord: string }) => {
