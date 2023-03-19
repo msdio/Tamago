@@ -47,7 +47,7 @@ public class StatisticService {
 			stringIntegerMap.put("count", stringIntegerMap.get("count") + value.get("count"));
 			stringIntegerMap.put("total", stringIntegerMap.get("total") + value.get("total"));
 		});
-		statisticsAll.changeStatisticsAll(getDoubleAverage(afterHistoryList, TypingHistory::getTypingAccuracy),
+		statisticsAll.updateStatisticsAll(getDoubleAverage(afterHistoryList, TypingHistory::getTypingAccuracy),
 			getDoubleAverage(afterHistoryList, TypingHistory::getWpm), afterHistoryList.size());
 		return statisticsAll;
 	}
@@ -75,7 +75,7 @@ public class StatisticService {
 		StatisticsAll statisticsAll = StatisticsAll.builder()
 			.accuracyAverage(accuracyAverage)
 			.wpmAverage(wpmAverage)
-			.length(length)
+			.size(length)
 			.wrongKeyInfo(wrongKeyAverage)
 			.user(user)
 			.build();
@@ -109,9 +109,9 @@ public class StatisticService {
 	}
 
 	private double getDoubleAverage(List<TypingHistory> historyList,
-		ToDoubleFunction<TypingHistory> getTypingAccuracy) {
+		ToDoubleFunction<TypingHistory> getDoubleFunction) {
 		return historyList.stream()
-			.mapToDouble(getTypingAccuracy)
+			.mapToDouble(getDoubleFunction)
 			.average()
 			.orElse(0.0);
 	}

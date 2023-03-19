@@ -37,7 +37,7 @@ public class StatisticsAll extends BaseTimeEntity{
 
 	private double accuracyAverage;
 	private double wpmAverage;
-	private int length;
+	private int size;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
@@ -47,26 +47,26 @@ public class StatisticsAll extends BaseTimeEntity{
 	@Column(columnDefinition = "json")
 	private Map<Character, Map<String, Integer>> wrongKeyInfo;
 
-	public void changeStatisticsAll(double accuracyAverage, double wpmAverage, int length) {
-		changeAccuracyAverage(accuracyAverage, length);
-		changeWpmAverage(accuracyAverage, length);
+	public void updateStatisticsAll(double accuracyAverage, double wpmAverage, int length) {
+		updateAccuracyAverage(accuracyAverage, length);
+		updateWpmAverage(accuracyAverage, length);
 		addLength(length);
 	}
 
 	private void addLength(int length) {
-		this.length += length;
+		this.size += length;
 	}
 
-	private void changeAccuracyAverage(double accuracyAverage, int length) {
-		double now = this.length * this.accuracyAverage;
+	private void updateAccuracyAverage(double accuracyAverage, int length) {
+		double now = this.size * this.accuracyAverage;
 		double change = accuracyAverage * length;
-		this.accuracyAverage = (now + change) / (length + this.length);
+		this.accuracyAverage = (now + change) / (length + this.size);
 	}
 
-	private void changeWpmAverage(double wpmAverage, int length) {
-		double now = this.length * this.wpmAverage;
+	private void updateWpmAverage(double wpmAverage, int length) {
+		double now = this.size * this.wpmAverage;
 		double change = wpmAverage * length;
-		this.wpmAverage = (now + change) / (length + this.length);
+		this.wpmAverage = (now + change) / (length + this.size);
 	}
 
 }
