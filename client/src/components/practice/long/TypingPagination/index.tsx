@@ -2,27 +2,36 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
 import { SmallLeftArrow, SmallRightArrow } from '@/icons/SmallArrow';
+import { PRACTICE_LONG_PATH_DETAIL } from '@/utils/paths';
 
 interface TypingPaginationProps {
+  typingId: number;
   totalPage: number;
   currentPage: number;
+  isTyping: boolean;
 }
 
-export default function TypingPagination({ totalPage, currentPage }: TypingPaginationProps) {
+export default function TypingPagination({ typingId, totalPage, currentPage, isTyping }: TypingPaginationProps) {
   const router = useRouter();
 
   const onClickLeft = () => {
     if (currentPage <= 1) {
       return;
     }
-    router.push(`/practice/long/typing?page=${currentPage - 1}`);
+    router.push({
+      pathname: PRACTICE_LONG_PATH_DETAIL,
+      query: { typingId, pageNum: currentPage - 1, isTyping: isTyping },
+    });
   };
 
   const onClickRight = () => {
     if (currentPage >= totalPage) {
       return;
     }
-    router.push(`/practice/long/typing?page=${currentPage + 1}`);
+    router.push({
+      pathname: PRACTICE_LONG_PATH_DETAIL,
+      query: { typingId, pageNum: currentPage + 1, isTyping: isTyping },
+    });
   };
 
   return (

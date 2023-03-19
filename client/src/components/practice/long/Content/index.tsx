@@ -5,6 +5,7 @@ import { slicedContentAndStrings } from '@/utils/typing';
 
 import PracticeLongLayout from '../Layout';
 import TypingLine from '../TypingLine';
+import TypingPagination from '../TypingPagination';
 
 export default function LongContent({ content, currentPage, language, title, totalPage, typingId }: LongTypingDetail) {
   return (
@@ -20,6 +21,9 @@ export default function LongContent({ content, currentPage, language, title, tot
         {slicedContentAndStrings(content).map(([line], i) => (
           <TypingLine key={i} contentLine={line} states={'c'.repeat(line.length)} />
         ))}
+      </Flex>
+      <Flex mt='33px' justifyContent='right'>
+        <TypingPagination typingId={typingId} currentPage={currentPage} totalPage={totalPage} isTyping={false} />
       </Flex>
     </PracticeLongLayout>
   );

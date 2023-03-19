@@ -13,6 +13,7 @@ import { getTypingAccuracy, getTypingSpeed, getTypingWpm, slicedContentAndString
 import useStopwatch from '../../short/useStopWatch';
 import PracticeLongLayout from '../Layout';
 import TypingLine from '../TypingLine';
+import TypingPagination from '../TypingPagination';
 import InfoBar from './InfoBar';
 
 export default function PracticeLongTyping({
@@ -250,6 +251,9 @@ export default function PracticeLongTyping({
             <TypingLine key={i} contentLine={contentLine} typingLine={typingLine} states={states} />
           ),
         )}
+      </Flex>
+      <Flex mt='33px' justifyContent='right'>
+        <TypingPagination typingId={typingId} currentPage={currentPage} totalPage={totalPage} isTyping={true} />
       </Flex>
     </PracticeLongLayout>
   );
