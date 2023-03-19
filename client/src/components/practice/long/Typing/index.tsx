@@ -26,7 +26,7 @@ export default function PracticeLongTyping({
   const router = useRouter();
 
   const [textarea, setTextarea] = useState('');
-  const { time, status, timePlay, timePause, timeReset } = useStopwatch();
+  const { totalMillisecond, status, timePlay, timePause, timeReset } = useStopwatch();
 
   const contentInfos = useRef<CharInfo[]>(
     [...content].map((char) => ({
@@ -75,13 +75,13 @@ export default function PracticeLongTyping({
     typingSpeed.current = getTypingSpeed({
       typingCount: typingCount.current,
       backspaceCount: backspaceCount.current,
-      millisecond: time.minute * 60000 + time.second * 1000 + time.ms,
+      millisecond: totalMillisecond,
     });
     typingWpm.current = getTypingWpm({
       typingCount: typingCount.current,
-      millisecond: time.minute * 60000 + time.second * 1000 + time.ms,
+      millisecond: totalMillisecond,
     });
-  }, [status, textarea, time]);
+  }, [status, textarea, totalMillisecond]);
 
   /**
    * 사용자가 타이핑을 할 경우 상태 변화
@@ -106,7 +106,7 @@ export default function PracticeLongTyping({
     if (textareaLength > contentLength) {
       timePause();
       // const endTime = Date.now();
-      // const typingTime = time.minute * 60000 + time.second * 1000 + time.ms;
+      // const typingTime = totalMillisecond;
       // const result = {
       //   typingId: router.query.typingId,
       //   typingPage: router.query.pageNum,
@@ -201,7 +201,7 @@ export default function PracticeLongTyping({
         accuracy={typingAccuracy.current}
         speed={typingSpeed.current}
         wpm={typingWpm.current}
-        time={time.minute * 60 + time.second}
+        time={totalMillisecond / 1000}
       />
       <Flex
         h='550px'
