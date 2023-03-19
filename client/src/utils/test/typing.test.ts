@@ -1,17 +1,51 @@
-test('타자 정확도 계산', () => {
-  // expect(getTypingAccuracy('cciif')).toBe(50);
-  // expect(getTypingAccuracy('f')).toBe(0);
-  // expect(getTypingAccuracy('cccccccccccccccf')).toBe(100);
-  // expect(getTypingAccuracy('iiiiiiiiiiiiiiif')).toBe(0);
-  // expect(getTypingAccuracy('cciicicuf')).toBe(50);
+import { getTypingCount, getWrongLength } from '@/utils/typing';
+
+test('잘못된 입력 개수 확인', () => {
+  const answerList = [
+    {
+      originalTyping: '안녕하',
+      userTyping: '안녕하',
+    },
+    {
+      originalTyping: '안녕하',
+      userTyping: '안녕아',
+    },
+    {
+      originalTyping: '안녕하세요.',
+      userTyping: '테스트입니다',
+    },
+  ];
+  const expectedValues = [0, 1, 6];
+
+  answerList.forEach((answer, idx) => {
+    const expectedValue = expectedValues[idx];
+    const result = getWrongLength(answer);
+    expect(expectedValue).toBe(result);
+  });
 });
 
-// test('wpm 계산', () => {
-//   expect(getTypingWpm({ typingCount: 10, minute: 1 / 60 })).toBe(120);
-// });
+test('typing count 개수 확인', () => {
+  const answerList = [
+    {
+      originalTyping: '안녕하',
+      userTyping: '안녕하',
+    },
+    {
+      originalTyping: '안녕하',
+      userTyping: '안녕아',
+    },
+    {
+      originalTyping: '안녕하세요.',
+      userTyping: '테스트입니다',
+    },
+  ];
+  const expectedValues = [8, 6, 0];
 
-// test('타속 계산', () => {
-//   expect(getTypingSpeed({ typingCount: 10, minute: 1 / 60 })).toBe(600);
-// });
+  answerList.forEach((answer, idx) => {
+    const expectedValue = expectedValues[idx];
+    const result = getTypingCount(answer);
+    expect(expectedValue).toBe(result);
+  });
+});
 
 export {};
