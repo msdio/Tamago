@@ -2,9 +2,8 @@ package com.project.Tamago.dto;
 
 import java.time.LocalDate;
 
-public interface AccuracyAverageByDateDto {
+public interface WpmAverageByDateDto {
 
 	LocalDate getCreatedDate();
-	double getAccuracyAverage();
 	double getWpmAverage();
 }

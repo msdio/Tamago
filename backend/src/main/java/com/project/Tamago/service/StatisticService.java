@@ -1,5 +1,6 @@
 package com.project.Tamago.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -12,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.Tamago.domain.StatisticsAll;
 import com.project.Tamago.domain.TypingHistory;
 import com.project.Tamago.domain.User;
+import com.project.Tamago.dto.responseDto.DateAccuracyAverageResDto;
+import com.project.Tamago.dto.responseDto.DateWpmAverageResDto;
 import com.project.Tamago.dto.responseDto.StatisticsAllResDto;
 import com.project.Tamago.repository.StatisticAllRepository;
 import com.project.Tamago.repository.TypingHistoryRepository;
@@ -35,6 +38,15 @@ public class StatisticService {
 		}
 		return getStatisticsAllResDto(getFirstStatisticsAll(user));
 	}
+
+	// public DateAccuracyAverageResDto findAccuracyAverageByUser(User user, LocalDate startDay, LocalDate endDay) {
+	// 	return new DateAccuracyAverageResDto(typingHistoryRepository.findAccuracyAverageByUserId(user, startDay, endDay));
+	// }
+	//
+	// public DateWpmAverageResDto findWpmAverageByUser(User user, LocalDate startDay, LocalDate endDay) {
+	// 	return new DateWpmAverageResDto(typingHistoryRepository.findWpmAverageByUserId(user, startDay, endDay));
+	// }
+
 
 	private StatisticsAll changeStatisticsAll(User user, StatisticsAll statisticsAll) {
 		List<TypingHistory> afterHistoryList = typingHistoryRepository.findAllByUserAndCreatedDateIsAfter(

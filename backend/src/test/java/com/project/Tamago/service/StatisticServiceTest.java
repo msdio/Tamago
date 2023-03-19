@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -31,13 +32,16 @@ class StatisticServiceTest {
 	StatisticService statisticService;
 	@MockBean
 	TypingHistoryRepository typingHistoryRepository;
+
+	@Autowired
+	TypingHistoryRepository typingHistoryRepository2;
 	@MockBean
 	StatisticAllRepository statisticAllRepository;
 
 	@Test
+	@DisplayName("전체 통계 보여주기")
 	@Transactional
 	void totalStatisticsAll() {
-
 		// given
 		User user = mock(User.class);
 		StatisticsAll statisticsAllMock = mock(StatisticsAll.class);
