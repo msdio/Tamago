@@ -2,11 +2,12 @@ package com.project.Tamago.dto.requestDto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import com.project.Tamago.constants.enums.Role;
 import com.project.Tamago.domain.User;
+import com.project.Tamago.constants.enums.Role;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

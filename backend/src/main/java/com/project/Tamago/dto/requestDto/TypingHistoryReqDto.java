@@ -1,15 +1,14 @@
 package com.project.Tamago.dto.requestDto;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Range;
 
-import com.project.Tamago.dto.WrongKey;
+import com.project.Tamago.exception.CustomException;
+import com.project.Tamago.exception.exceptionHandler.ErrorCode;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,18 +49,25 @@ public class TypingHistoryReqDto {
 	@NotNull
 	private Map<Character, WrongKey> wrongKeys;
 
-	public Map<Character, Map<String, Integer>> wrongKeysChangeType() {
-		Map<Character, Map<String, Integer>> collect = wrongKeys.entrySet().stream()
-			.collect(Collectors.toMap(
-				Map.Entry::getKey,
-				entry -> {
-					HashMap<String, Integer> map = new HashMap<>();
-					int count = entry.getValue().getCount();
-					int total = entry.getValue().getTotal();
-					map.put("count", count);
-					map.put("total", total);
-					return map;
-				}));
-		return collect;
+	@Getter
+	@NoArgsConstructor
+	private static class WrongKey {
+		private int total;
+
+		private int count;
+
+		public void setTotal(int total) {
+			if (total < 0) {
+				throw new CustomException(ErrorCode.INVALID_PARAMETER);
+			}
+			this.total = total;
+		}
+
+		public void setCount(int count) {
+			if (count < 0 || count > this.total) {
+				throw new CustomException(ErrorCode.INVALID_PARAMETER);
+			}
+			this.count = count;
+		}
 	}
 }
