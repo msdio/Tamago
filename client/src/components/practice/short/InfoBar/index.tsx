@@ -1,5 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
-import Image from 'next/image';
+import { Box, Flex, Image, Text } from '@chakra-ui/react';
 
 import { useContextShortTyping } from '@/components/practice/short/_hook/contextShortTyping';
 import GrassEllipse from '@/components/practice/short/InfoBar/GrassEllipse';
