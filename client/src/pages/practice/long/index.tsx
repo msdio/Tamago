@@ -14,6 +14,7 @@ export const getServerSideProps: GetServerSideProps<{ data: LongTypingItem[] }> 
   };
 };
 
+//  TODO : Pracition 오타있습니다.
 interface PracitionLongPageProps extends InferGetServerSidePropsType<typeof getServerSideProps> {
   data: LongTypingItem[];
 }
