@@ -11,7 +11,7 @@ export default function CurrentTyping() {
   const { originalTyping, userTyping } = useContextShortTyping();
   const { onEndTyping, onTyping } = useContextShortTypingHandler();
 
-  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
 
     onTyping(input);
@@ -21,7 +21,7 @@ export default function CurrentTyping() {
     }
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+  const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     //? NOTE: enter 누른 경우 -> submit
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -54,8 +54,8 @@ export default function CurrentTyping() {
         placeholder=' '
         type='text'
         value={userTyping}
-        onChange={handleInput}
-        onKeyDown={handleKeyDown}
+        onChange={onInputChange}
+        onKeyDown={onKeyDown}
         w='100%'
         p='11px 5px'
         height='48px'
