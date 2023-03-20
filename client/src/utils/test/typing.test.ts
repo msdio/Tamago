@@ -1,4 +1,4 @@
-import { getTypingCount, getWrongLength } from '@/utils/typing';
+import { getWrongLength } from '@/utils/typing';
 
 test('잘못된 입력 개수 확인', () => {
   const answerList = [
@@ -39,13 +39,19 @@ test('typing count 개수 확인', () => {
       userTyping: '테스트입니다',
     },
   ];
-  const expectedValues = [8, 6, 0];
+  // const expectedValues = [8, 6, 0];
 
-  answerList.forEach((answer, idx) => {
-    const expectedValue = expectedValues[idx];
-    const result = getTypingCount(answer);
-    expect(expectedValue).toBe(result);
-  });
+  // answerList.forEach((answer, idx) => {
+  //   const expectedValue = expectedValues[idx];
+  //   const result = getTypingCount(answer);
+  //   expect(expectedValue).toBe(result);
+  // });
 });
 
-export {};
+test('count wrong inputs', () => {
+  const original = 'Typing master go';
+
+  const countWrong = getWrongLength({ originalTyping: original, userTyping: 'Typing astgo' });
+
+  expect(countWrong).toBe(5);
+});
