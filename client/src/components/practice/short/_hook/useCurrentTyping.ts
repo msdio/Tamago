@@ -52,7 +52,7 @@ export default function useCurrentTyping({
         wrongLength,
       });
 
-      setTypingAccuracy(parseInt(newAccuracy, 10));
+      // setTypingAccuracy(parseInt(newAccuracy, 10));
     },
     [originalTyping],
   );

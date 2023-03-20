@@ -1,5 +1,5 @@
-import request from '@/apis';
-import type { LongTypingItem } from '@/types/typing';
+import request, { authenticationRequest } from '@/apis';
+import type { LongTypingDetail, LongTypingItem } from '@/types/typing';
 import type { TypingMode } from '@/types/typing';
 
 export interface ShortTypingType {
@@ -14,27 +14,17 @@ export interface ShortTypingResultType {
   typingWritings: ShortTypingType[];
 }
 
-interface LongTypingListResultType {
+export interface LongTypingListResultType {
   code: number;
   description: string;
   result: [LongTypingItem];
 }
 
-export const getShortTypingWritingsAPI = async (
-  language: 'korean' | 'english',
-): Promise<{
-  result: ShortTypingResultType;
-}> => {
-  const res = await request.get(`/typing/short?language=${language}`);
-
-  return res.data;
-};
-
-export const getLongTypingWritingsAPI = async (): Promise<LongTypingListResultType> => {
-  const res = await request.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/typing/long`);
-
-  return res.data;
-};
+export interface LongTypingResultType {
+  code: number;
+  description: string;
+  result: LongTypingDetail;
+}
 
 type WrongKeyType = Record<string, { total: number; count: number }>;
 
@@ -49,6 +39,36 @@ interface TypingHistoryRequest {
   typingAccuracy: number;
   wrongKeys: Record<string, { total: number; count: number }>;
 }
+
+export const getShortTypingWritingsAPI = async (
+  language: 'korean' | 'english',
+): Promise<{
+  result: ShortTypingResultType;
+}> => {
+  const res = await request.get(`/typing/short?language=${language}`);
+
+  return res.data;
+};
+
+export const getLongTypingListAPI = async (): Promise<LongTypingListResultType> => {
+  const res = await request.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/typing/long`);
+
+  return res.data;
+};
+
+export const getLongTypingAPI = async ({
+  typingId,
+  pageNum,
+}: {
+  typingId: string;
+  pageNum: string;
+}): Promise<LongTypingResultType> => {
+  const res = await request.get(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/typing/long/detail?longTypingId=${typingId}&page=${pageNum}`,
+  );
+
+  return res.data;
+};
 
 export const getTypingHistoryAPI = async (typingHistory: TypingHistoryRequest) => {
   console.log('서버에 전송할 데이터', typingHistory);

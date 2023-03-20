@@ -31,5 +31,8 @@ public interface DataMapper {
 	@Mapping(target = "id", ignore = true)
 	@Mapping(source = "typing", target = "typing")
 	@Mapping(source = "user", target = "user")
-	TypingHistory toTypingHistory(TypingHistoryReqDto typingHistoryReqDto, Typing typing, User user);
+	@Mapping(source = "typingHistoryReqDto.typingAccuracy", target = "typingAccuracy")
+	@Mapping(target = "wrongKeys", expression = "java(typingHistoryReqDto.wrongKeysChangeType())")
+	@Mapping(source = "typingHistoryReqDto.contentType", target = "contentType")
+	TypingHistory toTypingHistory(TypingHistoryReqDto typingHistoryReqDto, LongTyping longTyping, Typing typing, User user);
 }

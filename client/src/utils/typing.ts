@@ -3,7 +3,10 @@ import { disassemble } from 'hangul-js';
 import type { CharInfo } from '@/types/typing';
 
 export const getTypingAccuracy = ({ typingLength, wrongLength }: { typingLength: number; wrongLength: number }) => {
-  return (((typingLength - wrongLength) / typingLength) * 100).toFixed(1);
+  if (typingLength === 0) {
+    return 0;
+  }
+  return Math.round(((typingLength - wrongLength) / typingLength) * 1000) / 10;
 };
 
 export const getTypingWpm = ({ typingCount, millisecond }: { typingCount: number; millisecond: number }) => {
