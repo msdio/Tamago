@@ -2,7 +2,8 @@ create table typing_history
 (
     id              int auto_increment
         primary key,
-    typing_id       int              not null,
+    typing_id       int              null,
+    longTyping_id   int              null,
     user_id         int              not null,
     content_type    bit default b'1' null,
     mode            varchar(255)     null,
@@ -27,7 +28,7 @@ create table statistics_all
     created_date     datetime(6) null,
     updated_date     datetime(6) null,
     accuracy_average double      not null,
-    length           int         not null,
+    size             int         not null,
     wpm_average      double      not null,
     wrong_key_info   json        null,
     user_id          int         null
