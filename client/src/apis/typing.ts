@@ -1,5 +1,5 @@
-import { requestWithAuth, requestWithoutAuth } from '@/apis';
-import type { LongTypingItem } from '@/types/typing';
+import { requestWithoutAuth } from '@/apis';
+import type { LongTypingDetail, LongTypingItem } from '@/types/typing';
 import type { TypingMode } from '@/types/typing';
 
 export interface ShortTypingType {
@@ -23,10 +23,8 @@ export interface LongTypingListResultType {
 export interface LongTypingResultType {
   code: number;
   description: string;
-  result: any;
+  result: LongTypingDetail;
 }
-
-type WrongKeyType = Record<string, { total: number; count: number }>;
 
 interface TypingHistoryRequest {
   typingId: string;
@@ -50,7 +48,7 @@ export const getShortTypingWritingsAPI = async (
   return res.data;
 };
 
-export const getLongTypingWritingsAPI = async (): Promise<LongTypingListResultType> => {
+export const getLongTypingListAPI = async (): Promise<LongTypingListResultType> => {
   const res = await requestWithoutAuth.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/typing/long`);
 
   return res.data;
@@ -72,8 +70,8 @@ export const getLongTypingAPI = async ({
 
 export const getTypingHistoryAPI = async (typingHistory: TypingHistoryRequest) => {
   console.log('서버에 전송할 데이터', typingHistory);
-  const res = await requestWithAuth.post('/typing/history', typingHistory);
-  console.log('res: ', res);
-
-  return res.data;
+  // const res = await authenticationRequest.post('/typing/history', typingHistory);
+  // console.log('res: ', res);
+  return true;
+  // return res.data;
 };
