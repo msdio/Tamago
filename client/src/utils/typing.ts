@@ -58,3 +58,29 @@ export const getWrongKeys = (contentInfos: CharInfo[], typingInfos: CharInfo[]) 
 
   return wrongKeys;
 };
+
+export const getWrongLength = ({ originalTyping, userTyping }: { originalTyping: string; userTyping: string }) => {
+  let wrongCount = 0;
+  for (let i = 0; i < userTyping.length; i++) {
+    if (userTyping[i] !== originalTyping[i]) {
+      wrongCount += 1;
+    }
+  }
+
+  return wrongCount;
+};
+
+interface GetWrongLengthProps {
+  originalTyping: string;
+  userTyping: string;
+}
+
+export const getTypingCount = ({ originalTyping, userTyping }: { originalTyping: string; userTyping: string }) => {
+  return userTyping.split('').reduce((wrongCount, currentInput, index) => {
+    if (currentInput !== originalTyping[index]) {
+      return wrongCount + 1;
+    }
+
+    return wrongCount;
+  }, 0);
+};

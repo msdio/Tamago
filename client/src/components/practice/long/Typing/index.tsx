@@ -8,7 +8,7 @@ import type { CharInfo, LongTypingDetail } from '@/types/typing';
 import { getCharType } from '@/utils/char';
 import { getTypingAccuracy, getTypingSpeed, getTypingWpm } from '@/utils/typing';
 
-import useStopwatch from '../../short/useStopWatch';
+import useStopwatch from '../../short/_hook/useStopWatch';
 import TypingLine from '../common/TypingLine';
 import PracticeLongLayout from '../Layout';
 import { slicedContentAndStrings } from '../utils';

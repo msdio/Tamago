@@ -43,7 +43,7 @@ public class UserService {
 			.orElseThrow(() -> new CustomException(CURRENT_PAGE_NOT_EXISTS));
 	}
 
-	private User getUserByJwtToken(String jwtToken) {
+	public User getUserByJwtToken(String jwtToken) {
 		return userRepository.findById(Integer.parseInt(jwtTokenProvider.getAuthenticationFromAcs(jwtToken).getName()))
 			.orElseThrow(() -> new CustomException(USERS_INFO_NOT_EXISTS));
 	}
