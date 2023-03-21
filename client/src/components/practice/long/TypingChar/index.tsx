@@ -3,13 +3,18 @@ import { memo } from 'react';
 
 import { TypingState } from '@/types/typing';
 
+const convertBlankToVisible = (char: string) => {
+  if (char === ' ' || char === '\n') return <>&nbsp;</>;
+  return char;
+};
+
 interface TypingCharProps {
-  contentChar: string;
-  typingChar?: string;
+  originalChar: string;
+  userChar?: string;
   state?: TypingState;
 }
 
-function TypingChar({ contentChar, typingChar, state = TypingState.DEFAULT }: TypingCharProps) {
+function TypingChar({ originalChar, userChar, state = TypingState.DEFAULT }: TypingCharProps) {
   const charColor = (state: TypingState) => {
     switch (state) {
       case TypingState.CORRECT:
@@ -21,12 +26,6 @@ function TypingChar({ contentChar, typingChar, state = TypingState.DEFAULT }: Ty
     }
   };
 
-  // TODO: 컴포넌트 밖으로 빼기
-  const convertBlankToVisible = (char: string) => {
-    if (char === ' ' || char === '\n') return <>&nbsp;</>;
-    return char;
-  };
-
   return (
     <Text
       as='span'
@@ -35,8 +34,8 @@ function TypingChar({ contentChar, typingChar, state = TypingState.DEFAULT }: Ty
       backgroundColor={state === TypingState.FOCUS ? '#FBE789' : ''}
     >
       {state === TypingState.INCORRECT
-        ? convertBlankToVisible(typingChar || contentChar)
-        : convertBlankToVisible(contentChar)}
+        ? convertBlankToVisible(userChar || originalChar)
+        : convertBlankToVisible(originalChar)}
     </Text>
   );
 }

@@ -17,7 +17,7 @@ export default function LongContent({ content, currentPage, language, title, tot
         p='34px 53px'
       >
         {slicedContentAndStrings(content).map(([line], i) => (
-          <TypingLine key={i} contentLine={line} states={'c'.repeat(line.length)} />
+          <TypingLine key={i} originalLine={line} states={'c'.repeat(line.length)} />
         ))}
       </Flex>
     </PracticeLongLayout>
