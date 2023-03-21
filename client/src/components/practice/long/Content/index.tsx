@@ -1,10 +1,9 @@
 import { Flex } from '@chakra-ui/react';
 
+import PracticeLongLayout from '@/components/practice/long/Layout';
+import TypingLine from '@/components/practice/long/TypingLine';
 import type { LongTypingDetail } from '@/types/typing';
-
-import TypingLine from '../common/TypingLine';
-import PracticeLongLayout from '../Layout';
-import { slicedContentAndStrings } from '../utils';
+import { slicedContentAndStrings } from '@/utils/typing';
 
 export default function LongContent({ content, currentPage, language, title, totalPage, typingId }: LongTypingDetail) {
   return (
@@ -18,7 +17,7 @@ export default function LongContent({ content, currentPage, language, title, tot
         p='34px 53px'
       >
         {slicedContentAndStrings(content).map(([line], i) => (
-          <TypingLine key={i} contentLine={line} states={'c'.repeat(line.length)} />
+          <TypingLine key={i} originalLine={line} states={'c'.repeat(line.length)} />
         ))}
       </Flex>
     </PracticeLongLayout>
