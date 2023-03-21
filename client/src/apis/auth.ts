@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 
-import request from '@/apis';
+import { requestWithoutAuth } from '@/apis';
 
 import { EmailDuplicateError, NicknameDuplicateError, ServerError } from './error';
 
@@ -15,7 +15,7 @@ interface EmailDuplicateResponse {
 
 export const loginAPI = async (email: string, password: string): Promise<number> => {
   try {
-    const response = await request.post(LOGIN_PATH, { email, password });
+    const response = await requestWithoutAuth.post(LOGIN_PATH, { email, password });
 
     const { data, status } = response;
 
@@ -41,7 +41,7 @@ interface SignupAPIParams {
 
 export const signupAPI = async ({ email, password, nickname }: SignupAPIParams) => {
   try {
-    await request.post(SIGNUP_PATH, { email, nickname, password });
+    await requestWithoutAuth.post(SIGNUP_PATH, { email, nickname, password });
   } catch (error) {
     if (error instanceof AxiosError) {
       const { code } = error.response?.data;
@@ -58,7 +58,7 @@ export const signupAPI = async ({ email, password, nickname }: SignupAPIParams) 
 
 export const emailDuplicateAPI = async (email: string) => {
   try {
-    const { data } = await request.get(EMAIL_DUPLICATE_PATH, { params: { email } });
+    const { data } = await requestWithoutAuth.get(EMAIL_DUPLICATE_PATH, { params: { email } });
     const { code } = data as EmailDuplicateResponse;
     if (code === 3001) {
       throw new EmailDuplicateError();

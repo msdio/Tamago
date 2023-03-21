@@ -1,3 +1,5 @@
+import { disassemble } from 'hangul-js';
+
 import type { CharInfo } from '@/types/typing';
 
 export const getTypingAccuracy = ({ typingLength, wrongLength }: { typingLength: number; wrongLength: number }) => {
@@ -76,4 +78,30 @@ export const slicedContentAndStrings = (content: string, ...args: string[]) => {
       [slicedContent],
     ),
   );
+};
+
+interface GetWrongLengthProps {
+  originalTyping: string;
+  userTyping: string;
+}
+
+export const getWrongLength = ({ originalTyping, userTyping }: GetWrongLengthProps) => {
+  return userTyping.split('').reduce((wrongCount, currentInput, index) => {
+    if (currentInput !== originalTyping[index]) {
+      return wrongCount + 1;
+    }
+
+    return wrongCount;
+  }, 0);
+};
+
+export const getTypingCount = ({ originalTyping, userTyping }: GetWrongLengthProps) => {
+  let typingCount = 0;
+  for (let i = 0; i < userTyping.length; i++) {
+    if (userTyping[i] === originalTyping[i]) {
+      typingCount += disassemble(originalTyping[i]).length;
+    }
+  }
+
+  return typingCount;
 };

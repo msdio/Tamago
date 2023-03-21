@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Disabled;
@@ -26,6 +27,7 @@ import com.project.Tamago.domain.LongTyping;
 import com.project.Tamago.domain.Typing;
 import com.project.Tamago.domain.TypingHistory;
 import com.project.Tamago.domain.User;
+import com.project.Tamago.dto.WrongKey;
 import com.project.Tamago.dto.requestDto.TypingHistoryReqDto;
 import com.project.Tamago.repository.LongTypingRepository;
 import com.project.Tamago.repository.TypingHistoryRepository;
@@ -82,7 +84,7 @@ public class TypingHistoryServiceTest {
 			.typing(typing)
 			.startTime(LocalDateTime.now())
 			.endTime(LocalDateTime.now())
-			.accuracy(10)
+			.typingAccuracy(10.0)
 			.wpm(10)
 			.build();
 		// when
@@ -134,6 +136,10 @@ public class TypingHistoryServiceTest {
 	@WithMockUser(username = "test", authorities = {"ROLE_USER"})
 	void testSaveHistoryWithTyping() {
 		// given
+		WrongKey key = new WrongKey();
+		key.setTotal(10);
+		key.setCount(1);
+
 		TypingHistoryReqDto typingHistoryReqDto = TypingHistoryReqDto.builder()
 			.typingId(1)
 			.resultContent("shortTest")
@@ -142,7 +148,7 @@ public class TypingHistoryServiceTest {
 			.wpm(100)
 			.typingAccuracy(90)
 			.contentType(false)
-			.wrongKeys(null)
+			.wrongKeys(Map.of('a',key, 'b', key))
 			.build();
 		User user = User.builder()
 			.id(1)
@@ -174,6 +180,10 @@ public class TypingHistoryServiceTest {
 	@WithMockUser(username = "test", authorities = {"ROLE_USER"})
 	void testSaveHistoryWithLongTyping() {
 		// given
+		WrongKey key = new WrongKey();
+		key.setTotal(10);
+		key.setCount(1);
+
 		TypingHistoryReqDto typingHistoryReqDto = TypingHistoryReqDto.builder()
 			.typingId(1)
 			.resultContent("shortTest")
@@ -183,7 +193,7 @@ public class TypingHistoryServiceTest {
 			.typingAccuracy(90)
 			.page(1)
 			.contentType(true)
-			.wrongKeys(null)
+			.wrongKeys(Map.of('a',key, 'b', key))
 			.build();
 		User user = User.builder()
 			.id(1)
@@ -191,7 +201,10 @@ public class TypingHistoryServiceTest {
 			.nickname("test")
 			.password("1234")
 			.build();
-		Typing typing = null;
+		Typing typing = Typing.builder()
+			.id(1)
+			.content("Test1")
+			.build();
 		LongTyping longTyping = LongTyping.builder()
 			.id(1)
 			.title("Test title 1")

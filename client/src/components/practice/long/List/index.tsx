@@ -1,5 +1,6 @@
 import { Box, Flex, Heading, Link, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 
+import PracticeLongLayout from '@/components/practice/long/Layout';
 import { Document } from '@/icons/Document';
 import DownArrow from '@/icons/DownArrow';
 import { BookmarkOff } from '@/icons/Heart';
@@ -7,8 +8,6 @@ import { SmallLeftArrow, SmallRightArrow } from '@/icons/SmallArrow';
 import UpDownArrow from '@/icons/UpDownArrow';
 import type { LongTypingItem } from '@/types/typing';
 import { PRACTICE_LONG_PATH_DETAIL } from '@/utils/paths';
-
-import PracticeLongLayout from '../Layout';
 
 interface PracticeLongListProps {
   typingList: LongTypingItem[];

@@ -3,17 +3,16 @@ import { disassemble } from 'hangul-js';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 
+import PracticeLongLayout from '@/components/practice/long/Layout';
+import TypingHeader from '@/components/practice/long/Typing/TypingHeader/index';
+import TypingLine from '@/components/practice/long/TypingLine';
+import TypingPagination from '@/components/practice/long/TypingPagination';
+import useStopwatch from '@/components/practice/short/_hook/useStopWatch';
 import type { CharInfo, LongTypingDetail } from '@/types/typing';
 import { TypingState } from '@/types/typing';
 import { getCharType } from '@/utils/char';
 import { PRACTICE_LONG_PATH_DETAIL } from '@/utils/paths';
 import { getTypingAccuracy, getTypingSpeed, getTypingWpm, slicedContentAndStrings } from '@/utils/typing';
-
-import useStopwatch from '../../short/useStopWatch';
-import PracticeLongLayout from '../Layout';
-import TypingLine from '../TypingLine';
-import TypingPagination from '../TypingPagination';
-import TypingHeader from './TypingHeader';
 
 export default function PracticeLongTyping({
   content,
@@ -28,14 +27,14 @@ export default function PracticeLongTyping({
   const [textarea, setTextarea] = useState('');
   const { totalMillisecond, status, timePlay, timePause, timeReset } = useStopwatch();
 
-  const contentInfos = useRef<CharInfo[]>(
+  const originalInfos = useRef<CharInfo[]>(
     [...content].map((char) => ({
       char,
       type: getCharType(char),
       components: disassemble(char),
     })),
   );
-  const typingInfos = useRef<CharInfo[]>(
+  const userInfos = useRef<CharInfo[]>(
     [...content].map(() => ({
       char: '',
       type: 'other',
@@ -67,7 +66,7 @@ export default function PracticeLongTyping({
   useEffect(() => {
     typingAccuracy.current = getTypingAccuracy({
       typingLength: typingStates.current.length - 1,
-      wrongLength: typingStates.current.replaceAll(TypingState.CORRECT, '').length - 1,
+      wrongLength: typingStates.current.replaceAll(TypingState.CORRECT, TypingState.EMPTY).length - 1,
     });
   }, [textarea]);
 
@@ -100,7 +99,7 @@ export default function PracticeLongTyping({
 
     const textareaLength = value.length;
     const typingLength = typingStates.current.length - 1;
-    const contentLength = contentInfos.current.length;
+    const contentLength = originalInfos.current.length;
 
     // 타이핑 완료시 api 호출
     if (textareaLength > contentLength) {
@@ -137,31 +136,31 @@ export default function PracticeLongTyping({
 
     // 한글처럼 여러 글쇠로 이루어진 문자의 경우 타이핑을 해도 길이가 동일한 경우 발생, 빼는 경우도 마찬가지
     if (textareaLength === typingLength) {
-      const prevComponents = typingInfos.current[textareaLength - 1].components;
+      const prevComponents = userInfos.current[textareaLength - 1].components;
 
-      typingInfos.current[textareaLength - 1] = {
+      userInfos.current[textareaLength - 1] = {
         char: textarea[textareaLength - 1],
         type: getCharType(textarea[textareaLength - 1]),
         components: disassemble(textarea[textareaLength - 1]),
       };
 
-      const currComponents = typingInfos.current[textareaLength - 1].components;
+      const currComponents = userInfos.current[textareaLength - 1].components;
 
       // 한글을 뺀 경우 (길이 변화 X)
       if (prevComponents > currComponents) {
-        if (contentInfos.current[textareaLength - 1].char === value[textareaLength - 1]) {
+        if (originalInfos.current[textareaLength - 1].char === value[textareaLength - 1]) {
           typingStates.current = typingStates.current.slice(0, -2) + TypingState.CORRECT + TypingState.FOCUS;
           typingCount.current +=
-            typingInfos.current[textareaLength - 1].components.length; /* 현재 글자의 글쇠를 타수에 더함 */
+            userInfos.current[textareaLength - 1].components.length; /* 현재 글자의 글쇠를 타수에 더함 */
         } else {
           typingStates.current = typingStates.current.slice(0, -2) + TypingState.INCORRECT + TypingState.FOCUS;
         }
       }
       // 한글을 더한 경우 (길이 변화 X)
       else {
-        if (contentInfos.current[textareaLength - 1].char === value[textareaLength - 1]) {
+        if (originalInfos.current[textareaLength - 1].char === value[textareaLength - 1]) {
           typingStates.current = typingStates.current.slice(0, -2) + TypingState.CORRECT + TypingState.FOCUS;
-          typingCount.current += typingInfos.current[textareaLength - 1].components.length;
+          typingCount.current += userInfos.current[textareaLength - 1].components.length;
         } else {
           typingStates.current = typingStates.current.slice(0, -2) + TypingState.INCORRECT + TypingState.FOCUS;
         }
@@ -169,22 +168,22 @@ export default function PracticeLongTyping({
     }
     // 타이핑하여 글자가 증가한 경우
     else if (textareaLength > typingLength) {
-      typingInfos.current[textareaLength - 1] = {
+      userInfos.current[textareaLength - 1] = {
         char: value[textareaLength - 1],
         type: getCharType(value[textareaLength - 1]),
         components: disassemble(value[textareaLength - 1]),
       };
 
-      if (contentInfos.current[textareaLength - 1].char === typingInfos.current[textareaLength - 1].char) {
+      if (originalInfos.current[textareaLength - 1].char === userInfos.current[textareaLength - 1].char) {
         typingStates.current = typingStates.current.slice(0, -1) + TypingState.CORRECT + TypingState.FOCUS;
-        typingCount.current += typingInfos.current[textareaLength - 1].components.length;
+        typingCount.current += userInfos.current[textareaLength - 1].components.length;
       } else {
         typingStates.current = typingStates.current.slice(0, -1) + TypingState.INCORRECT + TypingState.FOCUS;
       }
     }
     // 빼서 글자가 감소한 경우
     else if (textareaLength < typingLength) {
-      typingInfos.current[textareaLength] = {
+      userInfos.current[textareaLength] = {
         char: '',
         type: 'other',
         components: [],
@@ -225,11 +224,9 @@ export default function PracticeLongTyping({
           onCut={(e) => e.preventDefault()}
           onPaste={(e) => e.preventDefault()}
         />
-        {slicedContentAndStrings(content, textarea, typingStates.current).map(
-          ([contentLine, typingLine, states], i) => (
-            <TypingLine key={i} contentLine={contentLine} typingLine={typingLine} states={states} />
-          ),
-        )}
+        {slicedContentAndStrings(content, textarea, typingStates.current).map(([originalLine, userLine, states], i) => (
+          <TypingLine key={i} originalLine={originalLine} userLine={userLine} states={states} />
+        ))}
       </Flex>
       <Flex mt='33px' justifyContent='right'>
         <TypingPagination typingId={typingId} currentPage={currentPage} totalPage={totalPage} isTyping={true} />

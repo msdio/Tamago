@@ -1,25 +1,24 @@
 import { Flex } from '@chakra-ui/react';
 import { memo } from 'react';
 
-import type { TypingState } from '@/types/typing';
-
-import TypingChar from '../TypingChar';
+import TypingChar from '@/components/practice/long/TypingChar';
+import { TypingState } from '@/types/typing';
 
 interface TypingLineProps {
-  contentLine: string;
-  typingLine?: string;
+  originalLine: string;
+  userLine?: string;
   states?: string;
 }
 
-function TypingLine({ contentLine, typingLine, states = '' }: TypingLineProps) {
+function TypingLine({ originalLine, userLine, states = TypingState.EMPTY }: TypingLineProps) {
   return (
     <Flex>
-      {[...contentLine].map((key, i) => (
+      {[...originalLine].map((key, i) => (
         <TypingChar
           key={i}
-          contentChar={key}
-          typingChar={typingLine && typingLine[i]}
-          state={(states[i] as TypingState) ?? 'd'}
+          originalChar={key}
+          userChar={userLine && userLine[i]}
+          state={(states[i] as TypingState) ?? TypingState.DEFAULT}
         />
       ))}
     </Flex>

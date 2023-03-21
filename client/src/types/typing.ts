@@ -11,6 +11,7 @@ export enum TypingState {
   'CORRECT' = 'c',
   'INCORRECT' = 'i',
   'FOCUS' = 'f',
+  'EMPTY' = '',
 }
 
 export interface LongTypingItem {
