@@ -1,9 +1,8 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
 
+import EmailInput from '@/components/signup/Form/EmailInput';
 import theme from '@/styles/theme';
-
-import EmailInput from '.';
 
 export default {
   title: 'components/signup/InputEmail',

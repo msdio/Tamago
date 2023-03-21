@@ -3,17 +3,16 @@ import { disassemble } from 'hangul-js';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 
+import PracticeLongLayout from '@/components/practice/long/Layout';
+import InfoBar from '@/components/practice/long/Typing/InfoBar';
+import TypingLine from '@/components/practice/long/TypingLine';
+import useStopwatch from '@/components/practice/short/useStopWatch';
 import DownArrow from '@/icons/DownArrow';
 import type { CharInfo, LongTypingDetail } from '@/types/typing';
 import { TypingState } from '@/types/typing';
 import { getCharType } from '@/utils/char';
 import { PRACTICE_LONG_PATH_DETAIL } from '@/utils/paths';
 import { getTypingAccuracy, getTypingSpeed, getTypingWpm, slicedContentAndStrings } from '@/utils/typing';
-
-import useStopwatch from '../../short/useStopWatch';
-import PracticeLongLayout from '../Layout';
-import TypingLine from '../TypingLine';
-import InfoBar from './InfoBar';
 
 export default function PracticeLongTyping({
   content,
