@@ -46,6 +46,8 @@ export function Header() {
         {!isLogin && (
           <HStack spacing='12.91px'>
             <Button
+              variant='outline'
+              colorScheme='gray'
               w='95.54px'
               h='35.29px'
               border='0.516456px solid'
@@ -60,6 +62,8 @@ export function Header() {
               회원가입
             </Button>
             <Button
+              variant='outline'
+              colorScheme='gray'
               w='95.54px'
               h='35.29px'
               border='0.516456px solid'
