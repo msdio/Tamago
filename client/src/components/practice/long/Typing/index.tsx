@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import PracticeLongLayout from '@/components/practice/long/Layout';
 import InfoBar from '@/components/practice/long/Typing/InfoBar';
 import TypingLine from '@/components/practice/long/TypingLine';
-import useStopwatch from '@/components/practice/short/useStopWatch';
+import useStopwatch from '@/components/practice/short/_hook/useStopWatch';
 import DownArrow from '@/icons/DownArrow';
 import type { CharInfo, LongTypingDetail } from '@/types/typing';
 import { TypingState } from '@/types/typing';
