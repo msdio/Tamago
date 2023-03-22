@@ -1,0 +1,5 @@
+const SUCCESS = 1000;
+
+const EMAIL_DUPLICATE = 3001;
+
+export { EMAIL_DUPLICATE, SUCCESS };

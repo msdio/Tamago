@@ -8,6 +8,7 @@ import Alert from '@/components/common/Alert';
 import FormOr from '@/components/common/FormOr';
 import RegexInput from '@/components/common/RegexInput';
 import EmailInput from '@/components/signup/Form/EmailInput';
+import { EMAIL_DUPLICATE, SUCCESS } from '@/constants/responseCode';
 import useRegexInputs from '@/hooks/useRegexInputs';
 import { GithubLogo } from '@/icons/GithubLogo';
 import { GoogleLogo } from '@/icons/GoogleLogo';
@@ -53,16 +54,20 @@ export default function SignupForm() {
 
   const handleEmailDuplicate = async () => {
     try {
-      await emailDuplicateAPI(email.value);
-      setIsEmailDuplicated(true);
-      onOpen();
-    } catch (error) {
-      if (error instanceof EmailDuplicateError) {
+      const data = await emailDuplicateAPI(email.value);
+
+      if (data.code === SUCCESS) {
         setIsEmailDuplicated(false);
         onOpen();
-      } else {
-        alert('알 수 없는 오류가 발생했습니다.');
+      } else if (data.code === EMAIL_DUPLICATE) {
+        setIsEmailDuplicated(true);
+        onOpen();
       }
+    } catch (error) {
+      if (error instanceof EmailDuplicateError) {
+        console.log('중복', error);
+      }
+      alert('알 수 없는 오류가 발생했습니다.');
     }
   };
 

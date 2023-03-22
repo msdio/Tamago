@@ -10,6 +10,8 @@ const createApiWithoutAuth = () => {
       return data;
     },
     async function (error) {
+      console.log('inter', error);
+
       return await Promise.reject(error);
     },
   );
