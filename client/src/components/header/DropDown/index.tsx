@@ -1,12 +1,27 @@
 import { Box, Divider, Text } from '@chakra-ui/react';
+import Link from 'next/link';
 import type { Dispatch, SetStateAction } from 'react';
 
 import { fadeIn } from '@/constants/animations';
+import { PRACTICE_LONG_PATH, PRACTICE_SHORT_PATH } from '@/constants/paths';
 
-const longTypingMeuns = ['연습타자', '실전타자'];
-const shortTypingMeuns = ['연습타자', '실전타자'];
-const registerMenus = ['긴글', '짧은글', '업로드'];
-const profileMenus = ['수정', '통계'];
+const longTypingMeuns = [
+  { menu: '연습타자', path: PRACTICE_LONG_PATH },
+  { menu: '실전타자', path: PRACTICE_SHORT_PATH },
+];
+const shortTypingMeuns = [
+  { menu: '연습타자', path: PRACTICE_LONG_PATH },
+  { menu: '실전타자', path: PRACTICE_SHORT_PATH },
+];
+const registerMenus = [
+  { menu: '긴글', path: '' },
+  { menu: '짧은글', path: '' },
+  { menu: '업로드', path: '' },
+];
+const profileMenus = [
+  { menu: '수정', path: '' },
+  { menu: '통계', path: '' },
+];
 
 export function HeaderDropDown({ handler }: { handler: Dispatch<SetStateAction<boolean>> }) {
   return (
@@ -31,9 +46,11 @@ export function HeaderDropDown({ handler }: { handler: Dispatch<SetStateAction<b
     >
       <Box display='flex' flexDirection='column' alignItems='center' gap='15px'>
         {longTypingMeuns.map((el, idx) => (
-          <Text key={el + idx} cursor='pointer' fontWeight='500' fontSize='17px' _hover={{ color: 'primary.main' }}>
-            {el}
-          </Text>
+          <Link key={el.menu + idx} href={el.path}>
+            <Text cursor='pointer' fontWeight='500' fontSize='17px' _hover={{ color: 'primary.main' }}>
+              {el.menu}
+            </Text>
+          </Link>
         ))}
       </Box>
 
@@ -41,9 +58,11 @@ export function HeaderDropDown({ handler }: { handler: Dispatch<SetStateAction<b
 
       <Box display='flex' flexDirection='column' alignItems='center' gap='15px'>
         {shortTypingMeuns.map((el, idx) => (
-          <Text key={el + idx} cursor='pointer' fontWeight='500' fontSize='17px' _hover={{ color: 'primary.main' }}>
-            {el}
-          </Text>
+          <Link key={el.menu + idx} href={el.path}>
+            <Text cursor='pointer' fontWeight='500' fontSize='17px' _hover={{ color: 'primary.main' }}>
+              {el.menu}
+            </Text>
+          </Link>
         ))}
       </Box>
 
@@ -51,9 +70,11 @@ export function HeaderDropDown({ handler }: { handler: Dispatch<SetStateAction<b
 
       <Box display='flex' flexDirection='column' alignItems='center' gap='15px'>
         {registerMenus.map((el, idx) => (
-          <Text key={el + idx} cursor='pointer' fontWeight='500' fontSize='17px' _hover={{ color: 'primary.main' }}>
-            {el}
-          </Text>
+          <Link key={el.menu + idx} href={el.path}>
+            <Text cursor='pointer' fontWeight='500' fontSize='17px' _hover={{ color: 'primary.main' }}>
+              {el.menu}
+            </Text>
+          </Link>
         ))}
       </Box>
 
@@ -61,9 +82,11 @@ export function HeaderDropDown({ handler }: { handler: Dispatch<SetStateAction<b
 
       <Box display='flex' flexDirection='column' alignItems='center' gap='15px'>
         {profileMenus.map((el, idx) => (
-          <Text key={el + idx} cursor='pointer' fontWeight='500' fontSize='17px' _hover={{ color: 'primary.main' }}>
-            {el}
-          </Text>
+          <Link key={el.menu + idx} href={el.path}>
+            <Text cursor='pointer' fontWeight='500' fontSize='17px' _hover={{ color: 'primary.main' }}>
+              {el.menu}
+            </Text>
+          </Link>
         ))}
       </Box>
     </Box>
