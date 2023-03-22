@@ -32,7 +32,7 @@ test('영어 확인', () => {
   expect(isEnglishChar('?')).toBe(false);
 });
 
-// getConstantVowel 수정 예정 -> hangul.disassemble()처럼 수행되도록 해야함
+// getConstantVowel 수정 예정 -> hangul.disassemble()처럼 수행되도록 해야함!
 test('문자 글쇠 분리', () => {
   // expect(getConstantVowel('a').length).toBe(1);
   // expect(getConstantVowel('!').length).toBe(1);
