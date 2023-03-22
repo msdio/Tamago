@@ -23,7 +23,7 @@ const profileMenus = [
   { menu: '통계', path: '' },
 ];
 
-export function HeaderDropDown({ handler }: { handler: Dispatch<SetStateAction<boolean>> }) {
+export default function HeaderDropDown({ handler }: { handler: Dispatch<SetStateAction<boolean>> }) {
   return (
     <Box
       display='flex'

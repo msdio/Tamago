@@ -6,9 +6,9 @@ import { useState } from 'react';
 import { LOGIN_PATH, PRACTICE_PATH, PRACTICE_SHORT_PATH, SIGNUP_TERM_PATH } from '@/constants/paths';
 import { TamagoLogo } from '@/icons/TamagoLogo';
 
-import { HeaderDropDown } from './DropDown';
+import HeaderDropDown from './DropDown';
 
-export function Header() {
+export default function Header() {
   const [isLogin, setIsLogin] = useState(false);
   const [showDropDown, setShowDropDown] = useState(false);
 
