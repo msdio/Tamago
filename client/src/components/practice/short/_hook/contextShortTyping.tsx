@@ -2,12 +2,13 @@ import type { ReactNode } from 'react';
 import { createContext, useContext, useMemo, useRef, useState } from 'react';
 
 import type { ShortTypingType } from '@/apis/typing';
-import useCurrentTyping from '@/components/practice/short/currentTypingContext';
+import useCurrentTyping from '@/components/practice/short/_hook/useCurrentTyping';
 
-interface ShortTypingContextType {
-  time: number;
+interface ContextShortTypingType {
   originalTyping: string;
+  userTyping: string;
 
+  time: number;
   typingCount: number;
   typingWpm: number;
   typingAccuracy: number;
@@ -17,14 +18,13 @@ interface ShortTypingContextType {
   nextOriginalTyping: string;
 }
 
-interface ShortTypingHandlerContextType {
+interface ContextShortTypingHandlerType {
   onEndTyping: (input: string) => Promise<void>;
-  onBackspace: () => void;
   onTyping: (inputChar: string) => void;
 }
 
-const ShortTypingContext = createContext<ShortTypingContextType | null>(null);
-const ShortTypingHandlerContext = createContext<ShortTypingHandlerContextType | null>(null);
+const ContextShortTyping = createContext<ContextShortTypingType | null>(null);
+const ContextShortTypingHandler = createContext<ContextShortTypingHandlerType | null>(null);
 
 interface ShortTypingProviderProps {
   children: ReactNode;
@@ -34,21 +34,13 @@ interface ShortTypingProviderProps {
 const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderProps) => {
   const [currentIdx, setCurrentIdx] = useState(0);
   const prevUserTyping = useRef('');
-  const {
-    originalTyping,
-    time,
-    typingCount,
-    typingAccuracy,
-    typingWpm,
-    handleBackspace,
-    handleTypingSubmit,
-    handleTyping,
-  } = useCurrentTyping(
-    originalTypings[currentIdx] ?? {
-      typingId: 0,
-      content: '',
-    },
-  );
+  const { originalTyping, userTyping, time, typingCount, typingAccuracy, typingWpm, handleTypingSubmit, handleTyping } =
+    useCurrentTyping(
+      originalTypings[currentIdx] ?? {
+        typingId: 0,
+        content: '',
+      },
+    );
 
   const prevOriginalTyping = useMemo(
     () => (currentIdx > 0 ? originalTypings[currentIdx - 1]?.content : ''),
@@ -61,9 +53,9 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
   );
 
   const handleSubmit = async (input: string) => {
-    prevUserTyping.current = input;
+    await handleTypingSubmit(input);
 
-    handleTypingSubmit(input);
+    prevUserTyping.current = input;
   };
 
   const handleEndTyping = async (input: string) => {
@@ -77,11 +69,12 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
   };
 
   const values = {
+    originalTyping,
+    userTyping,
     time: time,
     typingCount: typingCount,
     typingWpm,
     typingAccuracy,
-    originalTyping,
     prevUserTyping: prevUserTyping.current,
     prevOriginalTyping,
     nextOriginalTyping,
@@ -89,30 +82,29 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
 
   const actions = {
     onEndTyping: handleEndTyping,
-    onBackspace: handleBackspace,
     onTyping: handleTyping,
   };
 
   return (
-    <ShortTypingContext.Provider value={values}>
-      <ShortTypingHandlerContext.Provider value={actions}>{children}</ShortTypingHandlerContext.Provider>
-    </ShortTypingContext.Provider>
+    <ContextShortTyping.Provider value={values}>
+      <ContextShortTypingHandler.Provider value={actions}>{children}</ContextShortTypingHandler.Provider>
+    </ContextShortTyping.Provider>
   );
 };
 
-export function useShortTypingContext() {
-  const value = useContext(ShortTypingContext);
+export function useContextShortTyping() {
+  const value = useContext(ContextShortTyping);
   if (value === null) {
-    throw new Error('useShortTypingContext should be used within ShortTypingProvider');
+    throw new Error('useContextShortTyping should be used within ShortTypingProvider');
   }
 
   return value;
 }
 
-export function useShortTypingHandlerContext() {
-  const value = useContext(ShortTypingHandlerContext);
+export function useContextShortTypingHandler() {
+  const value = useContext(ContextShortTypingHandler);
   if (value === null) {
-    throw new Error('useShortTypingHandlerContext should be used within ShortTypingHandlerProvider');
+    throw new Error('useContextShortTypingHandler should be used within ShortTypingHandlerProvider');
   }
 
   return value;

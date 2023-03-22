@@ -1,7 +1,9 @@
 package com.project.Tamago.domain;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
+import javax.persistence.Column;
 import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,9 +17,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import com.project.Tamago.constants.enums.Mode;
 
+import io.hypersistence.utils.hibernate.type.json.JsonType;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,6 +34,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
+@TypeDef(name = "json", typeClass = JsonType.class)
 public class TypingHistory extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,7 +54,11 @@ public class TypingHistory extends BaseTimeEntity {
 
 	private Integer wpm;
 
-	private Integer accuracy;
+	private Double typingAccuracy;
+
+	@ColumnDefault("true")
+	private Boolean contentType;
+
 
 	@Enumerated(EnumType.STRING)
 	private Mode mode;
@@ -62,4 +72,7 @@ public class TypingHistory extends BaseTimeEntity {
 	private Integer increasedValue;
 	private Integer page;
 
+	@Type(type = "json")
+	@Column(columnDefinition = "json")
+	private Map<Character, Map<String, Integer>> wrongKeys;
 }

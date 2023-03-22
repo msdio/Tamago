@@ -29,6 +29,10 @@ public interface DataMapper {
 	LongTypingDetailResDto LongTypingToLongTypingDetailResDto(LongTyping longTyping, PageContentDto pageContentDto);
 
 	@Mapping(target = "id", ignore = true)
-	@Mapping(source = "typingHistoryReqDto.typingAccuracy", target = "accuracy")
+	@Mapping(source = "typing", target = "typing")
+	@Mapping(source = "user", target = "user")
+	@Mapping(source = "typingHistoryReqDto.typingAccuracy", target = "typingAccuracy")
+	@Mapping(target = "wrongKeys", expression = "java(typingHistoryReqDto.wrongKeysChangeType())")
+	@Mapping(source = "typingHistoryReqDto.contentType", target = "contentType")
 	TypingHistory toTypingHistory(TypingHistoryReqDto typingHistoryReqDto, LongTyping longTyping, Typing typing, User user);
 }
