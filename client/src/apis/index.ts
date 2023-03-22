@@ -1,14 +1,23 @@
 import axios from 'axios';
 
-const createRequestWithoutAuth = () => {
+const createApiWithoutAuth = () => {
   const _request = axios.create({
     baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
   });
 
+  _request.interceptors.response.use(
+    function (data) {
+      return data;
+    },
+    async function (error) {
+      return await Promise.reject(error);
+    },
+  );
+
   return _request;
 };
 
-const createAuthenticationApi = () => {
+const createApiWithAuth = () => {
   const _requestWithAuth = axios.create({
     baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
   });
@@ -31,8 +40,17 @@ const createAuthenticationApi = () => {
     },
   );
 
+  _requestWithAuth.interceptors.response.use(
+    function (data) {
+      return data;
+    },
+    async function (error) {
+      return await Promise.reject(error);
+    },
+  );
+
   return _requestWithAuth;
 };
 
-export const requestWithAuth = createAuthenticationApi();
-export const requestWithoutAuth = createRequestWithoutAuth();
+export const requestWithAuth = createApiWithAuth();
+export const requestWithoutAuth = createApiWithoutAuth();

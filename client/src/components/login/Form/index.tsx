@@ -4,6 +4,8 @@ import Link from 'next/link';
 import FormOr from '@/components/common/FormOr';
 import RegexInput from '@/components/common/RegexInput';
 import useRegexInputs from '@/hooks/useRegexInputs';
+import { GithubLogo } from '@/icons/GithubLogo';
+import { GoogleLogo } from '@/icons/GoogleLogo';
 import { INQUIRY_PW_PATH } from '@/utils/paths';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
 
@@ -81,11 +83,11 @@ function LoginForm({ onLogin }: LoginFormProps) {
       </Box>
 
       <Flex justifyContent='center' gap='29.5px'>
-        <Button bg='fff' border='0.6px solid' borderColor='gray.main' width='59px' height='59px' p={0}>
-          {/* <Image src={require('../../../assets/icons/google-icon.svg')} alt='google login' width={40} height={38} /> */}
+        <Button bg='fff' border='0.6px solid' borderColor='gray.main' width='59px' height='59px' p='10px'>
+          <GoogleLogo />
         </Button>
-        <Button bg='fff' border='0.6px solid' borderColor='gray.main' width='59px' height='59px' p={0}>
-          {/* <Image src={require('../../../assets/icons/github-icon.svg')} alt='github login' width={40} height={38} /> */}
+        <Button bg='fff' border='0.6px solid' borderColor='gray.main' width='59px' height='59px' p='10px'>
+          <GithubLogo />
         </Button>
       </Flex>
     </>
