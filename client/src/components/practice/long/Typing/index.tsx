@@ -1,13 +1,13 @@
-import { Box, Flex, Text, Textarea } from '@chakra-ui/react';
+import { Flex, Textarea } from '@chakra-ui/react';
 import { disassemble } from 'hangul-js';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 
 import PracticeLongLayout from '@/components/practice/long/Layout';
-import InfoBar from '@/components/practice/long/Typing/InfoBar';
+import TypingHeader from '@/components/practice/long/Typing/TypingHeader/index';
 import TypingLine from '@/components/practice/long/TypingLine';
+import TypingPagination from '@/components/practice/long/TypingPagination';
 import useStopwatch from '@/components/practice/short/_hook/useStopWatch';
-import DownArrow from '@/icons/DownArrow';
 import type { CharInfo, LongTypingDetail } from '@/types/typing';
 import { TypingState } from '@/types/typing';
 import { getCharType } from '@/utils/char';
@@ -25,7 +25,7 @@ export default function PracticeLongTyping({
   const router = useRouter();
 
   const [textarea, setTextarea] = useState('');
-  const { time, status, timePlay, timePause, timeReset } = useStopwatch();
+  const { totalMillisecond, status, timePlay, timePause, timeReset } = useStopwatch();
 
   const originalInfos = useRef<CharInfo[]>(
     [...content].map((char) => ({
@@ -74,13 +74,13 @@ export default function PracticeLongTyping({
     typingSpeed.current = getTypingSpeed({
       typingCount: typingCount.current,
       backspaceCount: backspaceCount.current,
-      millisecond: time.minute * 60000 + time.second * 1000 + time.ms,
+      millisecond: totalMillisecond,
     });
     typingWpm.current = getTypingWpm({
       typingCount: typingCount.current,
-      millisecond: time.minute * 60000 + time.second * 1000 + time.ms,
+      millisecond: totalMillisecond,
     });
-  }, [status, textarea, time]);
+  }, [status, textarea, totalMillisecond]);
 
   /**
    * 사용자가 타이핑을 할 경우 상태 변화
@@ -105,7 +105,7 @@ export default function PracticeLongTyping({
     if (textareaLength > contentLength) {
       timePause();
       // const endTime = Date.now();
-      // const typingTime = time.minute * 60000 + time.second * 1000 + time.ms;
+      // const typingTime = totalMillisecond;
       // const result = {
       //   typingId: router.query.typingId,
       //   typingPage: router.query.pageNum,
@@ -196,32 +196,12 @@ export default function PracticeLongTyping({
 
   return (
     <PracticeLongLayout>
-      <Flex gap='24px' mb='28px'>
-        <Box w='118px' bg='#CEF0FF' border=' 0.6px solid #000000' borderRadius={10}></Box>
-        <Box flex={1}>
-          <Flex
-            mb='21px'
-            alignItems='center'
-            gap='8.5px'
-            border='0.6px solid #000000'
-            bg='#BCF075'
-            w='fit-content'
-            p='10px 23px'
-            borderRadius={30}
-          >
-            <Text fontSize='18px' fontWeight={500}>
-              긴 글 연습모드
-            </Text>
-            <DownArrow />
-          </Flex>
-          <InfoBar
-            accuracy={typingAccuracy.current}
-            speed={typingSpeed.current}
-            wpm={typingWpm.current}
-            time={time.minute * 60 + time.second}
-          />
-        </Box>
-      </Flex>
+      <TypingHeader
+        accuracy={typingAccuracy.current}
+        speed={typingSpeed.current}
+        wpm={typingWpm.current}
+        time={totalMillisecond / 1000}
+      />
       <Flex
         h='550px'
         direction='column'
@@ -247,6 +227,9 @@ export default function PracticeLongTyping({
         {slicedContentAndStrings(content, textarea, typingStates.current).map(([originalLine, userLine, states], i) => (
           <TypingLine key={i} originalLine={originalLine} userLine={userLine} states={states} />
         ))}
+      </Flex>
+      <Flex mt='33px' justifyContent='right'>
+        <TypingPagination typingId={typingId} currentPage={currentPage} totalPage={totalPage} isTyping={true} />
       </Flex>
     </PracticeLongLayout>
   );
