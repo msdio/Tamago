@@ -23,12 +23,17 @@ jobs:
       - name: Install Dependencies
         run: |
           cd ./client
-          yarn
+          yarn install --frozen-lockfile
+
+      - name: Create environment variables
+        run: |
+          cd ./client
+          touch .env
+          echo NEXT_PUBLIC_SERVER_URL='${secrets.NEXT_PUBLIC_SERVER_URL}'\ >> .env
 
       - name: Build with yarn
         run: |
           cd ./client
-          yarn install --frozen-lockfile
           yarn build
 
       - name: Configure AWS Credentials
