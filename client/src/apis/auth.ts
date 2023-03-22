@@ -1,8 +1,7 @@
 import { AxiosError } from 'axios';
 
 import { requestWithoutAuth } from '@/apis';
-
-import { EmailDuplicateError, NicknameDuplicateError } from './error';
+import type { ApiResponse } from '@/types/apiResponse';
 
 const SIGNUP_PATH = '/auth/join';
 const LOGIN_PATH = '/auth/login';
@@ -40,28 +39,13 @@ interface SignupAPIParams {
 }
 
 export const signupAPI = async ({ email, password, nickname }: SignupAPIParams) => {
-  try {
-    await requestWithoutAuth.post(SIGNUP_PATH, { email, nickname, password });
-  } catch (error) {
-    if (error instanceof AxiosError) {
-      const { code } = error.response?.data;
-      if (code === 3001) {
-        throw new EmailDuplicateError();
-      }
-      if (code === 3002) {
-        throw new NicknameDuplicateError();
-      }
-    }
-    return await Promise.reject(error);
-  }
+  const response = await requestWithoutAuth.post(SIGNUP_PATH, { email, nickname, password });
+
+  return response.data as ApiResponse;
 };
 
 export const emailDuplicateAPI = async (email: string) => {
-  try {
-    const response = await requestWithoutAuth.get(EMAIL_DUPLICATE_PATH, { params: { email } });
+  const response = await requestWithoutAuth.get(EMAIL_DUPLICATE_PATH, { params: { email } });
 
-    return response.data as EmailDuplicateResponse;
-  } catch (error) {
-    return await Promise.reject(error);
-  }
+  return response.data as ApiResponse;
 };

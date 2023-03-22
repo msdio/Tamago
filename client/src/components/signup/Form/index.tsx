@@ -3,15 +3,15 @@ import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 
 import { emailDuplicateAPI, signupAPI } from '@/apis/auth';
-import { EmailDuplicateError, NicknameDuplicateError, ServerError } from '@/apis/error';
 import Alert from '@/components/common/Alert';
 import FormOr from '@/components/common/FormOr';
 import RegexInput from '@/components/common/RegexInput';
 import EmailInput from '@/components/signup/Form/EmailInput';
-import { EMAIL_DUPLICATE, SUCCESS } from '@/constants/responseCode';
+import { EMAIL_DUPLICATE, NICKNAME_DUPLICATE, SUCCESS } from '@/constants/responseCode';
 import useRegexInputs from '@/hooks/useRegexInputs';
 import { GithubLogo } from '@/icons/GithubLogo';
 import { GoogleLogo } from '@/icons/GoogleLogo';
+import type { ApiErrorResponse } from '@/types/apiResponse';
 import { SIGNUP_COMPLETE_PATH } from '@/utils/paths';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
 
@@ -58,41 +58,43 @@ export default function SignupForm() {
 
       if (data.code === SUCCESS) {
         setIsEmailDuplicated(false);
-        onOpen();
       } else if (data.code === EMAIL_DUPLICATE) {
         setIsEmailDuplicated(true);
-        onOpen();
       }
+
+      onOpen();
     } catch (error) {
-      if (error instanceof EmailDuplicateError) {
-        console.log('중복', error);
-      }
-      alert('알 수 없는 오류가 발생했습니다.');
+      const customError = error as ApiErrorResponse;
+      alert(customError.description);
     }
   };
 
   const handleSignup = async () => {
+    if (isEmailDuplicated) {
+      onOpen();
+      return;
+    }
+
     const notValidInput = Object.entries(inputInfo).find(([, { isValid }]) => !isValid);
     if (notValidInput) {
       const [input] = notValidInput;
       inputRef.current[input]?.focus();
-    } else if (isEmailDuplicated) {
-      onOpen();
-    } else {
-      try {
-        await signupAPI({ nickname: name.value, email: email.value, password: password.value });
+      return;
+    }
+
+    try {
+      const data = await signupAPI({ nickname: name.value, email: email.value, password: password.value });
+
+      if (data.code === SUCCESS) {
         router.push(SIGNUP_COMPLETE_PATH);
-      } catch (error) {
-        if (error instanceof EmailDuplicateError) {
-          alert(error.message);
-        } else if (error instanceof NicknameDuplicateError) {
-          alert(error.message);
-        } else if (error instanceof ServerError) {
-          alert(error.message);
-        } else {
-          alert('알 수 없는 오류가 발생했습니다.');
-        }
+      } else if (data.code === EMAIL_DUPLICATE) {
+        alert(data.description);
+      } else if (data.code === NICKNAME_DUPLICATE) {
+        alert(data.description);
       }
+    } catch (error) {
+      const customError = error as ApiErrorResponse;
+      alert(customError.description);
     }
   };
 

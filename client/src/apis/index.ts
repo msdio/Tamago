@@ -1,3 +1,4 @@
+import type { AxiosError } from 'axios';
 import axios from 'axios';
 
 const createApiWithoutAuth = () => {
@@ -9,10 +10,10 @@ const createApiWithoutAuth = () => {
     function (data) {
       return data;
     },
-    async function (error) {
-      console.log('inter', error);
+    async function (error: AxiosError) {
+      const { response } = error;
 
-      return await Promise.reject(error);
+      return await Promise.reject(response?.data);
     },
   );
 
