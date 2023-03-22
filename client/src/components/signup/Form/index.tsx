@@ -7,11 +7,10 @@ import { EmailDuplicateError, NicknameDuplicateError, ServerError } from '@/apis
 import Alert from '@/components/common/Alert';
 import FormOr from '@/components/common/FormOr';
 import RegexInput from '@/components/common/RegexInput';
+import EmailInput from '@/components/signup/Form/EmailInput';
 import useRegexInputs from '@/hooks/useRegexInputs';
 import { SIGNUP_COMPLETE_PATH } from '@/utils/paths';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
-
-import EmailInput from './EmailInput';
 
 export default function SignupForm() {
   const router = useRouter();
