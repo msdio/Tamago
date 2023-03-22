@@ -6,8 +6,12 @@ import { useState } from 'react';
 import { TamagoLogo } from '@/icons/TamagoLogo';
 import { LOGIN_PATH, PRACTICE_PATH, PRACTICE_SHORT_PATH, SIGNUP_TERM_PATH } from '@/utils/paths';
 
+import { HeaderDropDown } from './DropDown';
+
 export function Header() {
   const [isLogin, setIsLogin] = useState(false);
+  const [showDropDown, setShowDropDown] = useState(false);
+
   const router = useRouter();
 
   const onRouting = (to: string) => {
@@ -20,10 +24,11 @@ export function Header() {
   };
 
   return (
-    <>
+    <div style={{ position: 'relative' }}>
       <Flex
         as='header'
-        direction='row'
+        position='relative'
+        justifyContent='space-between'
         h='88px'
         minH='88px'
         borderBottom='0.6px solid'
@@ -34,15 +39,25 @@ export function Header() {
         zIndex='100'
         background='white.light'
       >
-        <Link href='/'>
-          <TamagoLogo />
-        </Link>
-        <HStack spacing='62px' w='100%' marginLeft='81px' fontSize='17px' fontWeight='700'>
-          <Text onClick={() => onRouting(PRACTICE_PATH)}>긴글연습</Text>
-          <Text onClick={() => onRouting(PRACTICE_SHORT_PATH)}>짧은글연습</Text>
-          <Text>글등록</Text>
-          <Text>프로필</Text>
-        </HStack>
+        <Flex>
+          <Link href='/'>
+            <TamagoLogo />
+          </Link>
+          <HStack
+            spacing='46px'
+            w='fit-content'
+            marginLeft='81px'
+            fontSize='17px'
+            fontWeight='700'
+            onMouseEnter={() => setShowDropDown(true)}
+            cursor='pointer'
+          >
+            <Text onClick={() => onRouting(PRACTICE_PATH)}>긴글연습</Text>
+            <Text onClick={() => onRouting(PRACTICE_SHORT_PATH)}>짧은글연습</Text>
+            <Text onMouseEnter={() => setShowDropDown(true)}>글등록</Text>
+            <Text onMouseEnter={() => setShowDropDown(true)}>프로필</Text>
+          </HStack>
+        </Flex>
         {!isLogin && (
           <HStack spacing='12.91px'>
             <Button
@@ -80,6 +95,7 @@ export function Header() {
           </HStack>
         )}
       </Flex>
-    </>
+      {showDropDown && <HeaderDropDown handler={setShowDropDown} />}
+    </div>
   );
 }
