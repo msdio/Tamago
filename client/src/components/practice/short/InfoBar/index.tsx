@@ -1,7 +1,8 @@
-import { Box, Center, Flex, Image, Text } from '@chakra-ui/react';
+import { Box, Flex, Image, Text } from '@chakra-ui/react';
 import { useState } from 'react';
 
 import Confirm from '@/components/common/Confirm';
+import IconButton from '@/components/common/IconButton';
 import {
   useContextShortTyping,
   useContextTypingResultModal,
@@ -15,8 +16,8 @@ import { getSecondToMMSSFormat } from '@/utils/time';
 // TODO : 짧은글, 긴글에서 공통적으로 사용됨
 export default function InfoBar() {
   const { time, typingAccuracy, typingCount, typingWpm } = useContextShortTyping();
-  const { isResultModalOpen, handleResultModalOpen } = useContextTypingResultModal();
-  const [isExitModalOpen, setIsExitModalOpen] = useState(true);
+  const { handleResultModalOpen } = useContextTypingResultModal();
+  const [isExitModalOpen, setIsExitModalOpen] = useState(false);
   const onToggleExitModal = () => setIsExitModalOpen((prev) => !prev);
 
   return (
@@ -42,9 +43,7 @@ export default function InfoBar() {
         <Box flex={1}>
           <Flex justifyContent='space-between'>
             <ModeList />
-            <Center w='38px' h='38px' border='0.6px solid #000000' bg='background.white' borderRadius='50%'>
-              <Exit />
-            </Center>
+            <IconButton icon={<Exit />} onAction={onToggleExitModal} />
           </Flex>
 
           <Flex border='1px solid rgb(0, 0, 0)' borderRadius={10} h={'56px'}>

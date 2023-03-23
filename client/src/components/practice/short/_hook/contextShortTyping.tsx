@@ -23,8 +23,15 @@ interface ContextShortTypingHandlerType {
   onTyping: (inputChar: string) => void;
 }
 
+interface ContextTypingResultModalType {
+  isResultModalOpen: boolean;
+  handleResultModalOpen: () => void;
+  handleResultModalClose: () => void;
+}
+
 const ContextShortTyping = createContext<ContextShortTypingType | null>(null);
 const ContextShortTypingHandler = createContext<ContextShortTypingHandlerType | null>(null);
+const ContextTypingResultModal = createContext<ContextTypingResultModalType | null>(null);
 
 interface ShortTypingProviderProps {
   children: ReactNode;
@@ -34,6 +41,8 @@ interface ShortTypingProviderProps {
 const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderProps) => {
   const [currentIdx, setCurrentIdx] = useState(0);
   const prevUserTyping = useRef('');
+
+  const [isResultModalOpen, setIsResultModalOpen] = useState(true);
 
   const { originalTyping, userTyping, time, typingCount, typingAccuracy, typingWpm, handleTypingSubmit, handleTyping } =
     useCurrentTyping(
@@ -69,6 +78,13 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
     }
   };
 
+  const handleResultModalOpen = () => {
+    setIsResultModalOpen(true);
+  };
+  const handleResultModalClose = () => {
+    setIsResultModalOpen(false);
+  };
+
   const values = {
     originalTyping,
     userTyping,
@@ -86,9 +102,17 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
     onTyping: handleTyping,
   };
 
+  const modalValues = {
+    isResultModalOpen,
+    handleResultModalClose,
+    handleResultModalOpen,
+  };
+
   return (
     <ContextShortTyping.Provider value={values}>
-      <ContextShortTypingHandler.Provider value={actions}>{children}</ContextShortTypingHandler.Provider>
+      <ContextShortTypingHandler.Provider value={actions}>
+        <ContextTypingResultModal.Provider value={modalValues}>{children}</ContextTypingResultModal.Provider>
+      </ContextShortTypingHandler.Provider>
     </ContextShortTyping.Provider>
   );
 };
@@ -106,6 +130,14 @@ export function useContextShortTypingHandler() {
   const value = useContext(ContextShortTypingHandler);
   if (value === null) {
     throw new Error('useContextShortTypingHandler should be used within ShortTypingHandlerProvider');
+  }
+
+  return value;
+}
+export function useContextTypingResultModal() {
+  const value = useContext(ContextTypingResultModal);
+  if (value === null) {
+    throw new Error('useContextTypingResultModal should be used within ShortTypingHandlerProvider');
   }
 
   return value;
