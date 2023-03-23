@@ -3,9 +3,10 @@ import { Box, Flex, Image, Text } from '@chakra-ui/react';
 import { useContextShortTyping } from '@/components/practice/short/_hook/contextShortTyping';
 import GrassEllipse from '@/components/practice/short/InfoBar/GrassEllipse';
 import InfoBarItem from '@/components/practice/short/InfoBar/InfoBarItem';
-import DownArrow from '@/icons/DownArrow';
+import ModeList from '@/components/practice/short/InfoBar/ModeList';
 import { getSecondToMMSSFormat } from '@/utils/time';
 
+// TODO : 짧은글, 긴글에서 공통적으로 사용됨
 export default function InfoBar() {
   const { time, typingAccuracy, typingCount, typingWpm } = useContextShortTyping();
 
@@ -29,22 +30,7 @@ export default function InfoBar() {
         </Box>
       </Flex>
       <Box flex={1}>
-        <Flex
-          mb='21px'
-          alignItems='center'
-          gap='8.5px'
-          border='0.6px solid #000000'
-          bg='#BCF075'
-          w='fit-content'
-          p='10px 23px'
-          borderRadius={30}
-        >
-          <Text fontSize='18px' fontWeight={500}>
-            짧은 글 연습모드
-          </Text>
-
-          <DownArrow />
-        </Flex>
+        <ModeList />
 
         <Flex border='1px solid rgb(0, 0, 0)' borderRadius={10} h={'56px'}>
           <InfoBarItem label='경과 시간' content={getSecondToMMSSFormat(time)} />

@@ -65,7 +65,7 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
     if (currentIdx < originalTypings.length - 1) {
       setCurrentIdx((prev) => prev + 1);
     } else {
-      // TODO : 30문장 끝
+      // TODO : 30문장 끝, 백엔드 api가 처리되고 수정할 예정
     }
   };
 
