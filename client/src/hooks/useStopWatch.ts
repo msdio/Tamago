@@ -14,7 +14,17 @@ const initState: TimeType = {
   hour: 0,
 };
 
-const useStopwatch = () => {
+interface UseStopWatchReturns {
+  time: TimeType;
+  status: 'play' | 'stop' | 'pause';
+  timePlay: () => void;
+  timePause: () => void;
+  timeReset: () => void;
+  totalMillisecond: number;
+  startTime: React.MutableRefObject<number | null>;
+}
+
+const useStopwatch = (): UseStopWatchReturns => {
   const [time, setTime] = useState<TimeType>(initState); // 밀리초 (정밀도 1/1000)
   const playTimeout = useRef<NodeJS.Timeout | null>(null);
 

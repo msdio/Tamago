@@ -34,6 +34,7 @@ interface ShortTypingProviderProps {
 const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderProps) => {
   const [currentIdx, setCurrentIdx] = useState(0);
   const prevUserTyping = useRef('');
+
   const { originalTyping, userTyping, time, typingCount, typingAccuracy, typingWpm, handleTypingSubmit, handleTyping } =
     useCurrentTyping(
       originalTypings[currentIdx] ?? {

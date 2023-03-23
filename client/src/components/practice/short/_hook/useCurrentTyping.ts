@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import type { ShortTypingType } from '@/apis/typing';
 import { getTypingHistoryAPI } from '@/apis/typing';
-import useStopwatch from '@/components/practice/short/_hook/useStopWatch';
+import useStopwatch from '@/hooks/useStopWatch';
 import { getCharType } from '@/utils/char';
 import {
   getTypingAccuracy,
