@@ -15,9 +15,9 @@ public class TypingHistoryGenerator {
 
 	public static TypingHistory generateRandomTypingHistory() {
 		Typing typing = Typing.builder()
-			.id(random.nextInt(500) + 1).build();
+			.id(random.nextInt(50) + 1).build();
 		User user = User.builder()
-			.id(random.nextInt(5000) + 1).build();
+			.id(random.nextInt(50) + 1).build();
 
 		Integer wpm = random.nextInt(1000);
 		Double accuracy = random.nextDouble() * 100;

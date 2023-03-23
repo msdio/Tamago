@@ -39,13 +39,13 @@ public class StatisticService {
 		return getStatisticsAllResDto(getFirstStatisticsAll(user));
 	}
 
-	// public DateAccuracyAverageResDto findAccuracyAverageByUser(User user, LocalDate startDay, LocalDate endDay) {
-	// 	return new DateAccuracyAverageResDto(typingHistoryRepository.findAccuracyAverageByUserId(user, startDay, endDay));
-	// }
-	//
-	// public DateWpmAverageResDto findWpmAverageByUser(User user, LocalDate startDay, LocalDate endDay) {
-	// 	return new DateWpmAverageResDto(typingHistoryRepository.findWpmAverageByUserId(user, startDay, endDay));
-	// }
+	public DateAccuracyAverageResDto findAccuracyAverageByUser(User user, LocalDate startDay, LocalDate endDay) {
+		return new DateAccuracyAverageResDto(typingHistoryRepository.findAccuracyAverageByUserId(user.getId(), startDay.atStartOfDay(), endDay.atStartOfDay()));
+	}
+
+	public DateWpmAverageResDto findWpmAverageByUser(User user, LocalDate startDay, LocalDate endDay) {
+		return new DateWpmAverageResDto(typingHistoryRepository.findWpmAverageByUserId(user.getId(), startDay.atStartOfDay(), endDay.atStartOfDay()));
+	}
 
 
 	private StatisticsAll changeStatisticsAll(User user, StatisticsAll statisticsAll) {
