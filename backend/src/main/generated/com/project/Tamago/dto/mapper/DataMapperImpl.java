@@ -1,23 +1,26 @@
 package com.project.Tamago.dto.mapper;
 
 import com.project.Tamago.constants.enums.Mode;
+import com.project.Tamago.constants.enums.Role;
 import com.project.Tamago.domain.LongTyping;
 import com.project.Tamago.domain.Typing;
 import com.project.Tamago.domain.TypingHistory;
 import com.project.Tamago.domain.TypingHistory.TypingHistoryBuilder;
 import com.project.Tamago.domain.User;
+import com.project.Tamago.domain.User.UserBuilder;
 import com.project.Tamago.dto.PageContentDto;
 import com.project.Tamago.dto.requestDto.TypingHistoryReqDto;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto.LongTypingDetailResDtoBuilder;
 import com.project.Tamago.dto.responseDto.LongTypingResDto;
 import com.project.Tamago.dto.responseDto.LongTypingResDto.LongTypingResDtoBuilder;
+import com.project.Tamago.security.CustomOAuth2User;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-19T20:58:05+0900",
+    date = "2023-03-23T19:17:53+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.12 (Eclipse Foundation)"
 )
 @Component
@@ -99,5 +102,26 @@ public class DataMapperImpl implements DataMapper {
         typingHistory.wrongKeys( typingHistoryReqDto.wrongKeysChangeType() );
 
         return typingHistory.build();
+    }
+
+    @Override
+    public User toUser(CustomOAuth2User customOAuth2User, Role role) {
+        if ( customOAuth2User == null && role == null ) {
+            return null;
+        }
+
+        UserBuilder user = User.builder();
+
+        if ( customOAuth2User != null ) {
+            user.email( customOAuth2User.getEmail() );
+            user.nickname( customOAuth2User.getNickname() );
+        }
+        if ( role != null ) {
+            user.role( role );
+        }
+        user.provider( customOAuth2User.getOAuth2Id() );
+        user.providerId( customOAuth2User.getNameAttributeKey() );
+
+        return user.build();
     }
 }
