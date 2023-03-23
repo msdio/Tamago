@@ -33,8 +33,6 @@ class StatisticServiceTest {
 	@MockBean
 	TypingHistoryRepository typingHistoryRepository;
 
-	@Autowired
-	TypingHistoryRepository typingHistoryRepository2;
 	@MockBean
 	StatisticAllRepository statisticAllRepository;
 

@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles:
-    include: secret
+    include: secret-mysql
 
 
   datasource:
