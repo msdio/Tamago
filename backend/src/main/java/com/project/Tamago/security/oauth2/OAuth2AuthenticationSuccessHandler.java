@@ -2,6 +2,7 @@ package com.project.Tamago.security.oauth2;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,9 +39,8 @@ public class OAuth2AuthenticationSuccessHandler extends SavedRequestAwareAuthent
 	private void processRegisterAndLogin(HttpServletResponse response,
 		Authentication authentication,
 		CustomOAuth2User oAuth2User) throws IOException {
-		userRepository.findByEmailAndProvider(oAuth2User.getEmail(),
-				oAuth2User.getOAuth2Id())
-			.orElse(userRepository.save(DataMapper.INSTANCE.toUser(oAuth2User, Role.USER)));
+		if(userRepository.findByEmailAndProvider(oAuth2User.getEmail(), oAuth2User.getOAuth2Id()).isEmpty())
+			userRepository.save(DataMapper.INSTANCE.toUser(oAuth2User, Role.USER, UUID.randomUUID().toString().substring(0, 10)));
 		response.getWriter().write(loginByOAuth2(authentication));
 	}
 
@@ -57,7 +57,7 @@ public class OAuth2AuthenticationSuccessHandler extends SavedRequestAwareAuthent
 			response.getWriter().write(loginByOAuth2(authentication));
 			return;
 		}
-		userRepository.save(DataMapper.INSTANCE.toUser(oAuth2User, Role.USER));
+		userRepository.save(DataMapper.INSTANCE.toUser(oAuth2User, Role.USER, UUID.randomUUID().toString().substring(0, 10)));
 		redirect(request, response);
 	}
 

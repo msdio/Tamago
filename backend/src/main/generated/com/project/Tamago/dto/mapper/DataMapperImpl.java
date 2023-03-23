@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-23T19:17:53+0900",
+    date = "2023-03-23T20:49:31+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.12 (Eclipse Foundation)"
 )
 @Component
@@ -105,8 +105,8 @@ public class DataMapperImpl implements DataMapper {
     }
 
     @Override
-    public User toUser(CustomOAuth2User customOAuth2User, Role role) {
-        if ( customOAuth2User == null && role == null ) {
+    public User toUser(CustomOAuth2User customOAuth2User, Role role, String nickname) {
+        if ( customOAuth2User == null && role == null && nickname == null ) {
             return null;
         }
 
@@ -114,10 +114,12 @@ public class DataMapperImpl implements DataMapper {
 
         if ( customOAuth2User != null ) {
             user.email( customOAuth2User.getEmail() );
-            user.nickname( customOAuth2User.getNickname() );
         }
         if ( role != null ) {
             user.role( role );
+        }
+        if ( nickname != null ) {
+            user.nickname( nickname );
         }
         user.provider( customOAuth2User.getOAuth2Id() );
         user.providerId( customOAuth2User.getNameAttributeKey() );

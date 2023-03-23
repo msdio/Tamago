@@ -55,7 +55,6 @@ public class OAuthAttributes {
 			.attributes(attributes)
 			.authorities(Collections.singleton(new SimpleGrantedAuthority(Role.USER.name())))
 			.name((String)properties.get("nickname"))
-			.nickName(UUID.randomUUID().toString().substring(0, 10))
 			.build();
 	}
 }

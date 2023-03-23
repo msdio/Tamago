@@ -17,7 +17,6 @@ public class KakaoOAuth2User implements CustomOAuth2User{
 	private Map<String, Object> attributes;
 	private Set<GrantedAuthority> authorities;
 	private String name;
-	private String nickName;
 
 
 	@Override
@@ -32,7 +31,7 @@ public class KakaoOAuth2User implements CustomOAuth2User{
 
 	@Override
 	public String getNickname() {
-		return nickName;
+		return null;
 	}
 
 	@Override

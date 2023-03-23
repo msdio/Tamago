@@ -40,6 +40,7 @@ public interface DataMapper {
 
 	@Mapping(target = "provider", expression = "java(customOAuth2User.getOAuth2Id())")
 	@Mapping(source = "role", target = "role")
+	@Mapping(source = "nickname", target = "nickname")
 	@Mapping(target = "providerId", expression = "java(customOAuth2User.getNameAttributeKey())")
-	User toUser(CustomOAuth2User customOAuth2User, Role role);
+	User toUser(CustomOAuth2User customOAuth2User, Role role, String nickname);
 }
