@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import type { ShortTypingResultType } from '@/apis/typing';
 import { getShortTypingWritingsAPI } from '@/apis/typing';
 import PracticeShort from '@/components/practice/short';
-import ShortTypingProvider from '@/components/practice/short/shortTypingContext';
+import ShortTypingProvider from '@/components/practice/short/_hook/contextShortTyping';
 
 const INIT_LANG = 'korean';
 

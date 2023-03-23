@@ -3,10 +3,9 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import { CustomCheckbox } from '@/components/common/Checkbox';
+import IconCheckbox from '@/components/signup/Terms/IconCheckbox';
 import { RightArrow } from '@/icons/RightArrow';
 import { SIGNUP_FORM_PATH } from '@/utils/paths';
-
-import IconCheckbox from './IconCheckbox';
 
 export default function SignupTerms() {
   const router = useRouter();

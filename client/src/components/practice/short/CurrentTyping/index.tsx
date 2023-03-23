@@ -1,61 +1,33 @@
 import { Box, Input } from '@chakra-ui/react';
 import type { ChangeEvent, KeyboardEvent } from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
 
+import {
+  useContextShortTyping,
+  useContextShortTypingHandler,
+} from '@/components/practice/short/_hook/contextShortTyping';
 import OriginalTyping from '@/components/practice/short/OriginalTyping';
-import { useShortTypingContext, useShortTypingHandlerContext } from '@/components/practice/short/shortTypingContext';
-import { checkAllInputTyping } from '@/components/practice/short/utils';
 
 export default function CurrentTyping() {
-  const { originalTyping } = useShortTypingContext();
-  const { onEndTyping, onBackspace, onTyping } = useShortTypingHandlerContext();
+  const { originalTyping, userTyping } = useContextShortTyping();
+  const { onEndTyping, onTyping } = useContextShortTypingHandler();
 
-  const [userTyping, setUserTyping] = useState('');
+  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value;
 
-  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
-    const word = e.target.value;
-    setUserTyping(word);
+    onTyping(input);
 
-    // NOTE : backspace 누른 경우
-    if (userTyping.length > word.length) {
-      return;
-    }
-
-    onTyping(word);
-
-    //? NOTE: 마지막 글자까지 입력하면, 제출하고 다음 문장으로 넘어간다.
-    if (word.length === originalTyping.length) {
-      const isLast = checkAllInputTyping({
-        typingWord: word[originalTyping.length - 1],
-        originalWord: originalTyping[originalTyping.length - 1],
-      });
-
-      if (isLast) {
-        onEndTyping(word);
-      }
-    }
-    if (word.length > originalTyping.length) {
-      onEndTyping(word);
+    if (input.length > originalTyping.length) {
+      onEndTyping(input.slice(0, originalTyping.length));
     }
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+  const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     //? NOTE: enter 누른 경우 -> submit
     if (e.key === 'Enter') {
       e.preventDefault();
       onEndTyping(userTyping);
     }
-
-    // TODO : backspace 누른 경우 -> 타수에 영향
-    if (e.key === 'Backspace') {
-      onBackspace();
-    }
   };
-
-  useEffect(() => {
-    setUserTyping('');
-  }, [originalTyping]);
 
   if (!originalTyping) return <></>;
 
@@ -82,8 +54,8 @@ export default function CurrentTyping() {
         placeholder=' '
         type='text'
         value={userTyping}
-        onChange={handleInput}
-        onKeyDown={handleKeyDown}
+        onChange={onInputChange}
+        onKeyDown={onKeyDown}
         w='100%'
         p='11px 5px'
         height='48px'
