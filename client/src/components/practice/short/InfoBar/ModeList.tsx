@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 import DownArrow from '@/icons/DownArrow';
 
+// TODO : 추후 수정
 const MODE_LIST = [
   {
     name: '짧은 글 연습모드',
