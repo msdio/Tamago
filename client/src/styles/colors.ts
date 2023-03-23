@@ -39,4 +39,5 @@ const colors: Record<string, ColorType> = {
     'head-text': '#3F3C3B',
   },
 };
+
 export default colors;
