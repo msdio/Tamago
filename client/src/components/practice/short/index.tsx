@@ -33,7 +33,17 @@ export default function PracticeShort() {
         </Box>
       )}
 
-      <ResultModal isOpen={isResultModalOpen} onReplay={() => {}} />
+      <ResultModal
+        isOpen={isResultModalOpen}
+        onReplay={() => {}}
+        result={{
+          typingAccuracy: 100,
+          typingCount: 100,
+          typingWpm: 100,
+          typingTime: 100,
+          tier: 5,
+        }}
+      />
     </Box>
   );
 }

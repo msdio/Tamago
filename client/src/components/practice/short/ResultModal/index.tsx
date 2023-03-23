@@ -16,13 +16,9 @@ import IconButton from '@/components/common/IconButton';
 import { Tier } from '@/components/common/Tier';
 import { BookmarkOff } from '@/icons/Heart';
 import Share from '@/icons/Share';
+import { getSecondToMMSSFormat } from '@/utils/time';
 
-interface ResultModalProps {
-  isOpen: boolean;
-  onReplay: () => void;
-}
-
-const InfoBox = ({ label, content, isDarkBg }: { label: string; content: string; isDarkBg?: boolean }) => {
+const InfoBox = ({ label, content, isDarkBg }: { label: string; content: string | number; isDarkBg?: boolean }) => {
   // GangwonEduPower font 적용
   return (
     <Flex
@@ -41,7 +37,20 @@ const InfoBox = ({ label, content, isDarkBg }: { label: string; content: string;
   );
 };
 
-export default function ResultModal({ onReplay, isOpen }: ResultModalProps) {
+interface ResultModalProps {
+  isOpen: boolean;
+  onReplay: () => void;
+
+  result: {
+    tier: number;
+    typingTime: number;
+    typingAccuracy: number;
+    typingWpm: number;
+    typingCount: number;
+  };
+}
+
+export default function ResultModal({ onReplay, isOpen, result }: ResultModalProps) {
   const onBookmark = () => {};
   const onShare = () => {};
 
@@ -80,7 +89,7 @@ export default function ResultModal({ onReplay, isOpen }: ResultModalProps) {
                   h='190px'
                   position='absolute'
                   zIndex={0}
-                ></Box>
+                />
               </Box>
               <Text fontSize='20px' fontWeight={400} mt='20px'>
                 Lv.5
@@ -93,12 +102,13 @@ export default function ResultModal({ onReplay, isOpen }: ResultModalProps) {
               <Text fontSize='19px' fontWeight={600} color='black.dark' mb='14px'>
                 메밀꽃 필 무렵
               </Text>
-              <InfoBox label='경과시간' content='00:06' isDarkBg />
-              <InfoBox label='WPM' content='30' />
-              <InfoBox label='정확도' content='99%' isDarkBg />
-              <InfoBox label='타자' content='130타' />
+              <InfoBox label='경과시간' content={getSecondToMMSSFormat(result.typingTime)} isDarkBg />
+              <InfoBox label='WPM' content={result.typingWpm} />
+              <InfoBox label='정확도' content={result.typingAccuracy + '%'} isDarkBg />
+              <InfoBox label='타자' content={result.typingCount + '타'} />
             </Box>
           </Flex>
+          s
         </ModalBody>
         <ModalFooter justifyContent='center' p='0' gap='17px'>
           <Button w='174px' onClick={onReplay}>
