@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class LongTypingReqDto {
 	@NotBlank(message = "제목을 입력해주세요.")
 	private String title;
