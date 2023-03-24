@@ -5,16 +5,23 @@ import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.Tamago.dto.CustomResponse;
+import com.project.Tamago.dto.requestDto.LongTypingReqDto;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
 import com.project.Tamago.dto.responseDto.LongTypingResDto;
 import com.project.Tamago.dto.responseDto.ShortTypingListResDto;
 import com.project.Tamago.exception.CustomException;
+import com.project.Tamago.exception.InvalidParameterException;
 import com.project.Tamago.exception.exceptionHandler.ErrorCode;
 import com.project.Tamago.service.LongTypingService;
 import com.project.Tamago.service.ShortTypingService;
@@ -41,7 +48,8 @@ public class TypingController {
 	}
 
 	@GetMapping("/long")
-	public CustomResponse<List<LongTypingResDto>> findLongTypings(@RequestParam(required = false, defaultValue = "1") int page) {
+	public CustomResponse<List<LongTypingResDto>> findLongTypings(
+		@RequestParam(required = false, defaultValue = "1") int page) {
 		return new CustomResponse<>(longTypingService.findLongTypings(page));
 	}
 
@@ -49,5 +57,15 @@ public class TypingController {
 	public CustomResponse<LongTypingDetailResDto> findLongTyping(@RequestParam Integer longTypingId,
 		@RequestParam(required = false, defaultValue = "1") int page) {
 		return new CustomResponse<>(longTypingService.findLongTyping(longTypingId, page));
+	}
+
+	@PostMapping("/register")
+	public CustomResponse<Void> saveTyping(@Validated @RequestBody LongTypingReqDto longTypingReqDto, @RequestHeader("Authorization") String jwtToken,
+		BindingResult result) {
+		if (result.hasErrors()) {
+			throw new InvalidParameterException(result);
+		}
+		longTypingService.saveLongTyping(jwtToken, longTypingReqDto);
+		return new CustomResponse<>();
 	}
 }

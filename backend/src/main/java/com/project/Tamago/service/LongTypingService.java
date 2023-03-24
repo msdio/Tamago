@@ -16,11 +16,13 @@ import com.project.Tamago.domain.PagePosition;
 import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.PageContentDto;
 import com.project.Tamago.dto.mapper.DataMapper;
+import com.project.Tamago.dto.requestDto.LongTypingReqDto;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
 import com.project.Tamago.dto.responseDto.LongTypingResDto;
 import com.project.Tamago.exception.CustomException;
 import com.project.Tamago.repository.LongTypingRepository;
 import com.project.Tamago.repository.PagePositionRepository;
+import com.project.Tamago.repository.RegisterRepository;
 import com.project.Tamago.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -35,10 +37,12 @@ public class LongTypingService {
 	private final UserRepository userRepository;
 	private final LongTypingRepository longTypingRepository;
 	private final PagePositionRepository pagePositionRepository;
+	private final RegisterRepository registerRepository;
+	private final UserService userService;
 
 	@Transactional(readOnly = true)
 	public List<LongTypingResDto> findLongTypings(int page) {
-		PageRequest pageRequest = PageRequest.of(page-1, 20);
+		PageRequest pageRequest = PageRequest.of(page - 1, 20);
 		return longTypingRepository.findAll(pageRequest).stream()
 			.map(DataMapper.INSTANCE::LongTypingToLongTypingResDto)
 			.collect(Collectors.toList());
@@ -48,7 +52,15 @@ public class LongTypingService {
 	public LongTypingDetailResDto findLongTyping(Integer longTypingId, int page) {
 		LongTyping longTyping = longTypingRepository.findByIdAndTotalPageGreaterThanEqual(longTypingId, page)
 			.orElseThrow(() -> new CustomException(LONG_TYPING_INFO_NOT_EXISTS));
-		return DataMapper.INSTANCE.LongTypingToLongTypingDetailResDto(longTyping, getPageContent(longTyping.getContent(), page));
+		return DataMapper.INSTANCE.LongTypingToLongTypingDetailResDto(longTyping,
+			getPageContent(longTyping.getContent(), page));
+	}
+
+	public void saveLongTyping(String jwtToken, LongTypingReqDto longTypingReqDto) {
+		LongTyping longTyping = DataMapper.INSTANCE.toLongTyping(longTypingReqDto);
+		longTypingRepository.save(longTyping);
+		registerRepository.save(
+			DataMapper.INSTANCE.toRegister(longTyping, null, userService.getUserByJwtToken(jwtToken)));
 	}
 
 	private PageContentDto getPageContent(String content, Integer page) {
