@@ -3,7 +3,7 @@ create table typing_history
     id              int auto_increment
         primary key,
     typing_id       int              null,
-    longTyping_id   int              null,
+    long_typing_id   int              null,
     user_id         int              not null,
     content_type    bit default b'1' null,
     mode            varchar(255)     null,
