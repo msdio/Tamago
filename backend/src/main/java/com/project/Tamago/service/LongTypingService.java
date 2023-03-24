@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -36,8 +37,9 @@ public class LongTypingService {
 	private final PagePositionRepository pagePositionRepository;
 
 	@Transactional(readOnly = true)
-	public List<LongTypingResDto> findLongTypings() {
-		return longTypingRepository.findAll().stream()
+	public List<LongTypingResDto> findLongTypings(int page) {
+		PageRequest pageRequest = PageRequest.of(page-1, 20);
+		return longTypingRepository.findAll(pageRequest).stream()
 			.map(DataMapper.INSTANCE::LongTypingToLongTypingResDto)
 			.collect(Collectors.toList());
 	}

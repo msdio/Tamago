@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import com.project.Tamago.constants.enums.Language;
 import com.project.Tamago.domain.LongTyping;
@@ -53,14 +56,16 @@ class LongTypingServiceTest {
 			.build();
 
 		List<LongTyping> longTypings = Arrays.asList(longTyping1, longTyping2);
-		when(longTypingRepository.findAll()).thenReturn(longTypings);
+		Page<LongTyping> longTypingsPage = new PageImpl<>(longTypings);
+
+		when(longTypingRepository.findAll(any(PageRequest.class))).thenReturn(longTypingsPage);
 
 		List<LongTypingResDto> expectedLongTypingResDtos = longTypings.stream()
 			.map(DataMapper.INSTANCE::LongTypingToLongTypingResDto)
 			.collect(Collectors.toList());
 
 		// when
-		List<LongTypingResDto> actualLongTypingResDtos = longTypingService.findLongTypings();
+		List<LongTypingResDto> actualLongTypingResDtos = longTypingService.findLongTypings(1);
 
 		// then
 		assertEquals(expectedLongTypingResDtos, actualLongTypingResDtos);
