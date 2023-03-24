@@ -18,6 +18,7 @@ import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.mapper.DataMapper;
 import com.project.Tamago.repository.UserRepository;
 import com.project.Tamago.security.CustomOAuth2User;
+import com.project.Tamago.security.KakaoOAuth2User;
 import com.project.Tamago.security.jwt.JwtTokenProvider;
 
 import lombok.RequiredArgsConstructor;
@@ -39,8 +40,12 @@ public class OAuth2AuthenticationSuccessHandler extends SavedRequestAwareAuthent
 	private void processRegisterAndLogin(HttpServletResponse response,
 		Authentication authentication,
 		CustomOAuth2User oAuth2User) throws IOException {
-		if(userRepository.findByEmailAndProvider(oAuth2User.getEmail(), oAuth2User.getOAuth2Id()).isEmpty())
-			userRepository.save(DataMapper.INSTANCE.toUser(oAuth2User, Role.USER, UUID.randomUUID().toString().substring(0, 10)));
+
+		User user = userRepository.findByEmailAndProvider(oAuth2User.getEmail(),
+				oAuth2User.getOAuth2Id())
+			.orElseGet(() -> userRepository.save(
+				DataMapper.INSTANCE.toUser(oAuth2User, Role.USER, UUID.randomUUID().toString().substring(0, 10))));
+		((KakaoOAuth2User)authentication.getPrincipal()).setName(user.getId().toString());
 		response.getWriter().write(loginByOAuth2(authentication));
 	}
 

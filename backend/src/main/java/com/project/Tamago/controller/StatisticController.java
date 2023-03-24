@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.CustomResponse;
 import com.project.Tamago.dto.responseDto.DateAccuracyAverageResDto;
 import com.project.Tamago.dto.responseDto.DateWpmAverageResDto;
@@ -46,9 +45,8 @@ public class StatisticController {
 		@RequestHeader("Authorization") String jwtToken,
 		@RequestParam("startDay") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDay,
 		@RequestParam("endDay") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDay) {
-		User userByJwtToken = userService.getUserByJwtToken(jwtToken);
 		return new CustomResponse<>(
-			statisticService.findAccuracyAverageByUser(userByJwtToken, startDay, endDay));
+			statisticService.findAccuracyAverageByUser(userService.getUserByJwtToken(jwtToken), startDay, endDay));
 	}
 
 }
