@@ -27,8 +27,6 @@ export const loginAPI = async (email: string, password: string): Promise<number>
 
     const { data, status } = response;
 
-    console.log(data);
-
     window.localStorage.setItem('accessToken', data.result);
 
     return status;
@@ -80,7 +78,7 @@ export const emailDuplicateAPI = async (email: string) => {
   }
 };
 
-export const getUserProfile = async () => {
+export const getUserProfileAPI = async () => {
   try {
     const { data } = await requestWithAuth.get(USER_PROFILE);
 

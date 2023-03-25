@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 
-import { getUserProfile } from '@/apis/auth';
+import { getUserProfileAPI } from '@/apis/auth';
 import { userProfileState } from '@/atom/userProfile';
 
 const useUserProfile = () => {
@@ -13,7 +13,7 @@ const useUserProfile = () => {
     // 전역 상태는 없고 토큰은 있는 경우 (ex. 새로고침)
     // 토큰을 이용해서 유저 정보 받기
     if (!userProfile && accessToken) {
-      const userProfile = await getUserProfile();
+      const userProfile = await getUserProfileAPI();
       setUserProfile(userProfile);
     }
 
