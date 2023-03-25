@@ -2,11 +2,14 @@ import { Button, Flex, HStack, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 
+import { userProfileState } from '@/atom/userProfile';
 import { TamagoLogo } from '@/icons/TamagoLogo';
 import { LOGIN_PATH, PRACTICE_PATH, PRACTICE_SHORT_PATH, SIGNUP_TERM_PATH } from '@/utils/paths';
 
 export function Header() {
+  const userProfile = useRecoilValue(userProfileState);
   const [isLogin, setIsLogin] = useState(false);
   const router = useRouter();
 
@@ -43,7 +46,7 @@ export function Header() {
           <Text>글등록</Text>
           <Text>프로필</Text>
         </HStack>
-        {!isLogin && (
+        {!userProfile && (
           <HStack spacing='12.91px'>
             <Button
               w='95.54px'

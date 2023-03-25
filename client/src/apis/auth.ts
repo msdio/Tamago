@@ -1,16 +1,24 @@
 import { AxiosError } from 'axios';
 
-import { requestWithoutAuth } from '@/apis';
+import { requestWithAuth, requestWithoutAuth } from '@/apis';
+import type { UserProfile } from '@/types/user';
 
 import { EmailDuplicateError, NicknameDuplicateError, ServerError } from './error';
 
 const SIGNUP_PATH = '/auth/join';
 const LOGIN_PATH = '/auth/login';
 const EMAIL_DUPLICATE_PATH = '/auth/email';
+const USER_PROFILE = '/user/profile';
 
 interface EmailDuplicateResponse {
   code: number;
   description?: string;
+}
+
+interface UserProfileResponse {
+  code: number;
+  description: string;
+  result: UserProfile;
 }
 
 export const loginAPI = async (email: string, password: string): Promise<number> => {
@@ -18,6 +26,8 @@ export const loginAPI = async (email: string, password: string): Promise<number>
     const response = await requestWithoutAuth.post(LOGIN_PATH, { email, password });
 
     const { data, status } = response;
+
+    console.log(data);
 
     window.localStorage.setItem('accessToken', data.result);
 
@@ -59,10 +69,28 @@ export const signupAPI = async ({ email, password, nickname }: SignupAPIParams) 
 export const emailDuplicateAPI = async (email: string) => {
   try {
     const { data } = await requestWithoutAuth.get(EMAIL_DUPLICATE_PATH, { params: { email } });
-    const { code } = data as EmailDuplicateResponse;
-    if (code === 3001) {
-      throw new EmailDuplicateError();
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      const { code } = error.response?.data;
+      if (code === 500) {
+        throw new ServerError();
+      }
     }
+    return await Promise.reject(error);
+  }
+};
+
+export const getUserProfile = async () => {
+  try {
+    const { data } = await requestWithAuth.get(USER_PROFILE);
+
+    const { code, result } = data as UserProfileResponse;
+
+    if (code !== 1000) {
+      throw new Error('잘못된 토큰입니다.');
+    }
+
+    return result;
   } catch (error) {
     if (error instanceof AxiosError) {
       const { code } = error.response?.data;

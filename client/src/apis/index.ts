@@ -15,15 +15,15 @@ const createAuthenticationApi = () => {
 
   _requestWithAuth.interceptors.request.use(
     function (config) {
-      const access_token = localStorage.getItem('accessToken');
+      const accessToken = localStorage.getItem('accessToken');
 
-      if (access_token === null) {
+      if (accessToken === null) {
         alert('로그인이 필요합니다. ');
         window.location.href = '/login';
       }
 
       config.headers['Content-Type'] = 'application/json';
-      config.headers.Authorization = `Bearer ${access_token}`;
+      config.headers.Authorization = accessToken;
       return config;
     },
     async function (error) {
