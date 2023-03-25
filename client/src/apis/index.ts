@@ -18,7 +18,7 @@ const createAuthenticationApi = () => {
       const accessToken = localStorage.getItem('accessToken');
 
       if (accessToken === null) {
-        alert('로그인이 필요합니다. ');
+        alert('로그인이 필요합니다.');
         window.location.href = '/login';
       }
 

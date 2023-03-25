@@ -2,14 +2,13 @@ import { Button, Flex, HStack, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useRecoilValue } from 'recoil';
 
-import { userProfileState } from '@/atom/userProfile';
+import useUserProfile from '@/hooks/useUserProfile';
 import { TamagoLogo } from '@/icons/TamagoLogo';
 import { LOGIN_PATH, PRACTICE_PATH, PRACTICE_SHORT_PATH, SIGNUP_TERM_PATH } from '@/utils/paths';
 
 export function Header() {
-  const userProfile = useRecoilValue(userProfileState);
+  const userProfile = useUserProfile();
   const [isLogin, setIsLogin] = useState(false);
   const router = useRouter();
 
