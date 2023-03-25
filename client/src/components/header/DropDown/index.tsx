@@ -5,11 +5,11 @@ import type { Dispatch, SetStateAction } from 'react';
 import { fadeIn } from '@/constants/animations';
 import { PRACTICE_LONG_PATH, PRACTICE_SHORT_PATH } from '@/constants/paths';
 
-const longTypingMeuns = [
+const longTypingMenus = [
   { menu: '연습타자', path: PRACTICE_LONG_PATH },
   { menu: '실전타자', path: PRACTICE_SHORT_PATH },
 ];
-const shortTypingMeuns = [
+const shortTypingMenus = [
   { menu: '연습타자', path: PRACTICE_LONG_PATH },
   { menu: '실전타자', path: PRACTICE_SHORT_PATH },
 ];
@@ -45,7 +45,7 @@ export default function HeaderDropDown({ handler }: { handler: Dispatch<SetState
       animation={`${fadeIn} 0.2s linear`}
     >
       <Box display='flex' flexDirection='column' alignItems='center' gap='15px'>
-        {longTypingMeuns.map((el, idx) => (
+        {longTypingMenus.map((el, idx) => (
           <Link key={el.menu + idx} href={el.path}>
             <Text cursor='pointer' fontWeight='500' fontSize='17px' _hover={{ color: 'primary.main' }}>
               {el.menu}
@@ -57,7 +57,7 @@ export default function HeaderDropDown({ handler }: { handler: Dispatch<SetState
       <Divider orientation='vertical' />
 
       <Box display='flex' flexDirection='column' alignItems='center' gap='15px'>
-        {shortTypingMeuns.map((el, idx) => (
+        {shortTypingMenus.map((el, idx) => (
           <Link key={el.menu + idx} href={el.path}>
             <Text cursor='pointer' fontWeight='500' fontSize='17px' _hover={{ color: 'primary.main' }}>
               {el.menu}
