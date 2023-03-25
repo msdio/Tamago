@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import com.project.Tamago.constants.enums.Role;
 import com.project.Tamago.domain.LongTyping;
 import com.project.Tamago.domain.Typing;
 import com.project.Tamago.domain.TypingHistory;
@@ -12,6 +13,7 @@ import com.project.Tamago.dto.PageContentDto;
 import com.project.Tamago.dto.requestDto.TypingHistoryReqDto;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
 import com.project.Tamago.dto.responseDto.LongTypingResDto;
+import com.project.Tamago.security.CustomOAuth2User;
 
 @Mapper(componentModel = "spring")
 public interface DataMapper {
@@ -35,4 +37,10 @@ public interface DataMapper {
 	@Mapping(target = "wrongKeys", expression = "java(typingHistoryReqDto.wrongKeysChangeType())")
 	@Mapping(source = "typingHistoryReqDto.contentType", target = "contentType")
 	TypingHistory toTypingHistory(TypingHistoryReqDto typingHistoryReqDto, LongTyping longTyping, Typing typing, User user);
+
+	@Mapping(target = "provider", expression = "java(customOAuth2User.getOAuth2Id())")
+	@Mapping(source = "role", target = "role")
+	@Mapping(source = "nickname", target = "nickname")
+	@Mapping(target = "providerId", expression = "java(customOAuth2User.getNameAttributeKey())")
+	User toUser(CustomOAuth2User customOAuth2User, Role role, String nickname);
 }
