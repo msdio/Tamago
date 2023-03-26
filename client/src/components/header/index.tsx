@@ -1,5 +1,4 @@
 import { Button, Flex, HStack, Text } from '@chakra-ui/react';
-import styled from '@emotion/styled';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -8,18 +7,6 @@ import { LOGIN_PATH, SIGNUP_TERM_PATH } from '@/constants/paths';
 import { TamagoLogo } from '@/icons/TamagoLogo';
 
 import HeaderDropDown from './DropDown';
-
-const HeaderMenus = styled(Text)`
-  height: 100%;
-  display: flex;
-  align-items: center;
-  &:hover {
-    border-width: 0 0 5px 0;
-    border-style: solid;
-    border-color: #ff6a3c;
-    margin-bottom: -5px;
-  }
-`;
 
 export default function Header() {
   const [isLogin, setIsLogin] = useState(false);
@@ -71,10 +58,58 @@ export default function Header() {
             onMouseLeave={() => setShowDropDown(false)}
             cursor='pointer'
           >
-            <HeaderMenus>긴글연습</HeaderMenus>
-            <HeaderMenus>짧은글연습</HeaderMenus>
-            <HeaderMenus>글등록</HeaderMenus>
-            <HeaderMenus>프로필</HeaderMenus>
+            <Text
+              height='100%'
+              display='flex'
+              alignItems='center'
+              _hover={{
+                borderWidth: '0 0 5px 0',
+                borderStyle: 'solid',
+                borderColor: 'primary.main',
+                marginBottom: '-5px',
+              }}
+            >
+              긴글연습
+            </Text>
+            <Text
+              height='100%'
+              display='flex'
+              alignItems='center'
+              _hover={{
+                borderWidth: '0 0 5px 0',
+                borderStyle: 'solid',
+                borderColor: 'primary.main',
+                marginBottom: '-5px',
+              }}
+            >
+              짧은글연습
+            </Text>
+            <Text
+              height='100%'
+              display='flex'
+              alignItems='center'
+              _hover={{
+                borderWidth: '0 0 5px 0',
+                borderStyle: 'solid',
+                borderColor: 'primary.main',
+                marginBottom: '-5px',
+              }}
+            >
+              글등록
+            </Text>
+            <Text
+              height='100%'
+              display='flex'
+              alignItems='center'
+              _hover={{
+                borderWidth: '0 0 5px 0',
+                borderStyle: 'solid',
+                borderColor: 'primary.main',
+                marginBottom: '-5px',
+              }}
+            >
+              프로필
+            </Text>
           </HStack>
         </Flex>
         {!isLogin && (
