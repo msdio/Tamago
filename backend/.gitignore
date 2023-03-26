@@ -41,3 +41,4 @@ resources/application-secret.yml
 src/main/resources/application-secret.yml
 src/main/resources/application-secret-mysql.yml
 /src/main/generated/com/project/Tamago/dto/mapper/
+
