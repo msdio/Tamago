@@ -1,6 +1,13 @@
 import type { AxiosError } from 'axios';
 import axios from 'axios';
 
+const defaultErrorResponse = {
+  data: {
+    code: 500,
+    description: '서버가 응답하지 않습니다.',
+  },
+};
+
 const createApiWithoutAuth = () => {
   const _request = axios.create({
     baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
@@ -12,8 +19,9 @@ const createApiWithoutAuth = () => {
     },
     async (error: AxiosError) => {
       const { response } = error;
+      const customResponse = response ?? defaultErrorResponse;
 
-      return await Promise.reject(response?.data);
+      return await Promise.reject(customResponse.data);
     },
   );
 
@@ -41,8 +49,9 @@ const createApiWithAuth = () => {
     },
     async (error: AxiosError) => {
       const { response } = error;
+      const customResponse = response ?? defaultErrorResponse;
 
-      return await Promise.reject(response?.data);
+      return await Promise.reject(customResponse.data);
     },
   );
 
@@ -52,8 +61,9 @@ const createApiWithAuth = () => {
     },
     async (error: AxiosError) => {
       const { response } = error;
+      const customResponse = response ?? defaultErrorResponse;
 
-      return await Promise.reject(response?.data);
+      return await Promise.reject(customResponse.data);
     },
   );
 

@@ -65,6 +65,7 @@ export default function SignupForm() {
       onOpen();
     } catch (error) {
       const customError = error as ApiErrorResponse;
+
       alert(customError.description);
     }
   };
