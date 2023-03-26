@@ -12,7 +12,7 @@ function Login() {
   const router = useRouter();
   const handleLogin = async ({ email, password }: InputType) => {
     try {
-      const data = await loginAPI(email, password);
+      const data = await loginAPI({ email, password });
 
       if (data.code === SUCCESS) {
         router.push(MAIN_PATH);
