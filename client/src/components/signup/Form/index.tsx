@@ -1,15 +1,18 @@
-import { Box, Button, Flex, Image, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, Flex, useDisclosure } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 
 import { emailDuplicateAPI, signupAPI } from '@/apis/auth';
-import { EmailDuplicateError, NicknameDuplicateError, ServerError } from '@/apis/error';
 import Alert from '@/components/common/Alert';
 import FormOr from '@/components/common/FormOr';
 import RegexInput from '@/components/common/RegexInput';
 import EmailInput from '@/components/signup/Form/EmailInput';
+import { SIGNUP_COMPLETE_PATH } from '@/constants/paths';
+import { EMAIL_DUPLICATE, NICKNAME_DUPLICATE, SUCCESS } from '@/constants/responseCode';
 import useRegexInputs from '@/hooks/useRegexInputs';
-import { SIGNUP_COMPLETE_PATH } from '@/utils/paths';
+import { GithubLogo } from '@/icons/GithubLogo';
+import { GoogleLogo } from '@/icons/GoogleLogo';
+import type { ApiErrorResponse } from '@/types/apiResponse';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
 
 export default function SignupForm() {
@@ -51,41 +54,47 @@ export default function SignupForm() {
 
   const handleEmailDuplicate = async () => {
     try {
-      await emailDuplicateAPI(email.value);
-      setIsEmailDuplicated(true);
+      const data = await emailDuplicateAPI(email.value);
+
+      if (data.code === SUCCESS) {
+        setIsEmailDuplicated(false);
+      } else if (data.code === EMAIL_DUPLICATE) {
+        setIsEmailDuplicated(true);
+      }
+
       onOpen();
     } catch (error) {
-      if (error instanceof EmailDuplicateError) {
-        setIsEmailDuplicated(false);
-        onOpen();
-      } else {
-        alert('알 수 없는 오류가 발생했습니다.');
-      }
+      const customError = error as ApiErrorResponse;
+      alert(customError.description);
     }
   };
 
   const handleSignup = async () => {
+    if (isEmailDuplicated) {
+      onOpen();
+      return;
+    }
+
     const notValidInput = Object.entries(inputInfo).find(([, { isValid }]) => !isValid);
     if (notValidInput) {
       const [input] = notValidInput;
       inputRef.current[input]?.focus();
-    } else if (isEmailDuplicated) {
-      onOpen();
-    } else {
-      try {
-        await signupAPI({ nickname: name.value, email: email.value, password: password.value });
+      return;
+    }
+
+    try {
+      const data = await signupAPI({ nickname: name.value, email: email.value, password: password.value });
+
+      if (data.code === SUCCESS) {
         router.push(SIGNUP_COMPLETE_PATH);
-      } catch (error) {
-        if (error instanceof EmailDuplicateError) {
-          alert(error.message);
-        } else if (error instanceof NicknameDuplicateError) {
-          alert(error.message);
-        } else if (error instanceof ServerError) {
-          alert(error.message);
-        } else {
-          alert('알 수 없는 오류가 발생했습니다.');
-        }
+      } else if (data.code === EMAIL_DUPLICATE) {
+        alert(data.description);
+      } else if (data.code === NICKNAME_DUPLICATE) {
+        alert(data.description);
       }
+    } catch (error) {
+      const customError = error as ApiErrorResponse;
+      alert(customError.description);
     }
   };
 
@@ -154,11 +163,11 @@ export default function SignupForm() {
           <FormOr />
         </Box>
         <Flex justifyContent='center' gap={4}>
-          <Button bg='fff' border='0.6px solid' borderColor='gray.main' width='59px' height='59px' p={0}>
-            <Image src='/images/google-icon.svg' alt='google login' width={40} height={38} />
+          <Button bg='fff' border='0.6px solid' borderColor='gray.main' width='59px' height='59px' p='10px'>
+            <GoogleLogo />
           </Button>
-          <Button bg='fff' border='0.6px solid' borderColor='gray.main' width='59px' height='59px' p={0}>
-            <Image src='/images/github-icon.svg' alt='google login' width={40} height={38} />
+          <Button bg='fff' border='0.6px solid' borderColor='gray.main' width='59px' height='59px' p='10px'>
+            <GithubLogo />
           </Button>
         </Flex>
       </Flex>

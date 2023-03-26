@@ -4,7 +4,7 @@ import { loginAPI } from '@/apis/auth';
 import AuthLayout from '@/components/common/AuthLayout';
 import type { InputType } from '@/components/login/Form';
 import LoginForm from '@/components/login/Form';
-import { MAIN_PATH } from '@/utils/paths';
+import { MAIN_PATH } from '@/constants/paths';
 
 function Login() {
   const router = useRouter();
