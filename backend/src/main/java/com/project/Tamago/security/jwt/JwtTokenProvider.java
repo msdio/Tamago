@@ -1,7 +1,7 @@
 package com.project.Tamago.security.jwt;
 
-import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
-import static com.project.Tamago.constants.Constant.*;
+import static com.project.Tamago.common.Constant.*;
+import static com.project.Tamago.common.enums.ResponseStatus.*;
 
 import java.security.Key;
 import java.security.KeyPair;
@@ -25,8 +25,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import com.project.Tamago.exception.CustomException;
-import com.project.Tamago.constants.enums.KeyType;
+import com.project.Tamago.common.exception.CustomException;
+import com.project.Tamago.common.enums.KeyType;
 import com.project.Tamago.security.Token;
 
 import io.jsonwebtoken.Claims;

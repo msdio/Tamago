@@ -13,7 +13,7 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.project.Tamago.constants.enums.Role;
+import com.project.Tamago.common.enums.Role;
 import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.mapper.DataMapper;
 import com.project.Tamago.repository.UserRepository;

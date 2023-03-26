@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.Tamago.dto.CustomResponse;
+import com.project.Tamago.common.Response.CustomResponse;
 import com.project.Tamago.dto.responseDto.DateAccuracyAverageResDto;
 import com.project.Tamago.dto.responseDto.DateWpmAverageResDto;
 import com.project.Tamago.dto.responseDto.StatisticsAllResDto;

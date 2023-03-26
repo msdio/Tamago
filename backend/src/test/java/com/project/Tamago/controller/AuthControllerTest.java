@@ -1,6 +1,6 @@
 package com.project.Tamago.controller;
 
-import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
+import static com.project.Tamago.common.enums.ResponseStatus.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -19,7 +19,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.Tamago.dto.requestDto.JoinReqDto;
 import com.project.Tamago.dto.requestDto.LoginReqDto;
-import com.project.Tamago.exception.CustomException;
+import com.project.Tamago.common.exception.CustomException;
 import com.project.Tamago.security.jwt.JwtTokenProvider;
 import com.project.Tamago.repository.UserRepository;
 import com.project.Tamago.service.AuthService;

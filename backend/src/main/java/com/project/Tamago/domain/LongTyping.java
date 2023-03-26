@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.project.Tamago.constants.enums.Language;
+import com.project.Tamago.common.enums.Language;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

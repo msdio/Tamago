@@ -22,7 +22,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.Tamago.constants.enums.Language;
+import com.project.Tamago.common.enums.Language;
 import com.project.Tamago.domain.LongTyping;
 import com.project.Tamago.domain.Typing;
 import com.project.Tamago.domain.TypingHistory;

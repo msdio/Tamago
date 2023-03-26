@@ -3,19 +3,17 @@ package com.project.Tamago.controller;
 import java.util.List;
 import java.util.stream.Stream;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.Tamago.dto.CustomResponse;
+import com.project.Tamago.common.Response.CustomResponse;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
 import com.project.Tamago.dto.responseDto.LongTypingResDto;
 import com.project.Tamago.dto.responseDto.ShortTypingListResDto;
-import com.project.Tamago.exception.CustomException;
-import com.project.Tamago.exception.exceptionHandler.ErrorCode;
+import com.project.Tamago.common.exception.CustomException;
+import com.project.Tamago.common.enums.ResponseStatus;
 import com.project.Tamago.service.LongTypingService;
 import com.project.Tamago.service.ShortTypingService;
 
@@ -35,7 +33,7 @@ public class TypingController {
 	@GetMapping("/short")
 	public CustomResponse<ShortTypingListResDto> findShortTypings(@RequestParam String language) {
 		if (Stream.of(supportLanguage).noneMatch(element -> element.equals(language)))
-			throw new CustomException(ErrorCode.INVALID_PARAMETER);
+			throw new CustomException(ResponseStatus.INVALID_PARAMETER);
 
 		return new CustomResponse<>(shortTypingService.findRandomShortTyping(language));
 	}

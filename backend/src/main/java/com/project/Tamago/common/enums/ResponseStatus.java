@@ -1,6 +1,7 @@
-package com.project.Tamago.exception.exceptionHandler;
+package com.project.Tamago.common.enums;
 
-public enum ErrorCode {
+public enum ResponseStatus {
+	SUCCESS(1000, "응답 성공"),
 
 	INVALID_INPUT_VALUE(400, "유효성 검증에 실패한 경우"),
 	INTERNAL_SERVER_ERROR(500, "서버 에러입니다"),
@@ -28,7 +29,7 @@ public enum ErrorCode {
 	private final int code;
 	private final String description;
 
-	ErrorCode(int code, String description) {
+	ResponseStatus(int code, String description) {
 		this.code = code;
 		this.description = description;
 	}

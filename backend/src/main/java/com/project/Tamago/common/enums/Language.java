@@ -1,4 +1,4 @@
-package com.project.Tamago.constants.enums;
+package com.project.Tamago.common.enums;
 
 public enum Language {
 	KOREAN, ENGLISH, JAVA

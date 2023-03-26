@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import com.project.Tamago.constants.enums.Role;
+import com.project.Tamago.common.enums.Role;
 import com.project.Tamago.domain.LongTyping;
 import com.project.Tamago.domain.Typing;
 import com.project.Tamago.domain.TypingHistory;

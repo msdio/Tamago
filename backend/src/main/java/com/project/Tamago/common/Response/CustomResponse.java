@@ -1,4 +1,6 @@
-package com.project.Tamago.dto;
+package com.project.Tamago.common.Response;
+
+import static com.project.Tamago.common.enums.ResponseStatus.*;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -10,8 +12,8 @@ import lombok.Getter;
 @AllArgsConstructor
 @JsonPropertyOrder({"code", "description", "result"})
 public class CustomResponse<T> {
-	private int code = 1000;
-	private String description = "응답 성공";
+	private int code = SUCCESS.getCode();
+	private String description = SUCCESS.getDescription();
 
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private T result;

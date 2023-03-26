@@ -1,7 +1,7 @@
 package com.project.Tamago.service;
 
-import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
-import static com.project.Tamago.constants.Constant.*;
+import static com.project.Tamago.common.Constant.*;
+import static com.project.Tamago.common.enums.ResponseStatus.*;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.Tamago.security.PrincipalDetails;
 import com.project.Tamago.domain.User;
-import com.project.Tamago.exception.CustomException;
+import com.project.Tamago.common.exception.CustomException;
 import com.project.Tamago.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
