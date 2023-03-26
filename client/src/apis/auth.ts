@@ -38,14 +38,14 @@ interface SignupAPIParams {
   nickname: string;
 }
 
-export const signupAPI = async ({ email, password, nickname }: SignupAPIParams) => {
+export const signupAPI = async ({ email, password, nickname }: SignupAPIParams): Promise<ApiResponse> => {
   const response = await requestWithoutAuth.post(SIGNUP_PATH, { email, nickname, password });
 
-  return response.data as ApiResponse;
+  return response.data;
 };
 
-export const emailDuplicateAPI = async (email: string) => {
+export const emailDuplicateAPI = async (email: string): Promise<ApiResponse> => {
   const response = await requestWithoutAuth.get(EMAIL_DUPLICATE_PATH, { params: { email } });
 
-  return response.data as ApiResponse;
+  return response.data;
 };
