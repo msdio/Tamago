@@ -7,10 +7,10 @@ const createApiWithoutAuth = () => {
   });
 
   _request.interceptors.response.use(
-    function (data) {
+    (data) => {
       return data;
     },
-    async function (error: AxiosError) {
+    async (error: AxiosError) => {
       const { response } = error;
 
       return await Promise.reject(response?.data);
@@ -26,7 +26,7 @@ const createApiWithAuth = () => {
   });
 
   _requestWithAuth.interceptors.request.use(
-    function (config) {
+    (config) => {
       const access_token = localStorage.getItem('accessToken');
 
       if (access_token === null) {
@@ -36,19 +36,24 @@ const createApiWithAuth = () => {
 
       config.headers['Content-Type'] = 'application/json';
       config.headers.Authorization = `Bearer ${access_token}`;
+
       return config;
     },
-    async function (error) {
-      return await Promise.reject(error);
+    async (error: AxiosError) => {
+      const { response } = error;
+
+      return await Promise.reject(response?.data);
     },
   );
 
   _requestWithAuth.interceptors.response.use(
-    function (data) {
+    (data) => {
       return data;
     },
-    async function (error) {
-      return await Promise.reject(error);
+    async (error: AxiosError) => {
+      const { response } = error;
+
+      return await Promise.reject(response?.data);
     },
   );
 
