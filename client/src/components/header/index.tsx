@@ -1,4 +1,5 @@
 import { Button, Flex, HStack, Text } from '@chakra-ui/react';
+import styled from '@emotion/styled';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -7,6 +8,18 @@ import { LOGIN_PATH, SIGNUP_TERM_PATH } from '@/constants/paths';
 import { TamagoLogo } from '@/icons/TamagoLogo';
 
 import HeaderDropDown from './DropDown';
+
+const HeaderMenus = styled(Text)`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  &:hover {
+    border-width: 0 0 5px 0;
+    border-style: solid;
+    border-color: #ff6a3c;
+    margin-bottom: -5px;
+  }
+`;
 
 export default function Header() {
   const [isLogin, setIsLogin] = useState(false);
@@ -51,17 +64,17 @@ export default function Header() {
             spacing='46px'
             w='fit-content'
             h='100%'
-            marginLeft='81px'
+            marginLeft='5.0625rem'
             fontSize='17px'
             fontWeight='700'
             onMouseEnter={() => setShowDropDown(true)}
             onMouseLeave={() => setShowDropDown(false)}
             cursor='pointer'
           >
-            <Text>긴글연습</Text>
-            <Text>짧은글연습</Text>
-            <Text>글등록</Text>
-            <Text>프로필</Text>
+            <HeaderMenus>긴글연습</HeaderMenus>
+            <HeaderMenus>짧은글연습</HeaderMenus>
+            <HeaderMenus>글등록</HeaderMenus>
+            <HeaderMenus>프로필</HeaderMenus>
           </HStack>
         </Flex>
         {!isLogin && (
