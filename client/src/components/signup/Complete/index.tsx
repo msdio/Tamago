@@ -1,7 +1,7 @@
 import { Button, Flex, Img, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 
-import { LOGIN_PATH, MAIN_PATH } from '@/utils/paths';
+import { LOGIN_PATH, MAIN_PATH } from '@/constants/paths';
 
 export default function SignupComplete() {
   return (

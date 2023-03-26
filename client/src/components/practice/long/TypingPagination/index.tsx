@@ -1,8 +1,8 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
+import { PRACTICE_LONG_PATH_DETAIL } from '@/constants/paths';
 import { SmallLeftArrow, SmallRightArrow } from '@/icons/SmallArrow';
-import { PRACTICE_LONG_PATH_DETAIL } from '@/utils/paths';
 
 interface TypingPaginationProps {
   typingId: number;

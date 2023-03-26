@@ -1,8 +1,8 @@
 import { Box } from '@chakra-ui/react';
 import Link from 'next/link';
 
+import { PRACTICE_LONG_PATH } from '@/constants/paths';
 import { Exit } from '@/icons/Exit';
-import { PRACTICE_LONG_PATH } from '@/utils/paths';
 
 export default function TypingExit() {
   return (

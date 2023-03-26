@@ -3,8 +3,8 @@ import Link from 'next/link';
 
 import FormOr from '@/components/common/FormOr';
 import RegexInput from '@/components/common/RegexInput';
+import { INQUIRY_PW_PATH } from '@/constants/paths';
 import useRegexInputs from '@/hooks/useRegexInputs';
-import { INQUIRY_PW_PATH } from '@/utils/paths';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
 
 export type InputType = {
