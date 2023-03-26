@@ -7,11 +7,6 @@ const SIGNUP_PATH = '/auth/join';
 const LOGIN_PATH = '/auth/login';
 const EMAIL_DUPLICATE_PATH = '/auth/email';
 
-interface EmailDuplicateResponse {
-  code: number;
-  description?: string;
-}
-
 export const loginAPI = async (email: string, password: string): Promise<number> => {
   try {
     const response = await requestWithoutAuth.post(LOGIN_PATH, { email, password });
