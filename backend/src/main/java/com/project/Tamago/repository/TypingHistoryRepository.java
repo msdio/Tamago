@@ -26,8 +26,8 @@ public interface TypingHistoryRepository extends JpaRepository<TypingHistory, In
 	List<TypingHistory> findAllByUserAndCreatedDateIsAfter(User user, LocalDateTime localDateTime);
 
 	@Query(
-		value = "SELECT DATE(th.created_Date) as created_Date, " +
-			"AVG(th.typing_Accuracy) as accuracy_Average " +
+		value = "SELECT DATE(th.created_Date) as createdDate, " +
+			"AVG(th.typing_Accuracy) as accuracyAverage " +
 			"FROM Typing_History th " +
 			"WHERE th.user_id = :user AND th.created_Date >= :startDay AND th.created_Date <= :endDay " +
 			"GROUP BY DATE(th.created_Date) " +
@@ -38,8 +38,8 @@ public interface TypingHistoryRepository extends JpaRepository<TypingHistory, In
 		@Param("endDay") LocalDateTime endDay);
 
 	@Query(
-		value = "SELECT DATE(th.created_Date) as created_Date, " +
-			"AVG(th.wpm) as wpm_Average " +
+		value = "SELECT DATE(th.created_Date) as createdDate, " +
+			"AVG(th.wpm) as wpmAverage " +
 			"FROM Typing_History th " +
 			"WHERE th.user_id = :user AND th.created_Date >= :startDay AND th.created_Date <= :endDay " +
 			"GROUP BY DATE(th.created_Date) " +

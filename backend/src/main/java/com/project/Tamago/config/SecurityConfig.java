@@ -3,7 +3,6 @@ package com.project.Tamago.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -16,6 +15,8 @@ import com.project.Tamago.security.jwt.JwtAuthorizationFilter;
 import com.project.Tamago.security.jwt.JwtTokenProvider;
 import com.project.Tamago.security.jwt.handler.CustomAccessDeniedHandler;
 import com.project.Tamago.security.jwt.handler.CustomAuthenticationEntryPointHandler;
+import com.project.Tamago.security.oauth2.CustomOAuth2UserService;
+import com.project.Tamago.security.oauth2.OAuth2AuthenticationSuccessHandler;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,7 +28,8 @@ public class SecurityConfig {
 	private final CorsConfig corsConfig;
 	private final JwtTokenProvider jwtTokenProvider;
 	private final RedisTemplate<String, Object> redisTemplate;
-	private final AuthenticationManagerBuilder authenticationManagerBuilder;
+	private final CustomOAuth2UserService customOAuth2UserService;
+	private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 
 	@Bean
 	public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
@@ -56,6 +58,7 @@ public class SecurityConfig {
 			.antMatchers("/typing/history").authenticated()
 			.antMatchers("/typing/register").authenticated()
 			.antMatchers("/statistics/**").permitAll()
+			.antMatchers("/oauth2/**").permitAll()
 			.antMatchers("/auth/**").permitAll()
 			.antMatchers("/test/**").permitAll()
 			.antMatchers("/swagger-ui/**").permitAll()
@@ -69,6 +72,12 @@ public class SecurityConfig {
 			.and()
 			.authorizeRequests()
 			.anyRequest().authenticated();
+
+		http.oauth2Login()
+			.userInfoEndpoint().userService(customOAuth2UserService)
+			.and()
+			.successHandler(oAuth2AuthenticationSuccessHandler)
+			.permitAll();
 
 		return http.build();
 	}

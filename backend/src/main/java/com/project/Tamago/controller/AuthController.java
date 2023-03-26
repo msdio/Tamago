@@ -48,7 +48,7 @@ public class AuthController {
 	}
 
 	@PostMapping("/login")
-	public CustomResponse<String> login(@RequestBody LoginReqDto loginReqDto) {
+	public CustomResponse<String> login(@Validated @RequestBody LoginReqDto loginReqDto) {
 		return new CustomResponse<>(authService.login(loginReqDto));
 	}
 
