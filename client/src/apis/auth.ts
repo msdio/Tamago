@@ -55,17 +55,9 @@ export const signupAPI = async ({ email, password, nickname }: SignupAPIParams) 
 };
 
 export const emailDuplicateAPI = async (email: string) => {
-  try {
-    const { data } = await requestWithoutAuth.get(EMAIL_DUPLICATE_PATH, { params: { email } });
-  } catch (error) {
-    if (error instanceof AxiosError) {
-      const { code } = error.response?.data;
-      if (code === 500) {
-        throw new ServerError();
-      }
-    }
-    return await Promise.reject(error);
-  }
+  const response = await requestWithoutAuth.get(EMAIL_DUPLICATE_PATH, { params: { email } });
+
+  return response.data as ApiResponse;
 };
 
 export const getUserProfileAPI = async () => {
