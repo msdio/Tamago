@@ -61,7 +61,7 @@ const outlineVariant = defineStyle((props) => {
     border: '0.6px solid',
 
     _hover: {
-      bg: `${c}.main`,
+      bg: `${c}.light`,
       _disabled: {
         bg: 'gray.main',
       },

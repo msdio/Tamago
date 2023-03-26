@@ -49,7 +49,7 @@ export const getShortTypingWritingsAPI = async (
 };
 
 export const getLongTypingListAPI = async (): Promise<LongTypingListResultType> => {
-  const res = await requestWithoutAuth.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/typing/long`);
+  const res = await requestWithoutAuth.get(`/typing/long`);
 
   return res.data;
 };
@@ -61,9 +61,7 @@ export const getLongTypingAPI = async ({
   typingId: string;
   pageNum: string;
 }): Promise<LongTypingResultType> => {
-  const res = await requestWithoutAuth.get(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/typing/long/detail?longTypingId=${typingId}&page=${pageNum}`,
-  );
+  const res = await requestWithoutAuth.get(`/typing/long/detail?longTypingId=${typingId}&page=${pageNum}`);
 
   return res.data;
 };

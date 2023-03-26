@@ -4,12 +4,16 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.project.Tamago.domain.LongTyping;
 import com.project.Tamago.domain.Typing;
 import com.project.Tamago.domain.TypingHistory;
 import com.project.Tamago.domain.User;
+import com.project.Tamago.dto.AccuracyAverageByDateDto;
+import com.project.Tamago.dto.WpmAverageByDateDto;
 
 @Repository
 public interface TypingHistoryRepository extends JpaRepository<TypingHistory, Integer> {
@@ -21,28 +25,28 @@ public interface TypingHistoryRepository extends JpaRepository<TypingHistory, In
 
 	List<TypingHistory> findAllByUserAndCreatedDateIsAfter(User user, LocalDateTime localDateTime);
 
-	// @Query(
-	// 	"SELECT DATE(th.createdDate) as createdDate, " +
-	// 		"AVG(th.typingAccuracy) as accuracyAverage " +
-	// 		"FROM TypingHistory th " +
-	// 		"WHERE th.user = :user AND th.createdDate >= :startDay AND th.createdDate <= :endDay " +
-	// 		"GROUP BY DATE(th.createdDate) " +
-	// 		"ORDER BY th.createdDate"
-	// )
-	// List<AccuracyAverageByDateDto> findAccuracyAverageByUserId(@Param("user") User user,
-	// 	@Param("startDay") LocalDate startDay,
-	// 	@Param("endDay") LocalDate endDay);
-	//
-	// @Query(
-	// 	"SELECT DATE(th.createdDate) as createdDate, " +
-	// 		"AVG(th.wpm) as wpmAverage " +
-	// 		"FROM TypingHistory th " +
-	// 		"WHERE th.user = :user AND th.createdDate >= :startDay AND th.createdDate <= :endDay " +
-	// 		"GROUP BY DATE(th.createdDate) " +
-	// 		"ORDER BY th.createdDate"
-	// )
-	// List<WpmAverageByDateDto> findWpmAverageByUserId(@Param("user") User user,
-	// 	@Param("startDay") LocalDate startDay,
-	// 	@Param("endDay") LocalDate endDay);
+	@Query(
+		value = "SELECT DATE(th.created_Date) as createdDate, " +
+			"AVG(th.typing_Accuracy) as accuracyAverage " +
+			"FROM Typing_History th " +
+			"WHERE th.user_id = :user AND th.created_Date >= :startDay AND th.created_Date <= :endDay " +
+			"GROUP BY DATE(th.created_Date) " +
+			"ORDER BY th.created_Date", nativeQuery = true
+	)
+	List<AccuracyAverageByDateDto> findAccuracyAverageByUserId(@Param("user") long user,
+		@Param("startDay") LocalDateTime startDay,
+		@Param("endDay") LocalDateTime endDay);
+
+	@Query(
+		value = "SELECT DATE(th.created_Date) as createdDate, " +
+			"AVG(th.wpm) as wpmAverage " +
+			"FROM Typing_History th " +
+			"WHERE th.user_id = :user AND th.created_Date >= :startDay AND th.created_Date <= :endDay " +
+			"GROUP BY DATE(th.created_Date) " +
+			"ORDER BY th.created_Date", nativeQuery = true
+	)
+	List<WpmAverageByDateDto> findWpmAverageByUserId(@Param("user") long user,
+		@Param("startDay") LocalDateTime startDay,
+		@Param("endDay") LocalDateTime endDay);
 
 }

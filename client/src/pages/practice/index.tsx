@@ -1,7 +1,7 @@
 import { Button } from '@chakra-ui/react';
 import Link from 'next/link';
 
-import { PRACTICE_LONG_PATH, PRACTICE_SHORT_PATH } from '@/utils/paths';
+import { PRACTICE_LONG_PATH, PRACTICE_SHORT_PATH } from '@/constants/paths';
 
 export default function PracticePage() {
   return (
