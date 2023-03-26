@@ -7,12 +7,12 @@ import Alert from '@/components/common/Alert';
 import FormOr from '@/components/common/FormOr';
 import RegexInput from '@/components/common/RegexInput';
 import EmailInput from '@/components/signup/Form/EmailInput';
+import { SIGNUP_COMPLETE_PATH } from '@/constants/paths';
 import { EMAIL_DUPLICATE, NICKNAME_DUPLICATE, SUCCESS } from '@/constants/responseCode';
 import useRegexInputs from '@/hooks/useRegexInputs';
 import { GithubLogo } from '@/icons/GithubLogo';
 import { GoogleLogo } from '@/icons/GoogleLogo';
 import type { ApiErrorResponse } from '@/types/apiResponse';
-import { SIGNUP_COMPLETE_PATH } from '@/utils/paths';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
 
 export default function SignupForm() {

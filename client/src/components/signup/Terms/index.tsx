@@ -4,8 +4,8 @@ import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 
 import { CustomCheckbox } from '@/components/common/Checkbox';
+import { LOGIN_PATH, SIGNUP_FORM_PATH } from '@/constants/paths';
 import { RightArrow } from '@/icons/RightArrow';
-import { LOGIN_PATH, SIGNUP_FORM_PATH } from '@/utils/paths';
 
 export default function SignupTerms() {
   const [checkedTerms, setCheckedTerms] = useState({

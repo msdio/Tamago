@@ -7,7 +7,6 @@ import { INQUIRY_PW_PATH } from '@/constants/paths';
 import useRegexInputs from '@/hooks/useRegexInputs';
 import { GithubLogo } from '@/icons/GithubLogo';
 import { GoogleLogo } from '@/icons/GoogleLogo';
-import { INQUIRY_PW_PATH } from '@/utils/paths';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
 
 export type InputType = {
