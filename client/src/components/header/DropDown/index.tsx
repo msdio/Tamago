@@ -1,6 +1,5 @@
 import { Box, Divider, Text } from '@chakra-ui/react';
 import Link from 'next/link';
-import type { Dispatch, SetStateAction } from 'react';
 
 import { fadeIn } from '@/constants/animations';
 import { PRACTICE_LONG_PATH, PRACTICE_SHORT_PATH } from '@/constants/paths';
@@ -23,7 +22,7 @@ const profileMenus = [
   { menu: '통계', path: '' },
 ];
 
-export default function HeaderDropDown({ handler }: { handler: Dispatch<SetStateAction<boolean>> }) {
+export default function HeaderDropDown({ handler }: { handler: (a: boolean) => void }) {
   return (
     <Box
       display='flex'

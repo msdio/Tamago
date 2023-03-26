@@ -23,6 +23,10 @@ export default function Header() {
     setIsLogin(true);
   };
 
+  const handleDropDown = (show: boolean) => {
+    setShowDropDown(show);
+  };
+
   return (
     <div style={{ position: 'relative' }}>
       <Flex
@@ -97,7 +101,7 @@ export default function Header() {
           </HStack>
         )}
       </Flex>
-      {showDropDown && <HeaderDropDown handler={setShowDropDown} />}
+      {showDropDown && <HeaderDropDown handler={handleDropDown} />}
     </div>
   );
 }
