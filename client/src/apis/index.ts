@@ -35,7 +35,7 @@ const createApiWithAuth = () => {
 
   _requestWithAuth.interceptors.request.use(
     (config) => {
-      const access_token = localStorage.getItem('accessToken');
+      const accessToken = localStorage.getItem('accessToken');
 
       if (accessToken === null) {
         alert('로그인이 필요합니다.');
@@ -43,7 +43,7 @@ const createApiWithAuth = () => {
       }
 
       config.headers['Content-Type'] = 'application/json';
-      config.headers.Authorization = `Bearer ${access_token}`;
+      config.headers.Authorization = `Bearer ${accessToken}`;
 
       return config;
     },
