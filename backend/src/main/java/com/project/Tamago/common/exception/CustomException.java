@@ -1,17 +1,17 @@
 package com.project.Tamago.common.exception;
 
-import com.project.Tamago.common.enums.ResponseStatus;
+import com.project.Tamago.common.enums.ResponseCode;
 
 public class CustomException extends RuntimeException {
 
-	private ResponseStatus responseStatus;
+	private ResponseCode responseCode;
 
-	public CustomException(ResponseStatus responseStatus) {
-		super(responseStatus.getDescription());
-		this.responseStatus = responseStatus;
+	public CustomException(ResponseCode responseCode) {
+		super(responseCode.getDescription());
+		this.responseCode = responseCode;
 	}
 
-	public ResponseStatus getErrorCode() {
-		return responseStatus;
+	public ResponseCode getErrorCode() {
+		return responseCode;
 	}
 }

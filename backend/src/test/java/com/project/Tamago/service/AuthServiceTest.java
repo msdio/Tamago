@@ -1,6 +1,6 @@
 package com.project.Tamago.service;
 
-import static com.project.Tamago.common.enums.ResponseStatus.*;
+import static com.project.Tamago.common.enums.ResponseCode.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 

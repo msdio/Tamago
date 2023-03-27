@@ -1,6 +1,6 @@
 package com.project.Tamago.common.exception.exceptionHandler;
 
-import static com.project.Tamago.common.enums.ResponseStatus.*;
+import static com.project.Tamago.common.enums.ResponseCode.*;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.project.Tamago.common.exception.CustomException;
 import com.project.Tamago.common.exception.InvalidParameterException;
-import com.project.Tamago.common.enums.ResponseStatus;
+import com.project.Tamago.common.enums.ResponseCode;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,9 +27,9 @@ public class ControllerAdvice {
 	@org.springframework.web.bind.annotation.ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(InvalidParameterException.class)
 	protected ErrorMessage invalidParameterExceptionHandler(InvalidParameterException exception) {
-		ResponseStatus responseStatus = exception.getErrorCode();
-		log.error(responseStatus.getDescription());
-		return new ErrorMessage(responseStatus, exception.getErrors());
+		ResponseCode responseCode = exception.getErrorCode();
+		log.error(responseCode.getDescription());
+		return new ErrorMessage(responseCode, exception.getErrors());
 	}
 
 	@org.springframework.web.bind.annotation.ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -63,9 +63,9 @@ public class ControllerAdvice {
 	@org.springframework.web.bind.annotation.ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(CustomException.class)
 	public ErrorMessage customExceptionHandler(CustomException exception) {
-		ResponseStatus responseStatus = exception.getErrorCode();
-		log.error(responseStatus.getDescription());
-		return new ErrorMessage(responseStatus);
+		ResponseCode responseCode = exception.getErrorCode();
+		log.error(responseCode.getDescription());
+		return new ErrorMessage(responseCode);
 	}
 
 
@@ -91,6 +91,6 @@ public class ControllerAdvice {
 			.map(StackTraceElement::toString)
 			.map(toString -> toString + "\n")
 			.collect(Collectors.joining()));
-		return new ErrorMessage(ResponseStatus.INTERNAL_SERVER_ERROR);
+		return new ErrorMessage(ResponseCode.INTERNAL_SERVER_ERROR);
 	}
 }

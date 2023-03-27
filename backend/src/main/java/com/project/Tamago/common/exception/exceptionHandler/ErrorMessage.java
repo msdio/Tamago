@@ -9,7 +9,7 @@ import org.springframework.validation.FieldError;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.project.Tamago.common.enums.ResponseStatus;
+import com.project.Tamago.common.enums.ResponseCode;
 
 import lombok.Data;
 
@@ -21,13 +21,13 @@ public class ErrorMessage {
 	@JsonProperty("errors")
 	private List<String> errors;
 
-	public ErrorMessage(ResponseStatus responseStatus) {
-		this.code = responseStatus.getCode();
-		this.description = responseStatus.getDescription();
+	public ErrorMessage(ResponseCode responseCode) {
+		this.code = responseCode.getCode();
+		this.description = responseCode.getDescription();
 	}
 
-	public ErrorMessage(ResponseStatus responseStatus, Errors errors) {
-		this(responseStatus);
+	public ErrorMessage(ResponseCode responseCode, Errors errors) {
+		this(responseCode);
 		setCustomFieldErrors(errors.getFieldErrors());
 	}
 
