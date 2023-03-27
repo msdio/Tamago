@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.Tamago.common.Response.CustomResponse;
+import com.project.Tamago.common.annotation.UserId;
 import com.project.Tamago.dto.requestDto.ModifyProfileReqDto;
 import com.project.Tamago.dto.responseDto.ProfileResDto;
 import com.project.Tamago.common.exception.InvalidParameterException;
