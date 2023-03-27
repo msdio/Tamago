@@ -5,20 +5,25 @@ import AuthLayout from '@/components/common/AuthLayout';
 import type { InputType } from '@/components/login/Form';
 import LoginForm from '@/components/login/Form';
 import { MAIN_PATH } from '@/constants/paths';
+import { SUCCESS } from '@/constants/responseCode';
+import type { ApiErrorResponse } from '@/types/apiResponse';
 
 function Login() {
   const router = useRouter();
 
   const handleLogin = async ({ email, password }: InputType) => {
     try {
-      await loginAPI(email, password);
+      const data = await loginAPI({ email, password });
 
-      router.push(MAIN_PATH);
-    } catch (error) {
-      // TODO : error handling 방식 논의후 정리
-      if (error instanceof Error) {
-        alert(error.message);
+      if (data.code === SUCCESS) {
+        router.push(MAIN_PATH);
+      } else {
+        alert('로그인 실패');
       }
+    } catch (error) {
+      const customError = error as ApiErrorResponse;
+
+      alert(customError.description);
     }
   };
 

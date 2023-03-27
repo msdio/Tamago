@@ -54,17 +54,65 @@ export default function Header() {
             spacing='46px'
             w='fit-content'
             h='100%'
-            marginLeft='81px'
+            marginLeft='5.0625rem'
             fontSize='17px'
             fontWeight='700'
             onMouseEnter={() => setShowDropDown(true)}
             onMouseLeave={() => setShowDropDown(false)}
             cursor='pointer'
           >
-            <Text>긴글연습</Text>
-            <Text>짧은글연습</Text>
-            <Text>글등록</Text>
-            <Text>프로필</Text>
+            <Text
+              height='100%'
+              display='flex'
+              alignItems='center'
+              _hover={{
+                borderWidth: '0 0 5px 0',
+                borderStyle: 'solid',
+                borderColor: 'primary.main',
+                marginBottom: '-5px',
+              }}
+            >
+              긴글연습
+            </Text>
+            <Text
+              height='100%'
+              display='flex'
+              alignItems='center'
+              _hover={{
+                borderWidth: '0 0 5px 0',
+                borderStyle: 'solid',
+                borderColor: 'primary.main',
+                marginBottom: '-5px',
+              }}
+            >
+              짧은글연습
+            </Text>
+            <Text
+              height='100%'
+              display='flex'
+              alignItems='center'
+              _hover={{
+                borderWidth: '0 0 5px 0',
+                borderStyle: 'solid',
+                borderColor: 'primary.main',
+                marginBottom: '-5px',
+              }}
+            >
+              글등록
+            </Text>
+            <Text
+              height='100%'
+              display='flex'
+              alignItems='center'
+              _hover={{
+                borderWidth: '0 0 5px 0',
+                borderStyle: 'solid',
+                borderColor: 'primary.main',
+                marginBottom: '-5px',
+              }}
+            >
+              프로필
+            </Text>
           </HStack>
         </Flex>
         {!userProfile && (
