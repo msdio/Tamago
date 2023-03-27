@@ -1,6 +1,6 @@
 package com.project.Tamago.common.enums;
 
-public enum ResponseStatus {
+public enum ResponseCode {
 	SUCCESS(1000, "응답 성공"),
 
 	INVALID_INPUT_VALUE(400, "유효성 검증에 실패한 경우"),
@@ -29,7 +29,7 @@ public enum ResponseStatus {
 	private final int code;
 	private final String description;
 
-	ResponseStatus(int code, String description) {
+	ResponseCode(int code, String description) {
 		this.code = code;
 		this.description = description;
 	}

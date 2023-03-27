@@ -1,7 +1,7 @@
 package com.project.Tamago.dto;
 
 import com.project.Tamago.common.exception.CustomException;
-import com.project.Tamago.common.enums.ResponseStatus;
+import com.project.Tamago.common.enums.ResponseCode;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,14 +15,14 @@ public class WrongKey {
 
 	public void setTotal(int total) {
 		if(total < 0 ) {
-			throw new CustomException(ResponseStatus.INVALID_PARAMETER);
+			throw new CustomException(ResponseCode.INVALID_PARAMETER);
 		}
 		this.total = total;
 	}
 
 	public void setCount(int count) {
 		if(count < 0 || count > this.total) {
-			throw new CustomException(ResponseStatus.INVALID_PARAMETER);
+			throw new CustomException(ResponseCode.INVALID_PARAMETER);
 		}
 		this.count = count;
 	}

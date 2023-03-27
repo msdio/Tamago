@@ -1,6 +1,6 @@
 package com.project.Tamago.common.exception;
 
-import static com.project.Tamago.common.enums.ResponseStatus.*;
+import static com.project.Tamago.common.enums.ResponseCode.*;
 
 import org.springframework.validation.Errors;
 

@@ -13,7 +13,7 @@ import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
 import com.project.Tamago.dto.responseDto.LongTypingResDto;
 import com.project.Tamago.dto.responseDto.ShortTypingListResDto;
 import com.project.Tamago.common.exception.CustomException;
-import com.project.Tamago.common.enums.ResponseStatus;
+import com.project.Tamago.common.enums.ResponseCode;
 import com.project.Tamago.service.LongTypingService;
 import com.project.Tamago.service.ShortTypingService;
 
@@ -33,7 +33,7 @@ public class TypingController {
 	@GetMapping("/short")
 	public CustomResponse<ShortTypingListResDto> findShortTypings(@RequestParam String language) {
 		if (Stream.of(supportLanguage).noneMatch(element -> element.equals(language)))
-			throw new CustomException(ResponseStatus.INVALID_PARAMETER);
+			throw new CustomException(ResponseCode.INVALID_PARAMETER);
 
 		return new CustomResponse<>(shortTypingService.findRandomShortTyping(language));
 	}

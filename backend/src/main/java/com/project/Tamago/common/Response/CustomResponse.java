@@ -1,6 +1,6 @@
 package com.project.Tamago.common.Response;
 
-import static com.project.Tamago.common.enums.ResponseStatus.*;
+import static com.project.Tamago.common.enums.ResponseCode.*;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;

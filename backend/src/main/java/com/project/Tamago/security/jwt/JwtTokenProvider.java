@@ -1,7 +1,7 @@
 package com.project.Tamago.security.jwt;
 
 import static com.project.Tamago.common.Constant.*;
-import static com.project.Tamago.common.enums.ResponseStatus.*;
+import static com.project.Tamago.common.enums.ResponseCode.*;
 
 import java.security.Key;
 import java.security.KeyPair;
