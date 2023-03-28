@@ -1,14 +1,19 @@
 package com.project.Tamago.dto.mapper;
 
+import com.project.Tamago.common.enums.Language;
 import com.project.Tamago.common.enums.Mode;
 import com.project.Tamago.common.enums.Role;
 import com.project.Tamago.domain.LongTyping;
+import com.project.Tamago.domain.LongTyping.LongTypingBuilder;
+import com.project.Tamago.domain.Register;
+import com.project.Tamago.domain.Register.RegisterBuilder;
 import com.project.Tamago.domain.Typing;
 import com.project.Tamago.domain.TypingHistory;
 import com.project.Tamago.domain.TypingHistory.TypingHistoryBuilder;
 import com.project.Tamago.domain.User;
 import com.project.Tamago.domain.User.UserBuilder;
 import com.project.Tamago.dto.PageContentDto;
+import com.project.Tamago.dto.requestDto.LongTypingReqDto;
 import com.project.Tamago.dto.requestDto.TypingHistoryReqDto;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto.LongTypingDetailResDtoBuilder;
@@ -20,7 +25,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-27T02:39:40+0900",
+    date = "2023-03-28T20:46:00+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Eclipse Adoptium)"
 )
 @Component
@@ -102,6 +107,48 @@ public class DataMapperImpl implements DataMapper {
         typingHistory.wrongKeys( typingHistoryReqDto.wrongKeysChangeType() );
 
         return typingHistory.build();
+    }
+
+    @Override
+    public LongTyping toLongTyping(LongTypingReqDto longTypingReqDto) {
+        if ( longTypingReqDto == null ) {
+            return null;
+        }
+
+        LongTypingBuilder longTyping = LongTyping.builder();
+
+        longTyping.title( longTypingReqDto.getTitle() );
+        longTyping.content( longTypingReqDto.getContent() );
+        if ( longTypingReqDto.getLanguage() != null ) {
+            longTyping.language( Enum.valueOf( Language.class, longTypingReqDto.getLanguage() ) );
+        }
+
+        longTyping.thumbnail( longTypingReqDto.getContent().replaceAll("\r", "").substring(0, Math.min(longTypingReqDto.getContent().replaceAll("\r", "").length(), 50)) );
+        longTyping.length( longTypingReqDto.getContent().replaceAll("\r", "").length() );
+        longTyping.totalPage( (int) Math.ceil((double) (longTypingReqDto.getContent().length() - longTypingReqDto.getContent().replaceAll("\r\n", "").length() + 1) / 20) );
+
+        return longTyping.build();
+    }
+
+    @Override
+    public Register toRegister(LongTyping longTyping, Typing typing, User user) {
+        if ( longTyping == null && typing == null && user == null ) {
+            return null;
+        }
+
+        RegisterBuilder register = Register.builder();
+
+        if ( longTyping != null ) {
+            register.longTyping( longTyping );
+        }
+        if ( typing != null ) {
+            register.typing( typing );
+        }
+        if ( user != null ) {
+            register.user( user );
+        }
+
+        return register.build();
     }
 
     @Override
