@@ -1,20 +1,14 @@
 package com.project.Tamago.service;
 
-import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
-
-import java.util.Map;
-import java.util.stream.Collectors;
+import static com.project.Tamago.common.enums.ResponseCode.*;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.Tamago.domain.LongTyping;
-import com.project.Tamago.domain.Typing;
-import com.project.Tamago.domain.TypingHistory;
 import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.mapper.DataMapper;
 import com.project.Tamago.dto.requestDto.TypingHistoryReqDto;
-import com.project.Tamago.exception.CustomException;
+import com.project.Tamago.common.exception.CustomException;
 import com.project.Tamago.repository.LongTypingRepository;
 import com.project.Tamago.repository.TypingHistoryRepository;
 import com.project.Tamago.repository.TypingRepository;

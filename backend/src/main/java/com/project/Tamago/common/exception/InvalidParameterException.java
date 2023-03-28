@@ -1,6 +1,6 @@
-package com.project.Tamago.exception;
+package com.project.Tamago.common.exception;
 
-import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
+import static com.project.Tamago.common.enums.ResponseCode.*;
 
 import org.springframework.validation.Errors;
 

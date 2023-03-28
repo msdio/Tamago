@@ -1,6 +1,6 @@
 package com.project.Tamago.service;
 
-import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
+import static com.project.Tamago.common.enums.ResponseCode.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.project.Tamago.dto.requestDto.PasswordReqDto;
-import com.project.Tamago.exception.CustomException;
+import com.project.Tamago.common.exception.CustomException;
 import com.project.Tamago.repository.UserRepository;
 
 @SpringBootTest

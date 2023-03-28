@@ -1,6 +1,6 @@
 package com.project.Tamago.service;
 
-import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
+import static com.project.Tamago.common.enums.ResponseCode.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,17 +9,14 @@ import java.util.stream.Collectors;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import com.project.Tamago.domain.LongTyping;
-import com.project.Tamago.domain.PagePosition;
-import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.PageContentDto;
 import com.project.Tamago.dto.mapper.DataMapper;
 import com.project.Tamago.dto.requestDto.LongTypingReqDto;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
 import com.project.Tamago.dto.responseDto.LongTypingResDto;
-import com.project.Tamago.exception.CustomException;
+import com.project.Tamago.common.exception.CustomException;
 import com.project.Tamago.repository.LongTypingRepository;
 import com.project.Tamago.repository.PagePositionRepository;
 import com.project.Tamago.repository.RegisterRepository;

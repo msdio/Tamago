@@ -1,6 +1,6 @@
 package com.project.Tamago.controller;
 
-import static com.project.Tamago.constants.Constant.*;
+import static com.project.Tamago.common.Constant.*;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.Tamago.dto.CustomResponse;
+import com.project.Tamago.common.Response.CustomResponse;
 import com.project.Tamago.dto.requestDto.JoinReqDto;
 import com.project.Tamago.dto.requestDto.LoginReqDto;
 import com.project.Tamago.dto.requestDto.PasswordReqDto;
-import com.project.Tamago.exception.InvalidParameterException;
+import com.project.Tamago.common.exception.InvalidParameterException;
 import com.project.Tamago.security.Token;
 import com.project.Tamago.service.AuthService;
 

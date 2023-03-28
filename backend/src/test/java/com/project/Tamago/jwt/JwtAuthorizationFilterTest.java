@@ -1,6 +1,6 @@
 package com.project.Tamago.jwt;
 
-import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
+import static com.project.Tamago.common.enums.ResponseCode.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.project.Tamago.exception.CustomException;
+import com.project.Tamago.common.exception.CustomException;
 import com.project.Tamago.security.jwt.JwtTokenProvider;
 
 @ExtendWith(SpringExtension.class)

@@ -19,7 +19,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.test.context.support.WithMockUser;
 
-import com.project.Tamago.constants.enums.Language;
+import com.project.Tamago.common.enums.Language;
 import com.project.Tamago.domain.LongTyping;
 import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.PageContentDto;

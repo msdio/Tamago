@@ -1,6 +1,6 @@
 package com.project.Tamago.security.jwt.handler;
 
-import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
+import static com.project.Tamago.common.enums.ResponseCode.*;
 
 import java.io.IOException;
 

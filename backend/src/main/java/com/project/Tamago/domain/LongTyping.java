@@ -8,10 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.project.Tamago.common.enums.Language;
+
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
-import com.project.Tamago.constants.enums.Language;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

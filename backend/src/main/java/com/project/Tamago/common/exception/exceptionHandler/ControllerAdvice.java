@@ -1,6 +1,6 @@
-package com.project.Tamago.exception.exceptionHandler;
+package com.project.Tamago.common.exception.exceptionHandler;
 
-import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
+import static com.project.Tamago.common.enums.ResponseCode.*;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -12,11 +12,11 @@ import org.springframework.security.authentication.InternalAuthenticationService
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.project.Tamago.exception.CustomException;
-import com.project.Tamago.exception.InvalidParameterException;
+import com.project.Tamago.common.exception.CustomException;
+import com.project.Tamago.common.exception.InvalidParameterException;
+import com.project.Tamago.common.enums.ResponseCode;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,52 +24,52 @@ import lombok.extern.slf4j.Slf4j;
 @RestControllerAdvice
 public class ControllerAdvice {
 
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@org.springframework.web.bind.annotation.ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(InvalidParameterException.class)
 	protected ErrorMessage invalidParameterExceptionHandler(InvalidParameterException exception) {
-		ErrorCode errorCode = exception.getErrorCode();
-		log.error(errorCode.getDescription());
-		return new ErrorMessage(errorCode, exception.getErrors());
+		ResponseCode responseCode = exception.getErrorCode();
+		log.error(responseCode.getDescription());
+		return new ErrorMessage(responseCode, exception.getErrors());
 	}
 
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@org.springframework.web.bind.annotation.ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MissingServletRequestParameterException.class)
 	protected ErrorMessage nullParameterExceptionHandler(MissingServletRequestParameterException exception) {
 		log.error("파라미터 {}가 존재하지 않습니다", exception.getParameterName());
 		return new ErrorMessage(NULL_PARAMETER);
 	}
 
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@org.springframework.web.bind.annotation.ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(IllegalArgumentException.class)
 	public ErrorMessage illegalArgumentExceptionHandler(IllegalArgumentException exception) {
 		log.error(INVALID_INPUT_VALUE.getDescription());
 		return new ErrorMessage(INVALID_INPUT_VALUE);
 	}
 
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@org.springframework.web.bind.annotation.ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(InternalAuthenticationServiceException.class)
 	public ErrorMessage illegalArgumentExceptionHandler(InternalAuthenticationServiceException exception) {
 		log.error(USERS_EMPTY_USER_EMAIL.getDescription());
 		return new ErrorMessage(USERS_EMPTY_USER_EMAIL);
 	}
 
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@org.springframework.web.bind.annotation.ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(BadCredentialsException.class)
 	public ErrorMessage illegalArgumentExceptionHandler(BadCredentialsException exception) {
 		log.error(USERS_EXISTS_PASSWORD.getDescription());
 		return new ErrorMessage(USERS_EXISTS_PASSWORD);
 	}
 
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@org.springframework.web.bind.annotation.ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(CustomException.class)
 	public ErrorMessage customExceptionHandler(CustomException exception) {
-		ErrorCode errorCode = exception.getErrorCode();
-		log.error(errorCode.getDescription());
-		return new ErrorMessage(errorCode);
+		ResponseCode responseCode = exception.getErrorCode();
+		log.error(responseCode.getDescription());
+		return new ErrorMessage(responseCode);
 	}
 
 
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@org.springframework.web.bind.annotation.ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public ErrorMessage customExceptionHandler(HttpMessageNotReadableException exception) {
 		log.error(INVALID_PARAMETER.getDescription());
@@ -77,20 +77,20 @@ public class ControllerAdvice {
 	}
 
 
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@org.springframework.web.bind.annotation.ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ErrorMessage customExceptionHandler(MethodArgumentNotValidException exception) {
 		log.error(INVALID_PARAMETER.getDescription());
 		return new ErrorMessage(INVALID_PARAMETER);
 	}
 
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	@org.springframework.web.bind.annotation.ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(Exception.class)
 	public ErrorMessage exceptionHandler(Exception exception) {
 		log.error(Arrays.stream(exception.getStackTrace())
 			.map(StackTraceElement::toString)
 			.map(toString -> toString + "\n")
 			.collect(Collectors.joining()));
-		return new ErrorMessage(ErrorCode.INTERNAL_SERVER_ERROR);
+		return new ErrorMessage(ResponseCode.INTERNAL_SERVER_ERROR);
 	}
 }
