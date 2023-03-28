@@ -14,14 +14,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import com.project.Tamago.constants.enums.Language;
 import com.project.Tamago.domain.LongTyping;
+import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.PageContentDto;
 import com.project.Tamago.dto.mapper.DataMapper;
+import com.project.Tamago.dto.requestDto.LongTypingReqDto;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
 import com.project.Tamago.dto.responseDto.LongTypingResDto;
 import com.project.Tamago.repository.LongTypingRepository;
+import com.project.Tamago.repository.RegisterRepository;
+import com.project.Tamago.repository.UserRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -30,6 +38,14 @@ class LongTypingServiceTest {
 	private LongTypingService longTypingService;
 	@MockBean
 	private LongTypingRepository longTypingRepository;
+
+	@MockBean
+	private RegisterRepository registerRepository;
+
+	@MockBean
+	private UserRepository userRepository;
+	@MockBean
+	private UserService userService;
 
 	@Test
 	@DisplayName("긴글 목록 조회 테스트")
@@ -53,14 +69,16 @@ class LongTypingServiceTest {
 			.build();
 
 		List<LongTyping> longTypings = Arrays.asList(longTyping1, longTyping2);
-		when(longTypingRepository.findAll()).thenReturn(longTypings);
+		Page<LongTyping> longTypingsPage = new PageImpl<>(longTypings);
+
+		when(longTypingRepository.findAll(any(PageRequest.class))).thenReturn(longTypingsPage);
 
 		List<LongTypingResDto> expectedLongTypingResDtos = longTypings.stream()
 			.map(DataMapper.INSTANCE::LongTypingToLongTypingResDto)
 			.collect(Collectors.toList());
 
 		// when
-		List<LongTypingResDto> actualLongTypingResDtos = longTypingService.findLongTypings();
+		List<LongTypingResDto> actualLongTypingResDtos = longTypingService.findLongTypings(1);
 
 		// then
 		assertEquals(expectedLongTypingResDtos, actualLongTypingResDtos);
@@ -140,4 +158,35 @@ class LongTypingServiceTest {
 		assertNotEquals(expectedPageContentDto.getContent(), actualLongTypingDetailResDto.getContent());
 		assertNotEquals(expectedPageContentDto.getPage(), actualLongTypingDetailResDto.getCurrentPage());
 	}
+
+	@Test
+	@DisplayName("긴글 저장 테스트")
+	@WithMockUser(username = "test", authorities = {"ROLE_USER"})
+	public void testSaveLongTyping() {
+		// given
+		String jwtToken = "testToken";
+		LongTypingReqDto longTypingReqDto = LongTypingReqDto.builder()
+			.title("Test title")
+			.language("ENGLISH")
+			.content("test content")
+			.build();
+		LongTyping longTyping = DataMapper.INSTANCE.toLongTyping(longTypingReqDto);
+
+		User user = User.builder()
+			.id(1)
+			.email("test@naver.com")
+			.nickname("test")
+			.password("1234")
+			.build();
+
+		when(userService.getUserByJwtToken(any())).thenReturn(user);
+
+		// when
+		longTypingService.saveLongTyping(jwtToken, longTypingReqDto);
+
+		// then
+		verify(registerRepository, times(1)).save(any());
+		assertEquals(longTyping.getContent(), longTypingReqDto.getContent());
+	}
+
 }

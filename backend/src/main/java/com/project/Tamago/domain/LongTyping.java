@@ -8,6 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+
 import com.project.Tamago.constants.enums.Language;
 
 import lombok.AccessLevel;
@@ -21,6 +24,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
+@DynamicInsert
 public class LongTyping extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,4 +38,6 @@ public class LongTyping extends BaseTimeEntity {
 	private Integer length;
 	private Integer totalPage;
 	private Integer viewCount;
+	@ColumnDefault("false")
+	private Boolean isRegistered;
 }
