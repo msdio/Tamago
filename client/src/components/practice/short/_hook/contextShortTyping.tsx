@@ -12,6 +12,7 @@ interface ContextShortTypingType {
   typingCount: number;
   typingWpm: number;
   typingAccuracy: number;
+  typingSpeed: number;
 
   prevUserTyping: string;
   prevOriginalTyping: string;
@@ -21,6 +22,9 @@ interface ContextShortTypingType {
 interface ContextShortTypingHandlerType {
   onEndTyping: (input: string) => Promise<void>;
   onTyping: (inputChar: string) => void;
+
+  timePlay: () => void;
+  timePause: () => void;
 }
 
 interface ContextTypingResultModalType {
@@ -42,15 +46,26 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
   const [currentIdx, setCurrentIdx] = useState(0);
   const prevUserTyping = useRef('');
 
-  const [isResultModalOpen, setIsResultModalOpen] = useState(true);
+  const [isResultModalOpen, setIsResultModalOpen] = useState(false);
 
-  const { originalTyping, userTyping, time, typingCount, typingAccuracy, typingWpm, handleTypingSubmit, handleTyping } =
-    useCurrentTyping(
-      originalTypings[currentIdx] ?? {
-        typingId: 0,
-        content: '',
-      },
-    );
+  const {
+    originalTyping,
+    userTyping,
+    time,
+    typingCount,
+    typingAccuracy,
+    typingWpm,
+    typingSpeed,
+    handleTypingSubmit,
+    handleTyping,
+    timePlay,
+    timePause,
+  } = useCurrentTyping(
+    originalTypings[currentIdx] ?? {
+      typingId: 0,
+      content: '',
+    },
+  );
 
   const prevOriginalTyping = useMemo(
     () => (currentIdx > 0 ? originalTypings[currentIdx - 1]?.content : ''),
@@ -88,10 +103,11 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
   const values = {
     originalTyping,
     userTyping,
-    time: time,
-    typingCount: typingCount,
+    time,
+    typingCount,
     typingWpm,
     typingAccuracy,
+    typingSpeed,
     prevUserTyping: prevUserTyping.current,
     prevOriginalTyping,
     nextOriginalTyping,
@@ -100,6 +116,8 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
   const actions = {
     onEndTyping: handleEndTyping,
     onTyping: handleTyping,
+    timePlay,
+    timePause,
   };
 
   const modalValues = {

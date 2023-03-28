@@ -27,7 +27,7 @@ interface ResultModalProps {
     typingTime: number;
     typingAccuracy: number;
     typingWpm: number;
-    typingCount: number;
+    typingSpeed: number;
   };
 }
 

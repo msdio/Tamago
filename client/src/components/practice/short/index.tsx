@@ -11,7 +11,8 @@ import PrevTyping from '@/components/practice/short/PrevTyping';
 import TwoRightArrow from '@/icons/TwoRightArrow';
 
 export default function PracticeShort() {
-  const { originalTyping, nextOriginalTyping } = useContextShortTyping();
+  // TODO : short typing result 평균으로 받아오기
+  const { originalTyping, nextOriginalTyping, time, typingSpeed, typingWpm, typingAccuracy } = useContextShortTyping();
   const { isResultModalOpen, handleResultModalClose } = useContextTypingResultModal();
 
   return (
@@ -37,11 +38,10 @@ export default function PracticeShort() {
         isOpen={isResultModalOpen}
         onReplay={handleResultModalClose}
         result={{
-          typingAccuracy: 100,
-          typingCount: 100,
-          typingWpm: 100,
-          typingTime: 100,
-          tier: 5,
+          typingSpeed,
+          typingWpm,
+          typingAccuracy,
+          typingTime: time,
         }}
       />
     </Box>

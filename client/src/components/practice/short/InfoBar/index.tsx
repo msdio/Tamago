@@ -5,6 +5,7 @@ import Confirm from '@/components/common/Confirm';
 import IconButton from '@/components/common/IconButton';
 import {
   useContextShortTyping,
+  useContextShortTypingHandler,
   useContextTypingResultModal,
 } from '@/components/practice/short/_hook/contextShortTyping';
 import GrassEllipse from '@/components/practice/short/InfoBar/GrassEllipse';
@@ -16,9 +17,19 @@ import { getSecondToMMSSFormat } from '@/utils/time';
 // TODO : 짧은글, 긴글에서 공통적으로 사용됨
 export default function InfoBar() {
   const { time, typingAccuracy, typingCount, typingWpm } = useContextShortTyping();
+  const { timePlay, timePause } = useContextShortTypingHandler();
   const { handleResultModalOpen } = useContextTypingResultModal();
   const [isExitModalOpen, setIsExitModalOpen] = useState(false);
-  const onToggleExitModal = () => setIsExitModalOpen((prev) => !prev);
+
+  const handleExitModalOpen = () => {
+    timePause();
+    setIsExitModalOpen(true);
+  };
+
+  const handleExitModalClose = () => {
+    timePlay();
+    setIsExitModalOpen(false);
+  };
 
   return (
     <>
@@ -43,7 +54,7 @@ export default function InfoBar() {
         <Box flex={1}>
           <Flex justifyContent='space-between'>
             <ModeList />
-            <IconButton icon={<Exit />} onAction={onToggleExitModal} />
+            <IconButton icon={<Exit />} onAction={handleExitModalOpen} />
           </Flex>
 
           <Flex border='1px solid rgb(0, 0, 0)' borderRadius={10} h={'56px'}>
@@ -63,10 +74,11 @@ export default function InfoBar() {
           </Flex>
         </Box>
       </Flex>
+      {/* 나가기 모달에서, 계속하기를 누르면 다시 경과시간 카운트를 증가? */}
       <Confirm
         header={'정말로 그만 두시겠어요?'}
         isOpen={isExitModalOpen}
-        onClose={onToggleExitModal}
+        onClose={handleExitModalClose}
         onAction={handleResultModalOpen}
         actionLabel='그만하기'
         closeLabel='계속하기'

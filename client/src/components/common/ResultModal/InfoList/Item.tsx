@@ -9,7 +9,6 @@ export default function InfoItem({
   content: string | number;
   isDarkBg?: boolean;
 }) {
-  // TODO : GangwonEduPower font 적용
   return (
     <Flex
       justifyContent='space-between'

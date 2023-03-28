@@ -22,11 +22,11 @@ interface ResultModalProps {
   onReplay: () => void;
   title?: string;
   result: {
-    tier: number;
+    tier?: number;
     typingTime: number;
     typingAccuracy: number;
     typingWpm: number;
-    typingCount: number;
+    typingSpeed: number;
   };
 }
 

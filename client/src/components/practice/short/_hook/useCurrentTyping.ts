@@ -21,6 +21,10 @@ interface UseCurrentTypingReturns {
   typingCount: number;
   typingWpm: number;
   typingAccuracy: number;
+  typingSpeed: number;
+
+  timePause: () => void;
+  timePlay: () => void;
 
   handleTyping: (userTyping: string) => void;
   handleTypingSubmit: (userTyping: string) => Promise<void>;
@@ -30,7 +34,7 @@ export default function useCurrentTyping({
   typingId,
   content: originalTyping,
 }: ShortTypingType): UseCurrentTypingReturns {
-  const { time, status, timePlay, timeReset, totalMillisecond, startTime } = useStopwatch();
+  const { time, status, timePlay, timeReset, timePause, totalMillisecond, startTime } = useStopwatch();
   const [userTyping, setUserTyping] = useState('');
 
   const [typingSpeed, setTypingSpeed] = useState(0);
@@ -52,7 +56,7 @@ export default function useCurrentTyping({
         wrongLength,
       });
 
-      // setTypingAccuracy(parseInt(newAccuracy, 10));
+      setTypingAccuracy(parseInt(String(newAccuracy), 10));
     },
     [originalTyping],
   );
@@ -159,6 +163,9 @@ export default function useCurrentTyping({
     typingCount,
     typingWpm,
     typingAccuracy,
+    typingSpeed,
+    timePause,
+    timePlay,
     handleTyping,
     handleTypingSubmit: handleSubmit,
   };
