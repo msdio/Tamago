@@ -13,29 +13,10 @@ import {
 import Link from 'next/link';
 
 import IconButton from '@/components/common/IconButton';
+import InfoList from '@/components/common/ResultModal/InfoList';
 import { Tier } from '@/components/common/Tier';
 import { BookmarkOff } from '@/icons/Heart';
 import Share from '@/icons/Share';
-import { getSecondToMMSSFormat } from '@/utils/time';
-
-const InfoBox = ({ label, content, isDarkBg }: { label: string; content: string | number; isDarkBg?: boolean }) => {
-  // GangwonEduPower font 적용
-  return (
-    <Flex
-      justifyContent='space-between'
-      alignItems='center'
-      bg={isDarkBg ? 'white.dark' : 'white.light'}
-      borderRadius='10px'
-      px='28px'
-      h='48px'
-    >
-      <Text>{label}</Text>
-      <Text fontFamily='GangwonEduPower' fontWeight={400} fontSize='20px'>
-        {content}
-      </Text>
-    </Flex>
-  );
-};
 
 interface ResultModalProps {
   isOpen: boolean;
@@ -50,9 +31,14 @@ interface ResultModalProps {
   };
 }
 
-export default function ResultModal({ onReplay, isOpen, result }: ResultModalProps) {
-  const onBookmark = () => {};
-  const onShare = () => {};
+export default function ExamResultModal({ onReplay, isOpen, result }: ResultModalProps) {
+  const onBookmark = () => {
+    console.log('click Bookmark: ');
+  };
+
+  const onShare = () => {
+    console.log('click Share: ', onShare);
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onReplay} size='2xl'>
@@ -102,13 +88,9 @@ export default function ResultModal({ onReplay, isOpen, result }: ResultModalPro
               <Text fontSize='19px' fontWeight={600} color='black.dark' mb='14px'>
                 메밀꽃 필 무렵
               </Text>
-              <InfoBox label='경과시간' content={getSecondToMMSSFormat(result.typingTime)} isDarkBg />
-              <InfoBox label='WPM' content={result.typingWpm} />
-              <InfoBox label='정확도' content={result.typingAccuracy + '%'} isDarkBg />
-              <InfoBox label='타자' content={result.typingCount + '타'} />
+              <InfoList {...result} />
             </Box>
           </Flex>
-          s
         </ModalBody>
         <ModalFooter justifyContent='center' p='0' gap='17px'>
           <Button w='174px' onClick={onReplay}>

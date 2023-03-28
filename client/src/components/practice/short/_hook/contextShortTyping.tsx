@@ -134,6 +134,7 @@ export function useContextShortTypingHandler() {
 
   return value;
 }
+
 export function useContextTypingResultModal() {
   const value = useContext(ContextTypingResultModal);
   if (value === null) {
