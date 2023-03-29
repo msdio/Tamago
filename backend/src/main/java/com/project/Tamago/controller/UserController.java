@@ -5,7 +5,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,23 +26,23 @@ public class UserController {
 	private final UserService userService;
 
 	@GetMapping("/profile")
-	public CustomResponse<ProfileResDto> findProfile(@RequestHeader("Authorization") String jwtToken) {
-		return new CustomResponse<>(userService.findProfileByJwtToken(jwtToken));
+	public CustomResponse<ProfileResDto> findProfile(@UserId Integer userId) {
+		return new CustomResponse<>(userService.findProfileById(userId));
 	}
 
 	@PatchMapping("/profile")
-	public CustomResponse<Void> modifyProfile(@RequestHeader("Authorization") String jwtToken,
+	public CustomResponse<Void> modifyProfile(@UserId Integer userId,
 		@Validated @RequestBody ModifyProfileReqDto modifyProfileReqDto, BindingResult result) {
 		if (result.hasErrors()) {
 			throw new InvalidParameterException(result);
 		}
-		userService.modifyUserByJwtToken(jwtToken, modifyProfileReqDto);
+		userService.modifyUserById(userId, modifyProfileReqDto);
 		return new CustomResponse<>();
 	}
 
 	@GetMapping("/typing/page")
-	public CustomResponse<Integer> findCurrentPage(@RequestHeader("Authorization") String jwtToken,
+	public CustomResponse<Integer> findCurrentPage(@UserId Integer userId,
 		@RequestParam(required = true) Integer longTypingId) {
-		return new CustomResponse<>(userService.findCurrentPage(jwtToken, longTypingId));
+		return new CustomResponse<>(userService.findCurrentPage(userId, longTypingId));
 	}
 }

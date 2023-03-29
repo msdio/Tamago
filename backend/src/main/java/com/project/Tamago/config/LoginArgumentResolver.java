@@ -1,12 +1,5 @@
 package com.project.Tamago.config;
 
-import static com.project.Tamago.common.enums.ResponseStatus.*;
-
-import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -16,7 +9,6 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import com.project.Tamago.common.annotation.UserId;
-import com.project.Tamago.common.exception.CustomException;
 
 @Component
 public class LoginArgumentResolver implements HandlerMethodArgumentResolver {

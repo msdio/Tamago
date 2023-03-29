@@ -28,17 +28,18 @@ public class UserService {
 	private final JwtTokenProvider jwtTokenProvider;
 
 	@Transactional(readOnly = true)
-	public ProfileResDto findProfileByJwtToken(String jwtToken) {
-		return UserMapper.convertProfileResDto(getUserByJwtToken(jwtToken));
+	public ProfileResDto findProfileById(Integer userId) {
+		User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USERS_INFO_NOT_EXISTS));
+		return UserMapper.convertProfileResDto(user);
 	}
 
-	public void modifyUserByJwtToken(String jwtToken, ModifyProfileReqDto modifyProfileReqDto) {
-		getUserByJwtToken(jwtToken).modifyUserInfo(modifyProfileReqDto);
+	public void modifyUserById(Integer userId, ModifyProfileReqDto modifyProfileReqDto) {
+		User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USERS_INFO_NOT_EXISTS));
+		user.modifyUserInfo(modifyProfileReqDto);
 	}
 
 	@Transactional(readOnly = true)
-	public Integer findCurrentPage(String jwtToken, Integer longTypingId) {
-		Integer userId = Integer.parseInt(jwtTokenProvider.getAuthenticationFromAcs(jwtToken).getName());
+	public Integer findCurrentPage(Integer userId, Integer longTypingId) {
 		return pagePositionRepository.findCurrentPageByUserAndTypingId(userId, longTypingId)
 			.orElseThrow(() -> new CustomException(CURRENT_PAGE_NOT_EXISTS));
 	}
