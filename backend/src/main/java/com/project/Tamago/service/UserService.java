@@ -25,7 +25,6 @@ public class UserService {
 
 	private final UserRepository userRepository;
 	private final PagePositionRepository pagePositionRepository;
-	private final JwtTokenProvider jwtTokenProvider;
 
 	@Transactional(readOnly = true)
 	public ProfileResDto findProfileById(Integer userId) {
@@ -42,10 +41,5 @@ public class UserService {
 	public Integer findCurrentPage(Integer userId, Integer longTypingId) {
 		return pagePositionRepository.findCurrentPageByUserAndTypingId(userId, longTypingId)
 			.orElseThrow(() -> new CustomException(CURRENT_PAGE_NOT_EXISTS));
-	}
-
-	public User getUserByJwtToken(String jwtToken) {
-		return userRepository.findById(Integer.parseInt(jwtTokenProvider.getAuthenticationFromAcs(jwtToken).getName()))
-			.orElseThrow(() -> new CustomException(USERS_INFO_NOT_EXISTS));
 	}
 }
