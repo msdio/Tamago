@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.Tamago.dto.requestDto.JoinReqDto;
 import com.project.Tamago.dto.requestDto.LoginReqDto;
 import com.project.Tamago.common.exception.CustomException;
-import com.project.Tamago.dto.responseDto.LoginResDto;
+import com.project.Tamago.dto.responseDto.LoginResInfoDto;
 import com.project.Tamago.security.jwt.JwtTokenProvider;
 import com.project.Tamago.repository.UserRepository;
 import com.project.Tamago.service.AuthService;
@@ -135,7 +135,7 @@ public class AuthControllerTest {
 		// given
 		LoginReqDto loginReqDto = new LoginReqDto("username", "password");
 		String accessToken = "access_token";
-		LoginResDto loginResDto = new LoginResDto(accessToken, "test");
+		LoginResInfoDto loginResDto = new LoginResInfoDto(accessToken, "test");
 		doReturn(loginResDto).when(authService).login(loginReqDto);
 		// when
 		ResultActions resultActions = mockMvc.perform(post("/auth/login")

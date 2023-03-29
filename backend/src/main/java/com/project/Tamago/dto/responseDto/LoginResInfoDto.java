@@ -1,17 +1,15 @@
 package com.project.Tamago.dto.responseDto;
 
-import com.project.Tamago.dto.LoginDto;
-import com.project.Tamago.security.Token;
+import com.project.Tamago.dto.LoginInfoDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Builder
 @AllArgsConstructor
-public class LoginResDto implements LoginDto {
+public class LoginResInfoDto implements LoginInfoDto {
 	private String accessToken;
 	private String nickname;
 }
