@@ -13,8 +13,9 @@ interface AuthAPIParams {
 
 export const loginAPI = async ({ email, password }: AuthAPIParams): Promise<ApiResponse> => {
   const { data } = await requestWithoutAuth.post(LOGIN_PATH, { email, password });
+  console.log('data: ', data);
 
-  window.localStorage.setItem('accessToken', data.result);
+  window.localStorage.setItem('accessToken', data.result.accessToken);
 
   return data;
 };
