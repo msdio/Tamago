@@ -2,13 +2,16 @@ import { Button, Flex, HStack, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 
+import { userProfileState } from '@/atom/userProfile';
 import { LOGIN_PATH, SIGNUP_TERM_PATH } from '@/constants/paths';
 import { TamagoLogo } from '@/icons/TamagoLogo';
 
 import HeaderDropDown from './DropDown';
 
 export default function Header() {
+  const userProfile = useRecoilValue(userProfileState);
   const [isLogin, setIsLogin] = useState(false);
   const [showDropDown, setShowDropDown] = useState(false);
 
@@ -112,7 +115,7 @@ export default function Header() {
             </Text>
           </HStack>
         </Flex>
-        {!isLogin && (
+        {!userProfile && (
           <HStack spacing='12.91px'>
             <Button
               variant='outline'

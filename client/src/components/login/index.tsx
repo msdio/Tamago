@@ -10,6 +10,7 @@ import type { ApiErrorResponse } from '@/types/apiResponse';
 
 function Login() {
   const router = useRouter();
+
   const handleLogin = async ({ email, password }: InputType) => {
     try {
       const data = await loginAPI({ email, password });
