@@ -1,4 +1,4 @@
-package com.project.Tamago.exception.exceptionHandler;
+package com.project.Tamago.common.exception.exceptionHandler;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,6 +9,7 @@ import org.springframework.validation.FieldError;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.project.Tamago.common.enums.ResponseCode;
 
 import lombok.Data;
 
@@ -20,13 +21,13 @@ public class ErrorMessage {
 	@JsonProperty("errors")
 	private List<String> errors;
 
-	public ErrorMessage(ErrorCode errorCode) {
-		this.code = errorCode.getCode();
-		this.description = errorCode.getDescription();
+	public ErrorMessage(ResponseCode responseCode) {
+		this.code = responseCode.getCode();
+		this.description = responseCode.getDescription();
 	}
 
-	public ErrorMessage(ErrorCode errorCode, Errors errors) {
-		this(errorCode);
+	public ErrorMessage(ResponseCode responseCode, Errors errors) {
+		this(responseCode);
 		setCustomFieldErrors(errors.getFieldErrors());
 	}
 

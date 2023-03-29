@@ -8,10 +8,10 @@ import TypingHeader from '@/components/practice/long/Typing/TypingHeader/index';
 import TypingLine from '@/components/practice/long/TypingLine';
 import TypingPagination from '@/components/practice/long/TypingPagination';
 import useStopwatch from '@/components/practice/short/_hook/useStopWatch';
+import { PRACTICE_LONG_PATH_DETAIL } from '@/constants/paths';
 import type { CharInfo, LongTypingDetail } from '@/types/typing';
 import { TypingState } from '@/types/typing';
 import { getCharType } from '@/utils/char';
-import { PRACTICE_LONG_PATH_DETAIL } from '@/utils/paths';
 import { getTypingAccuracy, getTypingSpeed, getTypingWpm, slicedContentAndStrings } from '@/utils/typing';
 
 export default function PracticeLongTyping({

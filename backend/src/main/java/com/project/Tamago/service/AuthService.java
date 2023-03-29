@@ -1,7 +1,7 @@
 package com.project.Tamago.service;
 
-import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
-import static com.project.Tamago.constants.Constant.*;
+import static com.project.Tamago.common.Constant.*;
+import static com.project.Tamago.common.enums.ResponseCode.*;
 
 import java.util.concurrent.TimeUnit;
 
@@ -18,7 +18,7 @@ import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.requestDto.JoinReqDto;
 import com.project.Tamago.dto.requestDto.LoginReqDto;
 import com.project.Tamago.dto.requestDto.PasswordReqDto;
-import com.project.Tamago.exception.CustomException;
+import com.project.Tamago.common.exception.CustomException;
 import com.project.Tamago.security.jwt.JwtTokenProvider;
 import com.project.Tamago.repository.UserRepository;
 import com.project.Tamago.security.Token;
