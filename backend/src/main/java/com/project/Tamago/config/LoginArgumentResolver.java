@@ -8,14 +8,14 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import com.project.Tamago.common.annotation.UserId;
+import com.project.Tamago.common.annotation.Login;
 
 @Component
 public class LoginArgumentResolver implements HandlerMethodArgumentResolver {
 	@Override
 	public boolean supportsParameter(MethodParameter parameter) {
 		return parameter.getParameterType().equals(Integer.class) &&
-			parameter.hasParameterAnnotation(UserId.class);
+			parameter.hasParameterAnnotation(Login.class);
 	}
 
 	@Override
