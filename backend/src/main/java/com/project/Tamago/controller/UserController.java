@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.Tamago.common.Response.CustomResponse;
-import com.project.Tamago.common.annotation.UserId;
+import com.project.Tamago.common.annotation.Login;
+import com.project.Tamago.dto.LoginDto;
 import com.project.Tamago.dto.requestDto.ModifyProfileReqDto;
 import com.project.Tamago.dto.responseDto.ProfileResDto;
 import com.project.Tamago.common.exception.InvalidParameterException;
@@ -26,23 +27,23 @@ public class UserController {
 	private final UserService userService;
 
 	@GetMapping("/profile")
-	public CustomResponse<ProfileResDto> findProfile(@UserId Integer userId) {
-		return new CustomResponse<>(userService.findProfileById(userId));
+	public CustomResponse<ProfileResDto> findProfile(@Login LoginDto loginDto) {
+		return new CustomResponse<>(userService.findProfileById(loginDto.getUserId()));
 	}
 
 	@PatchMapping("/profile")
-	public CustomResponse<Void> modifyProfile(@UserId Integer userId,
+	public CustomResponse<Void> modifyProfile(@Login LoginDto loginDto,
 		@Validated @RequestBody ModifyProfileReqDto modifyProfileReqDto, BindingResult result) {
 		if (result.hasErrors()) {
 			throw new InvalidParameterException(result);
 		}
-		userService.modifyUserById(userId, modifyProfileReqDto);
+		userService.modifyUserById(loginDto.getUserId(), modifyProfileReqDto);
 		return new CustomResponse<>();
 	}
 
 	@GetMapping("/typing/page")
-	public CustomResponse<Integer> findCurrentPage(@UserId Integer userId,
+	public CustomResponse<Integer> findCurrentPage(@Login LoginDto loginDto,
 		@RequestParam(required = true) Integer longTypingId) {
-		return new CustomResponse<>(userService.findCurrentPage(userId, longTypingId));
+		return new CustomResponse<>(userService.findCurrentPage(loginDto.getUserId(), longTypingId));
 	}
 }
