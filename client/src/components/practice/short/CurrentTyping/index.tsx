@@ -46,7 +46,7 @@ export default function CurrentTyping() {
       p='30px 49px'
       bg='#FFF2BA'
     >
-      <OriginalTyping originalTyping={originalTyping} userTyping={userTyping} />
+      <OriginalTyping originalTyping={originalTyping} userTyping={userTyping} isTyping />
 
       <Input
         bg='#FFE98B'
