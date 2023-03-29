@@ -14,20 +14,16 @@ import Link from 'next/link';
 
 import IconButton from '@/components/common/IconButton';
 import InfoList from '@/components/common/ResultModal/InfoList';
+import type { TypingResultType } from '@/components/common/ResultModal/types';
 import { BookmarkOff } from '@/icons/Heart';
 import Share from '@/icons/Share';
 
 interface ResultModalProps {
   isOpen: boolean;
+  result: TypingResultType;
   onReplay: () => void;
+
   title?: string;
-  result: {
-    tier?: number;
-    typingTime: number;
-    typingAccuracy: number;
-    typingWpm: number;
-    typingSpeed: number;
-  };
 }
 
 export default function PracticeResultModal({ onReplay, title, isOpen, result }: ResultModalProps) {

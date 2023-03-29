@@ -14,6 +14,7 @@ import Link from 'next/link';
 
 import IconButton from '@/components/common/IconButton';
 import InfoList from '@/components/common/ResultModal/InfoList';
+import type { TypingResultType } from '@/components/common/ResultModal/types';
 import { Tier } from '@/components/common/Tier';
 import { BookmarkOff } from '@/icons/Heart';
 import Share from '@/icons/Share';
@@ -22,13 +23,8 @@ interface ResultModalProps {
   isOpen: boolean;
   onReplay: () => void;
 
-  result: {
-    tier: number;
-    typingTime: number;
-    typingAccuracy: number;
-    typingWpm: number;
-    typingSpeed: number;
-  };
+  tier: number; // TODO : modal 에서 tier을 계산할지 고민
+  result: TypingResultType;
 }
 
 export default function ExamResultModal({ onReplay, isOpen, result }: ResultModalProps) {

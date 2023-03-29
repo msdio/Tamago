@@ -1,12 +1,9 @@
 import InfoItem from '@/components/common/ResultModal/InfoList/Item';
+import type { TypingResultType } from '@/components/common/ResultModal/types';
 import { getSecondToMMSSFormat } from '@/utils/time';
 
-interface InfoListProps {
-  typingTime: number;
-  typingAccuracy: number;
-  typingWpm: number;
-  typingSpeed: number;
-}
+type InfoListProps = TypingResultType;
+
 export default function InfoList({ typingTime, typingAccuracy, typingWpm, typingSpeed }: InfoListProps) {
   return (
     <>
