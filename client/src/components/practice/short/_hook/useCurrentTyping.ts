@@ -128,7 +128,6 @@ export default function useCurrentTyping({
     async (resultContent: string) => {
       const typingHistory = generateTypingInfo(resultContent);
       await getTypingHistoryAPI(typingHistory);
-
       resetTypingData();
     },
     [generateTypingInfo, resetTypingData],

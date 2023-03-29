@@ -1,8 +1,14 @@
 import type { ReactNode } from 'react';
+import { useCallback } from 'react';
 import { createContext, useContext, useMemo, useRef, useState } from 'react';
 
 import type { ShortTypingType } from '@/apis/typing';
 import useCurrentTyping from '@/components/practice/short/_hook/useCurrentTyping';
+import type { TypingResultType } from '@/types/typing';
+
+interface TypingHistoryType extends TypingResultType {
+  content: string;
+}
 
 interface ContextShortTypingType {
   originalTyping: string;
@@ -67,6 +73,15 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
     },
   );
 
+  const history = useRef<TypingHistoryType[]>([]);
+
+  const saveTypingHistory = useCallback(
+    (content: string) => {
+      history.current = [...history.current, { typingSpeed, typingAccuracy, typingWpm, typingTime: time, content }];
+    },
+    [time, typingAccuracy, typingSpeed, typingWpm],
+  );
+
   const prevOriginalTyping = useMemo(
     () => (currentIdx > 0 ? originalTypings[currentIdx - 1]?.content : ''),
     [currentIdx, originalTypings],
@@ -79,7 +94,9 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
 
   const handleSubmit = async (input: string) => {
     await handleTypingSubmit(input);
+    saveTypingHistory(input);
 
+    // TODO : saveTypingHistory 로 대체하기
     prevUserTyping.current = input;
   };
 
@@ -96,6 +113,7 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
   const handleResultModalOpen = () => {
     setIsResultModalOpen(true);
   };
+
   const handleResultModalClose = () => {
     setIsResultModalOpen(false);
   };
