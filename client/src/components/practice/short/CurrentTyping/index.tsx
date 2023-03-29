@@ -21,11 +21,11 @@ export default function CurrentTyping() {
     }
   };
 
-  const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+  const onKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     //? NOTE: enter 누른 경우 -> submit
     if (e.key === 'Enter') {
       e.preventDefault();
-      onEndTyping(userTyping);
+      onEndTyping(userTyping.padEnd(originalTyping.length, ' '));
     }
   };
 
@@ -55,7 +55,7 @@ export default function CurrentTyping() {
         type='text'
         value={userTyping}
         onChange={onInputChange}
-        onKeyDown={onKeyDown}
+        onKeyPress={onKeyPress}
         w='100%'
         p='11px 5px'
         height='48px'
