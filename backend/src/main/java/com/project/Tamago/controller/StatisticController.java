@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.Tamago.common.Response.CustomResponse;
 import com.project.Tamago.common.annotation.Login;
+import com.project.Tamago.dto.LoginDto;
 import com.project.Tamago.dto.responseDto.DateAccuracyAverageResDto;
 import com.project.Tamago.dto.responseDto.DateWpmAverageResDto;
 import com.project.Tamago.dto.responseDto.StatisticsAllResDto;
@@ -25,26 +26,26 @@ public class StatisticController {
 	private final StatisticService statisticService;
 
 	@GetMapping("/all")
-	public CustomResponse<StatisticsAllResDto> findUserStatistic(@Login Integer userId) {
-		return new CustomResponse<>(statisticService.totalStatisticsAll(userId));
+	public CustomResponse<StatisticsAllResDto> findUserStatistic(@Login LoginDto loginDto) {
+		return new CustomResponse<>(statisticService.totalStatisticsAll(loginDto.getUserId()));
 	}
 
 	@GetMapping("/speed")
 	public CustomResponse<DateWpmAverageResDto> findDateAverageWpm(
-		@Login Integer userId,
+		@Login LoginDto loginDto,
 		@RequestParam("startDay") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDay,
 		@RequestParam("endDay") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDay) {
 		return new CustomResponse<>(
-			statisticService.findWpmAverageByUser(userId, startDay, endDay));
+			statisticService.findWpmAverageByUser(loginDto.getUserId(), startDay, endDay));
 	}
 
 	@GetMapping("/accuracy")
 	public CustomResponse<DateAccuracyAverageResDto> findDateAverageAccuracy(
-		@Login Integer userId,
+		@Login LoginDto loginDto,
 		@RequestParam("startDay") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDay,
 		@RequestParam("endDay") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDay) {
 		return new CustomResponse<>(
-			statisticService.findAccuracyAverageByUser(userId, startDay, endDay));
+			statisticService.findAccuracyAverageByUser(loginDto.getUserId(), startDay, endDay));
 	}
 
 }
