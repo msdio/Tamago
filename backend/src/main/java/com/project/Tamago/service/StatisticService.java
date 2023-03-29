@@ -1,5 +1,7 @@
 package com.project.Tamago.service;
 
+import static com.project.Tamago.common.enums.ResponseCode.*;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +12,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.Tamago.common.exception.CustomException;
 import com.project.Tamago.domain.StatisticsAll;
 import com.project.Tamago.domain.TypingHistory;
 import com.project.Tamago.domain.User;
@@ -18,6 +21,7 @@ import com.project.Tamago.dto.responseDto.DateWpmAverageResDto;
 import com.project.Tamago.dto.responseDto.StatisticsAllResDto;
 import com.project.Tamago.repository.StatisticAllRepository;
 import com.project.Tamago.repository.TypingHistoryRepository;
+import com.project.Tamago.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,8 +34,10 @@ public class StatisticService {
 
 	private final TypingHistoryRepository typingHistoryRepository;
 	private final StatisticAllRepository statisticAllRepository;
+	private final UserRepository userRepository;
 
-	public StatisticsAllResDto totalStatisticsAll(User user) {
+	public StatisticsAllResDto totalStatisticsAll(Integer userId) {
+		User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USERS_INFO_NOT_EXISTS));
 		Optional<StatisticsAll> optionalStatisticsAll = statisticAllRepository.findByUser(user);
 		if (optionalStatisticsAll.isPresent()) {
 			return getStatisticsAllResDto(changeStatisticsAll(user, optionalStatisticsAll.get()));
@@ -39,12 +45,12 @@ public class StatisticService {
 		return getStatisticsAllResDto(getFirstStatisticsAll(user));
 	}
 
-	public DateAccuracyAverageResDto findAccuracyAverageByUser(User user, LocalDate startDay, LocalDate endDay) {
-		return new DateAccuracyAverageResDto(typingHistoryRepository.findAccuracyAverageByUserId(user.getId(), startDay.atStartOfDay(), endDay.atStartOfDay()));
+	public DateAccuracyAverageResDto findAccuracyAverageByUser(Integer userId, LocalDate startDay, LocalDate endDay) {
+		return new DateAccuracyAverageResDto(typingHistoryRepository.findAccuracyAverageByUserId(userId, startDay.atStartOfDay(), endDay.atStartOfDay()));
 	}
 
-	public DateWpmAverageResDto findWpmAverageByUser(User user, LocalDate startDay, LocalDate endDay) {
-		return new DateWpmAverageResDto(typingHistoryRepository.findWpmAverageByUserId(user.getId(), startDay.atStartOfDay(), endDay.atStartOfDay()));
+	public DateWpmAverageResDto findWpmAverageByUser(Integer userId, LocalDate startDay, LocalDate endDay) {
+		return new DateWpmAverageResDto(typingHistoryRepository.findWpmAverageByUserId(userId, startDay.atStartOfDay(), endDay.atStartOfDay()));
 	}
 
 
