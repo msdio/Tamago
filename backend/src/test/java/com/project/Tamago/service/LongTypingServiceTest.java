@@ -161,7 +161,7 @@ class LongTypingServiceTest {
 
 	@Test
 	@DisplayName("긴글 저장 테스트")
-	@WithMockUser(username = "test", authorities = {"ROLE_USER"})
+	@WithMockUser(username = "1", authorities = {"ROLE_USER"})
 	public void testSaveLongTyping() {
 		// given
 		String jwtToken = "testToken";
@@ -179,10 +179,10 @@ class LongTypingServiceTest {
 			.password("1234")
 			.build();
 
-		when(userService.getUserByJwtToken(any())).thenReturn(user);
+		when(userRepository.findById(any())).thenReturn(Optional.ofNullable(user));
 
 		// when
-		longTypingService.saveLongTyping(jwtToken, longTypingReqDto);
+		longTypingService.saveLongTyping(user.getId(), longTypingReqDto);
 
 		// then
 		verify(registerRepository, times(1)).save(any());
