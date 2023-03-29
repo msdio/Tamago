@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.Tamago.common.Response.CustomResponse;
-import com.project.Tamago.common.annotation.Login;
-import com.project.Tamago.dto.LoginDto;
+import com.project.Tamago.dto.Login;
 import com.project.Tamago.dto.responseDto.DateAccuracyAverageResDto;
 import com.project.Tamago.dto.responseDto.DateWpmAverageResDto;
 import com.project.Tamago.dto.responseDto.StatisticsAllResDto;
@@ -26,26 +25,26 @@ public class StatisticController {
 	private final StatisticService statisticService;
 
 	@GetMapping("/all")
-	public CustomResponse<StatisticsAllResDto> findUserStatistic(@Login LoginDto loginDto) {
-		return new CustomResponse<>(statisticService.totalStatisticsAll(loginDto.getUserId()));
+	public CustomResponse<StatisticsAllResDto> findUserStatistic(@com.project.Tamago.common.annotation.Login Login login) {
+		return new CustomResponse<>(statisticService.totalStatisticsAll(login.getUserId()));
 	}
 
 	@GetMapping("/speed")
 	public CustomResponse<DateWpmAverageResDto> findDateAverageWpm(
-		@Login LoginDto loginDto,
+		@com.project.Tamago.common.annotation.Login Login login,
 		@RequestParam("startDay") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDay,
 		@RequestParam("endDay") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDay) {
 		return new CustomResponse<>(
-			statisticService.findWpmAverageByUser(loginDto.getUserId(), startDay, endDay));
+			statisticService.findWpmAverageByUser(login.getUserId(), startDay, endDay));
 	}
 
 	@GetMapping("/accuracy")
 	public CustomResponse<DateAccuracyAverageResDto> findDateAverageAccuracy(
-		@Login LoginDto loginDto,
+		@com.project.Tamago.common.annotation.Login Login login,
 		@RequestParam("startDay") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDay,
 		@RequestParam("endDay") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDay) {
 		return new CustomResponse<>(
-			statisticService.findAccuracyAverageByUser(loginDto.getUserId(), startDay, endDay));
+			statisticService.findAccuracyAverageByUser(login.getUserId(), startDay, endDay));
 	}
 
 }

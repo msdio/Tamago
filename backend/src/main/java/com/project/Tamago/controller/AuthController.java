@@ -22,8 +22,8 @@ import com.project.Tamago.dto.requestDto.JoinReqDto;
 import com.project.Tamago.dto.requestDto.LoginReqDto;
 import com.project.Tamago.dto.requestDto.PasswordReqDto;
 import com.project.Tamago.common.exception.InvalidParameterException;
-import com.project.Tamago.dto.responseDto.LoginAutoResInfoDto;
-import com.project.Tamago.dto.responseDto.LoginResInfoDto;
+import com.project.Tamago.dto.responseDto.LoginAutoResDto;
+import com.project.Tamago.dto.responseDto.LoginResDto;
 import com.project.Tamago.service.AuthService;
 
 import lombok.RequiredArgsConstructor;
@@ -49,24 +49,24 @@ public class AuthController {
 	}
 
 	@PostMapping("/login")
-	public CustomResponse<LoginResInfoDto> login(@Validated @RequestBody LoginReqDto loginReqDto) {
+	public CustomResponse<LoginResDto> login(@Validated @RequestBody LoginReqDto loginReqDto) {
 		return new CustomResponse<>(authService.login(loginReqDto));
 	}
 
 	@PostMapping("/login/auto")
-	public CustomResponse<LoginResInfoDto> loginAuto(@RequestBody LoginReqDto loginReqDto, HttpServletResponse response) {
-		LoginAutoResInfoDto loginAutoResDto = authService.loginAuto(loginReqDto);
+	public CustomResponse<LoginResDto> loginAuto(@RequestBody LoginReqDto loginReqDto, HttpServletResponse response) {
+		LoginAutoResDto loginAutoResDto = authService.loginAuto(loginReqDto);
 		ResponseCookie cookie = ResponseCookie.from(REFRESH_TOKEN, loginAutoResDto.getRefreshToken())
 			.maxAge(refreshTokenExpireTime)
 			.httpOnly(true)
 			.path("/")
 			.build();
 		response.setHeader("Set-Cookie", cookie.toString());
-		return new CustomResponse<>(new LoginResInfoDto(loginAutoResDto.getAccessToken(), loginAutoResDto.getNickname()));
+		return new CustomResponse<>(new LoginResDto(loginAutoResDto.getAccessToken(), loginAutoResDto.getNickname()));
 	}
 
 	@PostMapping("/jwt")
-	public CustomResponse<LoginResInfoDto> reissue(@RequestBody String accessToken,
+	public CustomResponse<LoginResDto> reissue(@RequestBody String accessToken,
 		@RequestHeader(value = REFRESH_TOKEN, required = false) String refreshToken) {
 		return new CustomResponse<>(authService.reissue(accessToken, refreshToken));
 	}

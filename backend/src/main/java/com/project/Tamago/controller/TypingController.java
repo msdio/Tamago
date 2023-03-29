@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.Tamago.common.Response.CustomResponse;
-import com.project.Tamago.common.annotation.Login;
 import com.project.Tamago.common.exception.InvalidParameterException;
-import com.project.Tamago.dto.LoginDto;
+import com.project.Tamago.dto.Login;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
 import com.project.Tamago.dto.responseDto.LongTypingResDto;
 import com.project.Tamago.dto.responseDto.ShortTypingListResDto;
@@ -60,13 +59,13 @@ public class TypingController {
 	}
 
 	@PostMapping("/register")
-	public CustomResponse<Void> saveTyping(@Login LoginDto loginDto,
+	public CustomResponse<Void> saveTyping(@com.project.Tamago.common.annotation.Login Login login,
 		@Validated @RequestBody LongTypingReqDto longTypingReqDto,
 		BindingResult result) {
 		if (result.hasErrors()) {
 			throw new InvalidParameterException(result);
 		}
-		longTypingService.saveLongTyping(loginDto.getUserId(), longTypingReqDto);
+		longTypingService.saveLongTyping(login.getUserId(), longTypingReqDto);
 		return new CustomResponse<>();
 	}
 }

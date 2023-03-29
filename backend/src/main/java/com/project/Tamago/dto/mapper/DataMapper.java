@@ -10,7 +10,6 @@ import com.project.Tamago.domain.Register;
 import com.project.Tamago.domain.Typing;
 import com.project.Tamago.domain.TypingHistory;
 import com.project.Tamago.domain.User;
-import com.project.Tamago.dto.LoginDto;
 import com.project.Tamago.dto.PageContentDto;
 import com.project.Tamago.dto.requestDto.LongTypingReqDto;
 import com.project.Tamago.dto.requestDto.TypingHistoryReqDto;
