@@ -4,11 +4,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.Tamago.common.Response.CustomResponse;
+import com.project.Tamago.common.annotation.Login;
+import com.project.Tamago.dto.LoginDto;
 import com.project.Tamago.dto.requestDto.TypingHistoryReqDto;
 import com.project.Tamago.common.exception.InvalidParameterException;
 import com.project.Tamago.service.TypingHistoryService;
@@ -24,11 +25,11 @@ public class TypingHistoryController {
 
 	@PostMapping("/history")
 	public CustomResponse<Void> saveTypingHistory(@RequestBody @Validated TypingHistoryReqDto typingHistoryReqDto,
-		@RequestHeader("Authorization") String jwtToken, BindingResult result) {
+		@Login LoginDto loginDto, BindingResult result) {
 		if (result.hasErrors()) {
 			throw new InvalidParameterException(result);
 		}
-		typingHistoryService.saveHistory(typingHistoryReqDto, jwtToken);
+		typingHistoryService.saveHistory(typingHistoryReqDto, loginDto.getUserId());
 		return new CustomResponse<>();
 	}
 }

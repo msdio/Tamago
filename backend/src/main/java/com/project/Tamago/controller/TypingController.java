@@ -8,13 +8,14 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.Tamago.common.Response.CustomResponse;
+import com.project.Tamago.common.annotation.Login;
 import com.project.Tamago.common.exception.InvalidParameterException;
+import com.project.Tamago.dto.LoginDto;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
 import com.project.Tamago.dto.responseDto.LongTypingResDto;
 import com.project.Tamago.dto.responseDto.ShortTypingListResDto;
@@ -59,13 +60,13 @@ public class TypingController {
 	}
 
 	@PostMapping("/register")
-	public CustomResponse<Void> saveTyping(@Validated @RequestBody LongTypingReqDto longTypingReqDto,
-		@RequestHeader("Authorization") String jwtToken,
+	public CustomResponse<Void> saveTyping(@Login LoginDto loginDto,
+		@Validated @RequestBody LongTypingReqDto longTypingReqDto,
 		BindingResult result) {
 		if (result.hasErrors()) {
 			throw new InvalidParameterException(result);
 		}
-		longTypingService.saveLongTyping(jwtToken, longTypingReqDto);
+		longTypingService.saveLongTyping(loginDto.getUserId(), longTypingReqDto);
 		return new CustomResponse<>();
 	}
 }
