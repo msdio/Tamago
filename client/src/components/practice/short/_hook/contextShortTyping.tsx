@@ -3,7 +3,10 @@ import { useCallback } from 'react';
 import { createContext, useContext, useMemo, useRef, useState } from 'react';
 
 import type { ShortTypingType } from '@/apis/typing';
+import Confirm from '@/components/common/Confirm';
+import ResultModal from '@/components/common/ResultModal/practice-mode';
 import useCurrentTyping from '@/components/practice/short/_hook/useCurrentTyping';
+import useToggle from '@/hooks/useToggle';
 import type { TypingResultType } from '@/types/typing';
 
 interface TypingHistoryType extends TypingResultType {
@@ -23,25 +26,19 @@ interface ContextShortTypingType {
   prevUserTyping: string;
   prevOriginalTyping: string;
   nextOriginalTyping: string;
+
+  typingAvgResult: TypingResultType;
 }
 
 interface ContextShortTypingHandlerType {
   onEndTyping: (input: string) => Promise<void>;
   onTyping: (inputChar: string) => void;
 
-  timePlay: () => void;
-  timePause: () => void;
-}
-
-interface ContextTypingResultModalType {
-  isResultModalOpen: boolean;
-  handleResultModalOpen: () => void;
-  handleResultModalClose: () => void;
+  handleExitModalOpen: () => void;
 }
 
 const ContextShortTyping = createContext<ContextShortTypingType | null>(null);
 const ContextShortTypingHandler = createContext<ContextShortTypingHandlerType | null>(null);
-const ContextTypingResultModal = createContext<ContextTypingResultModalType | null>(null);
 
 interface ShortTypingProviderProps {
   children: ReactNode;
@@ -51,8 +48,6 @@ interface ShortTypingProviderProps {
 const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderProps) => {
   const [currentIdx, setCurrentIdx] = useState(0);
   const prevUserTyping = useRef('');
-
-  // const [isResultModalOpen, setIsResultModalOpen] = useState(false);
 
   const {
     originalTyping,
@@ -73,7 +68,17 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
     },
   );
 
+  const [isResultModalOpen, handleResultModalToggle] = useToggle();
+  const [isExitModalOpen, handleExitModalToggle] = useToggle();
+
   const history = useRef<TypingHistoryType[]>([]);
+
+  const typingAvgResult: TypingResultType = {
+    typingSpeed: history.current.reduce((acc, cur) => acc + cur.typingSpeed, 0) / history.current.length,
+    typingAccuracy: history.current.reduce((acc, cur) => acc + cur.typingAccuracy, 0) / history.current.length,
+    typingWpm: history.current.reduce((acc, cur) => acc + cur.typingWpm, 0) / history.current.length,
+    typingTime: history.current.reduce((acc, cur) => acc + cur.typingTime, 0) / history.current.length,
+  };
 
   const saveTypingHistory = useCallback(
     (content: string) => {
@@ -107,16 +112,24 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
       setCurrentIdx((prev) => prev + 1);
     } else {
       // TODO : 30문장 끝, 백엔드 api가 처리되고 수정할 예정
+      // 여기서 결과 모달을 띄워야하기 때문에, 모달 관련 로직을 여기서 처리하는게 맞을 것 같음
     }
   };
 
-  // const handleResultModalOpen = () => {
-  //   setIsResultModalOpen(true);
-  // };
+  const handleExitModalOpen = useCallback(() => {
+    timePause();
+    handleExitModalToggle();
+  }, [handleExitModalToggle, timePause]);
 
-  // const handleResultModalClose = () => {
-  //   setIsResultModalOpen(false);
-  // };
+  const handleExitModalClose = useCallback(() => {
+    timePlay();
+    handleExitModalToggle();
+  }, [handleExitModalToggle, timePlay]);
+
+  const handleResultModalOpen = useCallback(() => {
+    handleExitModalToggle();
+    handleResultModalToggle();
+  }, [handleExitModalToggle, handleResultModalToggle]);
 
   const values = {
     originalTyping,
@@ -129,26 +142,29 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
     prevUserTyping: prevUserTyping.current,
     prevOriginalTyping,
     nextOriginalTyping,
+    typingAvgResult,
   };
 
   const actions = {
     onEndTyping: handleEndTyping,
     onTyping: handleTyping,
-    timePlay,
-    timePause,
+    handleExitModalOpen,
   };
-
-  // const modalValues = {
-  //   isResultModalOpen,
-  //   handleResultModalClose,
-  //   handleResultModalOpen,
-  // };
 
   return (
     <ContextShortTyping.Provider value={values}>
       <ContextShortTypingHandler.Provider value={actions}>
         {children}
-        {/* <ContextTypingResultModal.Provider value={modalValues}></ContextTypingResultModal.Provider> */}
+
+        <Confirm
+          header={'정말로 그만 두시겠어요?'}
+          isOpen={isExitModalOpen}
+          onClose={handleExitModalClose}
+          onAction={handleResultModalOpen}
+          actionLabel='그만하기'
+          closeLabel='계속하기'
+        />
+        <ResultModal isOpen={isResultModalOpen} onReplay={handleResultModalToggle} result={typingAvgResult} />
       </ContextShortTypingHandler.Provider>
     </ContextShortTyping.Provider>
   );
