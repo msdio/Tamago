@@ -68,7 +68,7 @@ export const getLongTypingAPI = async ({
 
 export const getTypingHistoryAPI = async (typingHistory: TypingHistoryRequest) => {
   console.log('서버에 전송할 데이터', typingHistory);
-  // const res = await authenticationRequest.post('/typing/history', typingHistory);
+  // const res = await requestWithAuth.post('/typing/history', typingHistory);
   // console.log('res: ', res);
   return true;
   // return res.data;
