@@ -52,7 +52,7 @@ export default function useCurrentTyping({
       });
 
       const newAccuracy = getTypingAccuracy({
-        typingLength: originalTyping.length,
+        typingLength: userTyping.length,
         wrongLength,
       });
 

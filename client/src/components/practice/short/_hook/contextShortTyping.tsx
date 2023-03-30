@@ -48,7 +48,6 @@ interface ShortTypingProviderProps {
 
 const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderProps) => {
   const [currentIdx, setCurrentIdx] = useState(0);
-  const prevUserTyping = useRef('');
 
   const {
     originalTyping,
@@ -73,6 +72,7 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
   const [isExitModalOpen, handleExitModalToggle] = useToggle();
 
   const history = useRef<TypingHistoryType[]>([]);
+  const prevUserTyping = history.current[history.current.length - 1]?.content ?? '';
 
   const typingAvgResult: TypingResultType =
     history.current.length === 0
@@ -105,9 +105,6 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
     async (input: string) => {
       await handleTypingSubmit(input);
       saveTypingHistory(input);
-
-      // TODO : saveTypingHistory 로 대체하기
-      prevUserTyping.current = input;
     },
     [handleTypingSubmit, saveTypingHistory],
   );
@@ -120,7 +117,6 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
       if (currentIdx < originalTypings.length - 1) {
         setCurrentIdx((prev) => prev + 1);
       } else {
-        // TODO : 30문장 끝, 백엔드 api가 처리되고 수정할 예정
         // 여기서 결과 모달을 띄워야하기 때문에, 모달 관련 로직을 여기서 처리하는게 맞을 것 같음
         handleResultModalToggle();
       }
@@ -143,6 +139,7 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
     handleResultModalToggle();
   }, [handleExitModalToggle, handleResultModalToggle]);
 
+  // NOTE: 객체의 크기가 커서, 알아보기 힘들다면 쪼개는 것도 좋을 것 같다.
   const values = {
     originalTyping,
     userTyping,
@@ -151,7 +148,7 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
     typingWpm,
     typingAccuracy,
     typingSpeed,
-    prevUserTyping: prevUserTyping.current,
+    prevUserTyping,
     prevOriginalTyping,
     nextOriginalTyping,
     typingAvgResult,
