@@ -19,6 +19,7 @@ export default function PageNotFound() {
         flexDir='column'
       >
         <Image src='/images/page-404.png' alt='404' w={'222px'} margin={'51px 0'} />
+
         <Text fontSize={28} fontWeight={600} marginBottom='22px'>
           죄송합니다. 현재 찾을 수 없는 페이지를 요청하셨습니다.
         </Text>
