@@ -52,7 +52,7 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
   const [currentIdx, setCurrentIdx] = useState(0);
   const prevUserTyping = useRef('');
 
-  const [isResultModalOpen, setIsResultModalOpen] = useState(false);
+  // const [isResultModalOpen, setIsResultModalOpen] = useState(false);
 
   const {
     originalTyping,
@@ -110,13 +110,13 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
     }
   };
 
-  const handleResultModalOpen = () => {
-    setIsResultModalOpen(true);
-  };
+  // const handleResultModalOpen = () => {
+  //   setIsResultModalOpen(true);
+  // };
 
-  const handleResultModalClose = () => {
-    setIsResultModalOpen(false);
-  };
+  // const handleResultModalClose = () => {
+  //   setIsResultModalOpen(false);
+  // };
 
   const values = {
     originalTyping,
@@ -138,16 +138,17 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
     timePause,
   };
 
-  const modalValues = {
-    isResultModalOpen,
-    handleResultModalClose,
-    handleResultModalOpen,
-  };
+  // const modalValues = {
+  //   isResultModalOpen,
+  //   handleResultModalClose,
+  //   handleResultModalOpen,
+  // };
 
   return (
     <ContextShortTyping.Provider value={values}>
       <ContextShortTypingHandler.Provider value={actions}>
-        <ContextTypingResultModal.Provider value={modalValues}>{children}</ContextTypingResultModal.Provider>
+        {children}
+        {/* <ContextTypingResultModal.Provider value={modalValues}></ContextTypingResultModal.Provider> */}
       </ContextShortTypingHandler.Provider>
     </ContextShortTyping.Provider>
   );
@@ -171,13 +172,13 @@ export function useContextShortTypingHandler() {
   return value;
 }
 
-export function useContextTypingResultModal() {
-  const value = useContext(ContextTypingResultModal);
-  if (value === null) {
-    throw new Error('useContextTypingResultModal should be used within ShortTypingHandlerProvider');
-  }
+// export function useContextTypingResultModal() {
+//   const value = useContext(ContextTypingResultModal);
+//   if (value === null) {
+//     throw new Error('useContextTypingResultModal should be used within ShortTypingHandlerProvider');
+//   }
 
-  return value;
-}
+//   return value;
+// }
 
 export default ShortTypingProvider;
