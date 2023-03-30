@@ -56,12 +56,14 @@ const baseVariant = defineStyle((props) => {
 const outlineVariant = defineStyle((props) => {
   const { colorScheme: c } = props;
   return {
-    bg: `${c}.light`,
-    color: c === 'primary' ? 'white.light' : 'gray.dark',
+    color: `${c}.main`,
+    bg: c === 'primary' ? 'white.light' : 'gray.dark',
     border: '0.6px solid',
 
     _hover: {
-      bg: `${c}.light`,
+      bg: `${c}.main`,
+      color: c === 'primary' ? 'white.light' : 'gray.dark',
+
       _disabled: {
         bg: 'gray.main',
       },

@@ -12,6 +12,7 @@ interface ContextShortTypingType {
   typingCount: number;
   typingWpm: number;
   typingAccuracy: number;
+  typingSpeed: number;
 
   prevUserTyping: string;
   prevOriginalTyping: string;
@@ -21,10 +22,20 @@ interface ContextShortTypingType {
 interface ContextShortTypingHandlerType {
   onEndTyping: (input: string) => Promise<void>;
   onTyping: (inputChar: string) => void;
+
+  timePlay: () => void;
+  timePause: () => void;
+}
+
+interface ContextTypingResultModalType {
+  isResultModalOpen: boolean;
+  handleResultModalOpen: () => void;
+  handleResultModalClose: () => void;
 }
 
 const ContextShortTyping = createContext<ContextShortTypingType | null>(null);
 const ContextShortTypingHandler = createContext<ContextShortTypingHandlerType | null>(null);
+const ContextTypingResultModal = createContext<ContextTypingResultModalType | null>(null);
 
 interface ShortTypingProviderProps {
   children: ReactNode;
@@ -34,13 +45,27 @@ interface ShortTypingProviderProps {
 const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderProps) => {
   const [currentIdx, setCurrentIdx] = useState(0);
   const prevUserTyping = useRef('');
-  const { originalTyping, userTyping, time, typingCount, typingAccuracy, typingWpm, handleTypingSubmit, handleTyping } =
-    useCurrentTyping(
-      originalTypings[currentIdx] ?? {
-        typingId: 0,
-        content: '',
-      },
-    );
+
+  const [isResultModalOpen, setIsResultModalOpen] = useState(false);
+
+  const {
+    originalTyping,
+    userTyping,
+    time,
+    typingCount,
+    typingAccuracy,
+    typingWpm,
+    typingSpeed,
+    handleTypingSubmit,
+    handleTyping,
+    timePlay,
+    timePause,
+  } = useCurrentTyping(
+    originalTypings[currentIdx] ?? {
+      typingId: 0,
+      content: '',
+    },
+  );
 
   const prevOriginalTyping = useMemo(
     () => (currentIdx > 0 ? originalTypings[currentIdx - 1]?.content : ''),
@@ -64,17 +89,25 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
     if (currentIdx < originalTypings.length - 1) {
       setCurrentIdx((prev) => prev + 1);
     } else {
-      // TODO : 30문장 끝
+      // TODO : 30문장 끝, 백엔드 api가 처리되고 수정할 예정
     }
+  };
+
+  const handleResultModalOpen = () => {
+    setIsResultModalOpen(true);
+  };
+  const handleResultModalClose = () => {
+    setIsResultModalOpen(false);
   };
 
   const values = {
     originalTyping,
     userTyping,
-    time: time,
-    typingCount: typingCount,
+    time,
+    typingCount,
     typingWpm,
     typingAccuracy,
+    typingSpeed,
     prevUserTyping: prevUserTyping.current,
     prevOriginalTyping,
     nextOriginalTyping,
@@ -83,11 +116,21 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
   const actions = {
     onEndTyping: handleEndTyping,
     onTyping: handleTyping,
+    timePlay,
+    timePause,
+  };
+
+  const modalValues = {
+    isResultModalOpen,
+    handleResultModalClose,
+    handleResultModalOpen,
   };
 
   return (
     <ContextShortTyping.Provider value={values}>
-      <ContextShortTypingHandler.Provider value={actions}>{children}</ContextShortTypingHandler.Provider>
+      <ContextShortTypingHandler.Provider value={actions}>
+        <ContextTypingResultModal.Provider value={modalValues}>{children}</ContextTypingResultModal.Provider>
+      </ContextShortTypingHandler.Provider>
     </ContextShortTyping.Provider>
   );
 };
@@ -105,6 +148,15 @@ export function useContextShortTypingHandler() {
   const value = useContext(ContextShortTypingHandler);
   if (value === null) {
     throw new Error('useContextShortTypingHandler should be used within ShortTypingHandlerProvider');
+  }
+
+  return value;
+}
+
+export function useContextTypingResultModal() {
+  const value = useContext(ContextTypingResultModal);
+  if (value === null) {
+    throw new Error('useContextTypingResultModal should be used within ShortTypingHandlerProvider');
   }
 
   return value;

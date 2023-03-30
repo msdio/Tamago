@@ -22,6 +22,7 @@ const colors: Record<string, ColorType> = {
   },
   white: {
     light: '#FFFFFF',
+    dark: '#F8F8F8',
   },
   error: {
     main: '#FF0000',
@@ -39,4 +40,5 @@ const colors: Record<string, ColorType> = {
     'head-text': '#3F3C3B',
   },
 };
+
 export default colors;
