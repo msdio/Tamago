@@ -39,3 +39,12 @@ export interface TypingResultType {
   typingWpm: number;
   typingSpeed: number;
 }
+
+export const INIT_TYPING_RESULT = {
+  typingSpeed: 0,
+  typingAccuracy: 0,
+  typingWpm: 0,
+  typingTime: 0,
+};
+
+Object.freeze(INIT_TYPING_RESULT);

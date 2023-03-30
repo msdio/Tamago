@@ -11,6 +11,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import IconButton from '@/components/common/IconButton';
 import InfoList from '@/components/common/ResultModal/InfoList';
@@ -21,13 +22,13 @@ import Share from '@/icons/Share';
 interface ResultModalProps {
   isOpen: boolean;
   result: TypingResultType;
-  onReplay: () => void;
+  onClose: () => void;
 
   title?: string;
 }
 
-export default function PracticeResultModal({ onReplay, title, isOpen, result }: ResultModalProps) {
-  const isLongResult = !!title;
+export default function PracticeResultModal({ onClose, title, isOpen, result }: ResultModalProps) {
+  const router = useRouter();
 
   const onBookmark = () => {
     console.log('click Bookmark: ');
@@ -35,6 +36,11 @@ export default function PracticeResultModal({ onReplay, title, isOpen, result }:
 
   const onShare = () => {
     console.log('click Share: ', onShare);
+  };
+
+  const onReplay = () => {
+    onClose();
+    router.reload();
   };
 
   return (
