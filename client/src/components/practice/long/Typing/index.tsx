@@ -5,8 +5,8 @@ import { useEffect, useRef, useState } from 'react';
 
 import PracticeLongLayout from '@/components/practice/long/Layout';
 import TypingHeader from '@/components/practice/long/Typing/TypingHeader/index';
+import TypingDetailPagination from '@/components/practice/long/TypingDetailPagination';
 import TypingLine from '@/components/practice/long/TypingLine';
-import TypingPagination from '@/components/practice/long/TypingPagination';
 import { PRACTICE_LONG_PATH_DETAIL } from '@/constants/paths';
 import useStopwatch from '@/hooks/useStopWatch';
 import type { CharInfo, LongTypingDetail } from '@/types/typing';
@@ -229,7 +229,7 @@ export default function PracticeLongTyping({
         ))}
       </Flex>
       <Flex mt='33px' justifyContent='right'>
-        <TypingPagination typingId={typingId} currentPage={currentPage} totalPage={totalPage} isTyping={true} />
+        <TypingDetailPagination typingId={typingId} currentPage={currentPage} totalPage={totalPage} isTyping={true} />
       </Flex>
     </PracticeLongLayout>
   );
