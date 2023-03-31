@@ -11,7 +11,6 @@ import {
   Text,
 } from '@chakra-ui/react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 import IconButton from '@/components/common/IconButton';
 import PrepareAlert from '@/components/common/PrepareAlert';
@@ -25,26 +24,18 @@ interface ResultModalProps {
   isOpen: boolean;
   result: TypingResultType;
   endTime: Date;
-  onClose: () => void;
+  onReplay: () => void;
 
   title?: string;
 }
 
-export default function PracticeResultModal({ onClose, title, isOpen, result, endTime }: ResultModalProps) {
-  const router = useRouter();
-
+export default function PracticeResultModal({ title, isOpen, result, endTime, onReplay }: ResultModalProps) {
   const [isPrepareModalOpen, togglePrepareModal] = useToggle();
 
   const isLong = !!title;
 
   const onBookmark = () => {
     togglePrepareModal();
-  };
-
-  const onReplay = () => {
-    // NOTE : 다시하기 기능은 새로고침으로 구현했는데, 긴글에서도 새로고침으로 해도 괜찮을까요?
-    onClose();
-    router.reload();
   };
 
   return (
