@@ -2,8 +2,8 @@ import { Box, Flex, Heading, Link, Table, TableContainer, Tbody, Td, Text, Th, T
 
 import PracticeLongLayout from '@/components/practice/long/Layout';
 import { PRACTICE_LONG_PATH_DETAIL } from '@/constants/paths';
+import { DownArrow } from '@/icons/Arrow';
 import { Document } from '@/icons/Document';
-import DownArrow from '@/icons/DownArrow';
 import { BookmarkOff } from '@/icons/Heart';
 import { SmallLeftArrow, SmallRightArrow } from '@/icons/SmallArrow';
 import UpDownArrow from '@/icons/UpDownArrow';
