@@ -1,20 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
 
-const useCountUp = (end: number) => {
-  const [count, setCount] = useState(0);
-  const currentCount = useRef(end || 0);
+interface CountUpProps {
+  end: number;
+  start?: number;
+}
+
+const useCountUp = ({ start = 0, end }: CountUpProps) => {
+  const [count, setCount] = useState(start);
+  const currentCount = useRef(start);
 
   useEffect(() => {
     const counter = setInterval(() => {
-      setCount(Math.ceil(end - currentCount.current));
-
-      if (currentCount.current < 1) {
+      if (currentCount.current > end) {
         clearInterval(counter);
       }
 
-      const jump = currentCount.current / 10;
+      setCount(Math.ceil(currentCount.current));
 
-      currentCount.current -= jump;
+      const jump = (end - currentCount.current) / 20;
+
+      currentCount.current += jump;
     }, 50);
   }, [end]);
 
