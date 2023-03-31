@@ -39,8 +39,9 @@ export interface TypingHistoryRequest {
   wrongKeys: Record<string, { total: number; count: number }>;
 }
 
+export type TypingLanguageType = 'korean' | 'english' | 'java' | 'javascript' | 'python';
 export const getShortTypingWritingsAPI = async (
-  language: 'korean' | 'english',
+  language: TypingLanguageType,
 ): Promise<{
   result: ShortTypingResultType;
 }> => {
