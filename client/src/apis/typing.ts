@@ -60,7 +60,7 @@ export const getLongTypingListAPI = async (page: string): Promise<LongTypingList
     code: res.data.code,
     description: res.data.description,
     result: {
-      currentPage: 1,
+      currentPage: +page,
       totalPage: 10,
       longTypingList: res.data.result,
     },

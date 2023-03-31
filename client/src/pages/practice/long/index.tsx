@@ -19,6 +19,8 @@ export default function PracticeLongPage() {
 
     const { currentPage, totalPage, longTypingList } = result;
 
+    console.log(result);
+
     setData({ currentPage, totalPage, longTypingList });
   };
 

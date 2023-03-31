@@ -1,5 +1,8 @@
 import { Flex, Text } from '@chakra-ui/react';
+import Link from 'next/link';
+import { useEffect } from 'react';
 
+import { PRACTICE_LONG_PATH } from '@/constants/paths';
 import { SmallLeftArrow, SmallRightArrow } from '@/icons/SmallArrow';
 
 interface TypingListPaginationProps {
@@ -18,6 +21,10 @@ const getCurrentIndexArr = (currentPage: number, totalPage: number) => {
 };
 
 export default function TypingListPagination({ currentPage, totalPage }: TypingListPaginationProps) {
+  useEffect(() => {
+    console.log(currentPage, totalPage);
+  }, []);
+
   return (
     <Flex gap='50px' justifyContent='center' m='43px 0' alignItems='center'>
       <SmallLeftArrow />
@@ -25,23 +32,27 @@ export default function TypingListPagination({ currentPage, totalPage }: TypingL
         {getCurrentIndexArr(currentPage, totalPage).map((index) => {
           if (index === currentPage) {
             return (
-              <Text
-                key={index}
-                w='28px'
-                h='28px'
-                textAlign='center'
-                lineHeight='28px'
-                bg='primary.light'
-                borderRadius='50'
-              >
-                {index}
-              </Text>
+              <Link href={`${PRACTICE_LONG_PATH}?page=${index}`} key={index}>
+                <Text
+                  key={index}
+                  w='28px'
+                  h='28px'
+                  textAlign='center'
+                  lineHeight='28px'
+                  bg='primary.light'
+                  borderRadius='50'
+                >
+                  {index}
+                </Text>
+              </Link>
             );
           } else {
             return (
-              <Text key={index} w='28px' h='28px' textAlign='center' lineHeight='28px'>
-                {index}
-              </Text>
+              <Link href={`${PRACTICE_LONG_PATH}?page=${index}`} key={index}>
+                <Text w='28px' h='28px' textAlign='center' lineHeight='28px'>
+                  {index}
+                </Text>
+              </Link>
             );
           }
         })}
