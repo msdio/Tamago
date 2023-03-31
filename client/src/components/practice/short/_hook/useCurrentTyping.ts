@@ -153,7 +153,7 @@ export default function useCurrentTyping({
   useEffect(() => {
     handleTypingSpeed();
     handleTypingWpm();
-  }, [handleTypingSpeed, handleTypingWpm]);
+  }, [handleTypingSpeed, handleTypingWpm, totalMillisecond]);
 
   return {
     userTyping,

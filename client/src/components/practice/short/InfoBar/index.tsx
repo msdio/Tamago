@@ -14,7 +14,7 @@ interface InfoBarProps {
 
 // TODO : 짧은글, 긴글에서 공통적으로 사용됨
 export default function InfoBar({ onExit }: InfoBarProps) {
-  const { time, typingAccuracy, typingCount, typingWpm } = useContextShortTyping();
+  const { time, typingAccuracy, typingSpeed, typingWpm } = useContextShortTyping();
 
   return (
     <>
@@ -46,7 +46,7 @@ export default function InfoBar({ onExit }: InfoBarProps) {
             <InfoBarItem label='경과 시간' content={getSecondToMMSSFormat(time)} />
             <InfoBarItem label='WPM' content={`${typingWpm}`} />
             <InfoBarItem label='정확도' content={`${typingAccuracy}%`} />
-            <InfoBarItem label='타자' content={`${typingCount}타`} />
+            <InfoBarItem label='타자' content={`${typingSpeed}타`} />
 
             <Flex pr={27} borderLeft='1px solid #000' flex={1} flexDirection='row-reverse' alignItems='center' gap={1}>
               <Text fontWeight={600} fontSize={16}>
