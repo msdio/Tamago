@@ -16,6 +16,7 @@ import { useRouter } from 'next/router';
 import IconButton from '@/components/common/IconButton';
 import InfoList from '@/components/common/ResultModal/InfoList';
 import type { TypingResultType } from '@/components/common/ResultModal/types';
+import { PRACTICE_LONG_PATH } from '@/constants/paths';
 import { BookmarkOff } from '@/icons/Heart';
 import Share from '@/icons/Share';
 
@@ -25,9 +26,10 @@ interface ResultModalProps {
   onClose: () => void;
 
   title?: string;
+  nextURL?: string;
 }
 
-export default function PracticeResultModal({ onClose, title, isOpen, result }: ResultModalProps) {
+export default function PracticeResultModal({ onClose, title, isOpen, result, nextURL }: ResultModalProps) {
   const router = useRouter();
 
   const onBookmark = () => {
@@ -40,7 +42,11 @@ export default function PracticeResultModal({ onClose, title, isOpen, result }: 
 
   const onReplay = () => {
     onClose();
-    router.reload();
+    if (nextURL) {
+      router.push(nextURL);
+    } else {
+      router.reload();
+    }
   };
 
   return (
@@ -78,8 +84,9 @@ export default function PracticeResultModal({ onClose, title, isOpen, result }: 
         </ModalBody>
         <ModalFooter justifyContent='center' p='0' gap='17px'>
           <Button w='174px' onClick={onReplay}>
-            이어 하기
+            {nextURL === PRACTICE_LONG_PATH ? '목록으로' : '이어 하기'}
           </Button>
+
           <Link href='/'>
             <Button w='174px' variant='outline'>
               메인화면으로 가기

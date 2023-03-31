@@ -1,21 +1,29 @@
 import { Flex, Textarea } from '@chakra-ui/react';
 import { disassemble } from 'hangul-js';
-import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
 import { getTypingHistoryAPI } from '@/apis/typing';
 import { userProfileState } from '@/atom/userProfile';
+import PracticeResultModal from '@/components/common/ResultModal/practice-mode';
 import PracticeLongLayout from '@/components/practice/long/Layout';
 import TypingHeader from '@/components/practice/long/Typing/TypingHeader/index';
 import TypingLine from '@/components/practice/long/TypingLine';
 import TypingPagination from '@/components/practice/long/TypingPagination';
-import { PRACTICE_LONG_PATH_DETAIL } from '@/constants/paths';
+import { PRACTICE_LONG_PATH, PRACTICE_LONG_PATH_DETAIL } from '@/constants/paths';
 import useStopwatch from '@/hooks/useStopWatch';
+import useToggle from '@/hooks/useToggle';
 import type { CharInfo, LongTypingDetail } from '@/types/typing';
 import { TypingState } from '@/types/typing';
 import { getCharType } from '@/utils/char';
 import { getTypingAccuracy, getTypingSpeed, getTypingWpm, getWrongKeys, slicedContentAndStrings } from '@/utils/typing';
+
+const getNextPageURL = (typingId: number, currentPage: number, totalPage: number) => {
+  if (currentPage === totalPage) {
+    return PRACTICE_LONG_PATH;
+  }
+  return `${PRACTICE_LONG_PATH_DETAIL}?typingId=${typingId}&pageNum=${currentPage + 1}&isTyping=true`;
+};
 
 export default function PracticeLongTyping({
   content,
@@ -25,11 +33,12 @@ export default function PracticeLongTyping({
   totalPage,
   typingId,
 }: LongTypingDetail) {
-  const router = useRouter();
   const userProfile = useRecoilValue(userProfileState);
 
+  const [isResultModalOpen, handleResultModalToggle] = useToggle();
+
   const [textarea, setTextarea] = useState('');
-  const { totalMillisecond, status, timePlay, timePause, timeReset } = useStopwatch();
+  const { totalMillisecond, status, timePlay, timePause } = useStopwatch();
 
   const originalInfos = useRef<CharInfo[]>(
     [...content].map((char) => ({
@@ -125,17 +134,7 @@ export default function PracticeLongTyping({
           wrongKeys: getWrongKeys(originalInfos.current, userInfos.current),
         });
       }
-      if (confirm(`정확도: ${typingAccuracy.current}, wpm: ${typingWpm.current}, 타속: ${typingSpeed.current}`)) {
-        if (totalPage > currentPage) {
-          router.push(
-            `${PRACTICE_LONG_PATH_DETAIL}?typingId=${typingId}&pageNum=${currentPage + 1}&isTyping=true`,
-            undefined,
-            { shallow: false },
-          );
-        } else {
-          router.push(`/practice/long`);
-        }
-      }
+      handleResultModalToggle();
       return;
     }
 
@@ -202,42 +201,57 @@ export default function PracticeLongTyping({
   };
 
   return (
-    <PracticeLongLayout>
-      <TypingHeader
-        accuracy={typingAccuracy.current}
-        speed={typingSpeed.current}
-        wpm={typingWpm.current}
-        time={totalMillisecond / 1000}
-      />
-      <Flex
-        h='550px'
-        direction='column'
-        border='0.6px solid #000000'
-        borderRadius='10px'
-        backgroundColor='#fff'
-        p='34px 53px'
-        onClick={focusTextarea}
-      >
-        <Textarea
-          pos='absolute'
-          left='-9999px'
-          value={textarea}
-          ref={textareaRef}
-          onChange={handleChange}
-          onSelect={(e) =>
-            e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)
-          }
-          onCopy={(e) => e.preventDefault()}
-          onCut={(e) => e.preventDefault()}
-          onPaste={(e) => e.preventDefault()}
+    <>
+      <PracticeLongLayout>
+        <TypingHeader
+          accuracy={typingAccuracy.current}
+          speed={typingSpeed.current}
+          wpm={typingWpm.current}
+          time={totalMillisecond / 1000}
         />
-        {slicedContentAndStrings(content, textarea, typingStates.current).map(([originalLine, userLine, states], i) => (
-          <TypingLine key={i} originalLine={originalLine} userLine={userLine} states={states} />
-        ))}
-      </Flex>
-      <Flex mt='33px' justifyContent='right'>
-        <TypingPagination typingId={typingId} currentPage={currentPage} totalPage={totalPage} isTyping={true} />
-      </Flex>
-    </PracticeLongLayout>
+        <Flex
+          h='550px'
+          direction='column'
+          border='0.6px solid #000000'
+          borderRadius='10px'
+          backgroundColor='#fff'
+          p='34px 53px'
+          onClick={focusTextarea}
+        >
+          <Textarea
+            pos='absolute'
+            left='-9999px'
+            value={textarea}
+            ref={textareaRef}
+            onChange={handleChange}
+            onSelect={(e) =>
+              e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)
+            }
+            onCopy={(e) => e.preventDefault()}
+            onCut={(e) => e.preventDefault()}
+            onPaste={(e) => e.preventDefault()}
+          />
+          {slicedContentAndStrings(content, textarea, typingStates.current).map(
+            ([originalLine, userLine, states], i) => (
+              <TypingLine key={i} originalLine={originalLine} userLine={userLine} states={states} />
+            ),
+          )}
+        </Flex>
+        <Flex mt='33px' justifyContent='right'>
+          <TypingPagination typingId={typingId} currentPage={currentPage} totalPage={totalPage} isTyping={true} />
+        </Flex>
+      </PracticeLongLayout>
+      <PracticeResultModal
+        isOpen={isResultModalOpen}
+        onClose={handleResultModalToggle}
+        result={{
+          typingAccuracy: typingAccuracy.current,
+          typingSpeed: typingSpeed.current,
+          typingTime: totalMillisecond,
+          typingWpm: typingWpm.current,
+        }}
+        nextURL={getNextPageURL(typingId, currentPage, totalPage)}
+      />
+    </>
   );
 }
