@@ -7,12 +7,8 @@ import Confirm from '@/components/common/Confirm';
 import ResultModal from '@/components/common/ResultModal/practice-mode';
 import useCurrentTyping from '@/components/practice/short/_hook/useCurrentTyping';
 import useToggle from '@/hooks/useToggle';
-import type { TypingResultType } from '@/types/typing';
-import { INIT_TYPING_RESULT } from '@/types/typing';
-
-interface TypingHistoryType extends TypingResultType {
-  content: string;
-}
+import type { TypingHistoryType, TypingResultType } from '@/types/typing';
+import { getTypingHistoryAverage } from '@/utils/typing';
 
 interface ContextShortTypingType {
   originalTyping: string;
@@ -74,15 +70,7 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
   const history = useRef<TypingHistoryType[]>([]);
   const prevUserTyping = history.current[history.current.length - 1]?.content ?? '';
 
-  const typingAvgResult: TypingResultType =
-    history.current.length === 0
-      ? INIT_TYPING_RESULT
-      : {
-          typingSpeed: history.current.reduce((acc, cur) => acc + cur.typingSpeed, 0) / history.current.length,
-          typingAccuracy: history.current.reduce((acc, cur) => acc + cur.typingAccuracy, 0) / history.current.length,
-          typingWpm: history.current.reduce((acc, cur) => acc + cur.typingWpm, 0) / history.current.length,
-          typingTime: history.current.reduce((acc, cur) => acc + cur.typingTime, 0) / history.current.length,
-        };
+  const typingAvgResult = getTypingHistoryAverage(history.current);
 
   const saveTypingHistory = useCallback(
     (content: string) => {

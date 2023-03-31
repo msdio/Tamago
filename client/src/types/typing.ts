@@ -40,6 +40,10 @@ export interface TypingResultType {
   typingSpeed: number;
 }
 
+export interface TypingHistoryType extends TypingResultType {
+  content: string;
+}
+
 export const INIT_TYPING_RESULT = {
   typingSpeed: 0,
   typingAccuracy: 0,

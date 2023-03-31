@@ -1,15 +1,22 @@
 import { disassemble } from 'hangul-js';
 
-import type { CharInfo } from '@/types/typing';
+import type { CharInfo, TypingHistoryType, TypingResultType } from '@/types/typing';
+import { INIT_TYPING_RESULT } from '@/types/typing';
 
-export const getTypingAccuracy = ({ typingLength, wrongLength }: { typingLength: number; wrongLength: number }) => {
+export const getTypingAccuracy = ({
+  typingLength,
+  wrongLength,
+}: {
+  typingLength: number;
+  wrongLength: number;
+}): number => {
   if (typingLength === 0) {
     return 0;
   }
   return Math.round(((typingLength - wrongLength) / typingLength) * 1000) / 10;
 };
 
-export const getTypingWpm = ({ typingCount, millisecond }: { typingCount: number; millisecond: number }) => {
+export const getTypingWpm = ({ typingCount, millisecond }: { typingCount: number; millisecond: number }): number => {
   if (millisecond === 0) {
     return 0;
   }
@@ -25,7 +32,7 @@ export const getTypingSpeed = ({
   typingCount: number;
   backspaceCount: number;
   millisecond: number;
-}) => {
+}): number => {
   if (millisecond === 0) {
     return 0;
   }
@@ -66,8 +73,8 @@ export const getWrongKeys = (contentInfos: CharInfo[], typingInfos: CharInfo[]) 
  * 이후 slice된 각 문자열을 TypingLine의 params으로 전달한다.
  */
 export const slicedContentAndStrings = (content: string, ...args: string[]) => {
-  const spiltedContent = content.split('\n').map((line) => line + '\n');
-  return spiltedContent.map((slicedContent) =>
+  const splitContent = content.split('\n').map((line) => line + '\n');
+  return splitContent.map((slicedContent) =>
     args.reduce(
       (prev, curr, i) => {
         const sliced = curr.slice(0, slicedContent.length);
@@ -85,7 +92,7 @@ interface GetWrongLengthProps {
   userTyping: string;
 }
 
-export const getWrongLength = ({ originalTyping, userTyping }: GetWrongLengthProps) => {
+export const getWrongLength = ({ originalTyping, userTyping }: GetWrongLengthProps): number => {
   return userTyping.split('').reduce((wrongCount, currentInput, index) => {
     if (currentInput !== originalTyping[index]) {
       return wrongCount + 1;
@@ -95,7 +102,7 @@ export const getWrongLength = ({ originalTyping, userTyping }: GetWrongLengthPro
   }, 0);
 };
 
-export const getTypingCount = ({ originalTyping, userTyping }: GetWrongLengthProps) => {
+export const getTypingCount = ({ originalTyping, userTyping }: GetWrongLengthProps): number => {
   let typingCount = 0;
   for (let i = 0; i < userTyping.length; i++) {
     if (userTyping[i] === originalTyping[i]) {
@@ -104,4 +111,19 @@ export const getTypingCount = ({ originalTyping, userTyping }: GetWrongLengthPro
   }
 
   return typingCount;
+};
+
+// TODO : test code 작성
+export const getTypingHistoryAverage = (typingHistories: TypingHistoryType[]): TypingResultType => {
+  const typingHistoriesLength = typingHistories.length;
+
+  if (typingHistoriesLength === 0) {
+    return INIT_TYPING_RESULT;
+  }
+  return {
+    typingSpeed: typingHistories.reduce((acc, cur) => acc + cur.typingSpeed, 0) / typingHistoriesLength,
+    typingAccuracy: typingHistories.reduce((acc, cur) => acc + cur.typingAccuracy, 0) / typingHistoriesLength,
+    typingWpm: typingHistories.reduce((acc, cur) => acc + cur.typingWpm, 0) / typingHistoriesLength,
+    typingTime: typingHistories.reduce((acc, cur) => acc + cur.typingTime, 0) / typingHistoriesLength,
+  };
 };
