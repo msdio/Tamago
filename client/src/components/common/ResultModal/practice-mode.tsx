@@ -13,19 +13,19 @@ import {
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import Alert from '@/components/common/Alert';
 import IconButton from '@/components/common/IconButton';
+import PrepareAlert from '@/components/common/PrepareAlert';
 import InfoList from '@/components/common/ResultModal/InfoList';
-import type { TypingResultType } from '@/components/common/ResultModal/types';
 import useToggle from '@/hooks/useToggle';
 import { BookmarkOff } from '@/icons/Heart';
+import type { TypingResultType } from '@/types/typing';
 import { getDateYYYYMMDDHHMMFormat } from '@/utils/time';
 
 interface ResultModalProps {
   isOpen: boolean;
   result: TypingResultType;
-  onClose: () => void;
   endTime: Date;
+  onClose: () => void;
 
   title?: string;
 }
@@ -57,7 +57,6 @@ export default function PracticeResultModal({ onClose, title, isOpen, result, en
                 {isLong ? '긴 글' : '짧은 글'} 연습모드 결과
               </Text>
               <Flex gap='14px'>
-                {/* <IconButton onAction={onShare} icon={<Share />} /> */}
                 <IconButton onAction={onBookmark} icon={<BookmarkOff />} />
               </Flex>
             </Flex>
@@ -74,14 +73,13 @@ export default function PracticeResultModal({ onClose, title, isOpen, result, en
                     {title}
                   </Text>
                 )}
-
                 <InfoList {...result} />
               </Box>
             </Flex>
           </ModalBody>
           <ModalFooter justifyContent='center' p='0' gap='17px'>
             <Button w='174px' onClick={onReplay}>
-              이어 하기
+              다시 하기
             </Button>
             <Link href='/'>
               <Button w='174px' variant='outline'>
@@ -91,7 +89,7 @@ export default function PracticeResultModal({ onClose, title, isOpen, result, en
           </ModalFooter>
         </ModalContent>
       </Modal>
-      <Alert header='준비중인 기능입니다.' isOpen={isPrepareModalOpen} onClose={togglePrepareModal} />
+      <PrepareAlert isOpen={isPrepareModalOpen} onClose={togglePrepareModal} />
     </>
   );
 }

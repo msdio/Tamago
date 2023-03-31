@@ -1,5 +1,5 @@
 import InfoItem from '@/components/common/ResultModal/InfoList/Item';
-import type { TypingResultType } from '@/components/common/ResultModal/types';
+import type { TypingResultType } from '@/types/typing';
 import { getSecondToMMSSFormat } from '@/utils/time';
 
 type InfoListProps = TypingResultType;
