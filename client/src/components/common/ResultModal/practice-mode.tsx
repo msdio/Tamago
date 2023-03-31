@@ -18,17 +18,20 @@ import InfoList from '@/components/common/ResultModal/InfoList';
 import type { TypingResultType } from '@/components/common/ResultModal/types';
 import { BookmarkOff } from '@/icons/Heart';
 import Share from '@/icons/Share';
+import { getDateYYYYMMDDHHMMFormat } from '@/utils/time';
 
 interface ResultModalProps {
   isOpen: boolean;
   result: TypingResultType;
   onClose: () => void;
+  endTime: Date;
 
   title?: string;
 }
 
-export default function PracticeResultModal({ onClose, title, isOpen, result }: ResultModalProps) {
+export default function PracticeResultModal({ onClose, title, isOpen, result, endTime }: ResultModalProps) {
   const router = useRouter();
+  const isLong = !!title;
 
   const onBookmark = () => {
     console.log('click Bookmark: ');
@@ -51,7 +54,7 @@ export default function PracticeResultModal({ onClose, title, isOpen, result }: 
         <ModalHeader p={0}>
           <Flex justifyContent='space-between'>
             <Text fontSize='30px' fontWeight={700}>
-              짧은 글 연습모드 결과
+              {isLong ? '긴 글' : '짧은 글'} 연습모드 결과
             </Text>
             <Flex gap='14px'>
               <IconButton onAction={onShare} icon={<Share />} />
@@ -59,7 +62,7 @@ export default function PracticeResultModal({ onClose, title, isOpen, result }: 
             </Flex>
           </Flex>
           <Text color='gray.dark' fontSize='14px' fontWeight={500}>
-            2023.03.20 13:23
+            {getDateYYYYMMDDHHMMFormat(endTime)}
           </Text>
         </ModalHeader>
 

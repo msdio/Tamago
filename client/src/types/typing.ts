@@ -42,6 +42,7 @@ export interface TypingResultType {
 
 export interface TypingHistoryType extends TypingResultType {
   content: string;
+  endTime: Date;
 }
 
 export const INIT_TYPING_RESULT = {
