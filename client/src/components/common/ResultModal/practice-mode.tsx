@@ -42,6 +42,7 @@ export default function PracticeResultModal({ onClose, title, isOpen, result, en
   };
 
   const onReplay = () => {
+    // NOTE : 다시하기 기능은 새로고침으로 구현했는데, 긴글에서도 새로고침으로 해도 괜찮을까요?
     onClose();
     router.reload();
   };
