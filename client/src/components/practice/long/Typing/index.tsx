@@ -112,7 +112,8 @@ export default function PracticeLongTyping({
       const typingTime = totalMillisecond;
       if (userProfile) {
         const response = await getTypingHistoryAPI({
-          typingId: '' + typingId,
+          contentType: true,
+          typingId,
           page: currentPage,
           resultContent: textarea,
           startTime: new Date(endTime - typingTime),

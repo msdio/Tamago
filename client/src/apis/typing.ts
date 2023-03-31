@@ -26,17 +26,18 @@ export interface LongTypingResultType {
   result: LongTypingDetail;
 }
 
-interface TypingHistoryRequest {
-  typingId: string;
-  page: number;
+export interface TypingHistoryRequest {
+  contentType: boolean;
+  typingId: number;
   resultContent: string;
   startTime: Date;
   endTime: Date;
-  typingAccuracy: number;
   typingSpeed: number;
-  wpm: number;
   mode: TypingMode | string;
+  wpm: number;
+  typingAccuracy: number;
   wrongKeys: Record<string, { total: number; count: number }>;
+  page?: number;
 }
 
 export const getShortTypingWritingsAPI = async (
