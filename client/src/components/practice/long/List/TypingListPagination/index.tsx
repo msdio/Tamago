@@ -1,5 +1,6 @@
 import { Flex, Text } from '@chakra-ui/react';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 import { PRACTICE_LONG_PATH } from '@/constants/paths';
 import { SmallLeftArrow, SmallRightArrow } from '@/icons/SmallArrow';
@@ -20,11 +21,21 @@ const getCurrentIndexArr = (currentPage: number, totalPage: number) => {
 };
 
 export default function TypingListPagination({ currentPage, totalPage }: TypingListPaginationProps) {
+  const [currentIndexArr, setcurrentIndexArr] = useState<number[]>(getCurrentIndexArr(currentPage, totalPage));
+
+  useEffect(() => {
+    setcurrentIndexArr(getCurrentIndexArr(currentPage, totalPage));
+  }, [currentPage]);
+
   return (
     <Flex gap='50px' justifyContent='center' m='43px 0' alignItems='center'>
-      <SmallLeftArrow />
+      {currentIndexArr[0] - 1 > 0 && (
+        <Link href={`${PRACTICE_LONG_PATH}?page=${currentIndexArr[0] - 1}`}>
+          <SmallLeftArrow />
+        </Link>
+      )}
       <Flex gap='10px'>
-        {getCurrentIndexArr(currentPage, totalPage).map((index) => {
+        {currentIndexArr.map((index) => {
           if (index === currentPage) {
             return (
               <Link href={`${PRACTICE_LONG_PATH}?page=${index}`} key={index}>
@@ -52,7 +63,11 @@ export default function TypingListPagination({ currentPage, totalPage }: TypingL
           }
         })}
       </Flex>
-      <SmallRightArrow />
+      {currentIndexArr[currentIndexArr.length - 1] < totalPage && (
+        <Link href={`${PRACTICE_LONG_PATH}?page=${currentIndexArr[currentIndexArr.length - 1] + 1}`}>
+          <SmallRightArrow />
+        </Link>
+      )}
     </Flex>
   );
 }
