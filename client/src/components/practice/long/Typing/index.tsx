@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
-import { postTypingHistoryAPI } from '@/apis/typing';
+import { getTypingHistoryAPI } from '@/apis/typing';
 import { userProfileState } from '@/atom/userProfile';
 import PracticeLongLayout from '@/components/practice/long/Layout';
 import TypingHeader from '@/components/practice/long/Typing/TypingHeader/index';
@@ -111,9 +111,8 @@ export default function PracticeLongTyping({
       const endTime = Date.now();
       const typingTime = totalMillisecond;
       if (userProfile) {
-        const response = await postTypingHistoryAPI({
-          contentType: true,
-          typingId,
+        const response = await getTypingHistoryAPI({
+          typingId: '' + typingId,
           page: currentPage,
           resultContent: textarea,
           startTime: new Date(endTime - typingTime),
