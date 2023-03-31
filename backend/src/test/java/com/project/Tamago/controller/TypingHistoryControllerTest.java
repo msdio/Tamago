@@ -1,6 +1,6 @@
 package com.project.Tamago.controller;
 
-import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
+import static com.project.Tamago.common.enums.ResponseCode.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -206,7 +206,7 @@ public class TypingHistoryControllerTest {
 
 	@Test
 	@DisplayName("Typing History 등록 성공")
-	@WithMockUser(username = "user", authorities = {"ROLE_USER"})
+	@WithMockUser(username = "1", authorities = {"ROLE_USER"})
 	public void saveTypingHistorySuccess() throws Exception {
 		// given
 		init1();

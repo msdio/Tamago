@@ -13,8 +13,8 @@ import org.hibernate.annotations.DynamicInsert;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.project.Tamago.dto.requestDto.ModifyProfileReqDto;
-import com.project.Tamago.constants.enums.Role;
-import com.project.Tamago.constants.converter.RoleConverter;
+import com.project.Tamago.common.enums.Role;
+import com.project.Tamago.common.converter.RoleConverter;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

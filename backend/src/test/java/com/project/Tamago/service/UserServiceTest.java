@@ -50,7 +50,7 @@ public class UserServiceTest {
 		ModifyProfileReqDto modifyProfileReqDto = new ModifyProfileReqDto("안녕하세요",
 			"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT55B_AMMO9_gDppDBojupeVFHeQIg4zXSRDJ5COw4h&s");
 		// when
-		userService.modifyUserByJwtToken("any", modifyProfileReqDto);
+		userService.modifyUserById(anyInt(), modifyProfileReqDto);
 
 		// then
 		assertEquals("안녕하세요", user.getIntroduce());

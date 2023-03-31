@@ -1,19 +1,27 @@
 import type { AxiosError } from 'axios';
 import axios from 'axios';
 
+const defaultErrorResponse = {
+  data: {
+    code: 500,
+    description: '서버가 응답하지 않습니다.',
+  },
+};
+
 const createApiWithoutAuth = () => {
   const _request = axios.create({
     baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
   });
 
   _request.interceptors.response.use(
-    function (data) {
+    (data) => {
       return data;
     },
-    async function (error: AxiosError) {
+    async (error: AxiosError) => {
       const { response } = error;
+      const customResponse = response ?? defaultErrorResponse;
 
-      return await Promise.reject(response?.data);
+      return await Promise.reject(customResponse.data);
     },
   );
 
@@ -26,7 +34,7 @@ const createApiWithAuth = () => {
   });
 
   _requestWithAuth.interceptors.request.use(
-    function (config) {
+    (config) => {
       const accessToken = localStorage.getItem('accessToken');
 
       if (accessToken === null) {
@@ -36,19 +44,26 @@ const createApiWithAuth = () => {
 
       config.headers['Content-Type'] = 'application/json';
       config.headers.Authorization = accessToken;
+
       return config;
     },
-    async function (error) {
-      return await Promise.reject(error);
+    async (error: AxiosError) => {
+      const { response } = error;
+      const customResponse = response ?? defaultErrorResponse;
+
+      return await Promise.reject(customResponse.data);
     },
   );
 
   _requestWithAuth.interceptors.response.use(
-    function (data) {
+    (data) => {
       return data;
     },
-    async function (error) {
-      return await Promise.reject(error);
+    async (error: AxiosError) => {
+      const { response } = error;
+      const customResponse = response ?? defaultErrorResponse;
+
+      return await Promise.reject(customResponse.data);
     },
   );
 

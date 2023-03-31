@@ -1,6 +1,6 @@
 package com.project.Tamago.controller;
 
-import static com.project.Tamago.exception.exceptionHandler.ErrorCode.*;
+import static com.project.Tamago.common.enums.ResponseCode.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -19,7 +19,8 @@ import org.springframework.test.web.servlet.ResultActions;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.Tamago.dto.requestDto.JoinReqDto;
 import com.project.Tamago.dto.requestDto.LoginReqDto;
-import com.project.Tamago.exception.CustomException;
+import com.project.Tamago.common.exception.CustomException;
+import com.project.Tamago.dto.responseDto.LoginResDto;
 import com.project.Tamago.security.jwt.JwtTokenProvider;
 import com.project.Tamago.repository.UserRepository;
 import com.project.Tamago.service.AuthService;
@@ -134,14 +135,16 @@ public class AuthControllerTest {
 		// given
 		LoginReqDto loginReqDto = new LoginReqDto("username", "password");
 		String accessToken = "access_token";
-		doReturn(accessToken).when(authService).login(loginReqDto);
+		LoginResDto loginResDto = new LoginResDto(accessToken, "test");
+		doReturn(loginResDto).when(authService).login(loginReqDto);
 		// when
 		ResultActions resultActions = mockMvc.perform(post("/auth/login")
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(new ObjectMapper().writeValueAsString(loginReqDto)));
 		// then
 		resultActions.andExpect(status().isOk())
-			.andExpect(jsonPath("result").value(accessToken));
+			.andExpect(jsonPath("result.accessToken").value(loginResDto.getAccessToken()))
+			.andExpect(jsonPath("result.nickname").value(loginResDto.getNickname()));
 	}
 
 }

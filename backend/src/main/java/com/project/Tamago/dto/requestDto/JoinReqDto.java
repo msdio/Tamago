@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import com.project.Tamago.constants.enums.Role;
+import com.project.Tamago.common.enums.Role;
 import com.project.Tamago.domain.User;
 
 import lombok.AllArgsConstructor;

@@ -23,6 +23,7 @@ import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.responseDto.StatisticsAllResDto;
 import com.project.Tamago.repository.StatisticAllRepository;
 import com.project.Tamago.repository.TypingHistoryRepository;
+import com.project.Tamago.repository.UserRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -35,6 +36,9 @@ class StatisticServiceTest {
 
 	@MockBean
 	StatisticAllRepository statisticAllRepository;
+
+	@MockBean
+	UserRepository userRepository;
 
 	@Test
 	@DisplayName("전체 통계 보여주기")
@@ -49,10 +53,11 @@ class StatisticServiceTest {
 		when(statisticsAllMock.getUpdatedDate()).thenReturn(time);
 		when(statisticsAllMock.getWpmAverage()).thenReturn(5.14);
 		when(statisticsAllMock.getWrongKeyInfo()).thenReturn(Map.of('a', Map.of("count", 1, "total", 2)));
+		when(userRepository.findById(any())).thenReturn(Optional.ofNullable(user));
 		when(statisticAllRepository.findByUser(any())).thenReturn(Optional.of(statisticsAllMock));
 		when(typingHistoryRepository.findAllByUserAndCreatedDateIsAfter(user, time)).thenReturn(List.of());
 		// then
-		StatisticsAllResDto statisticsAllResDto = statisticService.totalStatisticsAll(user);
+		StatisticsAllResDto statisticsAllResDto = statisticService.totalStatisticsAll(anyInt());
 		assertEquals(statisticsAllResDto.getAccuracyAverage(), 3.14);
 		assertEquals(statisticsAllResDto.getWpmAverage(), 5.14);
 	}

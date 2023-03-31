@@ -1,6 +1,6 @@
 package com.project.Tamago.controller;
 
-import static com.project.Tamago.constants.Constant.*;
+import static com.project.Tamago.common.Constant.*;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,12 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.Tamago.dto.CustomResponse;
+import com.project.Tamago.common.Response.CustomResponse;
 import com.project.Tamago.dto.requestDto.JoinReqDto;
 import com.project.Tamago.dto.requestDto.LoginReqDto;
 import com.project.Tamago.dto.requestDto.PasswordReqDto;
-import com.project.Tamago.exception.InvalidParameterException;
-import com.project.Tamago.security.Token;
+import com.project.Tamago.common.exception.InvalidParameterException;
+import com.project.Tamago.dto.responseDto.LoginAutoResDto;
+import com.project.Tamago.dto.responseDto.LoginResDto;
 import com.project.Tamago.service.AuthService;
 
 import lombok.RequiredArgsConstructor;
@@ -48,26 +49,24 @@ public class AuthController {
 	}
 
 	@PostMapping("/login")
-	public CustomResponse<String> login(@Validated @RequestBody LoginReqDto loginReqDto) {
+	public CustomResponse<LoginResDto> login(@Validated @RequestBody LoginReqDto loginReqDto) {
 		return new CustomResponse<>(authService.login(loginReqDto));
 	}
 
 	@PostMapping("/login/auto")
-	public CustomResponse<String> loginAuto(@RequestBody LoginReqDto loginReqDto, HttpServletResponse response) {
-		Token token = authService.loginAuto(loginReqDto);
-
-		ResponseCookie cookie = ResponseCookie.from(REFRESH_TOKEN, token.getRefreshToken())
+	public CustomResponse<LoginResDto> loginAuto(@RequestBody LoginReqDto loginReqDto, HttpServletResponse response) {
+		LoginAutoResDto loginAutoResDto = authService.loginAuto(loginReqDto);
+		ResponseCookie cookie = ResponseCookie.from(REFRESH_TOKEN, loginAutoResDto.getRefreshToken())
 			.maxAge(refreshTokenExpireTime)
 			.httpOnly(true)
 			.path("/")
 			.build();
 		response.setHeader("Set-Cookie", cookie.toString());
-
-		return new CustomResponse<>(token.getAccessToken());
+		return new CustomResponse<>(new LoginResDto(loginAutoResDto.getAccessToken(), loginAutoResDto.getNickname()));
 	}
 
 	@PostMapping("/jwt")
-	public CustomResponse<String> reissue(@RequestBody String accessToken,
+	public CustomResponse<LoginResDto> reissue(@RequestBody String accessToken,
 		@RequestHeader(value = REFRESH_TOKEN, required = false) String refreshToken) {
 		return new CustomResponse<>(authService.reissue(accessToken, refreshToken));
 	}

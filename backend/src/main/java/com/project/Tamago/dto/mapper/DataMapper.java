@@ -4,12 +4,14 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import com.project.Tamago.constants.enums.Role;
+import com.project.Tamago.common.enums.Role;
 import com.project.Tamago.domain.LongTyping;
+import com.project.Tamago.domain.Register;
 import com.project.Tamago.domain.Typing;
 import com.project.Tamago.domain.TypingHistory;
 import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.PageContentDto;
+import com.project.Tamago.dto.requestDto.LongTypingReqDto;
 import com.project.Tamago.dto.requestDto.TypingHistoryReqDto;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
 import com.project.Tamago.dto.responseDto.LongTypingResDto;
@@ -37,6 +39,14 @@ public interface DataMapper {
 	@Mapping(target = "wrongKeys", expression = "java(typingHistoryReqDto.wrongKeysChangeType())")
 	@Mapping(source = "typingHistoryReqDto.contentType", target = "contentType")
 	TypingHistory toTypingHistory(TypingHistoryReqDto typingHistoryReqDto, LongTyping longTyping, Typing typing, User user);
+
+	@Mapping(target = "thumbnail", expression = "java(longTypingReqDto.getContent().replaceAll(\"\\r\", \"\").substring(0, Math.min(longTypingReqDto.getContent().replaceAll(\"\\r\", \"\").length(), 50)))")
+	@Mapping(target = "length", expression = "java(longTypingReqDto.getContent().replaceAll(\"\\r\", \"\").length())")
+	@Mapping(target = "totalPage", expression = "java((int) Math.ceil((double) (longTypingReqDto.getContent().length() - longTypingReqDto.getContent().replaceAll(\"\\r\\n\", \"\").length() + 1) / 20))")
+	LongTyping toLongTyping(LongTypingReqDto longTypingReqDto);
+
+	@Mapping(target = "id", ignore = true)
+	Register toRegister(LongTyping longTyping, Typing typing, User user);
 
 	@Mapping(target = "provider", expression = "java(customOAuth2User.getOAuth2Id())")
 	@Mapping(source = "role", target = "role")
