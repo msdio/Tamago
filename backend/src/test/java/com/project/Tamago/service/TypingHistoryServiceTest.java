@@ -55,7 +55,7 @@ public class TypingHistoryServiceTest {
 
 	@Test
 	@DisplayName("Typing History 단건으로 저장하기")
-	@WithMockUser(username = "test", authorities = {"ROLE_USER"})
+	@WithMockUser(username = "1", authorities = {"ROLE_USER"})
 	@Disabled
 	@Transactional
 	public void getShortTyping() {
@@ -126,14 +126,14 @@ public class TypingHistoryServiceTest {
 		});
 		when(userRepository.findByNickname(any())).thenReturn(Optional.ofNullable(user));
 		when(typingRepository.findById(any())).thenReturn(Optional.ofNullable(typing));
-		typingHistoryService.saveHistory(typingHistoryReqDto, "test");
+		typingHistoryService.saveHistory(typingHistoryReqDto, 1);
 		//then
 		assertTrue(typingHistoryRepository.findAll().contains(typingHistory));
 	}
 
 	@Test
 	@DisplayName("짧은글 전적 저장 성공")
-	@WithMockUser(username = "test", authorities = {"ROLE_USER"})
+	@WithMockUser(username = "1", authorities = {"ROLE_USER"})
 	void testSaveHistoryWithTyping() {
 		// given
 		WrongKey key = new WrongKey();
@@ -167,7 +167,7 @@ public class TypingHistoryServiceTest {
 		when(jwtTokenProvider.getAuthenticationFromAcs(anyString())).thenReturn(
 			new UsernamePasswordAuthenticationToken(1, new Object()));
 		// when
-		typingHistoryService.saveHistory(typingHistoryReqDto, "test");
+		typingHistoryService.saveHistory(typingHistoryReqDto, 1);
 
 		// then
 		List<TypingHistory> typingHistory = typingHistoryRepository.findByTyping(typing);
@@ -177,7 +177,7 @@ public class TypingHistoryServiceTest {
 
 	@Test
 	@DisplayName("긴글 전적 저장 성공")
-	@WithMockUser(username = "test", authorities = {"ROLE_USER"})
+	@WithMockUser(username = "1", authorities = {"ROLE_USER"})
 	void testSaveHistoryWithLongTyping() {
 		// given
 		WrongKey key = new WrongKey();
@@ -220,7 +220,7 @@ public class TypingHistoryServiceTest {
 		when(jwtTokenProvider.getAuthenticationFromAcs(anyString())).thenReturn(
 			new UsernamePasswordAuthenticationToken(1, new Object()));
 		// when
-		typingHistoryService.saveHistory(typingHistoryReqDto, "test");
+		typingHistoryService.saveHistory(typingHistoryReqDto, 1);
 
 		// then
 		List<TypingHistory> typingHistory = typingHistoryRepository.findByLongTyping(longTyping);

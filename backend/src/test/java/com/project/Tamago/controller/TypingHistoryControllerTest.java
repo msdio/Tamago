@@ -206,7 +206,7 @@ public class TypingHistoryControllerTest {
 
 	@Test
 	@DisplayName("Typing History 등록 성공")
-	@WithMockUser(username = "user", authorities = {"ROLE_USER"})
+	@WithMockUser(username = "1", authorities = {"ROLE_USER"})
 	public void saveTypingHistorySuccess() throws Exception {
 		// given
 		init1();

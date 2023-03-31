@@ -35,10 +35,10 @@ const createApiWithAuth = () => {
 
   _requestWithAuth.interceptors.request.use(
     (config) => {
-      const access_token = localStorage.getItem('accessToken');
+      const accessToken = localStorage.getItem('accessToken');
 
-      if (access_token === null) {
-        alert('로그인이 필요합니다. ');
+      if (accessToken === null) {
+        alert('로그인이 필요합니다.');
         window.location.href = '/login';
       }
 

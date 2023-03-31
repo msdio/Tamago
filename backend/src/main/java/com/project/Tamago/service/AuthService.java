@@ -15,13 +15,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.Tamago.domain.User;
+import com.project.Tamago.dto.LoginDto;
 import com.project.Tamago.dto.requestDto.JoinReqDto;
 import com.project.Tamago.dto.requestDto.LoginReqDto;
 import com.project.Tamago.dto.requestDto.PasswordReqDto;
 import com.project.Tamago.common.exception.CustomException;
+import com.project.Tamago.dto.responseDto.LoginAutoResDto;
+import com.project.Tamago.dto.responseDto.LoginResDto;
+import com.project.Tamago.security.Token;
 import com.project.Tamago.security.jwt.JwtTokenProvider;
 import com.project.Tamago.repository.UserRepository;
-import com.project.Tamago.security.Token;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,21 +50,21 @@ public class AuthService {
 		userRepository.save(user);
 	}
 
-	public String login(LoginReqDto loginReqDto) {
+	public LoginResDto login(LoginReqDto loginReqDto) {
 		Authentication authentication = attemptAuthentication(loginReqDto);
-		return jwtTokenProvider.createAccessToken(authentication);
+		return (LoginResDto)getLoginInfo(authentication,false);
 	}
 
-	public Token loginAuto(LoginReqDto loginReqDto) {
+	public LoginAutoResDto loginAuto(LoginReqDto loginReqDto) {
 		Authentication authentication = attemptAuthentication(loginReqDto);
-		Token token = jwtTokenProvider.createToken(authentication);
+		LoginAutoResDto loginAutoResDto = (LoginAutoResDto) getLoginInfo(authentication,true);
 		redisTemplate.opsForValue()
-			.set(REFRESH_TOKEN + COLON + authentication.getName(), token.getRefreshToken(),
+			.set(REFRESH_TOKEN + COLON + authentication.getName(), loginAutoResDto.getRefreshToken(),
 				refreshTokenExpireTime, TimeUnit.MILLISECONDS);
-		return token;
+		return loginAutoResDto;
 	}
 
-	public String reissue(String accessToken, String refreshToken) {
+	public LoginResDto reissue(String accessToken, String refreshToken) {
 		jwtTokenProvider.checkAccessTokenExpiration(accessToken);
 		jwtTokenProvider.validateRefreshToken(refreshToken);
 
@@ -72,7 +75,7 @@ public class AuthService {
 		if (!redisRefreshToken.equals(refreshToken)) {
 			throw new CustomException(DIFFERENT_REFRESH_TOKEN);
 		}
-		return jwtTokenProvider.createAccessToken(authentication);
+		return (LoginResDto)getLoginInfo(authentication,false);
 	}
 
 	public void modifyPassword(PasswordReqDto passwordReqDto) {
@@ -107,5 +110,15 @@ public class AuthService {
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
 			loginReqDto.getEmail(), loginReqDto.getPassword());
 		return authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+	}
+
+	private LoginDto getLoginInfo(Authentication authentication,boolean isAutoLogin) {
+		Integer userId = Integer.parseInt(authentication.getName());
+		User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USERS_INFO_NOT_EXISTS));
+		if (isAutoLogin) {
+			Token token = jwtTokenProvider.createToken(authentication);
+			return new LoginAutoResDto(token.getAccessToken(),token.getRefreshToken(), user.getNickname());
+		}
+		return new LoginResDto(jwtTokenProvider.createAccessToken(authentication), user.getNickname());
 	}
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.Tamago.domain.LongTyping;
+import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.PageContentDto;
 import com.project.Tamago.dto.mapper.DataMapper;
 import com.project.Tamago.dto.requestDto.LongTypingReqDto;
@@ -33,9 +34,7 @@ public class LongTypingService {
 	private static final int LINES_PER_PAGE = 20;
 	private final UserRepository userRepository;
 	private final LongTypingRepository longTypingRepository;
-	private final PagePositionRepository pagePositionRepository;
 	private final RegisterRepository registerRepository;
-	private final UserService userService;
 
 	@Transactional(readOnly = true)
 	public List<LongTypingResDto> findLongTypings(int page) {
@@ -53,11 +52,12 @@ public class LongTypingService {
 			getPageContent(longTyping.getContent(), page));
 	}
 
-	public void saveLongTyping(String jwtToken, LongTypingReqDto longTypingReqDto) {
+	public void saveLongTyping(Integer userId, LongTypingReqDto longTypingReqDto) {
+		User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USERS_INFO_NOT_EXISTS));
 		LongTyping longTyping = DataMapper.INSTANCE.toLongTyping(longTypingReqDto);
 		longTypingRepository.save(longTyping);
 		registerRepository.save(
-			DataMapper.INSTANCE.toRegister(longTyping, null, userService.getUserByJwtToken(jwtToken)));
+			DataMapper.INSTANCE.toRegister(longTyping, null, user));
 	}
 
 	private PageContentDto getPageContent(String content, Integer page) {
