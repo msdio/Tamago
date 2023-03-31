@@ -68,7 +68,7 @@ export default function PracticeLongList({ currentPage, totalPage, typingList }:
                 <Th width='50%'>제목명</Th>
                 <Th width='9%'>타입</Th>
                 <Th width='9%'>페이지 수</Th>
-                <Th width='9%'>평균타수</Th>
+                <Th width='9%'>조회수</Th>
                 <Th width='14%'></Th>
               </Tr>
             </Thead>
@@ -82,7 +82,7 @@ export default function PracticeLongList({ currentPage, totalPage, typingList }:
                     </Link>
                   </Td>
                   <Td>{TYPING_TYPE[language]}</Td>
-                  <Td>{totalPage}</Td>
+                  <Td>{totalPage}쪽</Td>
                   <Td>{viewCount}</Td>
                   <Td display='flex' gap='32.4px' justifyContent='end'>
                     <Link href={`${PRACTICE_LONG_PATH_DETAIL}?typingId=${typingId}&pageNum=1`}>
