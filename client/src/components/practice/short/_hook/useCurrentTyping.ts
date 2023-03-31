@@ -1,7 +1,7 @@
 import { disassemble } from 'hangul-js';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import type { ShortTypingType } from '@/apis/typing';
+import type { ShortTypingType, TypingHistoryRequest } from '@/apis/typing';
 import { getTypingHistoryAPI } from '@/apis/typing';
 import useStopwatch from '@/hooks/useStopWatch';
 import { getCharType } from '@/utils/char';
@@ -34,7 +34,7 @@ export default function useCurrentTyping({
   typingId,
   content: originalTyping,
 }: ShortTypingType): UseCurrentTypingReturns {
-  const { time, status, timePlay, timeReset, timePause, totalMillisecond, startTime } = useStopwatch();
+  const { status, timePlay, timeReset, timePause, totalMillisecond, startTime } = useStopwatch();
   const [userTyping, setUserTyping] = useState('');
 
   const [typingSpeed, setTypingSpeed] = useState(0);
@@ -52,7 +52,7 @@ export default function useCurrentTyping({
       });
 
       const newAccuracy = getTypingAccuracy({
-        typingLength: originalTyping.length,
+        typingLength: userTyping.length,
         wrongLength,
       });
 
@@ -107,7 +107,8 @@ export default function useCurrentTyping({
         components: disassemble(char),
       }));
 
-      const typingHistory = {
+      const typingHistory: TypingHistoryRequest = {
+        contentType: true,
         mode: 'PRACTICE',
         startTime: new Date(startTime.current as number),
         endTime: new Date(),
@@ -128,7 +129,6 @@ export default function useCurrentTyping({
     async (resultContent: string) => {
       const typingHistory = generateTypingInfo(resultContent);
       await getTypingHistoryAPI(typingHistory);
-
       resetTypingData();
     },
     [generateTypingInfo, resetTypingData],
@@ -137,24 +137,24 @@ export default function useCurrentTyping({
   const handleTypingWpm = useCallback(() => {
     const newTypingWpm = getTypingWpm({
       typingCount,
-      millisecond: time.minute * 60 * 1000 + time.second * 1000 + time.ms,
+      millisecond: totalMillisecond,
     });
     setTypingWpm(newTypingWpm);
-  }, [time.minute, time.ms, time.second, typingCount]);
+  }, [totalMillisecond, typingCount]);
 
   const handleTypingSpeed = useCallback(() => {
     const newTypingSpeed = getTypingSpeed({
       typingCount,
       backspaceCount: backspaceCount.current,
-      millisecond: time.minute * 60 * 1000 + time.second * 1000 + time.ms,
+      millisecond: totalMillisecond,
     });
     setTypingSpeed(newTypingSpeed);
-  }, [time.minute, time.ms, time.second, typingCount]);
+  }, [totalMillisecond, typingCount]);
 
   useEffect(() => {
     handleTypingSpeed();
     handleTypingWpm();
-  }, [handleTypingSpeed, handleTypingWpm]);
+  }, [handleTypingSpeed, handleTypingWpm, totalMillisecond]);
 
   return {
     userTyping,

@@ -1,9 +1,9 @@
-import { requestWithoutAuth } from '@/apis';
+import { requestWithAuth, requestWithoutAuth } from '@/apis';
 import type { LongTypingDetail, LongTypingItem } from '@/types/typing';
 import type { TypingMode } from '@/types/typing';
 
 export interface ShortTypingType {
-  typingId: string;
+  typingId: number;
   content: string;
 }
 
@@ -26,8 +26,9 @@ export interface LongTypingResultType {
   result: LongTypingDetail;
 }
 
-interface TypingHistoryRequest {
-  typingId: string;
+export interface TypingHistoryRequest {
+  contentType: boolean;
+  typingId: number;
   resultContent: string;
   startTime: Date;
   endTime: Date;
@@ -66,10 +67,8 @@ export const getLongTypingAPI = async ({
   return res.data;
 };
 
+// TODO : 로그인을 하지않은 상태에서는 타이핑 기록 API를 호출하지 않는다?
 export const getTypingHistoryAPI = async (typingHistory: TypingHistoryRequest) => {
-  console.log('서버에 전송할 데이터', typingHistory);
-  // const res = await authenticationRequest.post('/typing/history', typingHistory);
-  // console.log('res: ', res);
-  return true;
-  // return res.data;
+  const res = await requestWithAuth.post('/typing/history', typingHistory);
+  return res.data.code;
 };

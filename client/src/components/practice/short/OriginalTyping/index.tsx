@@ -3,9 +3,11 @@ import { Flex, Text } from '@chakra-ui/react';
 interface OriginalTypingProps {
   originalTyping: string;
   userTyping: string;
+
+  isTyping?: boolean;
 }
 
-export default function OriginalTyping({ originalTyping, userTyping }: OriginalTypingProps) {
+export default function OriginalTyping({ originalTyping, userTyping, isTyping }: OriginalTypingProps) {
   return (
     <Flex pl='5px' mb='10px' fontSize='23px' fontWeight={500}>
       {originalTyping.split('').map((word, idx) => {
@@ -16,7 +18,11 @@ export default function OriginalTyping({ originalTyping, userTyping }: OriginalT
             </Text>
           );
         }
-        if (idx < userTyping.length - 1 && word !== userTyping[idx]) {
+        const isErrorWord = isTyping
+          ? idx < userTyping.length - 1 && word !== userTyping[idx]
+          : idx < userTyping.length && word !== userTyping[idx];
+
+        if (isErrorWord) {
           return (
             <Text as='span' bg='red' color='#fff' key={idx}>
               {word}

@@ -31,3 +31,24 @@ export interface LongTypingDetail {
   totalPage: number;
   typingId: number;
 }
+
+// TODO : TypingResultType 중복 코드 제거
+export interface TypingResultType {
+  typingTime: number;
+  typingAccuracy: number;
+  typingWpm: number;
+  typingSpeed: number;
+}
+
+export interface TypingHistoryType extends TypingResultType {
+  content: string;
+}
+
+export const INIT_TYPING_RESULT = {
+  typingSpeed: 0,
+  typingAccuracy: 0,
+  typingWpm: 0,
+  typingTime: 0,
+};
+
+Object.freeze(INIT_TYPING_RESULT);

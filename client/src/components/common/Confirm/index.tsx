@@ -36,13 +36,7 @@ export default function Confirm({
         </ModalBody>
         <ModalFooter justifyContent='center' p='0' gap='17px'>
           <Button onClick={onClose}>{closeLabel ?? '취소'}</Button>
-          <Button
-            onClick={() => {
-              onAction();
-              onClose();
-            }}
-            variant='outline'
-          >
+          <Button onClick={onAction} variant='outline'>
             {actionLabel ?? '확인'}
           </Button>
         </ModalFooter>
