@@ -34,7 +34,7 @@ export default function useCurrentTyping({
   typingId,
   content: originalTyping,
 }: ShortTypingType): UseCurrentTypingReturns {
-  const { time, status, timePlay, timeReset, timePause, totalMillisecond, startTime } = useStopwatch();
+  const { status, timePlay, timeReset, timePause, totalMillisecond, startTime } = useStopwatch();
   const [userTyping, setUserTyping] = useState('');
 
   const [typingSpeed, setTypingSpeed] = useState(0);
@@ -136,19 +136,19 @@ export default function useCurrentTyping({
   const handleTypingWpm = useCallback(() => {
     const newTypingWpm = getTypingWpm({
       typingCount,
-      millisecond: time.minute * 60 * 1000 + time.second * 1000 + time.ms,
+      millisecond: totalMillisecond,
     });
     setTypingWpm(newTypingWpm);
-  }, [time.minute, time.ms, time.second, typingCount]);
+  }, [totalMillisecond, typingCount]);
 
   const handleTypingSpeed = useCallback(() => {
     const newTypingSpeed = getTypingSpeed({
       typingCount,
       backspaceCount: backspaceCount.current,
-      millisecond: time.minute * 60 * 1000 + time.second * 1000 + time.ms,
+      millisecond: totalMillisecond,
     });
     setTypingSpeed(newTypingSpeed);
-  }, [time.minute, time.ms, time.second, typingCount]);
+  }, [totalMillisecond, typingCount]);
 
   useEffect(() => {
     handleTypingSpeed();
