@@ -5,7 +5,7 @@ interface CountUpProps {
   start?: number;
 }
 
-const useCountUp = ({ start = 0, end }: CountUpProps) => {
+const useCountUp = ({ end, start = 0 }: CountUpProps) => {
   const [count, setCount] = useState(start);
   const currentCount = useRef(start);
 
@@ -18,7 +18,6 @@ const useCountUp = ({ start = 0, end }: CountUpProps) => {
       setCount(Math.ceil(currentCount.current));
 
       const jump = (end - currentCount.current) / 20;
-
       currentCount.current += jump;
     }, 50);
   }, [end]);
