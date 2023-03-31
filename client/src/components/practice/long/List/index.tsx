@@ -10,10 +10,12 @@ import UpDownArrow from '@/icons/UpDownArrow';
 import type { LongTypingItem } from '@/types/typing';
 
 interface PracticeLongListProps {
+  currentPage: number;
+  totalPage: number;
   typingList: LongTypingItem[];
 }
 
-export default function PracticeLongList({ typingList }: PracticeLongListProps) {
+export default function PracticeLongList({ currentPage, totalPage, typingList }: PracticeLongListProps) {
   return (
     <PracticeLongLayout>
       <Flex direction='column'>

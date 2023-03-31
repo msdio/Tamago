@@ -17,7 +17,11 @@ export interface ShortTypingResultType {
 export interface LongTypingListResultType {
   code: number;
   description: string;
-  result: [LongTypingItem];
+  result: {
+    currentPage: number;
+    totalPage: number;
+    longTypingList: LongTypingItem[];
+  };
 }
 
 export interface LongTypingResultType {
@@ -49,10 +53,18 @@ export const getShortTypingWritingsAPI = async (
   return res.data;
 };
 
-export const getLongTypingListAPI = async (): Promise<LongTypingListResultType> => {
-  const res = await requestWithoutAuth.get(`/typing/long`);
+export const getLongTypingListAPI = async (page: string): Promise<LongTypingListResultType> => {
+  const res = await requestWithoutAuth.get(`/typing/long?page=${page}`);
 
-  return res.data;
+  return {
+    code: res.data.code,
+    description: res.data.description,
+    result: {
+      currentPage: 1,
+      totalPage: 10,
+      longTypingList: res.data.result,
+    },
+  };
 };
 
 export const getLongTypingAPI = async ({
