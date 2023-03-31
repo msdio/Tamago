@@ -1,6 +1,7 @@
 import { Box, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 
+import CodeDropDown from '@/components/choice/LanguageBox/CodeDropDown';
 import TextBox from '@/components/choice/LanguageBox/TextBox';
 import { speechBubbleShake } from '@/constants/animations';
 import useToggle from '@/hooks/useToggle';
@@ -11,6 +12,15 @@ const LANGUAGE_STRING = {
   english: '영문 타자',
   code: '코드 선택',
   random: '진짜 강자들만 선택할 수 있는 랜덤',
+};
+
+const CODE_LANGUAGE = ['javascript', 'python', 'java'];
+
+const getRandomLanguage = () => {
+  const languageList = [...CODE_LANGUAGE, 'korean', 'english'];
+  const randomIdx = Math.floor(Math.random() * languageList.length);
+
+  return languageList[randomIdx];
 };
 
 interface LanguageBoxProps {
@@ -29,14 +39,18 @@ export default function LanguageBox({ path, language }: LanguageBoxProps) {
         <Box pos='absolute' top='52px' right='50px'>
           <DownArrow w={4} h={6} />
         </Box>
-        {isCodeOpen && <Box pos='absolute'></Box>}
+        {/* 슬라이드 애니매이션? */}
+        {isCodeOpen && <CodeDropDown path={path} />}
       </Box>
     );
   }
+
   if (language === 'random') {
     return (
       <Box pos='relative'>
-        <TextBox content={LANGUAGE_STRING['random']} />
+        <Link href={getRandomLanguage()}>
+          <TextBox content={LANGUAGE_STRING['random']} />
+        </Link>
         <Box
           pos='absolute'
           top='-32px'
