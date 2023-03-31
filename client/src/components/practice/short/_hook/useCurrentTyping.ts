@@ -1,7 +1,7 @@
 import { disassemble } from 'hangul-js';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import type { ShortTypingType } from '@/apis/typing';
+import type { ShortTypingType, TypingHistoryRequest } from '@/apis/typing';
 import { getTypingHistoryAPI } from '@/apis/typing';
 import useStopwatch from '@/hooks/useStopWatch';
 import { getCharType } from '@/utils/char';
@@ -107,7 +107,8 @@ export default function useCurrentTyping({
         components: disassemble(char),
       }));
 
-      const typingHistory = {
+      const typingHistory: TypingHistoryRequest = {
+        contentType: true,
         mode: 'PRACTICE',
         startTime: new Date(startTime.current as number),
         endTime: new Date(),

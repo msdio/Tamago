@@ -26,7 +26,8 @@ export interface LongTypingResultType {
   result: LongTypingDetail;
 }
 
-interface TypingHistoryRequest {
+export interface TypingHistoryRequest {
+  contentType: boolean;
   typingId: number;
   resultContent: string;
   startTime: Date;
@@ -68,9 +69,6 @@ export const getLongTypingAPI = async ({
 
 // TODO : 로그인을 하지않은 상태에서는 타이핑 기록 API를 호출하지 않는다?
 export const getTypingHistoryAPI = async (typingHistory: TypingHistoryRequest) => {
-  const res = await requestWithAuth.post('/typing/history', {
-    contentType: true,
-    ...typingHistory,
-  });
+  const res = await requestWithAuth.post('/typing/history', typingHistory);
   return res.data.code;
 };
