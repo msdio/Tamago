@@ -43,7 +43,7 @@ const createApiWithAuth = () => {
       }
 
       config.headers['Content-Type'] = 'application/json';
-      config.headers.Authorization = access_token;
+      config.headers.Authorization = accessToken;
 
       return config;
     },

@@ -66,13 +66,11 @@ export const getLongTypingAPI = async ({
   return res.data;
 };
 
+// TODO : 로그인을 하지않은 상태에서는 타이핑 기록 API를 호출하지 않는다?
 export const getTypingHistoryAPI = async (typingHistory: TypingHistoryRequest) => {
-  console.log(typingHistory);
-  console.log('서버에 전송할 데이터', typingHistory);
   const res = await requestWithAuth.post('/typing/history', {
     contentType: true,
     ...typingHistory,
   });
-  console.log('res: ', res);
-  return true;
+  return res.data.code;
 };
