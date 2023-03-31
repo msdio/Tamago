@@ -6,11 +6,11 @@ import { PRACTICE_LONG_PATH, PRACTICE_SHORT_PATH } from '@/constants/paths';
 
 const longTypingMenus = [
   { menu: '연습타자', path: PRACTICE_LONG_PATH },
-  { menu: '실전타자', path: PRACTICE_SHORT_PATH },
+  { menu: '실전타자', path: '' },
 ];
 const shortTypingMenus = [
-  { menu: '연습타자', path: PRACTICE_LONG_PATH },
-  { menu: '실전타자', path: PRACTICE_SHORT_PATH },
+  { menu: '연습타자', path: PRACTICE_SHORT_PATH },
+  { menu: '실전타자', path: '' },
 ];
 const registerMenus = [
   { menu: '긴글', path: '' },
