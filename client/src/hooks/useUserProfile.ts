@@ -15,7 +15,7 @@ const useUserProfile = (path: string) => {
     // 토큰이 인증이 안될 경우 토큰 삭제 후 로그아웃
     if (!userProfile && accessToken) {
       try {
-        const { result: userProfile } = await getUserProfileAPI();
+        const userProfile = await getUserProfileAPI();
         setUserProfile(userProfile);
       } catch (error) {
         localStorage.removeItem('accessToken');
@@ -32,7 +32,6 @@ const useUserProfile = (path: string) => {
 
   useEffect(() => {
     // 실행 위치에 대해 고려해봐야 함
-    console.log('useUserProfile 실행: ' + path);
     fetchUserProfile();
   }, [path]);
 

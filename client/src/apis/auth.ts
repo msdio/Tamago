@@ -2,6 +2,7 @@ import { AxiosError } from 'axios';
 
 import { requestWithAuth, requestWithoutAuth } from '@/apis';
 import type { ApiResponse } from '@/types/apiResponse';
+import type { UserProfile } from '@/types/user';
 
 import { ServerError } from './error';
 
@@ -37,11 +38,11 @@ export const emailDuplicateAPI = async (email: string): Promise<ApiResponse> => 
   return data;
 };
 
-export const getUserProfileAPI = async (): Promise<ApiResponse> => {
+export const getUserProfileAPI = async (): Promise<UserProfile> => {
   try {
     const { data } = await requestWithAuth.get(USER_PROFILE);
 
-    const { code, result } = data;
+    const { code, result } = data as ApiResponse;
 
     if (code !== 1000) {
       throw new Error('잘못된 토큰입니다.');
