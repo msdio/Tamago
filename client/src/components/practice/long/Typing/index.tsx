@@ -2,7 +2,10 @@ import { Flex, Textarea } from '@chakra-ui/react';
 import { disassemble } from 'hangul-js';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 
+import { postTypingHistoryAPI } from '@/apis/typing';
+import { userProfileState } from '@/atom/userProfile';
 import PracticeLongLayout from '@/components/practice/long/Layout';
 import TypingHeader from '@/components/practice/long/Typing/TypingHeader/index';
 import TypingLine from '@/components/practice/long/TypingLine';
@@ -12,7 +15,7 @@ import useStopwatch from '@/hooks/useStopWatch';
 import type { CharInfo, LongTypingDetail } from '@/types/typing';
 import { TypingState } from '@/types/typing';
 import { getCharType } from '@/utils/char';
-import { getTypingAccuracy, getTypingSpeed, getTypingWpm, slicedContentAndStrings } from '@/utils/typing';
+import { getTypingAccuracy, getTypingSpeed, getTypingWpm, getWrongKeys, slicedContentAndStrings } from '@/utils/typing';
 
 export default function PracticeLongTyping({
   content,
@@ -23,6 +26,7 @@ export default function PracticeLongTyping({
   typingId,
 }: LongTypingDetail) {
   const router = useRouter();
+  const userProfile = useRecoilValue(userProfileState);
 
   const [textarea, setTextarea] = useState('');
   const { totalMillisecond, status, timePlay, timePause, timeReset } = useStopwatch();
@@ -89,7 +93,7 @@ export default function PracticeLongTyping({
    * 한글의 경우 더하거나 지우더라도 value의 길이가 변하지 않는 경우 존재하여
    * 해당 경우에 대한 경우의 수 처리
    */
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChange = async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     // 타이핑 시작시 타이머 동작
     if (status === 'stop') {
       timePlay();
@@ -104,23 +108,26 @@ export default function PracticeLongTyping({
     // 타이핑 완료시 api 호출
     if (textareaLength > contentLength) {
       timePause();
-      // const endTime = Date.now();
-      // const typingTime = totalMillisecond;
-      // const result = {
-      //   typingId: router.query.typingId,
-      //   typingPage: router.query.pageNum,
-      //   resultContent: textarea,
-      //   startTime: new Date(endTime - typingTime),
-      //   endTime: new Date(endTime),
-      //   typingSpeed,
-      //   mode: 'PRACTICE',
-      //   wpm: typingWpm,
-      //   typingAccuracy,
-      //   wrongKeys: getWrongKeys(contentInfos, typingInfos),
-      // };
+      const endTime = Date.now();
+      const typingTime = totalMillisecond;
+      if (userProfile) {
+        const response = await postTypingHistoryAPI({
+          contentType: true,
+          typingId,
+          page: currentPage,
+          resultContent: textarea,
+          startTime: new Date(endTime - typingTime),
+          endTime: new Date(endTime),
+          typingAccuracy: typingAccuracy.current,
+          typingSpeed: typingSpeed.current,
+          wpm: typingWpm.current,
+          mode: 'PRACTICE',
+          wrongKeys: getWrongKeys(originalInfos.current, userInfos.current),
+        });
+      }
       if (confirm(`정확도: ${typingAccuracy.current}, wpm: ${typingWpm.current}, 타속: ${typingSpeed.current}`)) {
         if (totalPage > currentPage) {
-          router.replace(
+          router.push(
             `${PRACTICE_LONG_PATH_DETAIL}?typingId=${typingId}&pageNum=${currentPage + 1}&isTyping=true`,
             undefined,
             { shallow: false },

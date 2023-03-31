@@ -2,20 +2,18 @@ import { Button, Flex, HStack, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useRecoilValue } from 'recoil';
 
-import { userProfileState } from '@/atom/userProfile';
 import { LOGIN_PATH, SIGNUP_TERM_PATH } from '@/constants/paths';
+import useUserProfile from '@/hooks/useUserProfile';
 import { TamagoLogo } from '@/icons/TamagoLogo';
 
 import HeaderDropDown from './DropDown';
 
 export default function Header() {
-  const userProfile = useRecoilValue(userProfileState);
+  const router = useRouter();
+  const userProfile = useUserProfile(router.asPath);
   const [isLogin, setIsLogin] = useState(false);
   const [showDropDown, setShowDropDown] = useState(false);
-
-  const router = useRouter();
 
   const onRouting = (to: string) => {
     router.push(to);
