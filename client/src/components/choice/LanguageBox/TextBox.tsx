@@ -1,6 +1,6 @@
 import { Flex, Text } from '@chakra-ui/react';
 
-export default function Wrapper({ children, content }: { children?: React.ReactNode; content: string }) {
+export default function TextBox({ content }: { content: string }) {
   return (
     <Flex
       bg='white.light'
@@ -15,9 +15,11 @@ export default function Wrapper({ children, content }: { children?: React.ReactN
       fontWeight={600}
       fontSize='25px'
       pos='relative'
+      _hover={{ bg: 'secondary.light' }}
     >
-      <Text>{content}</Text>
-      {children}
+      <Text maxW='200px' wordBreak='keep-all'>
+        {content}
+      </Text>
     </Flex>
   );
 }

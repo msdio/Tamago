@@ -1,7 +1,10 @@
 import { Box, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 
-import Wrapper from '@/components/choice/LanguageBox/Wrapper';
+import TextBox from '@/components/choice/LanguageBox/TextBox';
+import { speechBubbleShake } from '@/constants/animations';
+import useToggle from '@/hooks/useToggle';
+import { DownArrow } from '@/icons/Arrow';
 
 const LANGUAGE_STRING = {
   korean: '한글 타자',
@@ -16,12 +19,24 @@ interface LanguageBoxProps {
 }
 
 export default function LanguageBox({ path, language }: LanguageBoxProps) {
+  const [isCodeOpen, toggleCodeOpen] = useToggle();
+
   if (language === 'code') {
-    return <Wrapper content={LANGUAGE_STRING['code']}></Wrapper>;
+    return (
+      <Box onClick={toggleCodeOpen} pos='relative'>
+        <TextBox content={LANGUAGE_STRING['code']} />
+
+        <Box pos='absolute' top='52px' right='50px'>
+          <DownArrow w={4} h={6} />
+        </Box>
+        {isCodeOpen && <Box pos='absolute'></Box>}
+      </Box>
+    );
   }
   if (language === 'random') {
     return (
-      <Wrapper content={LANGUAGE_STRING['random']}>
+      <Box pos='relative'>
+        <TextBox content={LANGUAGE_STRING['random']} />
         <Box
           pos='absolute'
           top='-32px'
@@ -30,17 +45,19 @@ export default function LanguageBox({ path, language }: LanguageBoxProps) {
           backgroundSize='221px 50px'
           w='221px'
           h='50px'
+          animation={speechBubbleShake + ' 3s infinite ease'}
         >
-          <Text fontSize='18px' color='primary.dark' lineHeight='45px'>
+          <Text fontSize='18px' color='primary.dark' lineHeight='45px' textAlign='center'>
             고수라면 도전해보세요!
           </Text>
         </Box>
-      </Wrapper>
+      </Box>
     );
   }
+
   return (
     <Link href={`${path}?language=${language}`}>
-      <Wrapper content={LANGUAGE_STRING[language]} />
+      <TextBox content={LANGUAGE_STRING[language]} />
     </Link>
   );
 }
