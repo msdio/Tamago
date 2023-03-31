@@ -1,15 +1,15 @@
-import { Box, Divider, Text } from '@chakra-ui/react';
-import Link from 'next/link';
+import { Box, Divider } from '@chakra-ui/react';
 
+import DropDownItem from '@/components/header/DropDown/Item';
 import { fadeIn } from '@/constants/animations';
-import { PRACTICE_LONG_PATH, PRACTICE_SHORT_PATH } from '@/constants/paths';
+import { PRACTICE_LONG_PATH, PRACTICE_SHORT_CHOICE_PATH } from '@/constants/paths';
 
 const longTypingMenus = [
   { menu: '연습타자', path: PRACTICE_LONG_PATH },
   { menu: '실전타자', path: '' },
 ];
 const shortTypingMenus = [
-  { menu: '연습타자', path: PRACTICE_SHORT_PATH },
+  { menu: '연습타자', path: PRACTICE_SHORT_CHOICE_PATH },
   { menu: '실전타자', path: '' },
 ];
 const registerMenus = [
@@ -43,51 +43,13 @@ export default function HeaderDropDown({ handler }: { handler: (a: boolean) => v
       onMouseLeave={() => handler(false)}
       animation={`${fadeIn} 0.2s linear`}
     >
-      <Box display='flex' flexDirection='column' alignItems='center' gap='15px'>
-        {longTypingMenus.map((el, idx) => (
-          <Link key={el.menu + idx} href={el.path}>
-            <Text cursor='pointer' fontWeight='500' fontSize='17px' _hover={{ color: 'primary.main' }}>
-              {el.menu}
-            </Text>
-          </Link>
-        ))}
-      </Box>
-
+      <DropDownItem menus={longTypingMenus} />
       <Divider orientation='vertical' />
-
-      <Box display='flex' flexDirection='column' alignItems='center' gap='15px'>
-        {shortTypingMenus.map((el, idx) => (
-          <Link key={el.menu + idx} href={el.path}>
-            <Text cursor='pointer' fontWeight='500' fontSize='17px' _hover={{ color: 'primary.main' }}>
-              {el.menu}
-            </Text>
-          </Link>
-        ))}
-      </Box>
-
+      <DropDownItem menus={shortTypingMenus} />
       <Divider orientation='vertical' />
-
-      <Box display='flex' flexDirection='column' alignItems='center' gap='15px'>
-        {registerMenus.map((el, idx) => (
-          <Link key={el.menu + idx} href={el.path}>
-            <Text cursor='pointer' fontWeight='500' fontSize='17px' _hover={{ color: 'primary.main' }}>
-              {el.menu}
-            </Text>
-          </Link>
-        ))}
-      </Box>
-
+      <DropDownItem menus={registerMenus} />
       <Divider orientation='vertical' />
-
-      <Box display='flex' flexDirection='column' alignItems='center' gap='15px'>
-        {profileMenus.map((el, idx) => (
-          <Link key={el.menu + idx} href={el.path}>
-            <Text cursor='pointer' fontWeight='500' fontSize='17px' _hover={{ color: 'primary.main' }}>
-              {el.menu}
-            </Text>
-          </Link>
-        ))}
-      </Box>
+      <DropDownItem menus={profileMenus} />
     </Box>
   );
 }
