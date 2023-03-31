@@ -1,6 +1,5 @@
 import { Flex, Text } from '@chakra-ui/react';
 import Link from 'next/link';
-import { useEffect } from 'react';
 
 import { PRACTICE_LONG_PATH } from '@/constants/paths';
 import { SmallLeftArrow, SmallRightArrow } from '@/icons/SmallArrow';
@@ -21,10 +20,6 @@ const getCurrentIndexArr = (currentPage: number, totalPage: number) => {
 };
 
 export default function TypingListPagination({ currentPage, totalPage }: TypingListPaginationProps) {
-  useEffect(() => {
-    console.log(currentPage, totalPage);
-  }, []);
-
   return (
     <Flex gap='50px' justifyContent='center' m='43px 0' alignItems='center'>
       <SmallLeftArrow />
