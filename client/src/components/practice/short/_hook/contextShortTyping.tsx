@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import type { ReactNode } from 'react';
 import { useCallback } from 'react';
 import { createContext, useContext, useMemo, useRef, useState } from 'react';
@@ -43,6 +44,7 @@ interface ShortTypingProviderProps {
 }
 
 const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderProps) => {
+  const router = useRouter();
   const [currentIdx, setCurrentIdx] = useState(0);
 
   const {
@@ -74,7 +76,10 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
 
   const saveTypingHistory = useCallback(
     (content: string) => {
-      history.current = [...history.current, { typingSpeed, typingAccuracy, typingWpm, typingTime: time, content }];
+      history.current = [
+        ...history.current,
+        { typingSpeed, typingAccuracy, typingWpm, typingTime: time, content, endTime: new Date() },
+      ];
     },
     [time, typingAccuracy, typingSpeed, typingWpm],
   );
@@ -112,6 +117,8 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
     [currentIdx, handleResultModalToggle, handleSubmit, originalTypings.length],
   );
 
+  // NOTE: 모달 관련된 로직들을 분리할 방법이 있을까요?
+  // timePause, timePlay를 사용해야 하기떄문에 이곳에 만들었습니다.
   const handleExitModalOpen = useCallback(() => {
     timePause();
     handleExitModalToggle();
@@ -126,6 +133,12 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
     handleExitModalToggle();
     handleResultModalToggle();
   }, [handleExitModalToggle, handleResultModalToggle]);
+
+  const handleReplay = () => {
+    // NOTE : 다시하기 기능은 새로고침으로 구현했는데, 긴글에서도 새로고침으로 해도 괜찮을까요?
+    handleResultModalToggle();
+    router.reload();
+  };
 
   // NOTE: 객체의 크기가 커서, 알아보기 힘들다면 쪼개는 것도 좋을 것 같다.
   const values = {
@@ -161,7 +174,12 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
           actionLabel='그만하기'
           closeLabel='계속하기'
         />
-        <ResultModal isOpen={isResultModalOpen} onClose={handleResultModalToggle} result={typingAvgResult} />
+        <ResultModal
+          isOpen={isResultModalOpen}
+          result={typingAvgResult}
+          endTime={history.current[history.current.length - 1]?.endTime ?? new Date()}
+          onReplay={handleReplay}
+        />
       </ContextShortTypingHandler.Provider>
     </ContextShortTyping.Provider>
   );

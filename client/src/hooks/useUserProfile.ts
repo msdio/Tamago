@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 import { getUserProfileAPI } from '@/apis/auth';
 import { userProfileState } from '@/atom/userProfile';
 
-const useUserProfile = () => {
+const useUserProfile = (path: string) => {
   const [userProfile, setUserProfile] = useRecoilState(userProfileState);
 
   const fetchUserProfile = async () => {
@@ -31,8 +31,9 @@ const useUserProfile = () => {
   };
 
   useEffect(() => {
+    // 실행 위치에 대해 고려해봐야 함
     fetchUserProfile();
-  }, []);
+  }, [path]);
 
   return userProfile;
 };

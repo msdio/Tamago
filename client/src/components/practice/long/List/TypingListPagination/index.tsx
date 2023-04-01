@@ -13,7 +13,7 @@ interface TypingListPaginationProps {
 const MAX_PAGE_INDEX = 7;
 
 const getCurrentIndexArr = (currentPage: number, totalPage: number) => {
-  const currentIndex = (currentPage - 1) % MAX_PAGE_INDEX; // 0 ~ 4
+  const currentIndex = (currentPage - 1) % MAX_PAGE_INDEX;
   const accumulatedIndex = currentPage - (currentIndex + 1);
   const startIndex = accumulatedIndex + 1;
   const endIndex = Math.min(totalPage, accumulatedIndex + MAX_PAGE_INDEX);

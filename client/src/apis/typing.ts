@@ -40,6 +40,7 @@ export interface TypingHistoryRequest {
   wpm: number;
   typingAccuracy: number;
   wrongKeys: Record<string, { total: number; count: number }>;
+  page?: number;
 }
 
 export const getShortTypingWritingsAPI = async (
@@ -70,8 +71,16 @@ export const getLongTypingAPI = async ({
   return res.data;
 };
 
-// TODO : 로그인을 하지않은 상태에서는 타이핑 기록 API를 호출하지 않는다?
 export const getTypingHistoryAPI = async (typingHistory: TypingHistoryRequest) => {
+  // NOTE : 로그인이 되어있는지 여부는 accessToken이 localStorage에 있는지 여부로 판단한다. vs recoil user 정보로 판단한다.
+  const accessToken = localStorage.getItem('accessToken');
+
+  // NOTE : 로그인을 하지않은 상태에서는 타이핑 기록 API를 호출하지 않는다
+  // TODO : 연습모드인 경우에만, 실전 모드에서는 로그인시 어떻게 할것인지 고민해보기
+  if (accessToken === null) {
+    return;
+  }
+
   const res = await requestWithAuth.post('/typing/history', typingHistory);
   return res.data.code;
 };
