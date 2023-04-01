@@ -103,6 +103,24 @@ export default function PracticeLongTyping({
     router.push(getNextPageURL(typingId, currentPage, totalPage));
   };
 
+  const generateTypingInfo = () => {
+    const endTime = Date.now();
+    const typingTime = totalMillisecond;
+    return {
+      contentType: true,
+      typingId,
+      page: currentPage,
+      resultContent: textarea,
+      startTime: new Date(endTime - typingTime),
+      endTime: new Date(endTime),
+      typingAccuracy: typingAccuracy.current,
+      typingSpeed: typingSpeed.current,
+      wpm: typingWpm.current,
+      mode: 'PRACTICE',
+      wrongKeys: getWrongKeys(originalInfos.current, userInfos.current),
+    };
+  };
+
   /**
    * 사용자가 타이핑을 할 경우 상태 변화
    * textarea의 value를 기본적으로 바꾸고
@@ -125,22 +143,8 @@ export default function PracticeLongTyping({
     // 타이핑 완료시 api 호출
     if (textareaLength > contentLength) {
       timePause();
-      const endTime = Date.now();
-      const typingTime = totalMillisecond;
       if (userProfile) {
-        const response = await getTypingHistoryAPI({
-          contentType: true,
-          typingId,
-          page: currentPage,
-          resultContent: textarea,
-          startTime: new Date(endTime - typingTime),
-          endTime: new Date(endTime),
-          typingAccuracy: typingAccuracy.current,
-          typingSpeed: typingSpeed.current,
-          wpm: typingWpm.current,
-          mode: 'PRACTICE',
-          wrongKeys: getWrongKeys(originalInfos.current, userInfos.current),
-        });
+        await getTypingHistoryAPI(generateTypingInfo());
       }
       handleResultModalToggle();
       return;
