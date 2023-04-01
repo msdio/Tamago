@@ -10,18 +10,16 @@ import type { LongTypingItem } from '@/types/typing';
 export default function PracticeLongPage() {
   const router = useRouter();
 
-  const [data, setData] = useState<{ currentPage: number; totalPage: number; longTypingList: LongTypingItem[] } | null>(
+  const [data, setData] = useState<{ currentPage: number; totalPage: number; longTypings: LongTypingItem[] } | null>(
     null,
   );
 
   const getLongTypingList = async (page = '1') => {
     const { result } = await getLongTypingListAPI(page);
 
-    const { currentPage, totalPage, longTypingList } = result;
+    const { totalPage, longTypings } = result;
 
-    console.log(result);
-
-    setData({ currentPage, totalPage, longTypingList });
+    setData({ currentPage: Number(page), totalPage, longTypings });
   };
 
   useEffect(() => {
@@ -40,7 +38,7 @@ export default function PracticeLongPage() {
   return (
     <>
       <Header />
-      <PracticeLongList currentPage={data.currentPage} totalPage={data.totalPage} typingList={data.longTypingList} />
+      <PracticeLongList currentPage={data.currentPage} totalPage={data.totalPage} typingList={data.longTypings} />
       <Footer />
     </>
   );
