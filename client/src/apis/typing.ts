@@ -37,6 +37,7 @@ export interface TypingHistoryRequest {
   wpm: number;
   typingAccuracy: number;
   wrongKeys: Record<string, { total: number; count: number }>;
+  page?: number;
 }
 
 export const getShortTypingWritingsAPI = async (
