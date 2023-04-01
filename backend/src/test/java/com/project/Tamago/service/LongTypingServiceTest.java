@@ -26,7 +26,7 @@ import com.project.Tamago.dto.PageContentDto;
 import com.project.Tamago.dto.mapper.DataMapper;
 import com.project.Tamago.dto.requestDto.LongTypingReqDto;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
-import com.project.Tamago.dto.responseDto.LongTypingResDto;
+import com.project.Tamago.dto.LongTypingDto;
 import com.project.Tamago.repository.LongTypingRepository;
 import com.project.Tamago.repository.RegisterRepository;
 import com.project.Tamago.repository.UserRepository;
@@ -73,15 +73,15 @@ class LongTypingServiceTest {
 
 		when(longTypingRepository.findAll(any(PageRequest.class))).thenReturn(longTypingsPage);
 
-		List<LongTypingResDto> expectedLongTypingResDtos = longTypings.stream()
+		List<LongTypingDto> expectedLongTypingDtos = longTypings.stream()
 			.map(DataMapper.INSTANCE::LongTypingToLongTypingResDto)
 			.collect(Collectors.toList());
 
 		// when
-		List<LongTypingResDto> actualLongTypingResDtos = longTypingService.findLongTypings(1);
+		List<LongTypingDto> actualLongTypingDtos = longTypingService.findLongTypings(1).getLongTypings();
 
 		// then
-		assertEquals(expectedLongTypingResDtos, actualLongTypingResDtos);
+		assertEquals(expectedLongTypingDtos, actualLongTypingDtos);
 	}
 
 	@Test
