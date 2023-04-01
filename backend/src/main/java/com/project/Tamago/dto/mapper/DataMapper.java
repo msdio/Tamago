@@ -14,7 +14,7 @@ import com.project.Tamago.dto.PageContentDto;
 import com.project.Tamago.dto.requestDto.LongTypingReqDto;
 import com.project.Tamago.dto.requestDto.TypingHistoryReqDto;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
-import com.project.Tamago.dto.responseDto.LongTypingResDto;
+import com.project.Tamago.dto.LongTypingDto;
 import com.project.Tamago.security.CustomOAuth2User;
 
 @Mapper(componentModel = "spring")
@@ -24,7 +24,7 @@ public interface DataMapper {
 
 	@Mapping(source = "id", target = "typingId")
 	@Mapping(target = "language", expression = "java(longTyping.getLanguage().toString())")
-	LongTypingResDto LongTypingToLongTypingResDto(LongTyping longTyping);
+	LongTypingDto LongTypingToLongTypingResDto(LongTyping longTyping);
 
 	@Mapping(source = "longTyping.id", target = "typingId")
 	@Mapping(target = "language", expression = "java(longTyping.getLanguage().toString())")
