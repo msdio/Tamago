@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,10 +17,10 @@ import com.project.Tamago.dto.PageContentDto;
 import com.project.Tamago.dto.mapper.DataMapper;
 import com.project.Tamago.dto.requestDto.LongTypingReqDto;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
-import com.project.Tamago.dto.responseDto.LongTypingResDto;
+import com.project.Tamago.dto.LongTypingDto;
 import com.project.Tamago.common.exception.CustomException;
+import com.project.Tamago.dto.responseDto.LongTypingResDto;
 import com.project.Tamago.repository.LongTypingRepository;
-import com.project.Tamago.repository.PagePositionRepository;
 import com.project.Tamago.repository.RegisterRepository;
 import com.project.Tamago.repository.UserRepository;
 
@@ -37,11 +38,15 @@ public class LongTypingService {
 	private final RegisterRepository registerRepository;
 
 	@Transactional(readOnly = true)
-	public List<LongTypingResDto> findLongTypings(int page) {
+	public LongTypingResDto findLongTypings(int page) {
 		PageRequest pageRequest = PageRequest.of(page - 1, 20);
-		return longTypingRepository.findAll(pageRequest).stream()
+		Page<LongTyping> longTypingPage = longTypingRepository.findAll(pageRequest);
+		List<LongTypingDto> longTypings = longTypingPage.stream()
 			.map(DataMapper.INSTANCE::LongTypingToLongTypingResDto)
 			.collect(Collectors.toList());
+		int totalPage = longTypingPage.getTotalPages();
+
+		return new LongTypingResDto(totalPage, longTypings);
 	}
 
 	@Transactional(readOnly = true)

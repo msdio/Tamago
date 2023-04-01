@@ -1,5 +1,6 @@
 import { Flex, Textarea } from '@chakra-ui/react';
 import { disassemble } from 'hangul-js';
+import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
@@ -33,6 +34,8 @@ export default function PracticeLongTyping({
   totalPage,
   typingId,
 }: LongTypingDetail) {
+  const router = useRouter();
+
   const userProfile = useRecoilValue(userProfileState);
 
   const [isResultModalOpen, handleResultModalToggle] = useToggle();
@@ -94,6 +97,11 @@ export default function PracticeLongTyping({
       millisecond: totalMillisecond,
     });
   }, [status, textarea, totalMillisecond]);
+
+  const onAlertClick = () => {
+    handleResultModalToggle();
+    router.push(getNextPageURL(typingId, currentPage, totalPage));
+  };
 
   /**
    * 사용자가 타이핑을 할 경우 상태 변화
@@ -243,7 +251,7 @@ export default function PracticeLongTyping({
       </PracticeLongLayout>
       <PracticeResultModal
         isOpen={isResultModalOpen}
-        onClose={handleResultModalToggle}
+        onReplay={onAlertClick}
         result={{
           typingAccuracy: typingAccuracy.current,
           typingSpeed: typingSpeed.current,
@@ -251,6 +259,7 @@ export default function PracticeLongTyping({
           typingWpm: typingWpm.current,
         }}
         nextURL={getNextPageURL(typingId, currentPage, totalPage)}
+        endTime={new Date()}
       />
     </>
   );
