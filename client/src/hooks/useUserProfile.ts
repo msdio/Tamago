@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 
 import { getUserProfileAPI } from '@/apis/auth';
-import { userProfileState } from '@/atom/userProfile';
+import { userProfileState } from '@/atoms/userProfile';
 
 const useUserProfile = (path: string) => {
   const [userProfile, setUserProfile] = useRecoilState(userProfileState);

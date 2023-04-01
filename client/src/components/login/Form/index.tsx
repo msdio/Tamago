@@ -20,7 +20,7 @@ interface LoginFormProps {
   onLogin: ({}: InputType) => Promise<void>;
 }
 
-function LoginForm({ onLogin }: LoginFormProps) {
+const LoginForm = ({ onLogin }: LoginFormProps) => {
   const [inputs, valids, handleInputChange] = useRegexInputs({
     email: EMAIL_REGEX,
     password: PASSWORD_REGEX,
@@ -92,6 +92,6 @@ function LoginForm({ onLogin }: LoginFormProps) {
       </Flex>
     </>
   );
-}
+};
 
 export default LoginForm;

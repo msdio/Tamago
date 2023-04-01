@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
-import { userProfileState } from '@/atom/userProfile';
+import { userProfileState } from '@/atoms/userProfile';
 import { LOGIN_PATH, SIGNUP_TERM_PATH } from '@/constants/paths';
 import { TamagoLogo } from '@/icons/TamagoLogo';
 
