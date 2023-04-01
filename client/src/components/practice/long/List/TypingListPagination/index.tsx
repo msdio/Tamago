@@ -46,7 +46,7 @@ export default function TypingListPagination({ currentPage, totalPage }: TypingL
                   textAlign='center'
                   lineHeight='28px'
                   bg='primary.light'
-                  borderRadius='50'
+                  borderRadius='50%'
                 >
                   {index}
                 </Text>

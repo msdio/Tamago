@@ -52,7 +52,7 @@ export const getShortTypingWritingsAPI = async (
   return res.data;
 };
 
-export const getLongTypingListAPI = async (page: string): Promise<LongTypingListResultType> => {
+export const getLongTypingListAPI = async (page: number): Promise<LongTypingListResultType> => {
   const res = await requestWithoutAuth.get(`/typing/long?page=${page}`);
 
   return res.data;

@@ -14,19 +14,19 @@ export default function PracticeLongPage() {
     null,
   );
 
-  const getLongTypingList = async (page = '1') => {
+  const getLongTypingList = async (page = 1) => {
     const { result } = await getLongTypingListAPI(page);
 
     const { totalPage, longTypings } = result;
 
-    setData({ currentPage: Number(page), totalPage, longTypings });
+    setData({ currentPage: page, totalPage, longTypings });
   };
 
   useEffect(() => {
     if (!router.isReady) {
       return;
     }
-    const { page } = router.query as { page?: string };
+    const { page } = router.query as { page?: number };
 
     getLongTypingList(page);
   }, [router.isReady, router.asPath]);
