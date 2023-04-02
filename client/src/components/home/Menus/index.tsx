@@ -19,7 +19,7 @@ export default function Menus() {
       opacity={animationTrigger ? 1 : 0}
       animation={animationTrigger ? `${fadeIn} 1s linear` : ''}
     >
-      <Text fontSize='1.5625rem' marginBottom='.9375rem'>
+      <Text fontSize='1.5625rem' marginBottom='.9375rem' marginLeft='1.375rem'>
         About Tamago
       </Text>
       <Text fontSize='2.25rem' fontWeight='bold'>

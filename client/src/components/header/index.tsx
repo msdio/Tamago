@@ -11,11 +11,9 @@ import { TamagoLogo } from '@/icons/TamagoLogo';
 import HeaderDropDown from './DropDown';
 
 export default function Header() {
-  const userProfile = useRecoilValue(userProfileState);
-  const [isLogin, setIsLogin] = useState(false);
-  const [showDropDown, setShowDropDown] = useState(false);
-
   const router = useRouter();
+  const userProfile = useRecoilValue(userProfileState);
+  const [showDropDown, setShowDropDown] = useState(false);
 
   const onRouting = (to: string) => {
     router.push(to);
@@ -23,7 +21,6 @@ export default function Header() {
 
   const onLoginClick = () => {
     onRouting(LOGIN_PATH);
-    setIsLogin(true);
   };
 
   const handleDropDown = (show: boolean) => {
