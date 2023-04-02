@@ -1,12 +1,17 @@
 import { Flex } from '@chakra-ui/react';
+import type { ReactNode } from 'react';
 
-export default function CheckedLayout({ children }: { children: React.ReactNode }) {
+interface CheckedLayoutProps {
+  children: ReactNode;
+}
+
+// TODO : 추후 다른 곳에서도 공통적으로 사용
+export default function CheckedLayout({ children }: CheckedLayoutProps) {
   return (
     <Flex
       as='main'
       flexDirection='column'
       h='calc(100vh - 88px)'
-      // NOTE : min w 1100px로 지정
       minW='1100px'
       w='100%'
       backgroundColor='background.main'

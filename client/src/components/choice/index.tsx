@@ -3,15 +3,18 @@ import { Grid } from '@chakra-ui/react';
 import CheckedLayout from '@/components/choice/CheckedLayout';
 import ChoiceHeading from '@/components/choice/Heading';
 import LanguageBox from '@/components/choice/LanguageBox';
+import { CONTENT_TYPE } from '@/constants/typing';
+import type { ContentType } from '@/types/typing';
 
 interface ChoiceProps {
-  contentType: 'short' | 'long'; // 대문자가 좋을까요?
+  contentType: ContentType;
   typingType: 'practice' | 'exam';
 }
 
-// NOTE : file 위치 고민중
 export default function Choice({ contentType, typingType }: ChoiceProps) {
-  const title = `${contentType === 'short' ? '짧은 글' : '긴 글'} ${typingType === 'practice' ? '연습' : '실전'}타자`;
+  const title = `${contentType === CONTENT_TYPE.SHORT ? '짧은 글' : '긴 글'} ${
+    typingType === 'practice' ? '연습' : '실전'
+  }타자`;
   const path = `/${typingType}/${contentType}`;
   // TODO : 공통 배경 추가
   return (

@@ -1,6 +1,10 @@
 import { Flex, Text } from '@chakra-ui/react';
 
-export default function TextBox({ content }: { content: string }) {
+interface TextBoxProps {
+  content: string;
+}
+
+export default function TextBox({ content }: TextBoxProps) {
   return (
     <Flex
       bg='white.light'

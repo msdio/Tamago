@@ -1,12 +1,12 @@
 import { Box, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 
-interface CodeDropDownItemProps {
+interface ProgrammingDropDownItemProps {
   content: string;
   path: string;
 }
 
-export default function CodeDropDownItem({ content, path }: CodeDropDownItemProps) {
+export default function ProgrammingDropDownItem({ content, path }: ProgrammingDropDownItemProps) {
   return (
     <Link href={path}>
       <Box

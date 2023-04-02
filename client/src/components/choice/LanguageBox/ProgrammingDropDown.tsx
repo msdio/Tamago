@@ -3,7 +3,11 @@ import { Box } from '@chakra-ui/react';
 import ProgrammingDropDownItem from '@/components/choice/LanguageBox/ProgrammingDropDownItem';
 import { getRandomProgrammingLanguage } from '@/utils/language';
 
-export default function CodeDropDown({ path }: { path: string }) {
+interface ProgrammingDropDownProps {
+  path: string;
+}
+
+export default function ProgrammingDropDown({ path }: ProgrammingDropDownProps) {
   return (
     <Box
       pos='absolute'
