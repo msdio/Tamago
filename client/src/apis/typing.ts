@@ -43,8 +43,9 @@ export interface TypingHistoryRequest {
   page?: number;
 }
 
+export type TypingLanguageType = 'korean' | 'english' | 'java' | 'javascript' | 'python';
 export const getShortTypingWritingsAPI = async (
-  language: 'korean' | 'english',
+  language: TypingLanguageType,
 ): Promise<{
   result: ShortTypingResultType;
 }> => {
