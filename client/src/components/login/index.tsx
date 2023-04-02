@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useSetRecoilState } from 'recoil';
 
-import { loginAPI } from '@/apis/auth';
+import { getUserProfileAPI, loginAPI } from '@/apis/auth';
 import { userProfileState } from '@/atoms/userProfile';
 import AuthLayout from '@/components/common/AuthLayout';
 import type { InputType } from '@/components/login/Form';
@@ -9,28 +9,16 @@ import LoginForm from '@/components/login/Form';
 import { MAIN_PATH } from '@/constants/paths';
 import { SUCCESS } from '@/constants/responseCode';
 import type { ApiErrorResponse } from '@/types/apiResponse';
-import type { UserProfile } from '@/types/user';
 
 function Login() {
   const router = useRouter();
   const setUserProfile = useSetRecoilState(userProfileState);
 
-  const genTempData = (nickname: string): UserProfile => {
-    const data = {
-      email: 'temp',
-      introduce: 'temp',
-      nickname,
-      profileImg: 'temp',
-      provider: 'temp',
-      terms: true,
-    };
-
-    return data;
-  };
-
-  const onSuccessLogin = (data: UserProfile) => {
+  const onSuccessLogin = async () => {
+    const data = await getUserProfileAPI();
     setUserProfile(data);
-    router.push(MAIN_PATH);
+
+    await router.push(MAIN_PATH);
   };
 
   const handleLogin = async ({ email, password }: InputType) => {
@@ -38,8 +26,7 @@ function Login() {
       const data = await loginAPI({ email, password });
 
       if (data.code === SUCCESS) {
-        const temp = genTempData(data.result.nickname);
-        onSuccessLogin(temp);
+        onSuccessLogin();
       } else {
         alert('로그인 실패');
       }
