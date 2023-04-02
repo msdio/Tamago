@@ -11,46 +11,85 @@ import {
 import { Line } from 'react-chartjs-2';
 
 import type { ChartProps } from '@/types/chart';
+import { sortObjectByKeys } from '@/utils/sort';
 
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
 
-export const LineChart = ({ chartTitle, chartData }: ChartProps) => {
+interface LineChartProps {
+  chartTitle: ChartProps['chartTitle'];
+  chartData: ChartProps['chartData'][];
+}
+
+const LineChart = ({ chartTitle, chartData }: LineChartProps) => {
   const options = {
     responsive: true,
     plugins: {
       legend: {
-        // position: 'top' as const,
         display: false,
       },
       title: {
-        display: true,
+        display: false,
         text: chartTitle,
       },
     },
     scales: {
+      x: {
+        grid: {
+          // color: '#000000',
+          display: false,
+        },
+        // border: {
+        //   dash: [2, 4],
+        // },
+      },
       y: {
-        max: 1.0,
-        min: 0.0,
+        max: 100,
+        min: 0,
+        ticks: {
+          stepSize: 20,
+        },
       },
     },
   };
 
-  const chartLabels = Object.keys(chartData).sort();
+  // sort by keys
+  const orderedData: ChartProps['chartData'][] = [];
+  chartData.forEach((data) => {
+    const ordered = sortObjectByKeys(data);
+    orderedData.push(ordered);
+  });
+
+  const chartLabels = Object.keys(orderedData[0]);
 
   const data = {
     labels: chartLabels,
     datasets: [
       {
-        label: '# of errors',
-        data: Object.values(chartData),
+        label: '긴 글',
+        data: Object.values(orderedData[0]),
         borderWidth: 3,
         borderColor: '#FF8A65',
         lineTension: 0.3,
-        pointRadius: 0,
+        pointStyle: 'circle',
+        pointRadius: 3.5,
         pointHitRadius: 20,
+        pointBackgroundColor: '#FF8A65',
+      },
+      {
+        label: '짧은 글',
+        data: Object.values(orderedData[1]),
+        borderWidth: 3,
+        borderColor: '#83DA0D',
+        lineTension: 0.3,
+        pointStyle: 'circle',
+        pointRadius: 3.5,
+        pointHitRadius: 20,
+        pointBackgroundColor: '#83DA0D',
       },
     ],
   };
 
   return <Line options={options} data={data} />;
 };
+
+export default LineChart;
