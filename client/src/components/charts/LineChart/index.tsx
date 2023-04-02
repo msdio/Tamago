@@ -25,7 +25,15 @@ const LineChart = ({ chartTitle, chartData }: LineChartProps) => {
     responsive: true,
     plugins: {
       legend: {
-        display: false,
+        display: true,
+        position: 'bottom',
+        labels: {
+          usePointStyle: true,
+          pointStyle: 'line',
+          font: {
+            size: 14,
+          },
+        },
       },
       title: {
         display: false,
@@ -35,18 +43,38 @@ const LineChart = ({ chartTitle, chartData }: LineChartProps) => {
     scales: {
       x: {
         grid: {
-          // color: '#000000',
+          display: false,
+        },
+        border: {
+          drawBorder: false,
           display: false,
         },
         // border: {
         //   dash: [2, 4],
         // },
+        ticks: {
+          font: {
+            size: 15,
+            weight: 400,
+            color: '#BFBFBF',
+          },
+          padding: 9,
+        },
       },
       y: {
         max: 100,
         min: 0,
         ticks: {
+          font: {
+            size: 15,
+            weight: 400,
+            color: '#808080',
+          },
+          backdropPadding: {
+            x: 20,
+          },
           stepSize: 20,
+          padding: 24,
         },
       },
     },

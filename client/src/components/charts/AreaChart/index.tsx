@@ -92,7 +92,8 @@ const AreaChart = ({ chartTitle, chartData }: ChartProps) => {
           title: {
             font: {
               family: 'GangwonEduPower',
-              size: 18,
+              size: 15,
+              weight: 400,
             },
             formatter: (value: number) => 'Lv.' + getTierLevel(value) + '\n\n',
           },
@@ -101,7 +102,8 @@ const AreaChart = ({ chartTitle, chartData }: ChartProps) => {
             font: {
               family: 'Pretendard',
               color: '#FFA68A',
-              size: 17,
+              size: 15,
+              weight: 600,
             },
           },
         },
