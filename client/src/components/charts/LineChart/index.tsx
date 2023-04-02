@@ -39,6 +39,9 @@ const LineChart = ({ chartTitle, chartData }: LineChartProps) => {
         display: false,
         text: chartTitle,
       },
+      datalabels: {
+        display: false,
+      },
     },
     scales: {
       x: {
