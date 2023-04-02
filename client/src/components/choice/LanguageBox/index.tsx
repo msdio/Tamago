@@ -1,31 +1,18 @@
 import { Box, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 
-import CodeDropDown from '@/components/choice/LanguageBox/CodeDropDown';
+import ProgrammingDropDown from '@/components/choice/LanguageBox/ProgrammingDropDown';
 import TextBox from '@/components/choice/LanguageBox/TextBox';
 import { speechBubbleShake } from '@/constants/animations';
+import { SELECT_LANGUAGE_LABEL } from '@/constants/language';
 import useToggle from '@/hooks/useToggle';
 import { DownArrow } from '@/icons/Arrow';
-
-const LANGUAGE_STRING = {
-  korean: '한글 타자',
-  english: '영문 타자',
-  code: '코드 선택',
-  random: '진짜 강자들만 선택할 수 있는 랜덤',
-};
-
-const CODE_LANGUAGE = ['javascript', 'python', 'java'];
-
-const getRandomLanguage = () => {
-  const languageList = [...CODE_LANGUAGE, 'korean', 'english'];
-  const randomIdx = Math.floor(Math.random() * languageList.length);
-
-  return languageList[randomIdx];
-};
+import type { SelectLanguageType } from '@/types/language';
+import { getRandomLanguage } from '@/utils/language';
 
 interface LanguageBoxProps {
   path: string;
-  language: 'korean' | 'english' | 'code' | 'random';
+  language: SelectLanguageType;
 }
 
 export default function LanguageBox({ path, language }: LanguageBoxProps) {
@@ -34,13 +21,13 @@ export default function LanguageBox({ path, language }: LanguageBoxProps) {
   if (language === 'code') {
     return (
       <Box onClick={toggleCodeOpen} pos='relative'>
-        <TextBox content={LANGUAGE_STRING['code']} />
+        <TextBox content={SELECT_LANGUAGE_LABEL['code']} />
 
         <Box pos='absolute' top='52px' right='50px'>
           <DownArrow w={4} h={6} />
         </Box>
         {/* 슬라이드 애니매이션? */}
-        {isCodeOpen && <CodeDropDown path={path} />}
+        {isCodeOpen && <ProgrammingDropDown path={path} />}
       </Box>
     );
   }
@@ -49,7 +36,7 @@ export default function LanguageBox({ path, language }: LanguageBoxProps) {
     return (
       <Box pos='relative'>
         <Link href={`${path}?language?=${getRandomLanguage()}`}>
-          <TextBox content={LANGUAGE_STRING['random']} />
+          <TextBox content={SELECT_LANGUAGE_LABEL['random']} />
         </Link>
         <Box
           pos='absolute'
@@ -71,7 +58,7 @@ export default function LanguageBox({ path, language }: LanguageBoxProps) {
 
   return (
     <Link href={`${path}?language=${language}`}>
-      <TextBox content={LANGUAGE_STRING[language]} />
+      <TextBox content={SELECT_LANGUAGE_LABEL[language]} />
     </Link>
   );
 }
