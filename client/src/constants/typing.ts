@@ -6,6 +6,7 @@ export const CONTENT_TYPE: Record<ContentType, ContentType> = {
   SHORT: 'SHORT',
 };
 
+// Language Type으로 옮기는게 어떨까요?!
 const TYPING_TYPE: Record<string, string> = {
   KOREAN: '한글',
   ENGLISH: '영어',
