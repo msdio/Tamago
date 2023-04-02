@@ -1,6 +1,6 @@
 import { Box } from '@chakra-ui/react';
 
-import LineChart from '@/components/charts/LineChart';
+import AreaChart from '@/components/charts/AreaChart';
 
 export default function Profile() {
   const chartData = {
@@ -35,9 +35,9 @@ export default function Profile() {
   ];
 
   return (
-    <Box display={'flex'} alignItems={'center'} justifyContent={'center'} w={'661px'} h={'100vh'} margin={30}>
-      {/* <AreaChart chartTitle='testing area chart' chartData={chartData} /> */}
-      <LineChart chartTitle='line chart test' chartData={chartData2} />
+    <Box display={'flex'} alignItems={'center'} justifyContent={'center'} w={'80vw'} h={'100vh'} margin={30}>
+      <AreaChart chartTitle='testing area chart' chartData={chartData} />
+      {/* <LineChart chartTitle='line chart test' chartData={chartData2} /> */}
     </Box>
   );
 }
