@@ -21,7 +21,7 @@ interface LineChartProps {
 }
 
 const LineChart = ({ chartTitle, chartData }: LineChartProps) => {
-  const options = {
+  const options: any = {
     responsive: true,
     plugins: {
       legend: {
@@ -83,7 +83,6 @@ const LineChart = ({ chartTitle, chartData }: LineChartProps) => {
     },
   };
 
-  // sort by keys
   const orderedData: ChartProps['chartData'][] = [];
   chartData.forEach((data) => {
     const ordered = sortObjectByKeys(data);

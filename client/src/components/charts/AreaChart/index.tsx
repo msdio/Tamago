@@ -74,7 +74,7 @@ const AreaChart = ({ chartTitle, chartData }: ChartProps) => {
     setChartDataState(data);
   }, [chartData]);
 
-  const options = {
+  const options: any = {
     responsive: true,
     plugins: {
       legend: {
