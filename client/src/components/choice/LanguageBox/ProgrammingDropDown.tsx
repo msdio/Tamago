@@ -19,6 +19,7 @@ export default function ProgrammingDropDown({ path }: ProgrammingDropDownProps) 
       borderRadius='10px'
       overflow='hidden'
     >
+      {/* NOTE : map으로 하는게 좋을지 고민.. */}
       <ProgrammingDropDownItem path={`${path}?language=${getRandomProgrammingLanguage()}`} content='Random Code' />
       <ProgrammingDropDownItem path={`${path}?language=java`} content='Java' />
       <ProgrammingDropDownItem path={`${path}?language=python`} content='Python' />

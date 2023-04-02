@@ -26,7 +26,7 @@ export default function LanguageBox({ path, language }: LanguageBoxProps) {
         <Box pos='absolute' top='52px' right='50px'>
           <DownArrow w={4} h={6} />
         </Box>
-        {/* 슬라이드 애니매이션? */}
+        {/* TODO : 슬라이드 애니매이션  */}
         {isCodeOpen && <ProgrammingDropDown path={path} />}
       </Box>
     );
