@@ -1,6 +1,5 @@
 package com.project.Tamago.controller;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 import org.springframework.validation.BindingResult;
@@ -12,11 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.Tamago.common.Response.CustomResponse;
+import com.project.Tamago.common.response.CustomResponse;
 import com.project.Tamago.common.exception.InvalidParameterException;
 import com.project.Tamago.dto.Login;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
-import com.project.Tamago.dto.LongTypingDto;
 import com.project.Tamago.dto.responseDto.LongTypingResDto;
 import com.project.Tamago.dto.responseDto.ShortTypingListResDto;
 import com.project.Tamago.common.exception.CustomException;

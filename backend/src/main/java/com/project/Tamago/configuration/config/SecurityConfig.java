@@ -1,9 +1,11 @@
-package com.project.Tamago.config;
+package com.project.Tamago.configuration.config;
 
-import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -11,9 +13,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.filter.RequestContextFilter;
 
+import com.project.Tamago.common.logger.RequestStorage;
+import com.project.Tamago.common.logger.SlackAppender;
 import com.project.Tamago.security.jwt.JwtAuthorizationFilter;
 import com.project.Tamago.security.jwt.JwtTokenProvider;
 import com.project.Tamago.security.jwt.handler.CustomAccessDeniedHandler;
@@ -33,12 +39,14 @@ public class SecurityConfig {
 	private final RedisTemplate<String, Object> redisTemplate;
 	private final CustomOAuth2UserService customOAuth2UserService;
 	private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
-
+	private final RequestStorage requestStorage;
+	private final SlackAppender slackAppender;
 	@Bean
 	public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
 
 		http
-			.addFilterBefore(new JwtAuthorizationFilter(jwtTokenProvider, redisTemplate),
+			.addFilterBefore(new RequestContextFilter(), ChannelProcessingFilter.class)
+			.addFilterBefore(new JwtAuthorizationFilter(jwtTokenProvider, redisTemplate, requestStorage),
 				UsernamePasswordAuthenticationFilter.class);
 		http
 			.csrf().disable()
@@ -49,7 +57,7 @@ public class SecurityConfig {
 		http
 			.addFilter(corsConfig.corsFilter())
 			.exceptionHandling()
-			.authenticationEntryPoint(new CustomAuthenticationEntryPointHandler())
+			.authenticationEntryPoint(new CustomAuthenticationEntryPointHandler(slackAppender))
 			.accessDeniedHandler(new CustomAccessDeniedHandler());
 		http
 			.headers()

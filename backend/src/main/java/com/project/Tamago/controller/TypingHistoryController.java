@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.Tamago.common.Response.CustomResponse;
+import com.project.Tamago.common.response.CustomResponse;
 import com.project.Tamago.dto.Login;
 import com.project.Tamago.dto.requestDto.TypingHistoryReqDto;
 import com.project.Tamago.common.exception.InvalidParameterException;

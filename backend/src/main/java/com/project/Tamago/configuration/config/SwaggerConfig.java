@@ -1,4 +1,4 @@
-package com.project.Tamago.config;
+package com.project.Tamago.configuration.config;
 
 import static com.project.Tamago.common.Constant.*;
 

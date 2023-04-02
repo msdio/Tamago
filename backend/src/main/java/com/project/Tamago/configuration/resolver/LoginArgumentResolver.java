@@ -1,4 +1,4 @@
-package com.project.Tamago.config;
+package com.project.Tamago.configuration.resolver;
 
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.context.SecurityContextHolder;
