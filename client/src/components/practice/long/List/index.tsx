@@ -17,7 +17,6 @@ import {
 
 import PracticeLongLayout from '@/components/practice/long/Layout';
 import { PRACTICE_LONG_PATH_DETAIL } from '@/constants/paths';
-import { DownArrow } from '@/icons/Arrow';
 import { TYPING_TYPE } from '@/constants/typing';
 import { Document } from '@/icons/Document';
 import { BookmarkOff } from '@/icons/Heart';
