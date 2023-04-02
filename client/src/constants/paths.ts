@@ -16,4 +16,6 @@ export const PRACTICE_LONG_PATH = '/practice/long';
 
 export const PRACTICE_SHORT_PATH = '/practice/short';
 
+export const PRACTICE_SHORT_CHOICE_PATH = '/practice/short/choice';
+
 export const PRACTICE_LONG_PATH_DETAIL = '/practice/long/detail';

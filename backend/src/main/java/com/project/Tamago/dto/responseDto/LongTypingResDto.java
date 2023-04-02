@@ -1,15 +1,15 @@
 package com.project.Tamago.dto.responseDto;
 
-import lombok.Builder;
+import java.util.List;
+
+import com.project.Tamago.dto.LongTypingDto;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@Builder
+@AllArgsConstructor
 public class LongTypingResDto {
-	private Integer typingId;
-	private String title;
-	private String thumbnail;
-	private String language;
-	private String totalPage;
-	private Integer viewCount;
+	private Integer totalPage;
+	private List<LongTypingDto> longTypings;
 }

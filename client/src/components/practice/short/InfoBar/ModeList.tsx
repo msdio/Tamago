@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 import { useState } from 'react';
 
-import DownArrow from '@/icons/DownArrow';
+import { DownArrow } from '@/icons/Arrow';
 
 // TODO : 추후 수정
 const MODE_LIST = [

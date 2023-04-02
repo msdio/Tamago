@@ -1,6 +1,8 @@
 import { atom } from 'recoil';
 
-export const userProfileState = atom<any>({
+import type { UserProfile } from '@/types/user';
+
+export const userProfileState = atom<UserProfile | null>({
   key: 'userProfile',
   default: null,
 });

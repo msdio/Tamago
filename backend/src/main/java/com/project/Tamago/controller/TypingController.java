@@ -16,6 +16,7 @@ import com.project.Tamago.common.Response.CustomResponse;
 import com.project.Tamago.common.exception.InvalidParameterException;
 import com.project.Tamago.dto.Login;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
+import com.project.Tamago.dto.LongTypingDto;
 import com.project.Tamago.dto.responseDto.LongTypingResDto;
 import com.project.Tamago.dto.responseDto.ShortTypingListResDto;
 import com.project.Tamago.common.exception.CustomException;
@@ -47,7 +48,7 @@ public class TypingController {
 	}
 
 	@GetMapping("/long")
-	public CustomResponse<List<LongTypingResDto>> findLongTypings(
+	public CustomResponse<LongTypingResDto> findLongTypings(
 		@RequestParam(required = false, defaultValue = "1") int page) {
 		return new CustomResponse<>(longTypingService.findLongTypings(page));
 	}

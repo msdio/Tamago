@@ -8,6 +8,7 @@ import styles from '@/styles/styles';
 import { buttonTheme } from './buttons';
 import { inputTheme } from './inputs';
 import { tableTheme } from './table';
+import textStyles from './typo';
 
 const components: Record<string, StyleConfig> = {
   Button: buttonTheme,
@@ -20,6 +21,7 @@ const theme = extendTheme({
   styles,
   colors,
   components,
+  textStyles,
 });
 
 export default theme;
