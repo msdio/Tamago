@@ -2,10 +2,10 @@ import { Button, Flex, HStack, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 
 import { userProfileState } from '@/atoms/userProfile';
-import { LOGIN_PATH, SIGNUP_TERM_PATH } from '@/constants/paths';
+import { LOGIN_PATH, MAIN_PATH, SIGNUP_TERM_PATH } from '@/constants/paths';
 import { TamagoLogo } from '@/icons/TamagoLogo';
 
 import HeaderDropDown from './DropDown';
@@ -13,6 +13,7 @@ import HeaderDropDown from './DropDown';
 export default function Header() {
   const router = useRouter();
   const userProfile = useRecoilValue(userProfileState);
+  const clearUserProfile = useResetRecoilState(userProfileState);
   const [showDropDown, setShowDropDown] = useState(false);
 
   const onRouting = (to: string) => {
@@ -21,6 +22,13 @@ export default function Header() {
 
   const onLoginClick = () => {
     onRouting(LOGIN_PATH);
+  };
+
+  const onLogoutClick = () => {
+    window.localStorage.removeItem('accessToken');
+    clearUserProfile();
+    onRouting(MAIN_PATH);
+    window.location.reload();
   };
 
   const handleDropDown = (show: boolean) => {
@@ -145,6 +153,27 @@ export default function Header() {
               lineHeight='17px'
             >
               로그인
+            </Button>
+          </HStack>
+        )}
+        {userProfile && (
+          <HStack spacing='12.91px'>
+            <Text>{userProfile.nickname}님</Text>
+            <Button
+              variant='outline'
+              colorScheme='gray'
+              w='95.54px'
+              h='35.29px'
+              border='0.516456px solid'
+              borderColor='gray.main'
+              borderRadius='4.3038px'
+              bg='white.light'
+              color='black.dark'
+              onClick={onLogoutClick}
+              fontSize='14px'
+              lineHeight='17px'
+            >
+              로그아웃
             </Button>
           </HStack>
         )}
