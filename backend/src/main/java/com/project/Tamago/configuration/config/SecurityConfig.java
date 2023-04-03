@@ -68,6 +68,7 @@ public class SecurityConfig {
 			// swagger
 			.antMatchers("/typing/history").authenticated()
 			.antMatchers("/typing/register").authenticated()
+			.antMatchers("/typing/exam").authenticated()
 			.antMatchers("/statistics/**").permitAll()
 			.antMatchers("/oauth2/**").permitAll()
 			.antMatchers("/auth/**").permitAll()

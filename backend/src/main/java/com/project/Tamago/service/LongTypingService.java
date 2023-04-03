@@ -24,6 +24,7 @@ import com.project.Tamago.repository.LongTypingRepository;
 import com.project.Tamago.repository.RegisterRepository;
 import com.project.Tamago.repository.UserRepository;
 
+import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -57,6 +58,14 @@ public class LongTypingService {
 			getPageContent(longTyping.getContent(), page));
 	}
 
+	@Transactional(readOnly = true)
+	public LongTypingDetailResDto findLongExam() {
+		LongTyping longTyping = longTypingRepository.findRandom()
+			.orElseThrow(() -> new CustomException(LONG_TYPING_INFO_NOT_EXISTS));
+		return DataMapper.INSTANCE.LongTypingToLongTypingDetailResDto(longTyping,
+			getPageContent(longTyping.getContent(), getRandomInt(longTyping.getTotalPage())));
+	}
+
 	public void saveLongTyping(Integer userId, LongTypingReqDto longTypingReqDto) {
 		User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USERS_INFO_NOT_EXISTS));
 		LongTyping longTyping = DataMapper.INSTANCE.toLongTyping(longTypingReqDto);
@@ -71,5 +80,9 @@ public class LongTypingService {
 		int endIndex = Math.min(startIndex + LINES_PER_PAGE, contentLines.length);
 		String pageContent = String.join("\n", Arrays.copyOfRange(contentLines, startIndex, endIndex));
 		return new PageContentDto(page, pageContent);
+	}
+
+	private int getRandomInt(int n) {
+		return (int) (Math.random() * n) + 1;
 	}
 }
