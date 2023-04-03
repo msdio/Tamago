@@ -43,11 +43,11 @@ export default function LanguageBox({ path, select }: LanguageBoxProps) {
           pos='absolute'
           top='-32px'
           left='-67px'
-          backgroundImage='/images/speech-bubble.png'
+          backgroundImage='/images/writing-type/speech-bubble.png'
           backgroundSize='221px 50px'
           w='221px'
           h='50px'
-          animation={speechBubbleShake + ' 3s infinite ease'}
+          animation={speechBubbleShake + ' 1.8s infinite ease'}
         >
           <Text fontSize='18px' color='primary.dark' lineHeight='45px' textAlign='center'>
             고수라면 도전해보세요!
