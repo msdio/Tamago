@@ -1,9 +1,9 @@
 import { Flex } from '@chakra-ui/react';
 
-import PracticeLongLayout from '@/components/practice/long/Layout';
-import TypingDetailPagination from '@/components/practice/long/TypingDetailPagination';
-import TypingExit from '@/components/practice/long/TypingExit';
-import TypingLine from '@/components/practice/long/TypingLine';
+import PracticeLongLayout from '@/components/typing/long/Layout';
+import TypingDetailPagination from '@/components/typing/long/TypingDetailPagination';
+import TypingExit from '@/components/typing/long/TypingExit';
+import TypingLine from '@/components/typing/long/TypingLine';
 import type { LongTypingDetail } from '@/types/typing';
 import { slicedContentAndStrings } from '@/utils/typing';
 

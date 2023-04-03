@@ -1,6 +1,6 @@
 import { Flex, Text } from '@chakra-ui/react';
 
-import InfoBarItem from '@/components/practice/short/InfoBar/InfoBarItem';
+import InfoBarItem from '@/components/typing/short/InfoBar/InfoBarItem';
 import { getSecondToMMSSFormat } from '@/utils/time';
 
 interface InfoBarProps {

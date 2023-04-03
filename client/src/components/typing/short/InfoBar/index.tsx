@@ -1,10 +1,10 @@
 import { Box, Flex, Image, Text } from '@chakra-ui/react';
 
 import IconButton from '@/components/common/IconButton';
-import { useContextShortTyping } from '@/components/practice/short/_hook/contextShortTyping';
-import GrassEllipse from '@/components/practice/short/InfoBar/GrassEllipse';
-import InfoBarItem from '@/components/practice/short/InfoBar/InfoBarItem';
-import ModeList from '@/components/practice/short/InfoBar/ModeList';
+import { useContextShortTyping } from '@/components/typing/short/_hook/contextShortTyping';
+import GrassEllipse from '@/components/typing/short/InfoBar/GrassEllipse';
+import InfoBarItem from '@/components/typing/short/InfoBar/InfoBarItem';
+import ModeList from '@/components/typing/short/InfoBar/ModeList';
 import { Exit } from '@/icons/Exit';
 import { getSecondToMMSSFormat } from '@/utils/time';
 

@@ -15,7 +15,7 @@ import {
   Tr,
 } from '@chakra-ui/react';
 
-import PracticeLongLayout from '@/components/practice/long/Layout';
+import PracticeLongLayout from '@/components/typing/long/Layout';
 import { PRACTICE_LONG_PATH_DETAIL } from '@/constants/paths';
 import { TYPING_TYPE } from '@/constants/typing';
 import { Document } from '@/icons/Document';
