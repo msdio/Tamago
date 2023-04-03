@@ -28,7 +28,7 @@ export default function Header() {
     window.localStorage.removeItem('accessToken');
     clearUserProfile();
     onRouting(MAIN_PATH);
-    window.location.reload();
+    router.reload();
   };
 
   const handleDropDown = (show: boolean) => {
