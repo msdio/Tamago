@@ -1,15 +1,86 @@
-import type { LanguageType, NationLanguageType, ProgrammingLanguageType, SelectLanguageType } from '@/types/language';
+import type {
+  LanguageType,
+  NationLanguageType,
+  ProgrammingLanguageType,
+  SelectLanguageItemType,
+  SelectLanguageType,
+  SelectProgrammingLanguageItemType,
+  SelectProgrammingLanguageType,
+} from '@/types/language';
+import { getRandomProgrammingLanguage } from '@/utils/language';
 
-export const NATION_LANGUAGE: NationLanguageType[] = ['korean', 'english'];
-export const PROGRAMMING_LANGUAGE: ProgrammingLanguageType[] = ['javascript', 'python', 'java'];
-
-export const SELECT_LANGUAGE_LABEL: Record<SelectLanguageType, string> = {
-  korean: '한글 타자',
-  english: '영문 타자',
-  code: '코드 선택',
-  random: '진짜 강자들만 선택할 수 있는 랜덤',
+export const NATION_LANGUAGE: Record<string, NationLanguageType> = {
+  KOREAN: 'KOREAN',
+  ENGLISH: 'ENGLISH',
 };
 
-export const LANGUAGE_LIST: LanguageType[] = [...PROGRAMMING_LANGUAGE, ...NATION_LANGUAGE];
+export const PROGRAMMING_LANGUAGE: Record<string, ProgrammingLanguageType> = {
+  JAVASCRIPT: 'JAVASCRIPT',
+  PYTHON: 'PYTHON',
+  JAVA: 'JAVA',
+  C: 'C',
+};
 
-Object.freeze(SELECT_LANGUAGE_LABEL);
+export const SELECT_LANGUAGE_VALUE: Record<string, SelectLanguageType> = {
+  KOREAN: 'KOREAN',
+  ENGLISH: 'ENGLISH',
+  CODE: 'CODE',
+  RANDOM: 'RANDOM',
+};
+
+export const SELECT_LANGUAGE: Record<SelectLanguageType, SelectLanguageItemType> = {
+  KOREAN: {
+    value: SELECT_LANGUAGE_VALUE.KOREAN,
+    label: '한글 타자',
+  },
+  ENGLISH: {
+    value: SELECT_LANGUAGE_VALUE.ENGLISH,
+    label: '영어 타자',
+  },
+  CODE: {
+    value: SELECT_LANGUAGE_VALUE.CODE,
+    label: '코드 타자',
+  },
+  RANDOM: {
+    value: SELECT_LANGUAGE_VALUE.RANDOM,
+    label: '진짜 강자들만 선택할 수 있는 랜덤',
+  },
+};
+
+Object.freeze(SELECT_LANGUAGE);
+
+export const LANGUAGE_LIST: LanguageType[] = [
+  ...Object.values(PROGRAMMING_LANGUAGE),
+  ...Object.values(NATION_LANGUAGE),
+];
+
+export const SELECT_PROGRAMMING_LANGUAGE_VALUE: Record<string, SelectProgrammingLanguageType> = {
+  JAVASCRIPT: 'JAVASCRIPT',
+  PYTHON: 'PYTHON',
+  JAVA: 'JAVA',
+  C: 'C',
+  RANDOM: getRandomProgrammingLanguage(),
+};
+
+export const SELECT_PROGRAMMING_LANGUAGE: Record<SelectProgrammingLanguageType, SelectProgrammingLanguageItemType> = {
+  RANDOM: {
+    value: SELECT_PROGRAMMING_LANGUAGE_VALUE.RANDOM,
+    label: 'Random Code',
+  },
+  JAVA: {
+    value: SELECT_PROGRAMMING_LANGUAGE_VALUE.JAVA,
+    label: 'Java',
+  },
+  PYTHON: {
+    value: SELECT_PROGRAMMING_LANGUAGE_VALUE.PYTHON,
+    label: 'Python',
+  },
+  JAVASCRIPT: {
+    value: SELECT_PROGRAMMING_LANGUAGE_VALUE.JAVASCRIPT,
+    label: 'Javascript',
+  },
+  C: {
+    value: SELECT_PROGRAMMING_LANGUAGE_VALUE.C,
+    label: 'C',
+  },
+};
