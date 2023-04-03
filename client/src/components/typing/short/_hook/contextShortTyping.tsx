@@ -6,7 +6,7 @@ import { createContext, useContext, useMemo, useRef, useState } from 'react';
 import type { ShortTypingType } from '@/apis/typing';
 import Confirm from '@/components/common/Confirm';
 import ResultModal from '@/components/common/ResultModal/practice-mode';
-import useCurrentTyping from '@/components/practice/short/_hook/useCurrentTyping';
+import useCurrentTyping from '@/components/typing/short/_hook/useCurrentTyping';
 import useToggle from '@/hooks/useToggle';
 import type { TypingHistoryType, TypingResultType } from '@/types/typing';
 import { getTypingHistoryAverage } from '@/utils/typing';

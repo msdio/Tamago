@@ -2,8 +2,8 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 import { getLongTypingAPI } from '@/apis/typing';
-import LongContent from '@/components/practice/long/Content';
-import PracticeLongTyping from '@/components/practice/long/Typing';
+import LongContent from '@/components/typing/long/Content';
+import PracticeLongTyping from '@/components/typing/long/Typing';
 import type { LongTypingDetail } from '@/types/typing';
 
 export default function LongTypingPage() {
