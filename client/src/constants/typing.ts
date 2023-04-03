@@ -1,9 +1,15 @@
-import type { ContentType } from '@/types/typing';
+import type { ContentType, TypingMode } from '@/types/typing';
 
 // NOTE : enum?
-export const CONTENT_TYPE: Record<ContentType, ContentType> = {
-  LONG: 'LONG',
-  SHORT: 'SHORT',
+export const CONTENT_TYPE: Record<string, ContentType> = {
+  LONG: true,
+  SHORT: false,
+};
+
+// NOTE : 왜 actual인가요?
+export const TYPING_MODE: Record<string, TypingMode> = {
+  PRACTICE: 'PRACTICE',
+  ACTUAL: 'ACTUAL',
 };
 
 // Language Type으로 옮기는게 어떨까요?!

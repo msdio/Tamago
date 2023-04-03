@@ -5,7 +5,7 @@ export interface CharInfo {
 }
 
 export type TypingMode = 'PRACTICE' | 'ACTUAL';
-export type ContentType = 'LONG' | 'SHORT';
+export type ContentType = true | false;
 
 export enum TypingState {
   'DEFAULT' = 'd',
