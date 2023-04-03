@@ -3,10 +3,10 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import {
   useContextShortTyping,
   useContextShortTypingHandler,
-} from '@/components/practice/short/_hook/contextShortTyping';
-import CurrentTyping from '@/components/practice/short/CurrentTyping';
-import InfoBar from '@/components/practice/short/InfoBar';
-import PrevTyping from '@/components/practice/short/PrevTyping';
+} from '@/components/typing/short/_hook/contextShortTyping';
+import CurrentTyping from '@/components/typing/short/CurrentTyping';
+import InfoBar from '@/components/typing/short/InfoBar';
+import PrevTyping from '@/components/typing/short/PrevTyping';
 import TwoRightArrow from '@/icons/TwoRightArrow';
 
 export default function PracticeShort() {

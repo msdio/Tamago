@@ -4,8 +4,8 @@ import type { ChangeEvent, KeyboardEvent } from 'react';
 import {
   useContextShortTyping,
   useContextShortTypingHandler,
-} from '@/components/practice/short/_hook/contextShortTyping';
-import OriginalTyping from '@/components/practice/short/OriginalTyping';
+} from '@/components/typing/short/_hook/contextShortTyping';
+import OriginalTyping from '@/components/typing/short/OriginalTyping';
 
 export default function CurrentTyping() {
   const { originalTyping, userTyping } = useContextShortTyping();

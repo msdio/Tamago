@@ -1,7 +1,7 @@
 import { Box, Text } from '@chakra-ui/react';
 
-import { useContextShortTyping } from '@/components/practice/short/_hook/contextShortTyping';
-import OriginalTyping from '@/components/practice/short/OriginalTyping';
+import { useContextShortTyping } from '@/components/typing/short/_hook/contextShortTyping';
+import OriginalTyping from '@/components/typing/short/OriginalTyping';
 
 function PrevTyping() {
   const { prevUserTyping, prevOriginalTyping } = useContextShortTyping();

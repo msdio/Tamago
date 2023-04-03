@@ -1,7 +1,7 @@
 import { Flex } from '@chakra-ui/react';
 import { memo } from 'react';
 
-import TypingChar from '@/components/practice/long/TypingChar';
+import TypingChar from '@/components/typing/long/TypingChar';
 import { TypingState } from '@/types/typing';
 
 interface TypingLineProps {

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { getLongTypingListAPI } from '@/apis/typing';
 import Footer from '@/components/footer';
 import Header from '@/components/header';
-import PracticeLongList from '@/components/practice/long/List';
+import PracticeLongList from '@/components/typing/long/List';
 import type { LongTypingItem } from '@/types/typing';
 
 export default function PracticeLongPage() {
