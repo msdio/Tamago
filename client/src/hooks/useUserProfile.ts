@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 
 import { getUserProfileAPI } from '@/apis/auth';
-import { userProfileState } from '@/atom/userProfile';
+import { userProfileState } from '@/atoms/userProfile';
 
 const useUserProfile = (path: string) => {
   const [userProfile, setUserProfile] = useRecoilState(userProfileState);
+  const clearUserProfile = useResetRecoilState(userProfileState);
 
   const fetchUserProfile = async () => {
     const accessToken = localStorage.getItem('accessToken');
@@ -19,14 +20,14 @@ const useUserProfile = (path: string) => {
         setUserProfile(userProfile);
       } catch (error) {
         localStorage.removeItem('accessToken');
-        setUserProfile(null);
+        clearUserProfile();
       }
     }
 
     // 토큰이 없을 경우
     // 로그아웃 상태로 변경
     if (!accessToken) {
-      setUserProfile(null);
+      clearUserProfile();
     }
   };
 

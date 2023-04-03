@@ -11,12 +11,16 @@ import type { ApiErrorResponse } from '@/types/apiResponse';
 function Login() {
   const router = useRouter();
 
+  const onSuccessLogin = () => {
+    router.push(MAIN_PATH);
+  };
+
   const handleLogin = async ({ email, password }: InputType) => {
     try {
       const data = await loginAPI({ email, password });
 
       if (data.code === SUCCESS) {
-        router.push(MAIN_PATH);
+        onSuccessLogin();
       } else {
         alert('로그인 실패');
       }

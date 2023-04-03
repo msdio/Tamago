@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
 import { getTypingHistoryAPI } from '@/apis/typing';
-import { userProfileState } from '@/atom/userProfile';
+import { userProfileState } from '@/atoms/userProfile';
 import PracticeResultModal from '@/components/common/ResultModal/practice-mode';
 import PracticeLongLayout from '@/components/typing/long/Layout';
 import TypingHeader from '@/components/typing/long/Typing/TypingHeader/index';
