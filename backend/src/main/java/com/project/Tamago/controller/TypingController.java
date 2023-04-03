@@ -41,7 +41,6 @@ public class TypingController {
 	public CustomResponse<ShortTypingListResDto> findShortTypings(@RequestParam String language) {
 		if (Stream.of(Language.values()).noneMatch(element -> element.name().equals(language)))
 			throw new CustomException(ResponseCode.INVALID_PARAMETER);
-
 		return new CustomResponse<>(shortTypingService.findRandomShortTyping(language));
 	}
 
