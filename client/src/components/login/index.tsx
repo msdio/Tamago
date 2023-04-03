@@ -1,8 +1,6 @@
 import { useRouter } from 'next/router';
-import { useSetRecoilState } from 'recoil';
 
-import { getUserProfileAPI, loginAPI } from '@/apis/auth';
-import { userProfileState } from '@/atoms/userProfile';
+import { loginAPI } from '@/apis/auth';
 import AuthLayout from '@/components/common/AuthLayout';
 import type { InputType } from '@/components/login/Form';
 import LoginForm from '@/components/login/Form';
@@ -12,13 +10,9 @@ import type { ApiErrorResponse } from '@/types/apiResponse';
 
 function Login() {
   const router = useRouter();
-  const setUserProfile = useSetRecoilState(userProfileState);
 
-  const onSuccessLogin = async () => {
-    const data = await getUserProfileAPI();
-    setUserProfile(data);
-
-    await router.push(MAIN_PATH);
+  const onSuccessLogin = () => {
+    router.push(MAIN_PATH);
   };
 
   const handleLogin = async ({ email, password }: InputType) => {
