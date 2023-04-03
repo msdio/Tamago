@@ -1,58 +1,61 @@
-import { Box, Flex, Heading, Link, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Heading,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Link,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from '@chakra-ui/react';
 
 import PracticeLongLayout from '@/components/practice/long/Layout';
 import { PRACTICE_LONG_PATH_DETAIL } from '@/constants/paths';
+import { TYPING_TYPE } from '@/constants/typing';
 import { Document } from '@/icons/Document';
-import DownArrow from '@/icons/DownArrow';
 import { BookmarkOff } from '@/icons/Heart';
-import { SmallLeftArrow, SmallRightArrow } from '@/icons/SmallArrow';
-import UpDownArrow from '@/icons/UpDownArrow';
+import { Search } from '@/icons/Search';
 import type { LongTypingItem } from '@/types/typing';
 
+import TypingListPagination from './TypingListPagination';
+
 interface PracticeLongListProps {
+  currentPage: number;
+  totalPage: number;
   typingList: LongTypingItem[];
 }
 
-export default function PracticeLongList({ typingList }: PracticeLongListProps) {
+export default function PracticeLongList({ currentPage, totalPage, typingList }: PracticeLongListProps) {
   return (
     <PracticeLongLayout>
       <Flex direction='column'>
         <Box textAlign='center' h='121px' pos='relative'>
-          <Flex pos='absolute' bottom='0' mb='21px' gap='16px'>
-            <Flex
-              alignItems='center'
-              gap='8.5px'
-              border='0.6px solid #000000'
-              bg='#BCF075'
-              w='fit-content'
-              h='38px'
-              p='10px 23px'
-              borderRadius={30}
-            >
-              <Text fontSize='18px' fontWeight={500}>
-                연습타자
-              </Text>
-              <DownArrow />
-            </Flex>
-            <Flex
-              alignItems='center'
-              gap='8.5px'
-              border='0.6px solid #000000'
-              bg='gray.light'
-              w='fit-content'
-              h='38px'
-              p='10px 23px'
-              borderRadius={30}
-            >
-              <Text fontSize='18px' fontWeight={500}>
-                정렬
-              </Text>
-              <UpDownArrow />
-            </Flex>
+          <Flex pos='absolute' right='0' bottom='0' mb='33px' gap='16px'>
+            <InputGroup>
+              <InputLeftElement pointerEvents='none' h='47px' w='50px'>
+                <Search />
+              </InputLeftElement>
+              <Input
+                w='289px'
+                h='47px'
+                pl='50px'
+                bg='#F2F2F2'
+                border='none'
+                borderRadius='20px'
+                placeholder='검색하기'
+                _placeholder={{ color: '#7D7D7D', fontSize: '18px' }}
+              />
+            </InputGroup>
           </Flex>
 
           <Heading fontSize='28px' fontWeight='600' lineHeight='121px'>
-            긴글타자
+            긴 글 연습타자
           </Heading>
         </Box>
         <TableContainer border='0.6px solid black' borderRadius='10px'>
@@ -65,7 +68,7 @@ export default function PracticeLongList({ typingList }: PracticeLongListProps) 
                 <Th width='50%'>제목명</Th>
                 <Th width='9%'>타입</Th>
                 <Th width='9%'>페이지 수</Th>
-                <Th width='9%'>평균타수</Th>
+                <Th width='9%'>조회수</Th>
                 <Th width='14%'></Th>
               </Tr>
             </Thead>
@@ -78,8 +81,8 @@ export default function PracticeLongList({ typingList }: PracticeLongListProps) 
                       {title}
                     </Link>
                   </Td>
-                  <Td>{language}</Td>
-                  <Td>{totalPage}</Td>
+                  <Td>{TYPING_TYPE[language]}</Td>
+                  <Td>{totalPage}쪽</Td>
                   <Td>{viewCount}</Td>
                   <Td display='flex' gap='32.4px' justifyContent='end'>
                     <Link href={`${PRACTICE_LONG_PATH_DETAIL}?typingId=${typingId}&pageNum=1`}>
@@ -94,24 +97,7 @@ export default function PracticeLongList({ typingList }: PracticeLongListProps) 
             </Tbody>
           </Table>
         </TableContainer>
-        <Flex gap='50px' justifyContent='center' m='43px 0' alignItems='center'>
-          <SmallLeftArrow />
-          <Flex gap='10px'>
-            <Text w='28px' h='28px' textAlign='center' lineHeight='28px' bg='primary.light' borderRadius='50'>
-              1
-            </Text>
-            <Text w='28px' h='28px' textAlign='center' lineHeight='28px'>
-              2
-            </Text>
-            <Text w='28px' h='28px' textAlign='center' lineHeight='28px'>
-              3
-            </Text>
-            <Text w='28px' h='28px' textAlign='center' lineHeight='28px'>
-              4
-            </Text>
-          </Flex>
-          <SmallRightArrow />
-        </Flex>
+        <TypingListPagination currentPage={currentPage} totalPage={totalPage} />
       </Flex>
     </PracticeLongLayout>
   );

@@ -27,7 +27,6 @@ interface ResultModalProps {
   onReplay: () => void;
 
   title?: string;
-  nextURL?: string;
 }
 
 export default function PracticeResultModal({ title, isOpen, result, endTime, onReplay }: ResultModalProps) {

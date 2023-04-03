@@ -1,6 +1,6 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 
-import DownArrow from '@/icons/DownArrow';
+import { DownArrow } from '@/icons/Arrow';
 
 import TypingExit from '../../TypingExit';
 import InfoBar from '../InfoBar';
