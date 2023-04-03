@@ -1,5 +1,5 @@
 import { Box, Flex } from '@chakra-ui/react';
-import Image from 'next/image';
+import { Image } from '@chakra-ui/react';
 import type { ReactNode } from 'react';
 
 import Footer from '@/components/footer';
@@ -27,7 +27,7 @@ export default function CheckedLayout({ children }: CheckedLayoutProps) {
       >
         {children}
         <Box w='full' h='173px' pos='absolute' bottom={0}>
-          <Image src='/images/writing-type/bottom-grass.png' alt='grass' fill />
+          <Image src='/images/writing-type/bottom-grass.png' alt='grass' w='100%' />
         </Box>
         <Flex pos='absolute' bottom={125} left={0} right={0} justifyContent='center'>
           <Image src='/images/writing-type/eggs.png' alt='character' width={195} height={91} />
