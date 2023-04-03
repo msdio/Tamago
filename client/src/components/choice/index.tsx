@@ -1,8 +1,8 @@
 import { Grid } from '@chakra-ui/react';
 
-import CheckedLayout from '@/components/choice/CheckedLayout';
 import ChoiceHeading from '@/components/choice/Heading';
 import LanguageBox from '@/components/choice/LanguageBox';
+import CheckedLayout from '@/components/common/CheckedLayout';
 import { SELECT_LANGUAGE } from '@/constants/language';
 import { CONTENT_TYPE } from '@/constants/typing';
 import type { ContentType } from '@/types/typing';
