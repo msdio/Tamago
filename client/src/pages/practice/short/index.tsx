@@ -36,7 +36,7 @@ export default function PracticeShortPage() {
   if (!data || isLoading) <>로딩중</>;
 
   return (
-    <ShortTypingProvider originalTypings={data.typingWritings}>
+    <ShortTypingProvider originalTypings={data.typingWritings} mode='PRACTICE'>
       <PracticeShort />;
     </ShortTypingProvider>
   );
