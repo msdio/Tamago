@@ -13,13 +13,13 @@ const shortTypingMenus = [
   { menu: '실전타자', path: '' },
 ];
 const registerMenus = [
-  { menu: '긴글', path: '' },
-  { menu: '짧은글', path: '' },
-  { menu: '업로드', path: '' },
+  { menu: '긴글', path: 'prepare' },
+  { menu: '짧은글', path: 'prepare' },
+  { menu: '업로드', path: 'prepare' },
 ];
 const profileMenus = [
-  { menu: '수정', path: '' },
-  { menu: '통계', path: '' },
+  { menu: '수정', path: 'prepare' },
+  { menu: '통계', path: 'prepare' },
 ];
 
 export default function HeaderDropDown({ handler }: { handler: (a: boolean) => void }) {

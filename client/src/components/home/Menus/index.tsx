@@ -1,14 +1,19 @@
 import { Box, Container, Flex, Text } from '@chakra-ui/react';
+import Link from 'next/link';
 import { useRef } from 'react';
 
+import PrepareAlert from '@/components/common/PrepareAlert';
 import { fadeIn } from '@/constants/animations';
+import { PRACTICE_LONG_PATH, PRACTICE_SHORT_PATH } from '@/constants/paths';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
+import useToggle from '@/hooks/useToggle';
 
 import MenuCard from './MenuCard';
 
 export default function Menus() {
   const observerRef = useRef<HTMLDivElement>(null);
   const animationTrigger = useIntersectionObserver({ ref: observerRef, threshold: 0.3 });
+  const [isModalOpen, handleModalOpen] = useToggle();
 
   return (
     <Container
@@ -30,14 +35,20 @@ export default function Menus() {
       </Text>
 
       <Flex marginTop='4.6875rem' w='100%' justifyContent='space-around'>
-        <MenuCard language='kr' title='긴 글 연습' content='Lorem ipsum dolor sit amet, consectetu' />
-        <Box transform='translateY(-9.3125rem)'>
-          <MenuCard language='en' title='짧은 글 연습' content='Lorem ipsum dolor sit amet, consectetu' />
-        </Box>
-        <Box transform='translateY(-3.0625rem)'>
+        <Link href={PRACTICE_LONG_PATH}>
+          <MenuCard language='kr' title='긴 글 연습' content='Lorem ipsum dolor sit amet, consectetu' />
+        </Link>
+        <Link href={PRACTICE_SHORT_PATH}>
+          <Box transform='translateY(-9.3125rem)'>
+            <MenuCard language='en' title='짧은 글 연습' content='Lorem ipsum dolor sit amet, consectetu' />
+          </Box>
+        </Link>
+        <Box transform='translateY(-3.0625rem)' onClick={handleModalOpen}>
           <MenuCard language='en' title='글 등록' content='Lorem ipsum dolor sit amet, consectetu' />
         </Box>
       </Flex>
+
+      <PrepareAlert isOpen={isModalOpen} onClose={handleModalOpen} />
     </Container>
   );
 }
