@@ -8,12 +8,7 @@ import useToggle from '@/hooks/useToggle';
 import type { TypingHistoryType } from '@/types/typing';
 import { getTypingHistoryAverage } from '@/utils/typing';
 
-// interface ShortTypingProviderProps {
-//   // children: ReactNode;
-//   originalTypings: ShortTypingType[];
-// }
-
-const usePracticeShortTyping = (originalTypings: ShortTypingType[]) => {
+export default function useActualShortTyping(originalTypings: ShortTypingType[]) {
   const [currentIdx, setCurrentIdx] = useState(0);
   const router = useRouter();
 
@@ -142,6 +137,4 @@ const usePracticeShortTyping = (originalTypings: ShortTypingType[]) => {
     actions,
     endGameValue,
   };
-};
-
-export default usePracticeShortTyping;
+}
