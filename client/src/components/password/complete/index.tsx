@@ -17,7 +17,7 @@ export default function PasswordChangeComplete() {
         <Text>비밀번호 변경을 완료하였습니다.</Text>
         <Text>가입된 이메일로 로그인 해 주세요.</Text>
         <Flex mt='54px' gap={5}>
-          <Link href='/login'>
+          <Link href='/loginResolverDto'>
             <Button>로그인하기</Button>
           </Link>
           <Link href='/'>

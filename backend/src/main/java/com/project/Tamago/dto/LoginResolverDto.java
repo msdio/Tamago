@@ -7,6 +7,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
-public class Login {
+public class LoginResolverDto {
 	private Integer userId;
 }

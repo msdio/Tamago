@@ -4,7 +4,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.Tamago.common.annotation.Login;
 import com.project.Tamago.common.response.CustomResponse;
+import com.project.Tamago.dto.LoginResolverDto;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
 import com.project.Tamago.service.LongTypingService;
 
@@ -21,7 +23,7 @@ public class TypingExamController {
 
 
 	@GetMapping("exam/long")
-	public CustomResponse<LongTypingDetailResDto> findLongExam() {
+	public CustomResponse<LongTypingDetailResDto> findLongExam(@Login LoginResolverDto loginResolverDto) {
 		return new CustomResponse<>(longTypingService.findLongExam());
 	}
 }
