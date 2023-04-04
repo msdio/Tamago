@@ -10,6 +10,7 @@ import PracticeResultModal from '@/components/common/ResultModal/practice-mode';
 import LongLayout from '@/components/typing/long/Layout';
 import TypingHeader from '@/components/typing/long/TypingHeader';
 import TypingLine from '@/components/typing/long/TypingLine';
+import { EXAM_TIMER } from '@/constants/typing';
 import useStopwatch from '@/hooks/useStopWatch';
 import useToggle from '@/hooks/useToggle';
 import type { CharInfo, LongTypingDetail } from '@/types/typing';
@@ -78,6 +79,10 @@ export default function ExamLongTyping({
   }, [textarea]);
 
   useEffect(() => {
+    if (EXAM_TIMER.LONG <= totalMillisecond) {
+      router.push(`/typing/${typingId}/result`);
+    }
+
     typingSpeed.current = getTypingSpeed({
       typingCount: typingCount.current,
       backspaceCount: backspaceCount.current,
@@ -248,7 +253,7 @@ export default function ExamLongTyping({
         result={{
           typingAccuracy: typingAccuracy.current,
           typingSpeed: typingSpeed.current,
-          typingTime: Math.floor(totalMillisecond / 1000), // 밀리초에서 초로 변환
+          typingTime: Math.floor(EXAM_TIMER.LONG) - Math.floor(totalMillisecond / 1000), // 타이머에서 현재 경과시간 뺀 값
           typingWpm: typingWpm.current,
         }}
         endTime={new Date()}
