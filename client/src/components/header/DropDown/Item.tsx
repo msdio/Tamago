@@ -13,7 +13,6 @@ interface DropDownItemProps {
   menus: MenuType[];
 }
 
-// TODO : 완료가 되지 않은 페이지는 "준비중입니다" 추가하면 좋을 것 같습니다.
 export default function DropDownItem({ menus }: DropDownItemProps) {
   const [isModalOpen, handleModalOpen] = useToggle();
 
