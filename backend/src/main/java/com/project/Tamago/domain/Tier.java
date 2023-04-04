@@ -46,8 +46,10 @@ public class Tier extends BaseTimeEntity {
 	@Enumerated(EnumType.STRING)
 	private Language language;
 
+	@ColumnDefault("1")
 	private Integer level;
 
+	@ColumnDefault("0")
 	private Integer mmr;
 
 	@ColumnDefault("false")

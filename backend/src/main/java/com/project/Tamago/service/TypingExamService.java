@@ -76,8 +76,6 @@ public class TypingExamService {
 		Tier newTier = Tier.builder()
 			.user(user)
 			.language(language)
-			.level(1)
-			.mmr(0)
 			.build();
 		tierRepository.save(newTier);
 	}
