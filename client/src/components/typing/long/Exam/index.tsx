@@ -8,10 +8,8 @@ import { getTypingHistoryAPI } from '@/apis/typing';
 import { userProfileState } from '@/atoms/userProfile';
 import PracticeResultModal from '@/components/common/ResultModal/practice-mode';
 import LongLayout from '@/components/typing/long/Layout';
-import TypingDetailPagination from '@/components/typing/long/TypingDetailPagination';
 import TypingHeader from '@/components/typing/long/TypingHeader';
 import TypingLine from '@/components/typing/long/TypingLine';
-import { PRACTICE_LONG_PATH, PRACTICE_LONG_PATH_DETAIL } from '@/constants/paths';
 import useStopwatch from '@/hooks/useStopWatch';
 import useToggle from '@/hooks/useToggle';
 import type { CharInfo, LongTypingDetail } from '@/types/typing';
@@ -19,14 +17,7 @@ import { TypingState } from '@/types/typing';
 import { getCharType } from '@/utils/char';
 import { getTypingAccuracy, getTypingSpeed, getTypingWpm, getWrongKeys, slicedContentAndStrings } from '@/utils/typing';
 
-const getNextPageURL = (typingId: number, currentPage: number, totalPage: number) => {
-  if (currentPage === totalPage) {
-    return PRACTICE_LONG_PATH;
-  }
-  return `${PRACTICE_LONG_PATH_DETAIL}?typingId=${typingId}&pageNum=${currentPage + 1}&isTyping=true`;
-};
-
-export default function PracticeLongTyping({
+export default function ExamLongTyping({
   content,
   currentPage,
   language,
@@ -100,7 +91,6 @@ export default function PracticeLongTyping({
 
   const onAlertClick = () => {
     handleResultModalToggle();
-    router.push(getNextPageURL(typingId, currentPage, totalPage));
   };
 
   const generateTypingInfo = () => {
@@ -249,9 +239,6 @@ export default function PracticeLongTyping({
               <TypingLine key={i} originalLine={originalLine} userLine={userLine} states={states} />
             ),
           )}
-        </Flex>
-        <Flex mt='33px' justifyContent='right'>
-          <TypingDetailPagination typingId={typingId} currentPage={currentPage} totalPage={totalPage} isTyping={true} />
         </Flex>
       </LongLayout>
       <PracticeResultModal
