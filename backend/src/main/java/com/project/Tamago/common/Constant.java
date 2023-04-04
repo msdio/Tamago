@@ -12,4 +12,8 @@ public class Constant {
 	public static final String SLACK_MESSAGE_FORMAT = "*%s*\n*[요청한 멤버 id]* %s\n\n*[요청한 ip]* %s\n\n*[ERROR LOG]*\n%s\n\n*[REQUEST_INFORMATION]*\n%s %s\n%s";
 	public static final String EMPTY_BODY_MESSAGE = "{BODY IS EMPTY}";
 	public static final String SLACK_ALARM_FORMAT = "[SlackAlarm] %s";
+	public static final int PRACTICE_SHORT_TYPING_SIZE = 30;
+	public static final int EXAM_SHORT_TYPING_SIZE = 10;
+
+
 }
