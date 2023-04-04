@@ -2,8 +2,10 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 import { getLongTypingAPI } from '@/apis/typing';
+import Footer from '@/components/footer';
+import Header from '@/components/header';
 import LongContent from '@/components/typing/long/Content';
-import PracticeLongTyping from '@/components/typing/long/Typing';
+import PracticeLongTyping from '@/components/typing/long/Practice';
 import type { LongTypingDetail } from '@/types/typing';
 
 export default function LongTypingPage() {
@@ -50,5 +52,11 @@ export default function LongTypingPage() {
     return <div>로딩중...</div>;
   }
 
-  return <>{isTyping ? <PracticeLongTyping {...data} /> : <LongContent {...data} />}</>;
+  return (
+    <>
+      <Header />
+      {isTyping ? <PracticeLongTyping {...data} /> : <LongContent {...data} />}
+      <Footer />
+    </>
+  );
 }

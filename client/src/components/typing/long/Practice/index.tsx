@@ -8,8 +8,8 @@ import { getTypingHistoryAPI } from '@/apis/typing';
 import { userProfileState } from '@/atoms/userProfile';
 import PracticeResultModal from '@/components/common/ResultModal/practice-mode';
 import PracticeLongLayout from '@/components/typing/long/Layout';
-import TypingHeader from '@/components/typing/long/Typing/TypingHeader/index';
 import TypingDetailPagination from '@/components/typing/long/TypingDetailPagination';
+import TypingHeader from '@/components/typing/long/TypingHeader';
 import TypingLine from '@/components/typing/long/TypingLine';
 import { PRACTICE_LONG_PATH, PRACTICE_LONG_PATH_DETAIL } from '@/constants/paths';
 import useStopwatch from '@/hooks/useStopWatch';
@@ -216,6 +216,7 @@ export default function PracticeLongTyping({
     <>
       <PracticeLongLayout>
         <TypingHeader
+          type='practice'
           accuracy={typingAccuracy.current}
           speed={typingSpeed.current}
           wpm={typingWpm.current}
@@ -254,6 +255,7 @@ export default function PracticeLongTyping({
         </Flex>
       </PracticeLongLayout>
       <PracticeResultModal
+        title={title}
         isOpen={isResultModalOpen}
         onReplay={onAlertClick}
         result={{

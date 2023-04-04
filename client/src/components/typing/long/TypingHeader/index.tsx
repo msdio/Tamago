@@ -1,18 +1,17 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 
-import { DownArrow } from '@/icons/Arrow';
-
-import TypingExit from '../../TypingExit';
-import InfoBar from '../InfoBar';
+import TypingExit from '@/components/typing/long/TypingExit';
+import InfoBar from '@/components/typing/long/TypingHeader/InfoBar';
 
 interface TypingHeaderProps {
+  type: 'practice' | 'exam';
   time: number;
   wpm: number;
   accuracy: number;
   speed: number;
 }
 
-export default function TypingHeader(props: TypingHeaderProps) {
+export default function TypingHeader({ type, time, wpm, accuracy, speed }: TypingHeaderProps) {
   return (
     <Flex gap='24px' mb='28px'>
       <Box w='118px' bg='#CEF0FF' border=' 0.6px solid #000000' borderRadius={10}></Box>
@@ -29,15 +28,14 @@ export default function TypingHeader(props: TypingHeaderProps) {
             borderRadius={30}
           >
             <Text fontSize='18px' fontWeight={500}>
-              긴 글 연습모드
+              {type === 'practice' ? '긴 글 연습모드' : '긴 글 실전모드'}
             </Text>
-            <DownArrow />
           </Flex>
           <Box mb='21px'>
             <TypingExit />
           </Box>
         </Flex>
-        <InfoBar {...props} />
+        <InfoBar time={time} wpm={wpm} accuracy={accuracy} speed={speed} />
       </Box>
     </Flex>
   );
