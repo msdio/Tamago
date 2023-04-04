@@ -4,16 +4,17 @@ import InfoBarItem from '@/components/typing/short/InfoBar/InfoBarItem';
 import { getSecondToMMSSFormat } from '@/utils/time';
 
 interface InfoBarProps {
+  type: 'practice' | 'exam';
   time: number;
   wpm: number;
   accuracy: number;
   speed: number;
 }
 
-function InfoBar({ time, wpm, accuracy, speed }: InfoBarProps) {
+function InfoBar({ type, time, wpm, accuracy, speed }: InfoBarProps) {
   return (
     <Flex border='1px solid rgb(0, 0, 0)' borderRadius={10} h={'56px'} backgroundColor='white'>
-      <InfoBarItem label='경과 시간' content={getSecondToMMSSFormat(time)} />
+      <InfoBarItem label={type === 'practice' ? '경과 시간' : '남은 시간'} content={getSecondToMMSSFormat(time)} />
       <InfoBarItem label='WPM' content={`${wpm}`} />
       <InfoBarItem label='정확도' content={`${accuracy}%`} />
       <InfoBarItem label='타자' content={`${speed}타`} />

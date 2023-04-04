@@ -35,7 +35,7 @@ export default function TypingHeader({ type, time, wpm, accuracy, speed }: Typin
             <TypingExit />
           </Box>
         </Flex>
-        <InfoBar time={time} wpm={wpm} accuracy={accuracy} speed={speed} />
+        <InfoBar type={type} time={time} wpm={wpm} accuracy={accuracy} speed={speed} />
       </Box>
     </Flex>
   );

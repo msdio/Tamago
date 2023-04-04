@@ -206,7 +206,7 @@ export default function ExamLongTyping({
     <>
       <LongLayout>
         <TypingHeader
-          type='practice'
+          type='exam'
           accuracy={typingAccuracy.current}
           speed={typingSpeed.current}
           wpm={typingWpm.current}
