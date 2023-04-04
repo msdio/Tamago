@@ -30,7 +30,7 @@ export default function ExamLongTyping({
 
   const userProfile = useRecoilValue(userProfileState);
 
-  const [isResultModalOpen, handleResultModalToggle] = useToggle();
+  const [isResultModalOpen, _, { toggleOn }] = useToggle();
 
   const [textarea, setTextarea] = useState('');
   const { totalMillisecond, status, timePlay, timePause } = useStopwatch();
@@ -63,39 +63,8 @@ export default function ExamLongTyping({
    */
   const focusTextarea = () => textareaRef.current?.focus();
 
-  /**
-   * 처음 화면이 렌더링될 때 textarea로 포커싱되도록 한다.
-   * textarea는 숨겨두었기 때문에 사용자가 보고 포커싱할 수 없다.
-   */
-  useEffect(() => {
-    focusTextarea();
-  }, []);
-
-  useEffect(() => {
-    typingAccuracy.current = getTypingAccuracy({
-      typingLength: typingStates.current.length - 1,
-      wrongLength: typingStates.current.replaceAll(TypingState.CORRECT, TypingState.EMPTY).length - 1,
-    });
-  }, [textarea]);
-
-  useEffect(() => {
-    if (EXAM_TIMER.LONG <= totalMillisecond) {
-      router.push(`/typing/${typingId}/result`);
-    }
-
-    typingSpeed.current = getTypingSpeed({
-      typingCount: typingCount.current,
-      backspaceCount: backspaceCount.current,
-      millisecond: totalMillisecond,
-    });
-    typingWpm.current = getTypingWpm({
-      typingCount: typingCount.current,
-      millisecond: totalMillisecond,
-    });
-  }, [status, textarea, totalMillisecond]);
-
   const onAlertClick = () => {
-    handleResultModalToggle();
+    // handleResultModalToggle();
   };
 
   const generateTypingInfo = () => {
@@ -115,6 +84,41 @@ export default function ExamLongTyping({
       wrongKeys: getWrongKeys(originalInfos.current, userInfos.current),
     };
   };
+
+  /**
+   * 처음 화면이 렌더링될 때 textarea로 포커싱되도록 한다.
+   * textarea는 숨겨두었기 때문에 사용자가 보고 포커싱할 수 없다.
+   */
+  useEffect(() => {
+    focusTextarea();
+  }, []);
+
+  useEffect(() => {
+    typingAccuracy.current = getTypingAccuracy({
+      typingLength: typingStates.current.length - 1,
+      wrongLength: typingStates.current.replaceAll(TypingState.CORRECT, TypingState.EMPTY).length - 1,
+    });
+  }, [textarea]);
+
+  useEffect(() => {
+    if (EXAM_TIMER.LONG <= totalMillisecond) {
+      timePause();
+      toggleOn();
+      // if (userProfile) {
+      //   getTypingHistoryAPI(generateTypingInfo());
+      // }
+    } else {
+      typingSpeed.current = getTypingSpeed({
+        typingCount: typingCount.current,
+        backspaceCount: backspaceCount.current,
+        millisecond: totalMillisecond,
+      });
+      typingWpm.current = getTypingWpm({
+        typingCount: typingCount.current,
+        millisecond: totalMillisecond,
+      });
+    }
+  }, [status, textarea, totalMillisecond]);
 
   /**
    * 사용자가 타이핑을 할 경우 상태 변화
@@ -141,7 +145,7 @@ export default function ExamLongTyping({
       if (userProfile) {
         await getTypingHistoryAPI(generateTypingInfo());
       }
-      handleResultModalToggle();
+      toggleOn();
       return;
     }
 
@@ -215,7 +219,7 @@ export default function ExamLongTyping({
           accuracy={typingAccuracy.current}
           speed={typingSpeed.current}
           wpm={typingWpm.current}
-          time={totalMillisecond / 1000}
+          time={Math.floor(EXAM_TIMER.LONG / 1000) - Math.floor(totalMillisecond / 1000)} // 타이머에서 현재 경과시간 뺀 값
         />
         <Flex
           h='550px'
@@ -253,7 +257,7 @@ export default function ExamLongTyping({
         result={{
           typingAccuracy: typingAccuracy.current,
           typingSpeed: typingSpeed.current,
-          typingTime: Math.floor(EXAM_TIMER.LONG) - Math.floor(totalMillisecond / 1000), // 타이머에서 현재 경과시간 뺀 값
+          typingTime: Math.floor(totalMillisecond / 1000),
           typingWpm: typingWpm.current,
         }}
         endTime={new Date()}

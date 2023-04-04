@@ -99,7 +99,6 @@ export default function PracticeLongTyping({
   }, [status, textarea, totalMillisecond]);
 
   const onAlertClick = () => {
-    handleResultModalToggle();
     router.push(getNextPageURL(typingId, currentPage, totalPage));
   };
 
