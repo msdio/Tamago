@@ -15,5 +15,5 @@
   ],
   "editor.tabSize": 2,
   "typescript.tsdk": "client/node_modules/typescript/lib",
-  "cSpell.words": ["chartjs", "YYYYMMDDHHMM"]
+  "cSpell.words": ["chakra", "chartjs", "MMSS", "YYYYMMDDHHMM"]
 }
