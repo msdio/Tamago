@@ -20,7 +20,8 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "types": ["jest", "node"]
+    "types": ["jest", "node"],
+    // "noImplicitAny": true
   },
   "include": ["next-env.d.ts", "src"],
   "exclude": ["node_modules"]
