@@ -5,7 +5,8 @@ import type { ShortTypingType } from '@/apis/typing';
 import Confirm from '@/components/common/Confirm';
 import PracticeResultModal from '@/components/common/ResultModal/practice-mode';
 
-import usePracticeShortTyping from './usePracticeShortTyping';
+import usePracticeShortTyping from './useActualShortTyping';
+import useActualShortTyping from './useActualShortTyping';
 
 interface ContextShortTypingType {
   originalTyping: string;
@@ -47,10 +48,16 @@ const ShortTypingProvider = ({ children, originalTypings, mode }: ShortTypingPro
     endGameValue: practiceEndGameValue,
   } = usePracticeShortTyping(originalTypings);
 
-  const values = mode === 'PRACTICE' ? practiceValues : practiceValues;
-  const actions = mode === 'PRACTICE' ? practiceActions : practiceActions;
-  const result = mode === 'PRACTICE' ? practiceEndGameValue.typingAvgResult : practiceEndGameValue.typingAvgResult;
-  const endGameValue = mode === 'PRACTICE' ? practiceEndGameValue : practiceEndGameValue;
+  const {
+    values: actualValues,
+    actions: actualActions,
+    endGameValue: actualEndGameValue,
+  } = useActualShortTyping(originalTypings);
+
+  const { values, actions, endGameValue } =
+    mode === 'PRACTICE'
+      ? { values: practiceValues, actions: practiceActions, endGameValue: practiceEndGameValue }
+      : { values: actualValues, actions: actualActions, endGameValue: actualEndGameValue };
 
   return (
     <ContextShortTyping.Provider value={values}>
@@ -68,7 +75,7 @@ const ShortTypingProvider = ({ children, originalTypings, mode }: ShortTypingPro
         {mode === 'PRACTICE' && (
           <PracticeResultModal
             isOpen={endGameValue.isResultModalOpen}
-            result={result}
+            result={endGameValue.typingAvgResult}
             endTime={endGameValue.endTime}
             onReplay={endGameValue.handleReplay}
           />
