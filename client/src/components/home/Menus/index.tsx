@@ -38,7 +38,7 @@ export default function Menus() {
         <Link href={PRACTICE_LONG_PATH}>
           <MenuCard language='kr' title='긴 글 연습' content='Lorem ipsum dolor sit amet, consectetu' />
         </Link>
-        <Link href={PRACTICE_SHORT_PATH}>
+        <Link href={`${PRACTICE_SHORT_PATH}?language=javascript`}>
           <Box transform='translateY(-9.3125rem)'>
             <MenuCard language='en' title='짧은 글 연습' content='Lorem ipsum dolor sit amet, consectetu' />
           </Box>
