@@ -13,3 +13,11 @@ export const SELECT_LANGUAGE_LABEL: Record<SelectLanguageType, string> = {
 export const LANGUAGE_LIST: LanguageType[] = [...PROGRAMMING_LANGUAGE, ...NATION_LANGUAGE];
 
 Object.freeze(SELECT_LANGUAGE_LABEL);
+
+export const LONG_TYPING_TYPE: Record<string, string> = {
+  KOREAN: '한글',
+  ENGLISH: '영어',
+  JAVA: 'JAVA',
+  PYTHON: '파이썬',
+  C: 'C',
+};

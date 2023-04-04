@@ -16,8 +16,8 @@ import {
 } from '@chakra-ui/react';
 
 import PracticeLongLayout from '@/components/typing/long/Layout';
+import { LONG_TYPING_TYPE } from '@/constants/language';
 import { PRACTICE_LONG_PATH_DETAIL } from '@/constants/paths';
-import { TYPING_TYPE } from '@/constants/typing';
 import { Document } from '@/icons/Document';
 import { BookmarkOff } from '@/icons/Heart';
 import { Search } from '@/icons/Search';
@@ -81,7 +81,7 @@ export default function PracticeLongList({ currentPage, totalPage, typingList }:
                       {title}
                     </Link>
                   </Td>
-                  <Td>{TYPING_TYPE[language]}</Td>
+                  <Td>{LONG_TYPING_TYPE[language]}</Td>
                   <Td>{totalPage}쪽</Td>
                   <Td>{viewCount}</Td>
                   <Td display='flex' gap='32.4px' justifyContent='end'>
