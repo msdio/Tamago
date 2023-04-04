@@ -9,13 +9,14 @@ import InfoBar from '@/components/typing/short/InfoBar';
 import PrevTyping from '@/components/typing/short/PrevTyping';
 import TwoRightArrow from '@/icons/TwoRightArrow';
 
+// TODO : Header, footer 추가
 export default function PracticeShort() {
   const { originalTyping, nextOriginalTyping } = useContextShortTyping();
-  const { handleExitModalOpen } = useContextShortTypingHandler();
+  const { onExit } = useContextShortTypingHandler();
 
   return (
     <Box p='35px 120px' minW='1100px'>
-      <InfoBar onExit={handleExitModalOpen} />
+      <InfoBar onExit={onExit} />
 
       {originalTyping && (
         <Box position='relative' border='0.6px solid #000000' borderRadius='30px 0px 0px 0px' mt='28px'>
