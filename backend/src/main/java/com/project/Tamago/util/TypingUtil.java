@@ -15,7 +15,7 @@ public class TypingUtil {
 	private static final int LINES_PER_PAGE = 20;
 
 	public static PageContentDto getPageContent(String content, Integer page) {
-		String[] contentLines = content.split("\r\n");
+		String[] contentLines = content.replaceAll("\r\n", "\n").split("\n");
 		int startIndex = (page - 1) * LINES_PER_PAGE;
 		int endIndex = Math.min(startIndex + LINES_PER_PAGE, contentLines.length);
 		String pageContent = String.join("\n", Arrays.copyOfRange(contentLines, startIndex, endIndex));
