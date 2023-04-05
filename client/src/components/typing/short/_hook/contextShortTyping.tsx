@@ -178,7 +178,8 @@ const ShortTypingProvider = ({ children, originalTypings }: ShortTypingProviderP
           isOpen={isResultModalOpen}
           result={typingAvgResult}
           endTime={history.current[history.current.length - 1]?.endTime ?? new Date()}
-          onReplay={handleReplay}
+          onAction={handleReplay}
+          actionLabel='다시하기'
         />
       </ContextShortTypingHandler.Provider>
     </ContextShortTyping.Provider>

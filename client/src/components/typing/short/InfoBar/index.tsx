@@ -4,7 +4,7 @@ import IconButton from '@/components/common/IconButton';
 import { useContextShortTyping } from '@/components/typing/short/_hook/contextShortTyping';
 import GrassEllipse from '@/components/typing/short/InfoBar/GrassEllipse';
 import InfoBarItem from '@/components/typing/short/InfoBar/InfoBarItem';
-import ModeList from '@/components/typing/short/InfoBar/ModeList';
+import ModeLabel from '@/components/typing/short/InfoBar/ModeLabel';
 import { Exit } from '@/icons/Exit';
 import { getSecondToMMSSFormat } from '@/utils/time';
 
@@ -38,7 +38,7 @@ export default function InfoBar({ onExit }: InfoBarProps) {
         </Flex>
         <Box flex={1}>
           <Flex justifyContent='space-between'>
-            <ModeList />
+            <ModeLabel />
             <IconButton icon={<Exit />} onAction={onExit} />
           </Flex>
 
