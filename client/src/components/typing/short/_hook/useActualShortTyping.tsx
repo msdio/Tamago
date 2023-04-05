@@ -116,6 +116,7 @@ const usePracticeShortTyping = (originalTypings: ShortTypingType[]) => {
     typingWpm,
     typingAccuracy,
     typingSpeed,
+    index: currentIdx,
   };
 
   const prevNextTypingInfo: PrevNextTypingInfoType = {
