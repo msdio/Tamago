@@ -11,7 +11,7 @@ interface TypingPaginationProps {
   isTyping: boolean;
 }
 
-// NOTE: Pagination을 common component 에 만들었습니다. 확인 부탁드려요.
+// NOTE: TypingPagination을 common component 에 만들었습니다. 확인 부탁드려요.
 export default function TypingPagination({ typingId, totalPage, currentPage, isTyping }: TypingPaginationProps) {
   const router = useRouter();
 
