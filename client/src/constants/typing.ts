@@ -6,7 +6,6 @@ export const CONTENT_TYPE: Record<string, ContentType> = {
   SHORT: false,
 };
 
-// NOTE : 왜 actual인가요?
 export const TYPING_MODE: Record<string, TypingMode> = {
   PRACTICE: 'PRACTICE',
   ACTUAL: 'ACTUAL',
