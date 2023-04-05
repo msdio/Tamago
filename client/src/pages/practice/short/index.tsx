@@ -39,7 +39,7 @@ export default function PracticeShortPage() {
   return (
     <ShortTypingProvider originalTypings={data.typingWritings} mode='PRACTICE'>
       <CheckedLayout>
-        <PracticeShort />;
+        <PracticeShort originalTypings={data.typingWritings} />;
       </CheckedLayout>
     </ShortTypingProvider>
   );

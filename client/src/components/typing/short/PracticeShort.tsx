@@ -1,5 +1,6 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 
+import type { ShortTypingType } from '@/apis/typing';
 import {
   useContextPrevNextTypingInfo,
   useContextShortTyping,
@@ -10,9 +11,11 @@ import InfoBar from '@/components/typing/short/InfoBar';
 import PrevTyping from '@/components/typing/short/PrevTyping';
 import TwoRightArrow from '@/icons/TwoRightArrow';
 
+import Pagination from '../../common/TypingPagination';
+
 // TODO : Header, footer 추가
-export default function PracticeShort() {
-  const { originalTyping } = useContextShortTyping();
+export default function PracticeShort({ originalTypings }: { originalTypings: ShortTypingType[] }) {
+  const { originalTyping, index: currentIdx } = useContextShortTyping();
   const { nextOriginalTyping } = useContextPrevNextTypingInfo();
   const { onExit } = useContextShortTypingHandler();
 
@@ -34,6 +37,10 @@ export default function PracticeShort() {
           </Flex>
         </Box>
       )}
+
+      <Flex mt='33px' justifyContent='right'>
+        <Pagination currentPage={currentIdx + 1} totalPage={originalTypings.length} />
+      </Flex>
     </Box>
   );
 }

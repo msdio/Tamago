@@ -8,6 +8,8 @@ export interface CurrentTypingInfoType {
   typingSpeed: number;
   typingAccuracy: number;
   typingWpm: number;
+
+  index: number;
 }
 
 export interface PrevNextTypingInfoType {
