@@ -11,6 +11,8 @@ export const TYPING_MODE: Record<TypingMode, TypingMode> = {
   ACTUAL: 'ACTUAL',
 };
 
+export const ACTUAL_SHORT_TYPING_TIME_LIMIT = 300000; // 5분
+
 // Language Type으로 옮기는게 어떨까요?!
 const TYPING_TYPE: Record<string, string> = {
   KOREAN: '한글',

@@ -126,7 +126,7 @@ export default function useCurrentTyping({
     [originalTyping, startTime, typingAccuracy, typingId, typingSpeed, typingWpm],
   );
 
-  const handleSubmit = useCallback(
+  const handlePracticeSubmit = useCallback(
     async (resultContent: string) => {
       const typingHistory = generateTypingInfo(resultContent);
       await getTypingHistoryAPI(typingHistory);
@@ -168,6 +168,6 @@ export default function useCurrentTyping({
     timePause,
     timePlay,
     handleTyping,
-    handleTypingSubmit: handleSubmit,
+    handleTypingSubmit: handlePracticeSubmit,
   };
 }

@@ -10,6 +10,7 @@ import {
 import CurrentTyping from '@/components/typing/short/CurrentTyping';
 import InfoBar from '@/components/typing/short/InfoBar';
 import PrevTyping from '@/components/typing/short/PrevTyping';
+import { TYPING_MODE } from '@/constants/typing';
 import TwoRightArrow from '@/icons/TwoRightArrow';
 
 export default function PracticeShort({ originalTypings }: { originalTypings: ShortTypingType[] }) {
@@ -19,7 +20,7 @@ export default function PracticeShort({ originalTypings }: { originalTypings: Sh
 
   return (
     <Box p='35px 120px' minW='1100px'>
-      <InfoBar onExit={onExit} />
+      <InfoBar onExit={onExit} mode={TYPING_MODE.PRACTICE} />
 
       {originalTyping && (
         <Box position='relative' border='0.6px solid #000000' borderRadius='30px 0px 0px 0px' mt='28px' bg='#fff'>

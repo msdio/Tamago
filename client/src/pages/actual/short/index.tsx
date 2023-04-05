@@ -6,6 +6,7 @@ import { getShortTypingWritingsAPI } from '@/apis/typing';
 import CheckedLayout from '@/components/common/CheckedLayout';
 import ShortTypingProvider from '@/components/typing/short/_hook/contextShortTyping';
 import ActualShort from '@/components/typing/short/ActualShort';
+import { TYPING_MODE } from '@/constants/typing';
 import useToggle from '@/hooks/useToggle';
 
 export default function ActualShortPage() {
@@ -37,7 +38,7 @@ export default function ActualShortPage() {
   if (!data || isLoading) <>로딩중</>;
 
   return (
-    <ShortTypingProvider originalTypings={data.typingWritings} mode='PRACTICE'>
+    <ShortTypingProvider originalTypings={data.typingWritings} mode={TYPING_MODE.ACTUAL}>
       <CheckedLayout>
         <ActualShort originalTypings={data.typingWritings} />;
       </CheckedLayout>
