@@ -42,7 +42,7 @@ export default function InfoBar({ onExit }: InfoBarProps) {
             <IconButton icon={<Exit />} onAction={onExit} />
           </Flex>
 
-          <Flex border='1px solid rgb(0, 0, 0)' borderRadius={10} h={'56px'}>
+          <Flex border='1px solid rgb(0, 0, 0)' borderRadius={10} h='56px' bg='#fff'>
             <InfoBarItem label='경과 시간' content={getSecondToMMSSFormat(time)} />
             <InfoBarItem label='WPM' content={`${typingWpm}`} />
             <InfoBarItem label='정확도' content={`${typingAccuracy}%`} />

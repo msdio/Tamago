@@ -21,7 +21,7 @@ export default function PracticeShort() {
       <InfoBar onExit={onExit} />
 
       {originalTyping && (
-        <Box position='relative' border='0.6px solid #000000' borderRadius='30px 0px 0px 0px' mt='28px'>
+        <Box position='relative' border='0.6px solid #000000' borderRadius='30px 0px 0px 0px' mt='28px' bg='#fff'>
           <PrevTyping />
 
           <CurrentTyping />
