@@ -12,7 +12,7 @@ import InfoBar from '@/components/typing/short/InfoBar';
 import PrevTyping from '@/components/typing/short/PrevTyping';
 import TwoRightArrow from '@/icons/TwoRightArrow';
 
-export default function PracticeShort({ originalTypings }: { originalTypings: ShortTypingType[] }) {
+export default function ActualShort({ originalTypings }: { originalTypings: ShortTypingType[] }) {
   const { originalTyping, index: currentIdx } = useContextShortTyping();
   const { nextOriginalTyping } = useContextPrevNextTypingInfo();
   const { onExit } = useContextShortTypingHandler();

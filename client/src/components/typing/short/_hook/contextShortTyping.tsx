@@ -4,11 +4,10 @@ import { createContext, useContext } from 'react';
 import type { ShortTypingType } from '@/apis/typing';
 import Confirm from '@/components/common/Confirm';
 import PracticeResultModal from '@/components/common/ResultModal/practice-mode';
+import useActualShortTyping from '@/components/typing/short/_hook/useActualShortTyping';
+import usePracticeShortTyping from '@/components/typing/short/_hook/useActualShortTyping';
 import type { CurrentTypingActionType, CurrentTypingInfoType, PrevNextTypingInfoType } from '@/types/shortTyping';
 import type { TypingMode } from '@/types/typing';
-
-import useActualShortTyping from './useActualShortTyping';
-import usePracticeShortTyping from './usePracticeShortTyping copy';
 
 type ContextCurrentTypingInfoType = CurrentTypingInfoType;
 type ContextPrevNextTypingInfoType = PrevNextTypingInfoType;
