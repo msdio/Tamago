@@ -8,7 +8,8 @@ export const getRandomLanguage = (): LanguageType => {
 };
 
 export const getRandomProgrammingLanguage = (): ProgrammingLanguageType => {
-  const randomIdx = Math.floor(Math.random() * PROGRAMMING_LANGUAGE.length);
+  const programmingLanguageList = Object.values(PROGRAMMING_LANGUAGE);
+  const randomIdx = Math.floor(Math.random() * programmingLanguageList.length);
 
-  return PROGRAMMING_LANGUAGE[randomIdx];
+  return programmingLanguageList[randomIdx];
 };
