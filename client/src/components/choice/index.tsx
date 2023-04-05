@@ -27,7 +27,7 @@ export default function Choice({ contentType, typingType }: ChoiceProps) {
       <ChoiceHeading title={title} />
       <Grid templateColumns='repeat(2, 400px)' justifyContent='center' gap='32px'>
         {Object.values(SELECT_LANGUAGE).map((language) => (
-          <LanguageBox key={language.value} path={path} select={language} />
+          <LanguageBox key={'language-box-' + language.value} path={path} select={language} />
         ))}
       </Grid>
       <Box w='full' h='173px' pos='absolute' bottom={0}>
