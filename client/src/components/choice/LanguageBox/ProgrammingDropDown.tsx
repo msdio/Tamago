@@ -19,7 +19,6 @@ export default function ProgrammingDropDown({ path }: ProgrammingDropDownProps) 
       borderRadius='10px'
       overflow='hidden'
     >
-      {/* NOTE : map으로 하는게 좋을지 고민.. */}
       {Object.values(SELECT_PROGRAMMING_LANGUAGE).map(({ value, label }) => (
         <ProgrammingDropDownItem key={value} path={`${path}?language=${value}`} content={label} />
       ))}
