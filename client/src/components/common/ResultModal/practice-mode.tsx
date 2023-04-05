@@ -24,12 +24,20 @@ interface ResultModalProps {
   isOpen: boolean;
   result: TypingResultType;
   endTime: Date;
-  onReplay: () => void;
+  onAction: () => void;
+  actionLabel: string;
 
   title?: string;
 }
 
-export default function PracticeResultModal({ title, isOpen, result, endTime, onReplay }: ResultModalProps) {
+export default function PracticeResultModal({
+  isOpen,
+  result,
+  endTime,
+  onAction,
+  actionLabel,
+  title,
+}: ResultModalProps) {
   const [isPrepareModalOpen, togglePrepareModal] = useToggle();
 
   const isLong = !!title;
@@ -40,7 +48,7 @@ export default function PracticeResultModal({ title, isOpen, result, endTime, on
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onReplay} size='md'>
+      <Modal isOpen={isOpen} onClose={onAction} size='md'>
         <ModalOverlay />
         <ModalContent m='auto' p='49px 40px 42px'>
           <ModalHeader p={0}>
@@ -70,8 +78,8 @@ export default function PracticeResultModal({ title, isOpen, result, endTime, on
             </Flex>
           </ModalBody>
           <ModalFooter justifyContent='center' p='0' gap='17px'>
-            <Button w='174px' onClick={onReplay}>
-              다시 하기
+            <Button w='174px' onClick={onAction}>
+              {actionLabel}
             </Button>
             <Link href='/'>
               <Button w='174px' variant='outline'>
