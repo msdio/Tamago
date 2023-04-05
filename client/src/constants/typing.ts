@@ -1,7 +1,7 @@
 import type { ContentType, TypingMode } from '@/types/typing';
 
 // NOTE : enum?
-export const CONTENT_TYPE: Record<string, ContentType> = {
+export const CONTENT_TYPE: Record<'LONG' | 'SHORT', ContentType> = {
   LONG: true,
   SHORT: false,
 };
