@@ -18,7 +18,6 @@ export default function Choice({ contentType, typingType }: ChoiceProps) {
   }타자`;
   const path = `/${typingType}/${contentType === CONTENT_TYPE.SHORT ? 'short' : 'long'}`;
 
-  // TODO : 공통 배경 추가
   return (
     <CheckedLayout>
       <ChoiceHeading title={title} />
