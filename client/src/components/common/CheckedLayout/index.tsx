@@ -9,7 +9,6 @@ interface CheckedLayoutProps {
   children: ReactNode;
 }
 
-// TODO : 추후 다른 곳에서도 공통적으로 사용
 export default function CheckedLayout({ children }: CheckedLayoutProps) {
   return (
     <>
