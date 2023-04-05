@@ -25,27 +25,12 @@ interface ShortTypingProviderProps {
 }
 
 const ShortTypingProvider = ({ children, originalTypings, mode }: ShortTypingProviderProps) => {
-  const {
-    currentTypingInfos: practiceValues,
-    currentTypingActions: practiceActions,
-    endGameValue: practiceEndGameValue,
-    prevNextTypingInfo,
-  } = usePracticeShortTyping(originalTypings);
+  const practiceValues = usePracticeShortTyping(originalTypings);
 
-  const {
-    currentTypingInfos: actualValues,
-    currentTypingActions: actualActions,
-    endGameValue: actualEndGameValue,
-  } = useActualShortTyping(originalTypings);
+  const actualValues = useActualShortTyping(originalTypings);
 
-  const { currentTypingInfos, currentTypingActions, endGameValue } =
-    mode === 'PRACTICE'
-      ? {
-          currentTypingInfos: practiceValues,
-          currentTypingActions: practiceActions,
-          endGameValue: practiceEndGameValue,
-        }
-      : { currentTypingInfos: actualValues, currentTypingActions: actualActions, endGameValue: actualEndGameValue };
+  const { currentTypingInfos, currentTypingActions, endGameValue, prevNextTypingInfo } =
+    mode === 'PRACTICE' ? practiceValues : actualValues;
 
   return (
     <ContextCurrentTypingInfo.Provider value={currentTypingInfos}>
