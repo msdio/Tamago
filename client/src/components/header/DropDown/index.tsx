@@ -2,11 +2,11 @@ import { Box, Divider } from '@chakra-ui/react';
 
 import DropDownItem from '@/components/header/DropDown/Item';
 import { fadeIn } from '@/constants/animations';
-import { PRACTICE_LONG_PATH, PRACTICE_SHORT_CHOICE_PATH } from '@/constants/paths';
+import { EXAM_LONG_PATH_CHOICE, PRACTICE_LONG_PATH_LIST, PRACTICE_SHORT_CHOICE_PATH } from '@/constants/paths';
 
 const longTypingMenus = [
-  { menu: '연습타자', path: PRACTICE_LONG_PATH },
-  { menu: '실전타자', path: '' },
+  { menu: '연습타자', path: PRACTICE_LONG_PATH_LIST },
+  { menu: '실전타자', path: EXAM_LONG_PATH_CHOICE },
 ];
 const shortTypingMenus = [
   { menu: '연습타자', path: PRACTICE_SHORT_CHOICE_PATH },

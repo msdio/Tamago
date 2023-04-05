@@ -1,18 +1,18 @@
 import { Text } from '@chakra-ui/react';
 import { memo } from 'react';
 
-import { TypingState } from '@/types/typing';
+import { TYPING_STATE } from '@/constants/typing';
 
 const convertBlankToVisible = (char: string) => {
   if (char === ' ' || char === '\n') return <>&nbsp;</>;
   return char;
 };
 
-const charColor = (state: TypingState) => {
+const charColor = (state: TYPING_STATE) => {
   switch (state) {
-    case TypingState.CORRECT:
+    case TYPING_STATE.CORRECT:
       return 'black';
-    case TypingState.INCORRECT:
+    case TYPING_STATE.INCORRECT:
       return '#ff0000';
     default:
       return '#757575';
@@ -22,18 +22,18 @@ const charColor = (state: TypingState) => {
 interface TypingCharProps {
   originalChar: string;
   userChar?: string;
-  state?: TypingState;
+  state?: TYPING_STATE;
 }
 
-function TypingChar({ originalChar, userChar, state = TypingState.DEFAULT }: TypingCharProps) {
+function TypingChar({ originalChar, userChar, state = TYPING_STATE.DEFAULT }: TypingCharProps) {
   return (
     <Text
       as='span'
       fontFamily='D2 coding'
       color={charColor(state)}
-      backgroundColor={state === TypingState.FOCUS ? '#FBE789' : ''}
+      backgroundColor={state === TYPING_STATE.FOCUS ? '#FBE789' : ''}
     >
-      {state === TypingState.INCORRECT
+      {state === TYPING_STATE.INCORRECT
         ? convertBlankToVisible(userChar || originalChar)
         : convertBlankToVisible(originalChar)}
     </Text>

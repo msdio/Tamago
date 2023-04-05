@@ -5,7 +5,7 @@ import IconButton from '@/components/common/IconButton';
 import PracticeLongLayout from '@/components/typing/long/Layout';
 import TypingDetailPagination from '@/components/typing/long/TypingDetailPagination';
 import TypingLine from '@/components/typing/long/TypingLine';
-import { PRACTICE_LONG_PATH } from '@/constants/paths';
+import { PRACTICE_LONG_PATH_LIST } from '@/constants/paths';
 import { Exit } from '@/icons/Exit';
 import type { LongTypingDetail } from '@/types/typing';
 import { slicedContentAndStrings } from '@/utils/typing';
@@ -14,7 +14,7 @@ export default function LongContent({ content, currentPage, language, title, tot
   const router = useRouter();
 
   const handleExit = () => {
-    router.push(PRACTICE_LONG_PATH);
+    router.push(PRACTICE_LONG_PATH_LIST);
   };
 
   return (

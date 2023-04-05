@@ -10,7 +10,7 @@ import PracticeResultModal from '@/components/common/ResultModal/practice-mode';
 import LongLayout from '@/components/typing/long/Layout';
 import TypingHeader from '@/components/typing/long/TypingHeader';
 import TypingLine from '@/components/typing/long/TypingLine';
-import { PRACTICE_LONG_PATH } from '@/constants/paths';
+import { PRACTICE_LONG_PATH_LIST } from '@/constants/paths';
 import { EXAM_TIMER, TYPING_STATE } from '@/constants/typing';
 import useStopwatch from '@/hooks/useStopWatch';
 import useToggle from '@/hooks/useToggle';
@@ -213,7 +213,7 @@ export default function ExamLongTyping({
   };
 
   const handleExit = () => {
-    router.push(PRACTICE_LONG_PATH);
+    router.push(PRACTICE_LONG_PATH_LIST);
   };
 
   return (

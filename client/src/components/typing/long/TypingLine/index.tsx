@@ -2,7 +2,7 @@ import { Flex } from '@chakra-ui/react';
 import { memo } from 'react';
 
 import TypingChar from '@/components/typing/long/TypingChar';
-import { TypingState } from '@/types/typing';
+import { TYPING_STATE } from '@/constants/typing';
 
 interface TypingLineProps {
   originalLine: string;
@@ -10,7 +10,7 @@ interface TypingLineProps {
   states?: string;
 }
 
-function TypingLine({ originalLine, userLine, states = TypingState.EMPTY }: TypingLineProps) {
+function TypingLine({ originalLine, userLine, states = TYPING_STATE.EMPTY }: TypingLineProps) {
   return (
     <Flex>
       {[...originalLine].map((key, i) => (
@@ -18,7 +18,7 @@ function TypingLine({ originalLine, userLine, states = TypingState.EMPTY }: Typi
           key={i}
           originalChar={key}
           userChar={userLine && userLine[i]}
-          state={(states[i] as TypingState) ?? TypingState.DEFAULT}
+          state={(states[i] as TYPING_STATE) ?? TYPING_STATE.DEFAULT}
         />
       ))}
     </Flex>
