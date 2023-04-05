@@ -11,11 +11,10 @@ import LongLayout from '@/components/typing/long/Layout';
 import TypingHeader from '@/components/typing/long/TypingHeader';
 import TypingLine from '@/components/typing/long/TypingLine';
 import { PRACTICE_LONG_PATH } from '@/constants/paths';
-import { EXAM_TIMER } from '@/constants/typing';
+import { EXAM_TIMER, TYPING_STATE } from '@/constants/typing';
 import useStopwatch from '@/hooks/useStopWatch';
 import useToggle from '@/hooks/useToggle';
 import type { CharInfo, LongTypingDetail } from '@/types/typing';
-import { TypingState } from '@/types/typing';
 import { getCharType } from '@/utils/char';
 import { getTypingAccuracy, getTypingSpeed, getTypingWpm, getWrongKeys, slicedContentAndStrings } from '@/utils/typing';
 
@@ -50,7 +49,7 @@ export default function ExamLongTyping({
       components: [],
     })),
   );
-  const typingStates = useRef<string>(TypingState.FOCUS);
+  const typingStates = useRef<string>(TYPING_STATE.FOCUS);
   const typingWpm = useRef(0);
   const typingSpeed = useRef(0);
   const typingAccuracy = useRef(0);
@@ -81,7 +80,7 @@ export default function ExamLongTyping({
       typingAccuracy: typingAccuracy.current,
       typingSpeed: typingSpeed.current,
       wpm: typingWpm.current,
-      mode: 'PRACTICE',
+      mode: 'EXAM',
       wrongKeys: getWrongKeys(originalInfos.current, userInfos.current),
     };
   };
@@ -97,7 +96,7 @@ export default function ExamLongTyping({
   useEffect(() => {
     typingAccuracy.current = getTypingAccuracy({
       typingLength: typingStates.current.length - 1,
-      wrongLength: typingStates.current.replaceAll(TypingState.CORRECT, TypingState.EMPTY).length - 1,
+      wrongLength: typingStates.current.replaceAll(TYPING_STATE.CORRECT, TYPING_STATE.EMPTY).length - 1,
     });
   }, [textarea]);
 
@@ -168,20 +167,20 @@ export default function ExamLongTyping({
       // 한글을 뺀 경우 (길이 변화 X)
       if (prevComponents > currComponents) {
         if (originalInfos.current[textareaLength - 1].char === value[textareaLength - 1]) {
-          typingStates.current = typingStates.current.slice(0, -2) + TypingState.CORRECT + TypingState.FOCUS;
+          typingStates.current = typingStates.current.slice(0, -2) + TYPING_STATE.CORRECT + TYPING_STATE.FOCUS;
           typingCount.current +=
             userInfos.current[textareaLength - 1].components.length; /* 현재 글자의 글쇠를 타수에 더함 */
         } else {
-          typingStates.current = typingStates.current.slice(0, -2) + TypingState.INCORRECT + TypingState.FOCUS;
+          typingStates.current = typingStates.current.slice(0, -2) + TYPING_STATE.INCORRECT + TYPING_STATE.FOCUS;
         }
       }
       // 한글을 더한 경우 (길이 변화 X)
       else {
         if (originalInfos.current[textareaLength - 1].char === value[textareaLength - 1]) {
-          typingStates.current = typingStates.current.slice(0, -2) + TypingState.CORRECT + TypingState.FOCUS;
+          typingStates.current = typingStates.current.slice(0, -2) + TYPING_STATE.CORRECT + TYPING_STATE.FOCUS;
           typingCount.current += userInfos.current[textareaLength - 1].components.length;
         } else {
-          typingStates.current = typingStates.current.slice(0, -2) + TypingState.INCORRECT + TypingState.FOCUS;
+          typingStates.current = typingStates.current.slice(0, -2) + TYPING_STATE.INCORRECT + TYPING_STATE.FOCUS;
         }
       }
     }
@@ -194,10 +193,10 @@ export default function ExamLongTyping({
       };
 
       if (originalInfos.current[textareaLength - 1].char === userInfos.current[textareaLength - 1].char) {
-        typingStates.current = typingStates.current.slice(0, -1) + TypingState.CORRECT + TypingState.FOCUS;
+        typingStates.current = typingStates.current.slice(0, -1) + TYPING_STATE.CORRECT + TYPING_STATE.FOCUS;
         typingCount.current += userInfos.current[textareaLength - 1].components.length;
       } else {
-        typingStates.current = typingStates.current.slice(0, -1) + TypingState.INCORRECT + TypingState.FOCUS;
+        typingStates.current = typingStates.current.slice(0, -1) + TYPING_STATE.INCORRECT + TYPING_STATE.FOCUS;
       }
     }
     // 빼서 글자가 감소한 경우
@@ -209,7 +208,7 @@ export default function ExamLongTyping({
       };
 
       backspaceCount.current += 1; /* TODO : 타이핑을 엄청 틀린 후 지울 경우 예외처리 */
-      typingStates.current = typingStates.current.slice(0, -2) + TypingState.FOCUS;
+      typingStates.current = typingStates.current.slice(0, -2) + TYPING_STATE.FOCUS;
     }
   };
 

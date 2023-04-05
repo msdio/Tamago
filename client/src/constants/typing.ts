@@ -10,3 +10,11 @@ export const CONTENT_TYPE: Record<ContentType, ContentType> = {
 export const EXAM_TIMER = {
   LONG: 4 * 60 * 1000,
 };
+
+export enum TYPING_STATE {
+  'DEFAULT' = 'd',
+  'CORRECT' = 'c',
+  'INCORRECT' = 'i',
+  'FOCUS' = 'f',
+  'EMPTY' = '',
+}
