@@ -1,7 +1,8 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 
-import TypingExit from '@/components/typing/long/TypingExit';
+import IconButton from '@/components/common/IconButton';
 import InfoBar from '@/components/typing/long/TypingHeader/InfoBar';
+import { Exit } from '@/icons/Exit';
 
 interface TypingHeaderProps {
   type: 'practice' | 'exam';
@@ -9,9 +10,10 @@ interface TypingHeaderProps {
   wpm: number;
   accuracy: number;
   speed: number;
+  onExit: () => void;
 }
 
-export default function TypingHeader({ type, time, wpm, accuracy, speed }: TypingHeaderProps) {
+export default function TypingHeader({ type, time, wpm, accuracy, speed, onExit }: TypingHeaderProps) {
   return (
     <Flex gap='24px' mb='28px'>
       <Box w='118px' bg='#CEF0FF' border=' 0.6px solid #000000' borderRadius={10}></Box>
@@ -32,7 +34,7 @@ export default function TypingHeader({ type, time, wpm, accuracy, speed }: Typin
             </Text>
           </Flex>
           <Box mb='21px'>
-            <TypingExit />
+            <IconButton icon={<Exit />} onAction={onExit} />
           </Box>
         </Flex>
         <InfoBar type={type} time={time} wpm={wpm} accuracy={accuracy} speed={speed} />

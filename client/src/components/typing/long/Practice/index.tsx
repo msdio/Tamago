@@ -211,6 +211,10 @@ export default function PracticeLongTyping({
     }
   };
 
+  const handleExit = () => {
+    router.push(PRACTICE_LONG_PATH);
+  };
+
   return (
     <>
       <LongLayout>
@@ -220,6 +224,7 @@ export default function PracticeLongTyping({
           speed={typingSpeed.current}
           wpm={typingWpm.current}
           time={totalMillisecond / 1000}
+          onExit={handleExit}
         />
         <Flex
           h='550px'

@@ -10,6 +10,7 @@ import PracticeResultModal from '@/components/common/ResultModal/practice-mode';
 import LongLayout from '@/components/typing/long/Layout';
 import TypingHeader from '@/components/typing/long/TypingHeader';
 import TypingLine from '@/components/typing/long/TypingLine';
+import { PRACTICE_LONG_PATH } from '@/constants/paths';
 import { EXAM_TIMER } from '@/constants/typing';
 import useStopwatch from '@/hooks/useStopWatch';
 import useToggle from '@/hooks/useToggle';
@@ -101,6 +102,7 @@ export default function ExamLongTyping({
   }, [textarea]);
 
   useEffect(() => {
+    // 타임 아웃
     if (EXAM_TIMER.LONG <= totalMillisecond) {
       timePause();
       toggleOn();
@@ -211,6 +213,10 @@ export default function ExamLongTyping({
     }
   };
 
+  const handleExit = () => {
+    router.push(PRACTICE_LONG_PATH);
+  };
+
   return (
     <>
       <LongLayout>
@@ -220,6 +226,7 @@ export default function ExamLongTyping({
           speed={typingSpeed.current}
           wpm={typingWpm.current}
           time={Math.floor(EXAM_TIMER.LONG / 1000) - Math.floor(totalMillisecond / 1000)} // 타이머에서 현재 경과시간 뺀 값
+          onExit={handleExit}
         />
         <Flex
           h='550px'
