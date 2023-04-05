@@ -14,7 +14,7 @@ interface InfoBarProps {
 
 // TODO : 짧은글, 긴글에서 공통적으로 사용됨
 export default function InfoBar({ onExit }: InfoBarProps) {
-  const { time, typingAccuracy, typingSpeed, typingWpm } = useContextShortTyping();
+  const { typingTime: time, typingAccuracy, typingSpeed, typingWpm } = useContextShortTyping();
 
   return (
     <>

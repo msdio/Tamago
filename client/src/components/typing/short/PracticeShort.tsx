@@ -1,6 +1,7 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 
 import {
+  useContextPrevNextTypingInfo,
   useContextShortTyping,
   useContextShortTypingHandler,
 } from '@/components/typing/short/_hook/contextShortTyping';
@@ -11,7 +12,8 @@ import TwoRightArrow from '@/icons/TwoRightArrow';
 
 // TODO : Header, footer 추가
 export default function PracticeShort() {
-  const { originalTyping, nextOriginalTyping } = useContextShortTyping();
+  const { originalTyping } = useContextShortTyping();
+  const { nextOriginalTyping } = useContextPrevNextTypingInfo();
   const { onExit } = useContextShortTypingHandler();
 
   return (

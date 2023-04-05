@@ -5,10 +5,16 @@ import { useMemo, useRef, useState } from 'react';
 import type { ShortTypingType } from '@/apis/typing';
 import useCurrentTyping from '@/components/typing/short/_hook/useCurrentTyping';
 import useToggle from '@/hooks/useToggle';
+import type {
+  CurrentTypingActionType,
+  CurrentTypingInfoType,
+  EndGameValueType,
+  PrevNextTypingInfoType,
+} from '@/types/shortTyping';
 import type { TypingHistoryType } from '@/types/typing';
 import { getTypingHistoryAverage } from '@/utils/typing';
 
-export default function useActualShortTyping(originalTypings: ShortTypingType[]) {
+const usePracticeShortTyping = (originalTypings: ShortTypingType[]) => {
   const [currentIdx, setCurrentIdx] = useState(0);
   const router = useRouter();
 
@@ -102,21 +108,24 @@ export default function useActualShortTyping(originalTypings: ShortTypingType[])
     router.reload();
   };
 
-  const values = {
+  const currentTypingInfos: CurrentTypingInfoType = {
     originalTyping,
     userTyping,
-    time,
+    typingTime: time,
     typingCount,
     typingWpm,
     typingAccuracy,
     typingSpeed,
+  };
+
+  const prevNextTypingInfo: PrevNextTypingInfoType = {
     prevUserTyping,
     prevOriginalTyping,
     nextOriginalTyping,
   };
 
-  const endGameValue = {
-    typingAvgResult,
+  const endGameValue: EndGameValueType = {
+    result: typingAvgResult,
     endTime: history.current[history.current.length - 1]?.endTime ?? new Date(),
     isExitModalOpen,
     isResultModalOpen,
@@ -126,15 +135,18 @@ export default function useActualShortTyping(originalTypings: ShortTypingType[])
     handleReplay,
   };
 
-  const actions = {
+  const currentTypingActions: CurrentTypingActionType = {
     onEndTyping: handleEndTyping,
     onTyping: handleTyping,
     onExit: handleExitModalOpen,
   };
 
   return {
-    values,
-    actions,
+    currentTypingInfos,
+    currentTypingActions,
     endGameValue,
+    prevNextTypingInfo,
   };
-}
+};
+
+export default usePracticeShortTyping;
