@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.Tamago.common.Response.CustomResponse;
+import com.project.Tamago.common.response.CustomResponse;
 import com.project.Tamago.dto.requestDto.JoinReqDto;
 import com.project.Tamago.dto.requestDto.LoginReqDto;
 import com.project.Tamago.dto.requestDto.PasswordReqDto;
@@ -49,7 +49,10 @@ public class AuthController {
 	}
 
 	@PostMapping("/login")
-	public CustomResponse<LoginResDto> login(@Validated @RequestBody LoginReqDto loginReqDto) {
+	public CustomResponse<LoginResDto> login(@Validated @RequestBody LoginReqDto loginReqDto, BindingResult result) {
+		if (result.hasErrors()) {
+			throw new InvalidParameterException(result);
+		}
 		return new CustomResponse<>(authService.login(loginReqDto));
 	}
 

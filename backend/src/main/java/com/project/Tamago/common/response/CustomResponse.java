@@ -1,4 +1,4 @@
-package com.project.Tamago.common.Response;
+package com.project.Tamago.common.response;
 
 import static com.project.Tamago.common.enums.ResponseCode.*;
 
