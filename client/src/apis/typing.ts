@@ -85,3 +85,9 @@ export const getTypingHistoryAPI = async (typingHistory: TypingHistoryRequest) =
   const res = await requestWithAuth.post('/typing/history', typingHistory);
   return res.data.code;
 };
+
+export const examLongTypingAPI = async (language: string) => {
+  const res = await requestWithAuth.get(`/typing/exam/long?language=${language}`);
+
+  return res.data;
+};

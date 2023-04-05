@@ -35,7 +35,7 @@ export default function LanguageBox({ path, language }: LanguageBoxProps) {
   if (language === 'random') {
     return (
       <Box pos='relative'>
-        <Link href={`${path}?language?=${getRandomLanguage()}`}>
+        <Link href={`${path}?language=${getRandomLanguage().toUpperCase()}`}>
           <TextBox content={SELECT_LANGUAGE_LABEL['random']} />
         </Link>
         <Box
@@ -57,7 +57,7 @@ export default function LanguageBox({ path, language }: LanguageBoxProps) {
   }
 
   return (
-    <Link href={`${path}?language=${language}`}>
+    <Link href={`${path}?language=${language.toUpperCase()}`}>
       <TextBox content={SELECT_LANGUAGE_LABEL[language]} />
     </Link>
   );
