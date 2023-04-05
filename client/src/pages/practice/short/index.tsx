@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import type { ShortTypingResultType, TypingLanguageType } from '@/apis/typing';
 import { getShortTypingWritingsAPI } from '@/apis/typing';
+import CheckedLayout from '@/components/common/CheckedLayout';
 import ShortTypingProvider from '@/components/typing/short/_hook/contextShortTyping';
 import PracticeShort from '@/components/typing/short/PracticeShort';
 import useToggle from '@/hooks/useToggle';
@@ -37,7 +38,9 @@ export default function PracticeShortPage() {
 
   return (
     <ShortTypingProvider originalTypings={data.typingWritings} mode='PRACTICE'>
-      <PracticeShort />;
+      <CheckedLayout>
+        <PracticeShort />;
+      </CheckedLayout>
     </ShortTypingProvider>
   );
 }
