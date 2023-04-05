@@ -35,8 +35,10 @@ public class SlackMessageGenerator {
 			String requestURI = request.getRequestURI();
 			String body = getBody(request);
 			String ip = request.getHeader("X-Forwarded-For");
-			if (ip == null || ip.isBlank()) {
-				ip = InetAddress.getLocalHost().getHostAddress();
+			if (ip != null && !ip.isBlank()) {
+				ip = ip.split(",")[0].trim();
+			} else {
+				ip = request.getRemoteAddr();
 			}
 			return toMessage(currentTime, userId, ip,
 				exceptionMessage, method, requestURI, body);
