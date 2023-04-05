@@ -15,7 +15,7 @@ export default function Choice({ contentType, typingType }: ChoiceProps) {
   const title = `${contentType === CONTENT_TYPE.SHORT ? '짧은 글' : '긴 글'} ${
     typingType === 'practice' ? '연습' : '실전'
   }타자`;
-  const path = `/${typingType}/${contentType}`;
+  const path = `/${typingType}/${contentType.toLowerCase()}`; /* contentType 소문자로 바꾸었어요! */
   // TODO : 공통 배경 추가
   return (
     <CheckedLayout>
