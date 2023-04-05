@@ -22,7 +22,7 @@ export default function SignupForm() {
   const [isEmailDuplicated, setIsEmailDuplicated] = useState(true);
   const [alertMessage, setAlertMessage] = useState('알 수 없는 에러입니다.');
 
-  const [isModalOpen, handleModalOpen, { toggleOn, toggleOff }] = useToggle();
+  const [isModalOpen, toggleModalOpen, { toggleOn, toggleOff }] = useToggle();
 
   const [inputs, valids, handleInputChange] = useRegexInputs({
     name: /./,
