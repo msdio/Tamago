@@ -6,7 +6,7 @@ export const CONTENT_TYPE: Record<string, ContentType> = {
   SHORT: false,
 };
 
-export const TYPING_MODE: Record<string, TypingMode> = {
+export const TYPING_MODE: Record<TypingMode, TypingMode> = {
   PRACTICE: 'PRACTICE',
   ACTUAL: 'ACTUAL',
 };
