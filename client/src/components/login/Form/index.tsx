@@ -1,9 +1,10 @@
-import { Box, Button, Checkbox, Flex, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 
+import { CustomCheckbox } from '@/components/common/Checkbox';
 import FormOr from '@/components/common/FormOr';
 import RegexInput from '@/components/common/RegexInput';
-import { INQUIRY_PW_PATH } from '@/constants/paths';
+import { INQUIRY_PW_PATH, SIGNUP_TERM_PATH } from '@/constants/paths';
 import useRegexInputs from '@/hooks/useRegexInputs';
 import { GithubLogo } from '@/icons/GithubLogo';
 import { GoogleLogo } from '@/icons/GoogleLogo';
@@ -63,15 +64,15 @@ function LoginForm({ onLogin }: LoginFormProps) {
       </Box>
 
       <Flex w='full' justifyContent='space-between' mt='20px'>
-        <Checkbox defaultChecked colorScheme='primary'>
-          아이디 저장
-        </Checkbox>
+        <CustomCheckbox labelText='아이디 저장' />
         <Flex gap='13px' fontSize='15px'>
           <Link href={INQUIRY_PW_PATH}>
             <Text color='gray.dark'>비밀번호 찾기</Text>
           </Link>
           <Text color='gray.dark'>|</Text>
-          <Text fontWeight='bold'>회원가입 하기</Text>
+          <Link href={SIGNUP_TERM_PATH}>
+            <Text fontWeight='bold'>회원가입 하기</Text>
+          </Link>
         </Flex>
       </Flex>
       <Button size='lg' mt='42px' onClick={onSubmit} isDisabled={isLoginDisabled}>
@@ -83,10 +84,30 @@ function LoginForm({ onLogin }: LoginFormProps) {
       </Box>
 
       <Flex justifyContent='center' gap='29.5px'>
-        <Button bg='fff' border='0.6px solid' borderColor='gray.main' width='59px' height='59px' p='10px'>
+        <Button
+          bg='fff'
+          border='0.6px solid'
+          borderColor='gray.main'
+          width='59px'
+          height='59px'
+          p='10px'
+          _hover={{
+            bgColor: 'primary.light',
+          }}
+        >
           <GoogleLogo />
         </Button>
-        <Button bg='fff' border='0.6px solid' borderColor='gray.main' width='59px' height='59px' p='10px'>
+        <Button
+          bg='fff'
+          border='0.6px solid'
+          borderColor='gray.main'
+          width='59px'
+          height='59px'
+          p='10px'
+          _hover={{
+            bgColor: 'primary.light',
+          }}
+        >
           <GithubLogo />
         </Button>
       </Flex>
