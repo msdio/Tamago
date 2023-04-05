@@ -1,5 +1,7 @@
 package com.project.Tamago.service;
 
+import static com.project.Tamago.common.Constant.*;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,6 +14,7 @@ import com.project.Tamago.dto.ShortTypingDto;
 import com.project.Tamago.dto.mapper.TypingMapper;
 import com.project.Tamago.dto.responseDto.ShortTypingListResDto;
 import com.project.Tamago.repository.TypingRepository;
+import com.project.Tamago.util.TypingUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,20 +24,10 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Transactional
 public class ShortTypingService {
-
-	private static final int SHORT_TYPING_SIZE = 30;
 	private final TypingRepository typingRepository;
 
 	public ShortTypingListResDto findRandomShortTyping(String language) {
-		List<ShortTypingDto> shortTypingDtos = getRandomLimit30(typingRepository.findByContentTypeIsFalseAndLanguageIs(language));
+		List<ShortTypingDto> shortTypingDtos = TypingUtil.getRandomShortTypings(typingRepository.findByContentTypeIsFalseAndLanguageIs(language), PRACTICE_SHORT_TYPING_SIZE);
 		return new ShortTypingListResDto(0, "practice", shortTypingDtos);
-	}
-
-	private List<ShortTypingDto> getRandomLimit30(List<Typing> shortTypingsAllList) {
-		Collections.shuffle(shortTypingsAllList);
-		return shortTypingsAllList.stream()
-			.limit(SHORT_TYPING_SIZE)
-			.map(TypingMapper::toShortTypingDto)
-			.collect(Collectors.toList());
 	}
 }

@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.Tamago.common.annotation.Login;
 import com.project.Tamago.common.response.CustomResponse;
-import com.project.Tamago.dto.Login;
+import com.project.Tamago.dto.LoginResolverDto;
 import com.project.Tamago.dto.requestDto.ModifyProfileReqDto;
 import com.project.Tamago.dto.responseDto.ProfileResDto;
 import com.project.Tamago.common.exception.InvalidParameterException;
@@ -26,23 +27,23 @@ public class UserController {
 	private final UserService userService;
 
 	@GetMapping("/profile")
-	public CustomResponse<ProfileResDto> findProfile(@com.project.Tamago.common.annotation.Login Login login) {
-		return new CustomResponse<>(userService.findProfileById(login.getUserId()));
+	public CustomResponse<ProfileResDto> findProfile(@Login LoginResolverDto loginResolverDto) {
+		return new CustomResponse<>(userService.findProfileById(loginResolverDto.getUserId()));
 	}
 
 	@PatchMapping("/profile")
-	public CustomResponse<Void> modifyProfile(@com.project.Tamago.common.annotation.Login Login login,
+	public CustomResponse<Void> modifyProfile(@Login LoginResolverDto loginResolverDto,
 		@Validated @RequestBody ModifyProfileReqDto modifyProfileReqDto, BindingResult result) {
 		if (result.hasErrors()) {
 			throw new InvalidParameterException(result);
 		}
-		userService.modifyUserById(login.getUserId(), modifyProfileReqDto);
+		userService.modifyUserById(loginResolverDto.getUserId(), modifyProfileReqDto);
 		return new CustomResponse<>();
 	}
 
 	@GetMapping("/typing/page")
-	public CustomResponse<Integer> findCurrentPage(@com.project.Tamago.common.annotation.Login Login login,
+	public CustomResponse<Integer> findCurrentPage(@Login LoginResolverDto loginResolverDto,
 		@RequestParam(required = true) Integer longTypingId) {
-		return new CustomResponse<>(userService.findCurrentPage(login.getUserId(), longTypingId));
+		return new CustomResponse<>(userService.findCurrentPage(loginResolverDto.getUserId(), longTypingId));
 	}
 }

@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.Tamago.common.annotation.Login;
 import com.project.Tamago.common.response.CustomResponse;
-import com.project.Tamago.dto.Login;
+import com.project.Tamago.dto.LoginResolverDto;
 import com.project.Tamago.dto.responseDto.DateAccuracyAverageResDto;
 import com.project.Tamago.dto.responseDto.DateWpmAverageResDto;
 import com.project.Tamago.dto.responseDto.StatisticsAllResDto;
@@ -25,26 +26,24 @@ public class StatisticController {
 	private final StatisticService statisticService;
 
 	@GetMapping("/all")
-	public CustomResponse<StatisticsAllResDto> findUserStatistic(@com.project.Tamago.common.annotation.Login Login login) {
-		return new CustomResponse<>(statisticService.totalStatisticsAll(login.getUserId()));
+	public CustomResponse<StatisticsAllResDto> findUserStatistic(@Login LoginResolverDto loginResolverDto) {
+		return new CustomResponse<>(statisticService.totalStatisticsAll(loginResolverDto.getUserId()));
 	}
 
 	@GetMapping("/speed")
-	public CustomResponse<DateWpmAverageResDto> findDateAverageWpm(
-		@com.project.Tamago.common.annotation.Login Login login,
+	public CustomResponse<DateWpmAverageResDto> findDateAverageWpm(@Login LoginResolverDto loginResolverDto,
 		@RequestParam("startDay") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDay,
 		@RequestParam("endDay") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDay) {
 		return new CustomResponse<>(
-			statisticService.findWpmAverageByUser(login.getUserId(), startDay, endDay));
+			statisticService.findWpmAverageByUser(loginResolverDto.getUserId(), startDay, endDay));
 	}
 
 	@GetMapping("/accuracy")
-	public CustomResponse<DateAccuracyAverageResDto> findDateAverageAccuracy(
-		@com.project.Tamago.common.annotation.Login Login login,
+	public CustomResponse<DateAccuracyAverageResDto> findDateAverageAccuracy(@Login LoginResolverDto loginResolverDto,
 		@RequestParam("startDay") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDay,
 		@RequestParam("endDay") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDay) {
 		return new CustomResponse<>(
-			statisticService.findAccuracyAverageByUser(login.getUserId(), startDay, endDay));
+			statisticService.findAccuracyAverageByUser(loginResolverDto.getUserId(), startDay, endDay));
 	}
 
 }
