@@ -26,6 +26,7 @@ export default function CurrentTyping() {
     if (e.key === 'Enter') {
       e.preventDefault();
       onEndTyping(userTyping.padEnd(originalTyping.length, ' '));
+      console.log('onEndTyping: ');
     }
   };
 

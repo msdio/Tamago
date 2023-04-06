@@ -26,10 +26,11 @@ const usePracticeShortTyping = (originalTypings: ShortTypingType[]) => {
     typingAccuracy,
     typingWpm,
     typingSpeed,
-    handleTypingSubmit,
+    handlePracticeSubmit,
     handleTyping,
     timePlay,
     timePause,
+    resetTypingData,
   } = useCurrentTyping(
     originalTypings[currentIdx] ?? {
       typingId: 0,
@@ -67,10 +68,10 @@ const usePracticeShortTyping = (originalTypings: ShortTypingType[]) => {
 
   const handleSubmit = useCallback(
     async (input: string) => {
-      await handleTypingSubmit(input);
+      await handlePracticeSubmit(input);
       saveTypingHistory(input);
     },
-    [handleTypingSubmit, saveTypingHistory],
+    [handlePracticeSubmit, saveTypingHistory],
   );
 
   const handleEndTyping = useCallback(
@@ -79,6 +80,7 @@ const usePracticeShortTyping = (originalTypings: ShortTypingType[]) => {
       await handleSubmit(input);
 
       if (currentIdx < originalTypings.length - 1) {
+        resetTypingData();
         setCurrentIdx((prev) => prev + 1);
       } else {
         // 여기서 결과 모달을 띄워야하기 때문에, 모달 관련 로직을 여기서 처리하는게 맞을 것 같음

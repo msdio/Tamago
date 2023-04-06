@@ -5,7 +5,7 @@ import type { ShortTypingType } from '@/apis/typing';
 import Confirm from '@/components/common/Confirm';
 import PracticeResultModal from '@/components/common/ResultModal/practice-mode';
 import useActualShortTyping from '@/components/typing/short/_hook/useActualShortTyping';
-import usePracticeShortTyping from '@/components/typing/short/_hook/useActualShortTyping';
+import usePracticeShortTyping from '@/components/typing/short/_hook/usePracticeShortTyping';
 import type { CurrentTypingActionType, CurrentTypingInfoType, PrevNextTypingInfoType } from '@/types/shortTyping';
 import type { TypingMode } from '@/types/typing';
 
@@ -25,7 +25,6 @@ interface ShortTypingProviderProps {
 
 const ShortTypingProvider = ({ children, originalTypings, mode }: ShortTypingProviderProps) => {
   const practiceValues = usePracticeShortTyping(originalTypings);
-
   const actualValues = useActualShortTyping(originalTypings);
 
   const { currentTypingInfos, currentTypingActions, endGameValue, prevNextTypingInfo } =
