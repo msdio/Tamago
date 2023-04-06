@@ -36,7 +36,7 @@ export default function TypingListPagination({ currentPage, totalPage }: TypingL
       )}
       <Flex gap='10px'>
         {currentIndexArr.map((index) => {
-          if (index === currentPage) {
+          if (index == currentPage) {
             return (
               <Link href={`${PRACTICE_LONG_PATH}?page=${index}`} key={index}>
                 <Text

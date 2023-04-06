@@ -17,7 +17,7 @@ export default function PracticeLongPage() {
   const getLongTypingList = async (page = 1) => {
     const { result } = await getLongTypingListAPI(page);
 
-    const { totalPage, longTypings } = result;
+    const { totalPage, longTypings } = result as { totalPage: number; longTypings: LongTypingItem[] };
 
     setData({ currentPage: page, totalPage, longTypings });
   };
