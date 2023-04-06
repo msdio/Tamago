@@ -103,13 +103,17 @@ export const postRegisterLongTextAPI = async (data: RegisterLongTextProps): Prom
 
 export const getTierInfoAPI = async (): Promise<{
   tier: TierLevels;
-  score: number;
+  prevScore: number;
+  afterScore: number;
 }> => {
-  const score = 1000;
+  const prevScore = 900;
+  const afterScore = 1000;
 
-  const tier = getTierLevel(score);
+  const tier = getTierLevel(afterScore);
+
   return {
     tier,
-    score,
+    prevScore,
+    afterScore,
   };
 };

@@ -3,14 +3,18 @@ import { Box, Image, Text } from '@chakra-ui/react';
 import { Tier } from '@/components/common/Tier';
 import { showScaleUp, wobblyEgg } from '@/constants/animations';
 import { TIER_INFO } from '@/constants/tierInfo';
+import useCountUp from '@/hooks/useCountUp';
 import { getTierLevel } from '@/utils/tier';
 
 interface ScoreInfoProps {
-  score: number | null;
+  afterScore: number | null;
+  prevScore: number | null;
 }
 
-export default function ScoreInfo({ score }: ScoreInfoProps) {
-  const isLoading = score === null;
+export default function ScoreInfo({ prevScore, afterScore }: ScoreInfoProps) {
+  const isLoading = afterScore === null || prevScore === null;
+
+  const score = useCountUp({ start: prevScore ?? 0, end: afterScore ?? 0 });
 
   if (isLoading) {
     return (
@@ -38,7 +42,7 @@ export default function ScoreInfo({ score }: ScoreInfoProps) {
     );
   }
 
-  const tier = getTierLevel(score);
+  const tier = getTierLevel(afterScore);
   const { level, text, label } = TIER_INFO[tier];
 
   return (

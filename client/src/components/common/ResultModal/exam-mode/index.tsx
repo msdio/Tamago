@@ -40,13 +40,15 @@ export default function ExamResultModal({ isOpen, result, endTime, onAction, act
     togglePrepareModal();
   };
 
-  const [score, setScore] = useState<number | null>(null);
+  const [prevScore, setPrevScore] = useState<number | null>(null);
+  const [afterScore, setAfterScore] = useState<number | null>(null);
 
   const settingTierInfo = async () => {
-    const { score } = await getTierInfoAPI();
+    const { prevScore, afterScore } = await getTierInfoAPI();
 
     setTimeout(() => {
-      setScore(score);
+      setPrevScore(prevScore);
+      setAfterScore(afterScore);
     }, 1000);
   };
 
@@ -75,7 +77,7 @@ export default function ExamResultModal({ isOpen, result, endTime, onAction, act
 
           <ModalBody mt='32px' mb='50px' p={0}>
             <Flex gap='65px'>
-              <ScoreInfo score={score} />
+              <ScoreInfo afterScore={afterScore} prevScore={prevScore} />
               <Box w='264px' pt='32px'>
                 <InfoList {...result} />
               </Box>
