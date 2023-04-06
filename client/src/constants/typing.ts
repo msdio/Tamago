@@ -16,9 +16,10 @@ export const TYPING_MODE: Record<string, TypingMode> = {
 const TYPING_TYPE: Record<string, string> = {
   KOREAN: '한글',
   ENGLISH: '영어',
-  JAVA: 'JAVA',
-  PYTHON: '파이썬',
+  JAVA: 'Java',
+  PYTHON: 'Python',
   C: 'C',
+  JAVASCRIPT: 'JavaScript',
 };
 
 export { TYPING_TYPE };
