@@ -11,7 +11,7 @@ import PracticeResultModal from '@/components/common/ResultModal/practice-mode';
 import LongLayout from '@/components/typing/long/Layout';
 import TypingHeader from '@/components/typing/long/TypingHeader';
 import TypingLine from '@/components/typing/long/TypingLine';
-import { PRACTICE_LONG_PATH_LIST } from '@/constants/paths';
+import { EXAM_LONG_PATH_CHOICE } from '@/constants/paths';
 import { EXAM_TIMER, TYPING_STATE } from '@/constants/typing';
 import useStopwatch from '@/hooks/useStopWatch';
 import useToggle from '@/hooks/useToggle';
@@ -36,9 +36,9 @@ export default function ExamLongTyping({
 
   const [textarea, setTextarea] = useState('');
   // 실전 도중 나가는 경우를 위한 상태
-  const [{ penalty, nextRoute }, setPenalty] = useState({
-    penalty: false,
-    nextRoute: '',
+  const [{ penalty, nextRoute }, setPenalty] = useState<{ penalty: boolean | undefined; nextRoute: string }>({
+    penalty: undefined,
+    nextRoute: router.asPath,
   });
   const { totalMillisecond, status, timePlay, timePause } = useStopwatch();
 
@@ -71,7 +71,7 @@ export default function ExamLongTyping({
   const focusTextarea = () => textareaRef.current?.focus();
 
   const onModalButtonClick = () => {
-    // handleResultModalToggle();
+    router.reload();
   };
 
   const generateTypingInfo = () => {
@@ -87,16 +87,16 @@ export default function ExamLongTyping({
       typingAccuracy: typingAccuracy.current,
       typingSpeed: typingSpeed.current,
       wpm: typingWpm.current,
-      mode: 'EXAM',
+      mode: 'PRACTICE',
       wrongKeys: getWrongKeys(originalInfos.current, userInfos.current),
     };
   };
 
   const finishTyping = async () => {
     timePause();
-    const typingInfo = generateTypingInfo();
+    setPenalty({ penalty: false, nextRoute });
     if (!userProfile) return;
-    await getTypingHistoryAPI(typingInfo);
+    await getTypingHistoryAPI(generateTypingInfo());
     resultToggleOn();
   };
 
@@ -112,13 +112,12 @@ export default function ExamLongTyping({
     focusTextarea();
 
     const onRouteChange = (route: string) => {
-      // 페널티 수락할 경우
-      exitToggleOn();
-      timePause();
-      setPenalty({ penalty: false, nextRoute: route });
-      // setPenalty({ penalty: false, nextRoute: '' });
-      router.events.emit('routeChangeError');
-      throw 'routeChange aborted';
+      if (penalty === undefined) {
+        exitToggleOn();
+        setPenalty({ penalty, nextRoute: route });
+        router.events.emit('routeChangeError');
+        throw 'routeChange aborted';
+      }
     };
 
     const cleanUpFunction = () => {
@@ -127,11 +126,6 @@ export default function ExamLongTyping({
 
     if (penalty) {
       router.replace(nextRoute);
-      return cleanUpFunction;
-    }
-
-    if (nextRoute !== '') {
-      timePlay();
       return cleanUpFunction;
     }
 
@@ -252,7 +246,7 @@ export default function ExamLongTyping({
   };
 
   const handleExit = () => {
-    router.push(PRACTICE_LONG_PATH_LIST);
+    router.push(EXAM_LONG_PATH_CHOICE);
   };
 
   return (
