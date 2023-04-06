@@ -30,7 +30,7 @@ export default function ExamLongTyping({
 
   const userProfile = useRecoilValue(userProfileState);
 
-  const [isResultModalOpen, _, { toggleOn }] = useToggle();
+  const [isResultModalOpen, , { toggleOn }] = useToggle();
 
   const [textarea, setTextarea] = useState('');
   const { totalMillisecond, status, timePlay, timePause } = useStopwatch();
@@ -63,7 +63,7 @@ export default function ExamLongTyping({
    */
   const focusTextarea = () => textareaRef.current?.focus();
 
-  const onAlertClick = () => {
+  const onModalButtonClick = () => {
     // handleResultModalToggle();
   };
 
@@ -85,13 +85,39 @@ export default function ExamLongTyping({
     };
   };
 
+  const finishTyping = async () => {
+    timePause();
+    const typingInfo = generateTypingInfo();
+    if (!userProfile) return;
+    await getTypingHistoryAPI(typingInfo);
+    toggleOn();
+  };
+
+  const [toUrl, setToUrl] = useState(router.asPath);
+
   /**
    * 처음 화면이 렌더링될 때 textarea로 포커싱되도록 한다.
    * textarea는 숨겨두었기 때문에 사용자가 보고 포커싱할 수 없다.
    */
   useEffect(() => {
     focusTextarea();
+
+    // const onRouteChange = (url: string) => {
+    //   console.log('routeChangeStart:', url);
+    //   setToUrl(url);
+    //   router.events.emit('routeChangeError');
+    //   throw 'Abort route change. Please ignore this error.';
+    // };
+
+    // router.events.on('routeChangeStart', onRouteChange);
+    // return () => {
+    //   router.events.off('routeChangeStart', onRouteChange);
+    // };
   }, []);
+
+  // useEffect(() => {
+  //   router.replace(toUrl);
+  // }, [toUrl]);
 
   useEffect(() => {
     typingAccuracy.current = getTypingAccuracy({
@@ -103,11 +129,7 @@ export default function ExamLongTyping({
   useEffect(() => {
     // 타임 아웃
     if (EXAM_TIMER.LONG <= totalMillisecond) {
-      timePause();
-      toggleOn();
-      // if (userProfile) {
-      //   getTypingHistoryAPI(generateTypingInfo());
-      // }
+      finishTyping();
     } else {
       typingSpeed.current = getTypingSpeed({
         typingCount: typingCount.current,
@@ -142,11 +164,7 @@ export default function ExamLongTyping({
 
     // 타이핑 완료시 api 호출
     if (textareaLength > contentLength) {
-      timePause();
-      if (userProfile) {
-        await getTypingHistoryAPI(generateTypingInfo());
-      }
-      toggleOn();
+      finishTyping();
       return;
     }
 
@@ -257,9 +275,9 @@ export default function ExamLongTyping({
         </Flex>
       </LongLayout>
       <PracticeResultModal
-        title={title}
+        title={`${title} (${currentPage}/${totalPage})`}
         isOpen={isResultModalOpen}
-        onReplay={onAlertClick}
+        onReplay={onModalButtonClick}
         result={{
           typingAccuracy: typingAccuracy.current,
           typingSpeed: typingSpeed.current,

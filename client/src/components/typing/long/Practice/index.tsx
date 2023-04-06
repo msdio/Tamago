@@ -11,7 +11,7 @@ import LongLayout from '@/components/typing/long/Layout';
 import TypingDetailPagination from '@/components/typing/long/TypingDetailPagination';
 import TypingHeader from '@/components/typing/long/TypingHeader';
 import TypingLine from '@/components/typing/long/TypingLine';
-import { PRACTICE_LONG_PATH_DETAIL, PRACTICE_LONG_PATH_LIST } from '@/constants/paths';
+import { EXAM_LONG_PATH_CHOICE, PRACTICE_LONG_PATH_DETAIL, PRACTICE_LONG_PATH_LIST } from '@/constants/paths';
 import { TYPING_STATE } from '@/constants/typing';
 import useStopwatch from '@/hooks/useStopWatch';
 import useToggle from '@/hooks/useToggle';
@@ -212,7 +212,7 @@ export default function PracticeLongTyping({
   };
 
   const handleExit = () => {
-    router.push(PRACTICE_LONG_PATH_LIST);
+    router.push(EXAM_LONG_PATH_CHOICE);
   };
 
   return (
@@ -259,7 +259,7 @@ export default function PracticeLongTyping({
         </Flex>
       </LongLayout>
       <PracticeResultModal
-        title={title}
+        title={`${title} (${currentPage}/${totalPage})`}
         isOpen={isResultModalOpen}
         onReplay={onAlertClick}
         result={{
