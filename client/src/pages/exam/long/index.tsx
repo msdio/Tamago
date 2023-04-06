@@ -14,7 +14,6 @@ export default function ExamLongTypingPage() {
 
   const getLongTyping = async (language: string) => {
     const { result } = await examLongTypingAPI(language);
-    console.log(result);
     setData(result);
   };
 

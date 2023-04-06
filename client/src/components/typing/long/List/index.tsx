@@ -5,7 +5,6 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  Link,
   Table,
   TableContainer,
   Tbody,
@@ -14,6 +13,7 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
+import Link from 'next/link';
 
 import PracticeLongLayout from '@/components/typing/long/Layout';
 import { LONG_TYPING_TYPE } from '@/constants/language';
