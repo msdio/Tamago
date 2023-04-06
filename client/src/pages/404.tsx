@@ -42,6 +42,10 @@ export default function PageNotFound() {
             color='primary.main'
             bgColor='white.light'
             size='md'
+            _hover={{
+              bgColor: 'primary.light',
+              color: 'white.light',
+            }}
             onClick={() => {
               router.back();
             }}
