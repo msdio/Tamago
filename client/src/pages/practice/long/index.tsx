@@ -26,9 +26,9 @@ export default function PracticeLongPage() {
     if (!router.isReady) {
       return;
     }
-    const { page } = router.query as { page?: number };
+    const { page } = router.query as { page: string };
 
-    getLongTypingList(page);
+    getLongTypingList(Number.isNaN(Number(page)) ? 1 : Number(page));
   }, [router.isReady, router.asPath]);
 
   if (!router.isReady || !data) {
