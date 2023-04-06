@@ -16,12 +16,10 @@ import { useEffect, useState } from 'react';
 import { getTierInfoAPI } from '@/apis/typing';
 import IconButton from '@/components/common/IconButton';
 import PrepareAlert from '@/components/common/PrepareAlert';
+import ScoreInfo from '@/components/common/ResultModal/exam-mode/ScoreInfo';
 import InfoList from '@/components/common/ResultModal/InfoList';
-import { Tier } from '@/components/common/Tier';
-import { TIER_INFO } from '@/constants/tierInfo';
 import useToggle from '@/hooks/useToggle';
 import { BookmarkOff } from '@/icons/Heart';
-import type { TierLevels } from '@/types/tier';
 import type { TypingResultType } from '@/types/typing';
 import { getDateYYYYMMDDHHMMFormat } from '@/utils/time';
 
@@ -37,23 +35,19 @@ interface ResultModalProps {
 
 export default function ExamResultModal({ isOpen, result, endTime, onAction, actionLabel, mode }: ResultModalProps) {
   const [isPrepareModalOpen, togglePrepareModal] = useToggle();
-  const [isLoading, toggleLoading] = useToggle();
+
   const onBookmark = () => {
     togglePrepareModal();
   };
 
-  const [tier, setTier] = useState<TierLevels | null>(null);
-  const [score, setScore] = useState<number>(0);
-
-  const tierInfo = tier ? TIER_INFO[tier] : null;
+  const [score, setScore] = useState<number | null>(null);
 
   const settingTierInfo = async () => {
-    toggleLoading();
-    const { tier, score } = await getTierInfoAPI();
-    toggleLoading();
+    const { score } = await getTierInfoAPI();
 
-    setTier(tier);
-    setScore(score);
+    setTimeout(() => {
+      setScore(score);
+    }, 1000);
   };
 
   useEffect(() => {
@@ -81,28 +75,7 @@ export default function ExamResultModal({ isOpen, result, endTime, onAction, act
 
           <ModalBody mt='32px' mb='50px' p={0}>
             <Flex gap='65px'>
-              {/* TODO : tier 마다 크기가 다름 */}
-              {tierInfo ? (
-                <Box w={190} fontFamily='GangwonEduPower' textAlign='center'>
-                  <Box position='relative' w='190px'>
-                    <Tier level={tierInfo.level} />
-                  </Box>
-                  {/* GangwonEduPower 적용이 안될까요.. */}
-                  <Text fontSize='20px' fontWeight={400} mt='9px' fontFamily='GangwonEduPower'>
-                    {tierInfo.text}
-                  </Text>
-                  <Text fontSize='16px' fontWeight={500}>
-                    {tierInfo.label}
-                  </Text>
-                  <Text mt='13px' fontSize='26px' fontWeight={400} fontFamily='GangwonEduPower'>
-                    {score}
-                  </Text>
-                </Box>
-              ) : (
-                <Box w={190} fontFamily='GangwonEduPower' textAlign='center'>
-                  loading...
-                </Box>
-              )}
+              <ScoreInfo score={score} />
               <Box w='264px' pt='32px'>
                 <InfoList {...result} />
               </Box>
