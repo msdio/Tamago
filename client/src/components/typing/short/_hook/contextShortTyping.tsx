@@ -3,6 +3,7 @@ import { createContext, useContext } from 'react';
 
 import type { ShortTypingType } from '@/apis/typing';
 import Confirm from '@/components/common/Confirm';
+import ExamResultModal from '@/components/common/ResultModal/exam-mode';
 import PracticeResultModal from '@/components/common/ResultModal/practice-mode';
 import useActualShortTyping from '@/components/typing/short/_hook/useActualShortTyping';
 import usePracticeShortTyping from '@/components/typing/short/_hook/usePracticeShortTyping';
@@ -55,12 +56,13 @@ const ShortTypingProvider = ({ children, originalTypings, mode }: ShortTypingPro
             />
           )}
           {mode === TYPING_MODE.ACTUAL && (
-            <PracticeResultModal
+            <ExamResultModal
               isOpen={endGameValue.isResultModalOpen}
               result={endGameValue.result}
               endTime={endGameValue.endTime}
               onAction={endGameValue.handleReplay}
               actionLabel='다시하기'
+              mode='short'
             />
           )}
         </ContextPrevNextTypingInfo.Provider>

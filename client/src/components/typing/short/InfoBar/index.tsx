@@ -4,7 +4,6 @@ import IconButton from '@/components/common/IconButton';
 import { useContextShortTyping } from '@/components/typing/short/_hook/contextShortTyping';
 import GrassEllipse from '@/components/typing/short/InfoBar/GrassEllipse';
 import InfoBarItem from '@/components/typing/short/InfoBar/InfoBarItem';
-import ModeLabel from '@/components/typing/short/InfoBar/ModeLabel';
 import { ACTUAL_SHORT_TYPING_TIME_LIMIT, TYPING_MODE } from '@/constants/typing';
 import { Exit } from '@/icons/Exit';
 import type { TypingMode } from '@/types/typing';
@@ -47,7 +46,23 @@ export default function InfoBar({ onExit, mode }: InfoBarProps) {
         </Flex>
         <Box flex={1}>
           <Flex justifyContent='space-between'>
-            <ModeLabel />
+            <Box w='fit-content' position='relative'>
+              <Flex
+                mb='21px'
+                alignItems='center'
+                gap='8.5px'
+                border='0.6px solid #000000'
+                bg='#BCF075'
+                w='fit-content'
+                p='10px 23px'
+                borderRadius={30}
+                h='38px'
+              >
+                <Text fontSize='18px' fontWeight={500}>
+                  짧은 글 {mode === TYPING_MODE.PRACTICE ? '연습모드 ' : '실전모드'}
+                </Text>
+              </Flex>
+            </Box>
             <IconButton icon={<Exit />} onAction={onExit} />
           </Flex>
 
@@ -62,6 +77,7 @@ export default function InfoBar({ onExit, mode }: InfoBarProps) {
                 님
               </Text>
               <Text fontWeight={800} fontSize={16}>
+                {/* TODO : user name 추가 */}
                 타마고
               </Text>
             </Flex>

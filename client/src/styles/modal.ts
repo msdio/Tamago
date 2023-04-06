@@ -3,7 +3,12 @@ import { defineStyleConfig, theme } from '@chakra-ui/react';
 export const modalTheme = defineStyleConfig({
   ...theme.components.Modal,
   sizes: {
-    md: {
+    'md': {
+      dialog: {
+        borderRadius: '20px',
+      },
+    },
+    '2xl': {
       dialog: {
         borderRadius: '20px',
       },

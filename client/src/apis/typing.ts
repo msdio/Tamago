@@ -1,8 +1,10 @@
 import { requestWithAuth, requestWithoutAuth } from '@/apis';
 import type { ApiResponse } from '@/types/apiResponse';
 import type { LanguageType } from '@/types/language';
+import type { TierLevels } from '@/types/tier';
 import type { LongTypingDetail, LongTypingItem } from '@/types/typing';
 import type { TypingMode } from '@/types/typing';
+import { getTierLevel } from '@/utils/tier';
 
 export interface ShortTypingType {
   typingId: number;
@@ -97,4 +99,17 @@ export const postRegisterLongTextAPI = async (data: RegisterLongTextProps): Prom
   const res = await requestWithAuth.post('/typing/register', data);
 
   return res.data;
+};
+
+export const getTierInfoAPI = async (): Promise<{
+  tier: TierLevels;
+  score: number;
+}> => {
+  const score = 1000;
+
+  const tier = getTierLevel(score);
+  return {
+    tier,
+    score,
+  };
 };
