@@ -7,11 +7,11 @@ const GridBackground = styled.div`
   background-image: linear-gradient(90deg, #fff6f1 1px, transparent 1px), linear-gradient(#fff6f1 1px, transparent 1px);
 `;
 
-interface PracticeLongLayoutProps {
+interface LongLayoutProps {
   children: React.ReactNode;
 }
 
-export default function PracticeLongLayout({ children }: PracticeLongLayoutProps) {
+export default function LongLayout({ children }: LongLayoutProps) {
   return (
     <>
       <GridBackground>

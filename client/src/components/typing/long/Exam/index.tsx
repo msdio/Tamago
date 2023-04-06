@@ -6,6 +6,7 @@ import { useRecoilValue } from 'recoil';
 
 import { getTypingHistoryAPI } from '@/apis/typing';
 import { userProfileState } from '@/atoms/userProfile';
+import Confirm from '@/components/common/Confirm';
 import PracticeResultModal from '@/components/common/ResultModal/practice-mode';
 import LongLayout from '@/components/typing/long/Layout';
 import TypingHeader from '@/components/typing/long/TypingHeader';
@@ -30,9 +31,15 @@ export default function ExamLongTyping({
 
   const userProfile = useRecoilValue(userProfileState);
 
-  const [isResultModalOpen, , { toggleOn }] = useToggle();
+  const [isResultModalOpen, , { toggleOn: resultToggleOn }] = useToggle();
+  const [isExitModalOpen, , { toggleOn: exitToggleOn, toggleOff: exitToggleOff }] = useToggle();
 
   const [textarea, setTextarea] = useState('');
+  // 실전 도중 나가는 경우를 위한 상태
+  const [{ penalty, nextRoute }, setPenalty] = useState({
+    penalty: false,
+    nextRoute: '',
+  });
   const { totalMillisecond, status, timePlay, timePause } = useStopwatch();
 
   const originalInfos = useRef<CharInfo[]>(
@@ -90,10 +97,12 @@ export default function ExamLongTyping({
     const typingInfo = generateTypingInfo();
     if (!userProfile) return;
     await getTypingHistoryAPI(typingInfo);
-    toggleOn();
+    resultToggleOn();
   };
 
-  const [toUrl, setToUrl] = useState(router.asPath);
+  const onExitButtonClick = () => {
+    setPenalty({ penalty: true, nextRoute });
+  };
 
   /**
    * 처음 화면이 렌더링될 때 textarea로 포커싱되도록 한다.
@@ -102,22 +111,34 @@ export default function ExamLongTyping({
   useEffect(() => {
     focusTextarea();
 
-    // const onRouteChange = (url: string) => {
-    //   console.log('routeChangeStart:', url);
-    //   setToUrl(url);
-    //   router.events.emit('routeChangeError');
-    //   throw 'Abort route change. Please ignore this error.';
-    // };
+    const onRouteChange = (route: string) => {
+      // 페널티 수락할 경우
+      exitToggleOn();
+      timePause();
+      setPenalty({ penalty: false, nextRoute: route });
+      // setPenalty({ penalty: false, nextRoute: '' });
+      router.events.emit('routeChangeError');
+      throw 'routeChange aborted';
+    };
 
-    // router.events.on('routeChangeStart', onRouteChange);
-    // return () => {
-    //   router.events.off('routeChangeStart', onRouteChange);
-    // };
-  }, []);
+    const cleanUpFunction = () => {
+      router.events.off('routeChangeStart', onRouteChange);
+    };
 
-  // useEffect(() => {
-  //   router.replace(toUrl);
-  // }, [toUrl]);
+    if (penalty) {
+      router.replace(nextRoute);
+      return cleanUpFunction;
+    }
+
+    if (nextRoute !== '') {
+      timePlay();
+      return cleanUpFunction;
+    }
+
+    router.events.on('routeChangeStart', onRouteChange);
+
+    return cleanUpFunction;
+  }, [penalty]);
 
   useEffect(() => {
     typingAccuracy.current = getTypingAccuracy({
@@ -274,6 +295,14 @@ export default function ExamLongTyping({
           )}
         </Flex>
       </LongLayout>
+      <Confirm
+        header='중간에 종료하시면 페널티가 부과됩니다. 정말로 그만 두시겠어요?'
+        isOpen={isExitModalOpen}
+        onClose={exitToggleOff}
+        onAction={onExitButtonClick}
+        actionLabel='그만하기'
+        closeLabel='계속하기'
+      />
       <PracticeResultModal
         title={`${title} (${currentPage}/${totalPage})`}
         isOpen={isResultModalOpen}

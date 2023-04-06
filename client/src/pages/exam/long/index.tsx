@@ -14,6 +14,7 @@ export default function ExamLongTypingPage() {
 
   const getLongTyping = async (language: string) => {
     const { result } = await examLongTypingAPI(language);
+    console.log(result);
     setData(result);
   };
 
@@ -23,7 +24,7 @@ export default function ExamLongTypingPage() {
     }
     const { language } = router.query as { language: string };
     getLongTyping(language);
-  }, [router.isReady]);
+  }, [router.isReady, router.asPath]);
 
   // TODO: 로딩창
   if (!router.isReady || !data) {
