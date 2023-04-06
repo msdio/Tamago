@@ -18,7 +18,7 @@ export default function ScoreInfo({ prevScore, afterScore }: ScoreInfoProps) {
 
   if (isLoading) {
     return (
-      <Box w={190} fontFamily='GangwonEduPower' textAlign='center'>
+      <Box w={190} textStyle='point/hd2' textAlign='center'>
         <Box position='relative' w='190px' h='175px' overflow='visible'>
           <Image
             src='/images/egg.png'
@@ -29,13 +29,13 @@ export default function ScoreInfo({ prevScore, afterScore }: ScoreInfoProps) {
           />
         </Box>
 
-        <Text fontSize='20px' fontWeight={400} mt='9px' fontFamily='GangwonEduPower'>
+        <Text fontSize='20px' fontWeight={400} mt='9px' textStyle='point/hd3'>
           Lv.0
         </Text>
         <Text fontSize='16px' fontWeight={500}>
           egg
         </Text>
-        <Text mt='13px' fontSize='26px' fontWeight={400} fontFamily='GangwonEduPower'>
+        <Text mt='13px' fontSize='26px' fontWeight={400} textStyle='point/hd2'>
           0점
         </Text>
       </Box>
@@ -46,20 +46,20 @@ export default function ScoreInfo({ prevScore, afterScore }: ScoreInfoProps) {
   const { level, text, label } = TIER_INFO[tier];
 
   return (
-    <Box w={190} fontFamily='GangwonEduPower' textAlign='center'>
+    <Box w={190} textStyle='point/hd2' textAlign='center'>
       <Box position='relative' w='190px' h='175px' overflow='visible'>
         <Box animation={`${showScaleUp} 1s ease`} w='fit-content'>
           <Tier level={level} />
         </Box>
       </Box>
       {/* GangwonEduPower 적용이 안될까요.. */}
-      <Text fontSize='20px' fontWeight={400} mt='9px' fontFamily='GangwonEduPower'>
+      <Text fontSize='20px' fontWeight={400} mt='9px' textStyle='point/hd3'>
         {text}
       </Text>
       <Text fontSize='16px' fontWeight={500}>
         {label}
       </Text>
-      <Text mt='13px' fontSize='26px' fontWeight={400} fontFamily='GangwonEduPower'>
+      <Text mt='13px' fontSize='26px' fontWeight={400} textStyle='point/hd2'>
         {score}점
       </Text>
     </Box>
