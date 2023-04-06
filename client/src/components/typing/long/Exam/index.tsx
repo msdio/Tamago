@@ -87,7 +87,7 @@ export default function ExamLongTyping({
       typingAccuracy: typingAccuracy.current,
       typingSpeed: typingSpeed.current,
       wpm: typingWpm.current,
-      mode: 'PRACTICE',
+      mode: 'PRACTICE' /* todo: EXAM으로 수정 */,
       wrongKeys: getWrongKeys(originalInfos.current, userInfos.current),
     };
   };
@@ -114,6 +114,7 @@ export default function ExamLongTyping({
     const onRouteChange = (route: string) => {
       if (penalty === undefined) {
         exitToggleOn();
+        // timePause(); // 여기에 timePause을 하면 동작을 하지 않는다! 콜백 함수 내부기 때문이라고 추측 중
         setPenalty({ penalty, nextRoute: route });
         router.events.emit('routeChangeError');
         throw 'routeChange aborted';
@@ -124,12 +125,12 @@ export default function ExamLongTyping({
       router.events.off('routeChangeStart', onRouteChange);
     };
 
+    router.events.on('routeChangeStart', onRouteChange);
+
     if (penalty) {
       router.replace(nextRoute);
       return cleanUpFunction;
     }
-
-    router.events.on('routeChangeStart', onRouteChange);
 
     return cleanUpFunction;
   }, [penalty]);
@@ -167,9 +168,7 @@ export default function ExamLongTyping({
    */
   const handleChange = async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     // 타이핑 시작시 타이머 동작
-    if (status === 'stop') {
-      timePlay();
-    }
+    timePlay();
 
     const { value } = e.target;
 
@@ -246,6 +245,7 @@ export default function ExamLongTyping({
   };
 
   const handleExit = () => {
+    timePause();
     router.push(EXAM_LONG_PATH_CHOICE);
   };
 
@@ -292,7 +292,10 @@ export default function ExamLongTyping({
       <Confirm
         header='중간에 종료하시면 페널티가 부과됩니다. 정말로 그만 두시겠어요?'
         isOpen={isExitModalOpen}
-        onClose={exitToggleOff}
+        onClose={() => {
+          timePlay();
+          exitToggleOff();
+        }}
         onAction={onExitButtonClick}
         actionLabel='그만하기'
         closeLabel='계속하기'
