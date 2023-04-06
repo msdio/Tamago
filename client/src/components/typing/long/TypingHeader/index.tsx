@@ -1,7 +1,8 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Flex, Image, Text } from '@chakra-ui/react';
 
 import IconButton from '@/components/common/IconButton';
 import InfoBar from '@/components/typing/long/TypingHeader/InfoBar';
+import GrassEllipse from '@/components/typing/short/InfoBar/GrassEllipse';
 import { Exit } from '@/icons/Exit';
 
 interface TypingHeaderProps {
@@ -16,7 +17,23 @@ interface TypingHeaderProps {
 export default function TypingHeader({ type, time, wpm, accuracy, speed, onExit }: TypingHeaderProps) {
   return (
     <Flex gap='24px' mb='28px'>
-      <Box w='118px' bg='#CEF0FF' border=' 0.6px solid #000000' borderRadius={10}></Box>
+      <Flex
+        justifyContent='center'
+        alignItems='center'
+        w='118px'
+        bg='#CEF0FF'
+        border=' 0.6px solid #000000'
+        borderRadius={10}
+        pos='relative'
+        overflow='hidden'
+      >
+        <Box pos='absolute' top='52px'>
+          <GrassEllipse />
+        </Box>
+        <Box pos='absolute' top='32px'>
+          <Image src='/images/home/white-chicken.png' alt='white-chicken' width={70} height={70} />
+        </Box>
+      </Flex>
       <Box flex={1}>
         <Flex alignItems='center' justifyContent='space-between'>
           <Flex
