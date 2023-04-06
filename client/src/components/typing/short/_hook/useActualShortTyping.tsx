@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useMemo, useRef, useState } from 'react';
 
 import type { ShortTypingType } from '@/apis/typing';
 import useCurrentTyping from '@/components/typing/short/_hook/useCurrentTyping';
+import { ACTUAL_SHORT_TYPING_TIME_LIMIT } from '@/constants/typing';
 import useToggle from '@/hooks/useToggle';
 import type {
   CurrentTypingActionType,
@@ -26,7 +27,6 @@ const usePracticeShortTyping = (originalTypings: ShortTypingType[]) => {
     typingAccuracy,
     typingWpm,
     typingSpeed,
-    // handleTypingSubmit,
     handleTyping,
     timePlay,
     timePause,
@@ -43,8 +43,9 @@ const usePracticeShortTyping = (originalTypings: ShortTypingType[]) => {
 
   const history = useRef<TypingHistoryType[]>([]);
   const prevUserTyping = history.current[history.current.length - 1]?.content ?? '';
-
   const typingAvgResult = getTypingHistoryAverage(history.current);
+
+  const totalTypingTime = history.current.reduce((acc, cur) => acc + cur.typingTime, 0) + time;
 
   const saveTypingHistory = useCallback(
     (content: string) => {
@@ -69,6 +70,8 @@ const usePracticeShortTyping = (originalTypings: ShortTypingType[]) => {
   const handleEndTyping = useCallback(
     async (input: string) => {
       resetTypingData();
+      timePlay(); // NOTE: 바로 다시 실행
+
       saveTypingHistory(input);
 
       if (currentIdx < originalTypings.length - 1) {
@@ -77,8 +80,13 @@ const usePracticeShortTyping = (originalTypings: ShortTypingType[]) => {
         handleResultModalToggle();
       }
     },
-    [currentIdx, handleResultModalToggle, originalTypings.length, resetTypingData, saveTypingHistory],
+    [currentIdx, handleResultModalToggle, originalTypings.length, resetTypingData, saveTypingHistory, timePlay],
   );
+
+  const handleForceEndTyping = () => {
+    timePause();
+    handleResultModalToggle();
+  };
 
   const handleExitModalClose = useCallback(() => {
     timePlay();
@@ -100,10 +108,17 @@ const usePracticeShortTyping = (originalTypings: ShortTypingType[]) => {
     router.reload();
   };
 
+  useEffect(() => {
+    if (ACTUAL_SHORT_TYPING_TIME_LIMIT - totalTypingTime <= 0) {
+      handleForceEndTyping();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [totalTypingTime]);
+
   const currentTypingInfos: CurrentTypingInfoType = {
     originalTyping,
     userTyping,
-    typingTime: time,
+    typingTime: totalTypingTime,
     typingCount,
     typingWpm,
     typingAccuracy,

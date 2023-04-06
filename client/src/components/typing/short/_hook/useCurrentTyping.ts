@@ -58,7 +58,7 @@ export default function useCurrentTyping({
         wrongLength,
       });
 
-      setTypingAccuracy(parseInt(String(newAccuracy), 10));
+      setTypingAccuracy(() => parseInt(String(newAccuracy), 10));
     },
     [originalTyping],
   );
@@ -86,7 +86,6 @@ export default function useCurrentTyping({
   );
 
   const resetTypingData = useCallback(() => {
-    console.log('resetTypingData: ');
     setTypingSpeed(() => 0);
     setTypingAccuracy(() => 0);
     setTypingWpm(() => 0);

@@ -87,7 +87,7 @@ const usePracticeShortTyping = (originalTypings: ShortTypingType[]) => {
         handleResultModalToggle();
       }
     },
-    [currentIdx, handleResultModalToggle, handleSubmit, originalTypings.length],
+    [currentIdx, handleResultModalToggle, handleSubmit, originalTypings.length, resetTypingData],
   );
 
   const handleExitModalClose = useCallback(() => {

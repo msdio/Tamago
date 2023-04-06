@@ -6,6 +6,7 @@ import Confirm from '@/components/common/Confirm';
 import PracticeResultModal from '@/components/common/ResultModal/practice-mode';
 import useActualShortTyping from '@/components/typing/short/_hook/useActualShortTyping';
 import usePracticeShortTyping from '@/components/typing/short/_hook/usePracticeShortTyping';
+import { TYPING_MODE } from '@/constants/typing';
 import type { CurrentTypingActionType, CurrentTypingInfoType, PrevNextTypingInfoType } from '@/types/shortTyping';
 import type { TypingMode } from '@/types/typing';
 
@@ -49,7 +50,17 @@ const ShortTypingProvider = ({ children, originalTypings, mode }: ShortTypingPro
               isOpen={endGameValue.isResultModalOpen}
               result={endGameValue.result}
               endTime={endGameValue.endTime}
-              onReplay={endGameValue.handleReplay}
+              onAction={endGameValue.handleReplay}
+              actionLabel='다시하기'
+            />
+          )}
+          {mode === TYPING_MODE.ACTUAL && (
+            <PracticeResultModal
+              isOpen={endGameValue.isResultModalOpen}
+              result={endGameValue.result}
+              endTime={endGameValue.endTime}
+              onAction={endGameValue.handleReplay}
+              actionLabel='다시하기'
             />
           )}
         </ContextPrevNextTypingInfo.Provider>

@@ -17,13 +17,13 @@ interface InfoBarProps {
 
 // TODO : 짧은글, 긴글에서 공통적으로 사용됨
 export default function InfoBar({ onExit, mode }: InfoBarProps) {
-  const { typingTime: time, typingAccuracy, typingSpeed, typingWpm } = useContextShortTyping();
+  const { typingTime, typingAccuracy, typingSpeed, typingWpm } = useContextShortTyping();
 
   const timeLabel = mode === TYPING_MODE.PRACTICE ? '경과 시간' : '남은 시간';
   const timeTextValue =
     mode === TYPING_MODE.PRACTICE
-      ? getSecondToMMSSFormat(time)
-      : getSecondToMMSSFormat(ACTUAL_SHORT_TYPING_TIME_LIMIT - time);
+      ? getSecondToMMSSFormat(typingTime)
+      : getSecondToMMSSFormat(ACTUAL_SHORT_TYPING_TIME_LIMIT - typingTime);
 
   return (
     <>
