@@ -13,7 +13,7 @@ const shortTypingMenus = [
   { menu: '실전타자', path: 'prepare' },
 ];
 const registerMenus = [
-  { menu: '긴글', path: 'prepare' },
+  { menu: '긴글', path: 'register' },
   { menu: '짧은글', path: 'prepare' },
   { menu: '업로드', path: 'prepare' },
 ];

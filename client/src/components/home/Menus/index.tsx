@@ -43,9 +43,11 @@ export default function Menus() {
             <MenuCard language='en' title='짧은 글 연습' content='Lorem ipsum dolor sit amet, consectetu' />
           </Box>
         </Link>
-        <Box transform='translateY(-3.0625rem)' onClick={handleModalOpen}>
-          <MenuCard language='en' title='글 등록' content='Lorem ipsum dolor sit amet, consectetu' />
-        </Box>
+        <Link href={'/register'}>
+          <Box transform='translateY(-3.0625rem)'>
+            <MenuCard language='en' title='글 등록' content='Lorem ipsum dolor sit amet, consectetu' />
+          </Box>
+        </Link>
       </Flex>
 
       <PrepareAlert isOpen={isModalOpen} onClose={handleModalOpen} />
