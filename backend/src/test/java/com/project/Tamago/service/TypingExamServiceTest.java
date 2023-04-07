@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.Optional;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -14,6 +15,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 
 import com.project.Tamago.common.enums.Language;
 import com.project.Tamago.domain.LongTyping;
+import com.project.Tamago.domain.Tier;
 import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.responseDto.LongTypingDetailResDto;
 import com.project.Tamago.repository.LongTypingRepository;
@@ -69,4 +71,35 @@ class TypingExamServiceTest {
 		assertNotNull(result);
 		assertEquals(result.getTitle(), longTyping.getTitle());
 	}
+
+	@Test
+	@DisplayName("티어 감점 테스트")
+	@WithMockUser(username = "1", authorities = {"ROLE_USER"})
+	public void savePenaltiesTest() {
+		// given
+
+		User user = User.builder()
+			.id(1)
+			.email("test@naver.com")
+			.nickname("test")
+			.password("1234")
+			.build();
+		Language language = Language.ENGLISH;
+		Tier tier = Tier.builder()
+			.user(user)
+			.language(language)
+			.mmr(1000)
+			.level(5)
+			.build();
+
+		when(tierRepository.findByUserIdAndLanguage(user.getId(), language)).thenReturn(Optional.of(tier));
+
+		// when
+		typingExamService.savePenalties(user.getId(), language);
+
+		// then
+		verify(tierRepository, times(1)).findByUserIdAndLanguage(user.getId(), language);
+		assertEquals(995, tier.getMmr());
+	}
+
 }

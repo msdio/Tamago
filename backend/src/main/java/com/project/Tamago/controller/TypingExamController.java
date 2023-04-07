@@ -25,11 +25,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/typing")
+@RequestMapping("/typing/exam")
 public class TypingExamController {
 	private final TypingExamService typingExamService;
 
-	@GetMapping("exam/long")
+	@GetMapping("long")
 	public CustomResponse<LongTypingDetailResDto> findLongExam(@RequestParam String language,
 		@Login LoginResolverDto loginResolverDto) {
 		if (Stream.of(Language.values()).noneMatch(element -> element.name().equals(language)))
@@ -37,11 +37,20 @@ public class TypingExamController {
 		return new CustomResponse<>(
 			typingExamService.findLongExam(loginResolverDto.getUserId(), Language.valueOf(language)));
 	}
-	@GetMapping("exam/short")
+	@GetMapping("short")
 	public CustomResponse<ShortTypingListResDto> findShortExam(@RequestParam String language,
 		@Login LoginResolverDto loginResolverDto) {
 		if (Stream.of(Language.values()).noneMatch(element -> element.name().equals(language)))
 			throw new CustomException(ResponseCode.INVALID_PARAMETER);
 		return new CustomResponse<>(typingExamService.findShortExam(loginResolverDto.getUserId(), Language.valueOf(language)));
 	}
+
+	@PostMapping("penalties")
+	public CustomResponse<Void> savePenalties(@RequestParam String language, @Login LoginResolverDto loginResolverDto) {
+		if (Stream.of(Language.values()).noneMatch(element -> element.name().equals(language)))
+			throw new CustomException(ResponseCode.INVALID_PARAMETER);
+		typingExamService.savePenalties(loginResolverDto.getUserId(), Language.valueOf(language));
+		return new CustomResponse<>();
+	}
+
 }
