@@ -87,7 +87,7 @@ export default function Stats() {
               </Text>
             </Flex>
 
-            <Flex onClick={() => toggleModalOpen(true)}>
+            <Flex onClick={toggleModalOpen}>
               <RightArrowWithCircle />
             </Flex>
 
