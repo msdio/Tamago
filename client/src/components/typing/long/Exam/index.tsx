@@ -36,8 +36,8 @@ export default function ExamLongTyping({
 
   const [textarea, setTextarea] = useState('');
   // 실전 도중 나가는 경우를 위한 상태
-  const [{ penalty, nextRoute }, setPenalty] = useState<{ penalty: boolean | undefined; nextRoute: string }>({
-    penalty: undefined,
+  const [{ penalty, nextRoute }, setPenalty] = useState<{ penalty: boolean | null; nextRoute: string }>({
+    penalty: null,
     nextRoute: router.asPath,
   });
   const { totalMillisecond, status, timePlay, timePause } = useStopwatch();
@@ -104,6 +104,28 @@ export default function ExamLongTyping({
     setPenalty({ penalty: true, nextRoute });
   };
 
+  const setTypingAccuracy = () => {
+    typingAccuracy.current = getTypingAccuracy({
+      typingLength: typingStates.current.length - 1,
+      wrongLength: typingStates.current.replaceAll(TYPING_STATE.CORRECT, TYPING_STATE.EMPTY).length - 1,
+    });
+  };
+
+  const setTypingSpeed = () => {
+    typingSpeed.current = getTypingSpeed({
+      typingCount: typingCount.current,
+      backspaceCount: backspaceCount.current,
+      millisecond: totalMillisecond,
+    });
+  };
+
+  const setTypingWpm = () => {
+    typingWpm.current = getTypingWpm({
+      typingCount: typingCount.current,
+      millisecond: totalMillisecond,
+    });
+  };
+
   /**
    * 처음 화면이 렌더링될 때 textarea로 포커싱되도록 한다.
    * textarea는 숨겨두었기 때문에 사용자가 보고 포커싱할 수 없다.
@@ -112,7 +134,7 @@ export default function ExamLongTyping({
     focusTextarea();
 
     const onRouteChange = (route: string) => {
-      if (penalty === undefined) {
+      if (penalty === null) {
         exitToggleOn();
         // timePause(); // 여기에 timePause을 하면 동작을 하지 않는다! 콜백 함수 내부기 때문이라고 추측 중
         setPenalty({ penalty, nextRoute: route });
@@ -136,10 +158,7 @@ export default function ExamLongTyping({
   }, [penalty]);
 
   useEffect(() => {
-    typingAccuracy.current = getTypingAccuracy({
-      typingLength: typingStates.current.length - 1,
-      wrongLength: typingStates.current.replaceAll(TYPING_STATE.CORRECT, TYPING_STATE.EMPTY).length - 1,
-    });
+    setTypingAccuracy();
   }, [textarea]);
 
   useEffect(() => {
@@ -147,15 +166,8 @@ export default function ExamLongTyping({
     if (EXAM_TIMER.LONG <= totalMillisecond) {
       finishTyping();
     } else {
-      typingSpeed.current = getTypingSpeed({
-        typingCount: typingCount.current,
-        backspaceCount: backspaceCount.current,
-        millisecond: totalMillisecond,
-      });
-      typingWpm.current = getTypingWpm({
-        typingCount: typingCount.current,
-        millisecond: totalMillisecond,
-      });
+      setTypingSpeed();
+      setTypingWpm();
     }
   }, [status, textarea, totalMillisecond]);
 
