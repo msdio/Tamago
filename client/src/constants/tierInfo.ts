@@ -6,7 +6,7 @@ interface TierInfoProps {
   label: string;
 }
 
-export const tierInfo: TierInfoProps[] = [
+export const TIER_INFO: TierInfoProps[] = [
   {
     level: 0,
     text: 'GUEST',

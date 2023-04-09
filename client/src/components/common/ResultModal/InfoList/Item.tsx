@@ -21,7 +21,7 @@ export default function InfoItem({
       <Text fontWeight={500} fontSize='16px'>
         {label}
       </Text>
-      <Text fontFamily={'GangwonEduPower'} fontSize={20} fontWeight={900}>
+      <Text textStyle='point/hd3' fontSize={20} fontWeight={900}>
         {content}
       </Text>
     </Flex>

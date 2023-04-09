@@ -1,8 +1,10 @@
 import { requestWithAuth, requestWithoutAuth } from '@/apis';
 import type { ApiResponse } from '@/types/apiResponse';
 import type { LanguageType } from '@/types/language';
+import type { TierLevels } from '@/types/tier';
 import type { LongTypingDetail, LongTypingItem } from '@/types/typing';
 import type { TypingMode } from '@/types/typing';
+import { getTierLevel } from '@/utils/tier';
 
 export interface ShortTypingType {
   typingId: number;
@@ -109,4 +111,21 @@ export const examPenaltiesAPI = async (language: string) => {
   const res = await requestWithAuth.post(`/typing/exam/penalties?language=${language}`);
 
   return res.data;
+};
+
+export const getTierInfoAPI = async (): Promise<{
+  tier: TierLevels;
+  prevScore: number;
+  afterScore: number;
+}> => {
+  const prevScore = 900;
+  const afterScore = 1000;
+
+  const tier = getTierLevel(afterScore);
+
+  return {
+    tier,
+    prevScore,
+    afterScore,
+  };
 };
