@@ -261,7 +261,9 @@ export default function PracticeLongTyping({
       <PracticeResultModal
         title={`${title} (${currentPage}/${totalPage})`}
         isOpen={isResultModalOpen}
-        onReplay={onAlertClick}
+        onAction={onAlertClick}
+        // TODO : "이어하기" 버튼 누르면 다음 페이지로 이동, 마지막 페이지면 "다시하기"로? @윤우
+        actionLabel={currentPage === totalPage ? '목록으로' : '이어하기'}
         result={{
           typingAccuracy: typingAccuracy.current,
           typingSpeed: typingSpeed.current,

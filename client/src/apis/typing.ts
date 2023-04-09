@@ -1,4 +1,6 @@
 import { requestWithAuth, requestWithoutAuth } from '@/apis';
+import type { ApiResponse } from '@/types/apiResponse';
+import type { LanguageType } from '@/types/language';
 import type { LongTypingDetail, LongTypingItem } from '@/types/typing';
 import type { TypingMode } from '@/types/typing';
 
@@ -88,6 +90,17 @@ export const getTypingHistoryAPI = async (typingHistory: TypingHistoryRequest) =
 
 export const examLongTypingAPI = async (language: string) => {
   const res = await requestWithAuth.get(`/typing/exam/long?language=${language}`);
+
+  return res.data;
+};
+
+interface RegisterLongTextProps {
+  title: string;
+  content: string;
+  language: LanguageType;
+}
+export const postRegisterLongTextAPI = async (data: RegisterLongTextProps): Promise<ApiResponse> => {
+  const res = await requestWithAuth.post('/typing/register', data);
 
   return res.data;
 };

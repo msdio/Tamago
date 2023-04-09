@@ -12,7 +12,7 @@ type ToggleTools = {
 };
 
 const useToggle = (initialState?: boolean): [ToggleState, ToggleHandler, ToggleTools] => {
-  const [toggle, setToggle] = useState<boolean>(initialState ?? false);
+  const [toggle, setToggle] = useState(initialState ?? false);
 
   const handleToggleClick = useCallback(() => {
     setToggle((prev) => !prev);

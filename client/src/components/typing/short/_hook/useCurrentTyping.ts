@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import type { ShortTypingType, TypingHistoryRequest } from '@/apis/typing';
 import { getTypingHistoryAPI } from '@/apis/typing';
+import { CONTENT_TYPE, TYPING_MODE } from '@/constants/typing';
 import useStopwatch from '@/hooks/useStopWatch';
 import { getCharType } from '@/utils/char';
 import {
@@ -108,16 +109,16 @@ export default function useCurrentTyping({
       }));
 
       const typingHistory: TypingHistoryRequest = {
-        contentType: true,
-        mode: 'PRACTICE',
+        contentType: CONTENT_TYPE.SHORT,
+        mode: TYPING_MODE.PRACTICE,
         startTime: new Date(startTime.current as number),
         endTime: new Date(),
+        wpm: typingWpm,
+        wrongKeys: getWrongKeys(originalInfos, typingInfos),
         typingSpeed,
         typingAccuracy,
-        wpm: typingWpm,
         resultContent,
         typingId,
-        wrongKeys: getWrongKeys(originalInfos, typingInfos),
       };
 
       return typingHistory;

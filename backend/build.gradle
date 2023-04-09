@@ -41,6 +41,11 @@ dependencies {
     // hypersistence-utils
     implementation 'io.hypersistence:hypersistence-utils-hibernate-55:3.2.0'
 
+    // slack Logback
+    implementation 'com.github.maricn:logback-slack-appender:1.4.0'
+    // webclient
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
     // mapstruct
     compileOnly 'org.projectlombok:lombok'
     implementation 'org.mapstruct:mapstruct:1.4.2.Final'

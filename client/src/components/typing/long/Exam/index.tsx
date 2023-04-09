@@ -303,7 +303,8 @@ export default function ExamLongTyping({
       <PracticeResultModal
         title={`${title} (${currentPage}/${totalPage})`}
         isOpen={isResultModalOpen}
-        onReplay={onModalButtonClick}
+        actionLabel='다시하기'
+        onAction={onModalButtonClick}
         result={{
           typingAccuracy: typingAccuracy.current,
           typingSpeed: typingSpeed.current,

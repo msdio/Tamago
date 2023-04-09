@@ -42,7 +42,7 @@ public interface DataMapper {
 
 	@Mapping(target = "thumbnail", expression = "java(longTypingReqDto.getContent().replaceAll(\"\\r\", \"\").substring(0, Math.min(longTypingReqDto.getContent().replaceAll(\"\\r\", \"\").length(), 50)))")
 	@Mapping(target = "length", expression = "java(longTypingReqDto.getContent().replaceAll(\"\\r\", \"\").length())")
-	@Mapping(target = "totalPage", expression = "java((int) Math.ceil((double) (longTypingReqDto.getContent().length() - longTypingReqDto.getContent().replaceAll(\"\\r\\n\", \"\").length() + 1) / 20))")
+	@Mapping(target = "totalPage", expression = "java((int) Math.ceil((double) (longTypingReqDto.getContent().length() - longTypingReqDto.getContent().replaceAll(\"\\n\", \"\").length() + 1) / 20))")
 	LongTyping toLongTyping(LongTypingReqDto longTypingReqDto);
 
 	@Mapping(target = "id", ignore = true)

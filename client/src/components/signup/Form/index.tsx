@@ -10,6 +10,7 @@ import EmailInput from '@/components/signup/Form/EmailInput';
 import { SIGNUP_COMPLETE_PATH } from '@/constants/paths';
 import { EMAIL_DUPLICATE, NICKNAME_DUPLICATE, SUCCESS } from '@/constants/responseCode';
 import useRegexInputs from '@/hooks/useRegexInputs';
+import useToggle from '@/hooks/useToggle';
 import { GithubLogo } from '@/icons/GithubLogo';
 import { GoogleLogo } from '@/icons/GoogleLogo';
 import type { ApiErrorResponse } from '@/types/apiResponse';
@@ -17,10 +18,11 @@ import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
 
 export default function SignupForm() {
   const router = useRouter();
-
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   const [isEmailDuplicated, setIsEmailDuplicated] = useState(true);
+  const [alertMessage, setAlertMessage] = useState('알 수 없는 에러입니다.');
+
+  const [isModalOpen, toggleModalOpen, { toggleOn, toggleOff }] = useToggle();
 
   const [inputs, valids, handleInputChange] = useRegexInputs({
     name: /./,
@@ -66,7 +68,8 @@ export default function SignupForm() {
     } catch (error) {
       const customError = error as ApiErrorResponse;
 
-      alert(customError.description);
+      setAlertMessage(customError.description);
+      toggleOn();
     }
   };
 
@@ -89,13 +92,17 @@ export default function SignupForm() {
       if (data.code === SUCCESS) {
         router.push(SIGNUP_COMPLETE_PATH);
       } else if (data.code === EMAIL_DUPLICATE) {
-        alert(data.description);
+        setAlertMessage(data.description);
+        toggleOn();
       } else if (data.code === NICKNAME_DUPLICATE) {
-        alert(data.description);
+        setAlertMessage(data.description);
+        toggleOn();
       }
     } catch (error) {
       const customError = error as ApiErrorResponse;
-      alert(customError.description);
+
+      setAlertMessage(customError.description);
+      toggleOn();
     }
   };
 
@@ -157,7 +164,7 @@ export default function SignupForm() {
             ref={(el) => (inputRef.current['verifyPassword'] = el)}
           />
         </Box>
-        <Button size='lg' onClick={handleSignup}>
+        <Button size='lg' onClick={handleSignup} isDisabled={isEmailDuplicated}>
           회원가입 하기
         </Button>
         <Box m='41px 0px'>
@@ -177,6 +184,8 @@ export default function SignupForm() {
         isOpen={isOpen}
         onClose={onClose}
       />
+
+      <Alert header={alertMessage} isOpen={isModalOpen} onClose={toggleOff} />
     </>
   );
 }

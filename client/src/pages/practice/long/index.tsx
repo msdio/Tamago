@@ -17,7 +17,7 @@ export default function PracticeLongPage() {
   const getLongTypingList = async (page: number) => {
     const { result } = await getLongTypingListAPI(page);
 
-    const { totalPage, longTypings } = result;
+    const { totalPage, longTypings } = result as { totalPage: number; longTypings: LongTypingItem[] };
 
     setData({ currentPage: page, totalPage, longTypings });
   };
@@ -26,9 +26,9 @@ export default function PracticeLongPage() {
     if (!router.isReady) {
       return;
     }
-    const { page } = router.query as { page?: string }; /* page: number로 한다고 숫자에서 문자열로 변환 X */
+    const { page } = router.query as { page: string };
 
-    getLongTypingList(isNaN(Number(page)) ? 1 : Number(page));
+    getLongTypingList(Number.isNaN(Number(page)) ? 1 : Number(page));
   }, [router.isReady, router.asPath]);
 
   if (!router.isReady || !data) {

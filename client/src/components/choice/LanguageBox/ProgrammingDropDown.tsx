@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react';
 
 import ProgrammingDropDownItem from '@/components/choice/LanguageBox/ProgrammingDropDownItem';
-import { getRandomProgrammingLanguage } from '@/utils/language';
+import { SELECT_PROGRAMMING_LANGUAGE } from '@/constants/language';
 
 interface ProgrammingDropDownProps {
   path: string;
@@ -19,14 +19,9 @@ export default function ProgrammingDropDown({ path }: ProgrammingDropDownProps) 
       borderRadius='10px'
       overflow='hidden'
     >
-      {/* NOTE : map으로 하는게 좋을지 고민.. */}
-      <ProgrammingDropDownItem
-        path={`${path}?language=${getRandomProgrammingLanguage().toUpperCase()}`}
-        content='Random Code'
-      />
-      <ProgrammingDropDownItem path={`${path}?language=JAVA`} content='Java' />
-      <ProgrammingDropDownItem path={`${path}?language=PYTONG`} content='Python' />
-      <ProgrammingDropDownItem path={`${path}?language=JAVASCRIPT`} content='Javascript' />
+      {Object.values(SELECT_PROGRAMMING_LANGUAGE).map(({ value, label }) => (
+        <ProgrammingDropDownItem key={value} path={`${path}?language=${value}`} content={label} />
+      ))}
     </Box>
   );
 }
