@@ -1,11 +1,4 @@
-import { Box } from '@chakra-ui/react';
-import styled from '@emotion/styled';
-
-const GridBackground = styled.div`
-  width: 100%;
-  background-size: 50px 50px;
-  background-image: linear-gradient(90deg, #fff6f1 1px, transparent 1px), linear-gradient(#fff6f1 1px, transparent 1px);
-`;
+import { Box, Flex } from '@chakra-ui/react';
 
 interface LongLayoutProps {
   children: React.ReactNode;
@@ -14,11 +7,20 @@ interface LongLayoutProps {
 export default function LongLayout({ children }: LongLayoutProps) {
   return (
     <>
-      <GridBackground>
+      <Flex
+        as='main'
+        flexDirection='column'
+        minW='1100px'
+        w='100%'
+        backgroundColor='background.main'
+        backgroundImage='linear-gradient(#EFDFD3 .0375rem, transparent .0625rem), linear-gradient(to right, #EFDFD3 .0625rem, #FFF .0625rem);'
+        backgroundSize='3.75rem 3.7656rem'
+        pos='relative'
+      >
         <Box w='1170px' p='35px 0' m='auto' minW='1100px'>
           {children}
         </Box>
-      </GridBackground>
+      </Flex>
     </>
   );
 }
