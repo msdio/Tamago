@@ -47,8 +47,8 @@ export default function ScoreInfo({ isLoading, prevScore, afterScore }: ScoreInf
 
   return (
     <Box w={190} textStyle='point/hd2' textAlign='center'>
-      <Box position='relative' w='190px' h='175px' overflow='visible'>
-        <Box animation={`${showScaleUp} 1s ease`} w='fit-content'>
+      <Box position='relative' overflow='visible'>
+        <Box animation={`${showScaleUp} 1s ease`} w='fit-content' margin='auto'>
           <Tier level={level} />
         </Box>
       </Box>

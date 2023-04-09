@@ -57,6 +57,16 @@ export const getShortTypingWritingsAPI = async (
   return res.data;
 };
 
+export const getExamShortTypingWritingsAPI = async (
+  language: TypingLanguageType,
+): Promise<{
+  result: ShortTypingResultType;
+}> => {
+  const res = await requestWithAuth.get('/typing/exam/short?language=' + language);
+
+  return res.data;
+};
+
 export const getLongTypingListAPI = async (page: number): Promise<LongTypingListResultType> => {
   const res = await requestWithoutAuth.get(`/typing/long?page=${page}`);
 
