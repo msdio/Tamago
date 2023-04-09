@@ -208,9 +208,9 @@ export default function ExamLongTyping({
       const prevComponents = userInfos.current[textareaLength - 1].components;
 
       userInfos.current[textareaLength - 1] = {
-        char: textarea[textareaLength - 1],
-        type: getCharType(textarea[textareaLength - 1]),
-        components: disassemble(textarea[textareaLength - 1]),
+        char: value[textareaLength - 1],
+        type: getCharType(value[textareaLength - 1]),
+        components: disassemble(value[textareaLength - 1]),
       };
 
       const currComponents = userInfos.current[textareaLength - 1].components;
