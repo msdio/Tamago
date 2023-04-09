@@ -11,8 +11,8 @@ import PracticeResultModal from '@/components/common/ResultModal/practice-mode';
 import LongLayout from '@/components/typing/long/Layout';
 import TypingHeader from '@/components/typing/long/TypingHeader';
 import TypingLine from '@/components/typing/long/TypingLine';
-import { EXAM_LONG_PATH_CHOICE } from '@/constants/paths';
-import { EXAM_TIMER, TYPING_STATE } from '@/constants/typing';
+import { ACTUAL_LONG_CHOICE_PATH } from '@/constants/paths';
+import { ACTUAL_TYPING_TIME_LIMIT, TYPING_STATE } from '@/constants/typing';
 import useStopwatch from '@/hooks/useStopWatch';
 import useToggle from '@/hooks/useToggle';
 import type { CharInfo, LongTypingDetail } from '@/types/typing';
@@ -170,7 +170,7 @@ export default function ExamLongTyping({
 
   useEffect(() => {
     // 타임 아웃
-    if (EXAM_TIMER.LONG <= totalMillisecond) {
+    if (ACTUAL_TYPING_TIME_LIMIT.LONG <= totalMillisecond) {
       finishTyping();
     } else {
       setTypingSpeed();
@@ -265,7 +265,7 @@ export default function ExamLongTyping({
 
   const handleExit = () => {
     timePause();
-    router.push(EXAM_LONG_PATH_CHOICE);
+    router.push(ACTUAL_LONG_CHOICE_PATH);
   };
 
   return (
@@ -276,7 +276,7 @@ export default function ExamLongTyping({
           accuracy={typingAccuracy.current}
           speed={typingSpeed.current}
           wpm={typingWpm.current}
-          time={Math.floor(EXAM_TIMER.LONG / 1000) - Math.floor(totalMillisecond / 1000)} // 타이머에서 현재 경과시간 뺀 값
+          time={Math.floor(ACTUAL_TYPING_TIME_LIMIT.LONG / 1000) - Math.floor(totalMillisecond / 1000)} // 타이머에서 현재 경과시간 뺀 값
           onExit={handleExit}
         />
         <Flex

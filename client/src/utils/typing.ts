@@ -120,10 +120,12 @@ export const getTypingHistoryAverage = (typingHistories: TypingHistoryType[]): T
   if (typingHistoriesLength === 0) {
     return INIT_TYPING_RESULT;
   }
-  return {
+  const res = {
     typingSpeed: typingHistories.reduce((acc, cur) => acc + cur.typingSpeed, 0) / typingHistoriesLength,
     typingAccuracy: typingHistories.reduce((acc, cur) => acc + cur.typingAccuracy, 0) / typingHistoriesLength,
     typingWpm: typingHistories.reduce((acc, cur) => acc + cur.typingWpm, 0) / typingHistoriesLength,
     typingTime: typingHistories.reduce((acc, cur) => acc + cur.typingTime, 0) / typingHistoriesLength,
   };
+
+  return res;
 };

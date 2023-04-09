@@ -37,6 +37,10 @@ export const SELECT_LANGUAGE_VALUE: Record<string, SelectLanguageType> = {
 };
 
 export const SELECT_LANGUAGE: Record<SelectLanguageType, SelectLanguageItemType> = {
+  RANDOM: {
+    value: SELECT_LANGUAGE_VALUE.RANDOM,
+    label: '진짜 강자들만 선택할 수 있는 랜덤',
+  },
   KOREAN: {
     value: SELECT_LANGUAGE_VALUE.KOREAN,
     label: '한글 타자',
@@ -47,15 +51,9 @@ export const SELECT_LANGUAGE: Record<SelectLanguageType, SelectLanguageItemType>
   },
   CODE: {
     value: SELECT_LANGUAGE_VALUE.CODE,
-    label: '코드 타자',
-  },
-  RANDOM: {
-    value: SELECT_LANGUAGE_VALUE.RANDOM,
-    label: '진짜 강자들만 선택할 수 있는 랜덤',
+    label: '코드 선택',
   },
 };
-
-Object.freeze(SELECT_LANGUAGE);
 
 export const LANGUAGE_LIST: LanguageType[] = [
   ...Object.values(PROGRAMMING_LANGUAGE),

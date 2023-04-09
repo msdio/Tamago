@@ -1,5 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react';
-import { Image } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import type { ReactNode } from 'react';
 
 import Footer from '@/components/footer';
@@ -9,7 +8,6 @@ interface CheckedLayoutProps {
   children: ReactNode;
 }
 
-// TODO : 추후 다른 곳에서도 공통적으로 사용
 export default function CheckedLayout({ children }: CheckedLayoutProps) {
   return (
     <>
@@ -26,12 +24,6 @@ export default function CheckedLayout({ children }: CheckedLayoutProps) {
         pos='relative'
       >
         {children}
-        <Box w='full' h='173px' pos='absolute' bottom={0}>
-          <Image src='/images/writing-type/bottom-grass.png' alt='grass' w='100%' />
-        </Box>
-        <Flex pos='absolute' bottom={125} left={0} right={0} justifyContent='center'>
-          <Image src='/images/writing-type/eggs.png' alt='character' width={195} height={91} />
-        </Flex>
       </Flex>
       <Footer />
     </>

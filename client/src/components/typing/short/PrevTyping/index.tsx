@@ -1,10 +1,10 @@
 import { Box, Text } from '@chakra-ui/react';
 
-import { useContextShortTyping } from '@/components/typing/short/_hook/contextShortTyping';
+import { useContextPrevNextTypingInfo } from '@/components/typing/short/_hook/contextShortTyping';
 import OriginalTyping from '@/components/typing/short/OriginalTyping';
 
 function PrevTyping() {
-  const { prevUserTyping, prevOriginalTyping } = useContextShortTyping();
+  const { prevUserTyping, prevOriginalTyping } = useContextPrevNextTypingInfo();
 
   return (
     <Box m='26px 36px'>

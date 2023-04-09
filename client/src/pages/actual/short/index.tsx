@@ -5,10 +5,11 @@ import type { ShortTypingResultType, TypingLanguageType } from '@/apis/typing';
 import { getShortTypingWritingsAPI } from '@/apis/typing';
 import CheckedLayout from '@/components/common/CheckedLayout';
 import ShortTypingProvider from '@/components/typing/short/_hook/contextShortTyping';
-import PracticeShort from '@/components/typing/short/PracticeShort';
+import ActualShort from '@/components/typing/short/ActualShort';
+import { TYPING_MODE } from '@/constants/typing';
 import useToggle from '@/hooks/useToggle';
 
-export default function PracticeShortPage() {
+export default function ActualShortPage() {
   const router = useRouter();
   const { language } = router.query;
 
@@ -37,9 +38,9 @@ export default function PracticeShortPage() {
   if (!data || isLoading) <>로딩중</>;
 
   return (
-    <ShortTypingProvider originalTypings={data.typingWritings} mode='PRACTICE'>
+    <ShortTypingProvider originalTypings={data.typingWritings} mode={TYPING_MODE.ACTUAL}>
       <CheckedLayout>
-        <PracticeShort originalTypings={data.typingWritings} />;
+        <ActualShort originalTypings={data.typingWritings} />;
       </CheckedLayout>
     </ShortTypingProvider>
   );
