@@ -1,4 +1,6 @@
-export const getTierLevel = (score: number) => {
+import type { TierLevels } from '@/types/tier';
+
+export const getTierLevel = (score: number): TierLevels => {
   if (score <= 360) {
     return 1;
   } else if (score <= 630) {

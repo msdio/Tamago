@@ -3,7 +3,7 @@ import { useRef } from 'react';
 
 import { Tier } from '@/components/common/Tier';
 import { fadeIn } from '@/constants/animations';
-import { tierInfo } from '@/constants/tierInfo';
+import { TIER_INFO } from '@/constants/tierInfo';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 
 export default function Tiers() {
@@ -30,7 +30,7 @@ export default function Tiers() {
       </Text>
 
       <Flex gap='1.625rem' justifyContent='center' mt='4.4375rem'>
-        {tierInfo.map((el) => (
+        {TIER_INFO.map((el) => (
           <Flex key={el.level} w='178px' h='17.875rem' alignItems='center' flexDirection='column'>
             <Flex w='100%' h='15.375rem' flexDirection='column' justifyContent='space-between' alignItems='center'>
               <Flex w='172.7px' h='172px' alignItems='center' flexDirection='column'>
