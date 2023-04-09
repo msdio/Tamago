@@ -42,6 +42,8 @@ export const getTypingSpeed = ({
 };
 
 export const getWrongKeys = (contentInfos: CharInfo[], typingInfos: CharInfo[]) => {
+  console.log(JSON.stringify(contentInfos, null, 2), JSON.stringify(typingInfos, null, 2));
+
   const wrongKeys: Record<string, { total: number; count: number }> = {};
   contentInfos.forEach((contentInfo, i) => {
     const { components: contentComponents } = contentInfo;
@@ -58,12 +60,6 @@ export const getWrongKeys = (contentInfos: CharInfo[], typingInfos: CharInfo[]) 
       }
     });
   });
-
-  for (const key in wrongKeys) {
-    if (wrongKeys[key].count === 0) {
-      delete wrongKeys[key];
-    }
-  }
 
   return wrongKeys;
 };
