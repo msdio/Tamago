@@ -124,3 +124,9 @@ export const postExamPenalty = async (language: LanguageType) => {
     throw error;
   }
 };
+
+export const examPenaltiesAPI = async (language: string) => {
+  const res = await requestWithAuth.post(`/typing/exam/penalties?language=${language}`);
+
+  return res.data;
+};
