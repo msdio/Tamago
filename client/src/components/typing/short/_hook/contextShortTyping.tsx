@@ -57,7 +57,7 @@ const ShortTypingProvider = ({ children, originalTypings, mode }: ShortTypingPro
           )}
           {mode === TYPING_MODE.ACTUAL && (
             <ExamResultModal
-              isOpen={endGameValue.isResultModalOpen}
+              isOpen={true || endGameValue.isResultModalOpen}
               result={endGameValue.result}
               endTime={endGameValue.endTime}
               onAction={endGameValue.handleReplay}
