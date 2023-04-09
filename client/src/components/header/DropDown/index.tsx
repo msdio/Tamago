@@ -18,8 +18,9 @@ const shortTypingMenus = [
   { menu: '실전타자', path: ACTUAL_SHORT_CHOICE_PATH },
 ];
 const registerMenus = [
-  { menu: '업로드', path: 'prepare' },
   { menu: '긴글', path: 'register' },
+  { menu: '짧은글', path: 'prepare' },
+  { menu: '업로드', path: 'prepare' },
 ];
 const profileMenus = [
   { menu: '수정', path: 'prepare' },
