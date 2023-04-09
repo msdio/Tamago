@@ -1,10 +1,9 @@
 import { requestWithAuth, requestWithoutAuth } from '@/apis';
+import type { ErrorResponse } from '@/apis/error';
 import type { ApiResponse } from '@/types/apiResponse';
 import type { LanguageType } from '@/types/language';
-import type { TierLevels } from '@/types/tier';
 import type { LongTypingDetail, LongTypingItem } from '@/types/typing';
 import type { TypingMode } from '@/types/typing';
-import { getTierLevel } from '@/utils/tier';
 
 export interface ShortTypingType {
   typingId: number;
@@ -101,19 +100,17 @@ export const postRegisterLongTextAPI = async (data: RegisterLongTextProps): Prom
   return res.data;
 };
 
-export const getTierInfoAPI = async (): Promise<{
-  tier: TierLevels;
-  prevScore: number;
-  afterScore: number;
-}> => {
-  const prevScore = 900;
-  const afterScore = 1000;
+export const postExamPenalty = async (language: LanguageType) => {
+  try {
+    const res = await requestWithAuth.post('/typing/exam/penalties?language=' + language);
 
-  const tier = getTierLevel(afterScore);
+    return res.data;
+  } catch (error: unknown) {
+    const err = error as ErrorResponse;
 
-  return {
-    tier,
-    prevScore,
-    afterScore,
-  };
+    if (err.code === 5000) {
+      return true;
+    }
+    throw error;
+  }
 };

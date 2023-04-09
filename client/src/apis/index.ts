@@ -1,6 +1,11 @@
 import type { AxiosError } from 'axios';
 import axios from 'axios';
 
+export interface ErrorResponseType {
+  code: number;
+  description: string;
+}
+
 const defaultErrorResponse = {
   data: {
     code: 500,

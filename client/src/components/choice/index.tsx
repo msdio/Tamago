@@ -25,7 +25,7 @@ export default function Choice({ contentType, typingType }: ChoiceProps) {
   return (
     <CheckedLayout>
       <ChoiceHeading title={title} />
-      <Grid templateColumns='repeat(2, 400px)' justifyContent='center' gap='32px'>
+      <Grid templateColumns='repeat(2, 400px)' justifyContent='center' gap='32px' zIndex={1}>
         {Object.values(SELECT_LANGUAGE).map((language) => (
           <LanguageBox key={'language-box-' + language.value} path={path} select={language} />
         ))}

@@ -9,11 +9,11 @@ import { getTierLevel } from '@/utils/tier';
 interface ScoreInfoProps {
   afterScore: number | null;
   prevScore: number | null;
+
+  isLoading: boolean;
 }
 
-export default function ScoreInfo({ prevScore, afterScore }: ScoreInfoProps) {
-  const isLoading = afterScore === null || prevScore === null;
-
+export default function ScoreInfo({ isLoading, prevScore, afterScore }: ScoreInfoProps) {
   const score = useCountUp({ start: prevScore ?? 0, end: afterScore ?? 0 });
 
   if (isLoading) {
@@ -42,7 +42,7 @@ export default function ScoreInfo({ prevScore, afterScore }: ScoreInfoProps) {
     );
   }
 
-  const tier = getTierLevel(afterScore);
+  const tier = getTierLevel(afterScore ?? 0);
   const { level, text, label } = TIER_INFO[tier];
 
   return (
