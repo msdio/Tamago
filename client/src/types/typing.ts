@@ -7,14 +7,6 @@ export interface CharInfo {
 export type TypingMode = 'PRACTICE' | 'ACTUAL';
 export type ContentType = true | false;
 
-export enum TypingState {
-  'DEFAULT' = 'd',
-  'CORRECT' = 'c',
-  'INCORRECT' = 'i',
-  'FOCUS' = 'f',
-  'EMPTY' = '',
-}
-
 export interface LongTypingItem {
   language: 'ENGLISH' | 'KOREAN' | 'JAVA' | string;
   thumbnail: string;

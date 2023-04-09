@@ -20,6 +20,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.springframework.security.core.parameters.P;
 
 import com.project.Tamago.common.enums.Language;
+import com.project.Tamago.common.enums.Level;
 import com.project.Tamago.common.enums.Mode;
 
 import lombok.AccessLevel;
@@ -52,14 +53,28 @@ public class Tier extends BaseTimeEntity {
 	@ColumnDefault("0")
 	private Integer mmr;
 
+	@ColumnDefault("0")
+	private Integer beforeMmr;
+
 	@ColumnDefault("false")
 	private Boolean status;
 
-	public void applyPenalty(int penalty) {
+	public void applyPenalty(int penalty, boolean isDirectPenalty) {
+		this.beforeMmr = this.mmr;
 		this.mmr = Math.max(0, this.mmr - penalty);
-		this.status = true;
+		updateLevel();
+		if (isDirectPenalty) {
+			this.status = true;
+		}
 	}
 	public void initStatus() {
 		this.status = false;
+	}
+
+	public void updateLevel() {
+		int newLevel = Level.of(this.mmr).getLevel();
+		if (this.level != newLevel) {
+			this.level = newLevel;
+		}
 	}
 }

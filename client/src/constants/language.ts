@@ -21,6 +21,14 @@ export const PROGRAMMING_LANGUAGE: Record<string, ProgrammingLanguageType> = {
   C: 'C',
 };
 
+export const LONG_TYPING_TYPE: Record<string, string> = {
+  KOREAN: '한글',
+  ENGLISH: '영어',
+  JAVA: 'Java',
+  PYTHON: 'Python',
+  JAVASCRIPT: 'JavaScript',
+  C: 'C',
+};
 export const SELECT_LANGUAGE_VALUE: Record<string, SelectLanguageType> = {
   KOREAN: 'KOREAN',
   ENGLISH: 'ENGLISH',

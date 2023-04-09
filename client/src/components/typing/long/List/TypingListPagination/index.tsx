@@ -2,7 +2,7 @@ import { Flex, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-import { PRACTICE_LONG_PATH } from '@/constants/paths';
+import { PRACTICE_LONG_PATH_LIST } from '@/constants/paths';
 import { SmallLeftArrow, SmallRightArrow } from '@/icons/SmallArrow';
 
 interface TypingListPaginationProps {
@@ -30,7 +30,7 @@ export default function TypingListPagination({ currentPage, totalPage }: TypingL
   return (
     <Flex gap='50px' justifyContent='center' m='43px 0' alignItems='center'>
       {currentIndexArr[0] - 1 > 0 && (
-        <Link href={`${PRACTICE_LONG_PATH}?page=${currentIndexArr[0] - 1}`}>
+        <Link href={`${PRACTICE_LONG_PATH_LIST}?page=${currentIndexArr[0] - 1}`}>
           <SmallLeftArrow />
         </Link>
       )}
@@ -38,7 +38,7 @@ export default function TypingListPagination({ currentPage, totalPage }: TypingL
         {currentIndexArr.map((index) => {
           if (index === currentPage) {
             return (
-              <Link href={`${PRACTICE_LONG_PATH}?page=${index}`} key={index}>
+              <Link href={`${PRACTICE_LONG_PATH_LIST}?page=${index}`} key={index}>
                 <Text
                   key={index}
                   w='28px'
@@ -54,7 +54,7 @@ export default function TypingListPagination({ currentPage, totalPage }: TypingL
             );
           } else {
             return (
-              <Link href={`${PRACTICE_LONG_PATH}?page=${index}`} key={index}>
+              <Link href={`${PRACTICE_LONG_PATH_LIST}?page=${index}`} key={index}>
                 <Text w='28px' h='28px' textAlign='center' lineHeight='28px'>
                   {index}
                 </Text>
@@ -64,7 +64,7 @@ export default function TypingListPagination({ currentPage, totalPage }: TypingL
         })}
       </Flex>
       {currentIndexArr[currentIndexArr.length - 1] < totalPage && (
-        <Link href={`${PRACTICE_LONG_PATH}?page=${currentIndexArr[currentIndexArr.length - 1] + 1}`}>
+        <Link href={`${PRACTICE_LONG_PATH_LIST}?page=${currentIndexArr[currentIndexArr.length - 1] + 1}`}>
           <SmallRightArrow />
         </Link>
       )}

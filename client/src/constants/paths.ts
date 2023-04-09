@@ -12,7 +12,8 @@ export const LOGIN_PATH = '/login';
 
 export const PRACTICE_PATH = '/practice';
 
-export const PRACTICE_LONG_PATH = '/practice/long';
+export const PRACTICE_LONG_PATH_LIST = '/practice/long';
+
 export const PRACTICE_SHORT_PATH = '/practice/short';
 export const ACTUAL_LONG_PATH = '/actual/long';
 export const ACTUAL_SHORT_PATH = '/actual/short';

@@ -1,6 +1,7 @@
 package com.project.Tamago.service;
 
 import static com.project.Tamago.common.Constant.*;
+import static com.project.Tamago.common.enums.Mode.*;
 import static com.project.Tamago.common.enums.ResponseCode.*;
 import static com.project.Tamago.common.enums.Score.*;
 
@@ -50,7 +51,13 @@ public class TypingExamService {
 		modifyTier(userId, language);
 		List<ShortTypingDto> shortTypings = TypingUtil.getRandomShortTypings(
 			typingRepository.findByContentTypeIsFalseAndLanguageIs(language.toString()), EXAM_SHORT_TYPING_SIZE);
-		return new ShortTypingListResDto(0, "practice", shortTypings);
+		return new ShortTypingListResDto(0, ACTUAL.toString(), shortTypings);
+	}
+
+	public void savePenalties(Integer userId, Language language) {
+		Tier tier = tierRepository.findByUserIdAndLanguage(userId, language)
+			.orElseThrow(() -> new CustomException(TIER_NOT_FOUND));
+		tier.applyPenalty(PENALTY.getScore(), true);
 	}
 
 	private void modifyTier(Integer userId, Language language) {
@@ -67,7 +74,7 @@ public class TypingExamService {
 			tier.initStatus();
 			return;
 		}
-		tier.applyPenalty(PENALTY.getScore());
+		tier.applyPenalty(PENALTY.getScore(), false);
 	}
 
 	private void createNewTier(Integer userId, Language language) {

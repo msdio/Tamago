@@ -5,7 +5,6 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  Link,
   Table,
   TableContainer,
   Tbody,
@@ -14,10 +13,11 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
+import Link from 'next/link';
 
 import PracticeLongLayout from '@/components/typing/long/Layout';
+import { LONG_TYPING_TYPE } from '@/constants/language';
 import { PRACTICE_LONG_PATH_DETAIL } from '@/constants/paths';
-import { TYPING_TYPE } from '@/constants/typing';
 import { Document } from '@/icons/Document';
 import { BookmarkOff } from '@/icons/Heart';
 import { Search } from '@/icons/Search';
@@ -77,11 +77,17 @@ export default function PracticeLongList({ currentPage, totalPage, typingList }:
                 <Tr key={typingId}>
                   <Td textAlign='center'>{typingId}</Td>
                   <Td>
-                    <Link href={`${PRACTICE_LONG_PATH_DETAIL}?typingId=${typingId}&pageNum=1&isTyping=true`}>
+                    <Link
+                      href={`${PRACTICE_LONG_PATH_DETAIL}?typingId=${typingId}&pageNum=1&isTyping=true`}
+                      onMouseOver={() => {
+                        // todo: 긴 글 제목에 마우스 호버시 썸네일 표시
+                        console.log(thumbnail);
+                      }}
+                    >
                       {title}
                     </Link>
                   </Td>
-                  <Td>{TYPING_TYPE[language]}</Td>
+                  <Td>{LONG_TYPING_TYPE[language]}</Td>
                   <Td>{totalPage}쪽</Td>
                   <Td>{viewCount}</Td>
                   <Td display='flex' gap='32.4px' justifyContent='end'>

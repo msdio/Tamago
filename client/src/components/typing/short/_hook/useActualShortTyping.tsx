@@ -5,7 +5,7 @@ import { useMemo, useRef, useState } from 'react';
 import type { ShortTypingType } from '@/apis/typing';
 import { postExamPenalty } from '@/apis/typing';
 import useCurrentTyping from '@/components/typing/short/_hook/useCurrentTyping';
-import { ACTUAL_SHORT_TYPING_TIME_LIMIT } from '@/constants/typing';
+import { ACTUAL_TYPING_TIME_LIMIT } from '@/constants/typing';
 import useToggle from '@/hooks/useToggle';
 import type { LanguageType } from '@/types/language';
 import type {
@@ -136,7 +136,7 @@ export default function useActualShortTyping(originalTypings: ShortTypingType[])
   };
 
   useEffect(() => {
-    if (ACTUAL_SHORT_TYPING_TIME_LIMIT - totalTypingTime <= 0) {
+    if (ACTUAL_TYPING_TIME_LIMIT.SHORT - totalTypingTime <= 0) {
       handleForceEndTyping();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
