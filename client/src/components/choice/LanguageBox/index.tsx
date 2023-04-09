@@ -36,7 +36,7 @@ export default function LanguageBox({ path, select }: LanguageBoxProps) {
   if (language === SELECT_LANGUAGE_VALUE.RANDOM) {
     return (
       <Box pos='relative'>
-        <Link href={`${path}?language?=${getRandomLanguage()}`}>
+        <Link href={`${path}?language=${getRandomLanguage()}`}>
           <TextBox content={label} />
         </Link>
         <Box

@@ -5,16 +5,25 @@ import { useContextShortTyping } from '@/components/typing/short/_hook/contextSh
 import GrassEllipse from '@/components/typing/short/InfoBar/GrassEllipse';
 import InfoBarItem from '@/components/typing/short/InfoBar/InfoBarItem';
 import ModeLabel from '@/components/typing/short/InfoBar/ModeLabel';
+import { ACTUAL_SHORT_TYPING_TIME_LIMIT, TYPING_MODE } from '@/constants/typing';
 import { Exit } from '@/icons/Exit';
+import type { TypingMode } from '@/types/typing';
 import { getSecondToMMSSFormat } from '@/utils/time';
 
 interface InfoBarProps {
   onExit: () => void;
+  mode: TypingMode;
 }
 
 // TODO : 짧은글, 긴글에서 공통적으로 사용됨
-export default function InfoBar({ onExit }: InfoBarProps) {
-  const { time, typingAccuracy, typingSpeed, typingWpm } = useContextShortTyping();
+export default function InfoBar({ onExit, mode }: InfoBarProps) {
+  const { typingTime, typingAccuracy, typingSpeed, typingWpm } = useContextShortTyping();
+
+  const timeLabel = mode === TYPING_MODE.PRACTICE ? '경과 시간' : '남은 시간';
+  const timeTextValue =
+    mode === TYPING_MODE.PRACTICE
+      ? getSecondToMMSSFormat(typingTime)
+      : getSecondToMMSSFormat(ACTUAL_SHORT_TYPING_TIME_LIMIT - typingTime);
 
   return (
     <>
@@ -42,8 +51,8 @@ export default function InfoBar({ onExit }: InfoBarProps) {
             <IconButton icon={<Exit />} onAction={onExit} />
           </Flex>
 
-          <Flex border='1px solid rgb(0, 0, 0)' borderRadius={10} h={'56px'}>
-            <InfoBarItem label='경과 시간' content={getSecondToMMSSFormat(time)} />
+          <Flex border='1px solid rgb(0, 0, 0)' borderRadius={10} h='56px' bg='#fff'>
+            <InfoBarItem label={timeLabel} content={timeTextValue} />
             <InfoBarItem label='WPM' content={`${typingWpm}`} />
             <InfoBarItem label='정확도' content={`${typingAccuracy}%`} />
             <InfoBarItem label='타자' content={`${typingSpeed}타`} />

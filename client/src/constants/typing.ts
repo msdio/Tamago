@@ -1,16 +1,17 @@
 import type { ContentType, TypingMode } from '@/types/typing';
 
 // NOTE : enum?
-export const CONTENT_TYPE: Record<string, ContentType> = {
+export const CONTENT_TYPE: Record<'LONG' | 'SHORT', ContentType> = {
   LONG: true,
   SHORT: false,
 };
 
-// NOTE : 왜 actual인가요?
-export const TYPING_MODE: Record<string, TypingMode> = {
+export const TYPING_MODE: Record<TypingMode, TypingMode> = {
   PRACTICE: 'PRACTICE',
   ACTUAL: 'ACTUAL',
 };
+
+export const ACTUAL_SHORT_TYPING_TIME_LIMIT = 240; // 5분
 
 // Language Type으로 옮기는게 어떨까요?!
 const TYPING_TYPE: Record<string, string> = {

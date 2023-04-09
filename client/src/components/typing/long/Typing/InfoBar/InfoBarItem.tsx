@@ -2,7 +2,7 @@ import { Flex, Text } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 
 const Wrapper = styled(Flex)`
-  &:not(:first-child) {
+  &:not(:first-of-type) {
     border-left: 1px solid #000;
   }
 `;

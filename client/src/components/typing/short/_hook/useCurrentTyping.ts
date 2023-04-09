@@ -28,7 +28,8 @@ interface UseCurrentTypingReturns {
   timePlay: () => void;
 
   handleTyping: (userTyping: string) => void;
-  handleTypingSubmit: (userTyping: string) => Promise<void>;
+  handlePracticeSubmit: (userTyping: string) => Promise<void>;
+  resetTypingData: () => void;
 }
 
 export default function useCurrentTyping({
@@ -57,7 +58,7 @@ export default function useCurrentTyping({
         wrongLength,
       });
 
-      setTypingAccuracy(parseInt(String(newAccuracy), 10));
+      setTypingAccuracy(() => parseInt(String(newAccuracy), 10));
     },
     [originalTyping],
   );
@@ -126,13 +127,13 @@ export default function useCurrentTyping({
     [originalTyping, startTime, typingAccuracy, typingId, typingSpeed, typingWpm],
   );
 
-  const handleSubmit = useCallback(
+  const handlePracticeSubmit = useCallback(
     async (resultContent: string) => {
       const typingHistory = generateTypingInfo(resultContent);
       await getTypingHistoryAPI(typingHistory);
-      resetTypingData();
+      // resetTypingData();
     },
-    [generateTypingInfo, resetTypingData],
+    [generateTypingInfo],
   );
 
   const handleTypingWpm = useCallback(() => {
@@ -168,6 +169,7 @@ export default function useCurrentTyping({
     timePause,
     timePlay,
     handleTyping,
-    handleTypingSubmit: handleSubmit,
+    handlePracticeSubmit,
+    resetTypingData,
   };
 }
