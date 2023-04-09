@@ -70,23 +70,30 @@ export default function useActualShortTyping(originalTypings: ShortTypingType[])
     [currentIdx, originalTypings],
   );
 
-  const handleSubmit = useCallback(async () => {
+  const handlePenaltySubmit = useCallback(async () => {
     const { language } = router.query;
     if (language) {
       toggleSubmitLoading();
-      const res = await postExamPenalty(language as LanguageType);
-      console.log('res: ', res);
+      await postExamPenalty(language as LanguageType);
 
       // TODO: 타이머 수정
       setTimeout(() => {
         toggleSubmitLoading();
-        console.log('timeout: ');
       }, 3000);
     }
 
     handleResultModalToggle();
   }, [handleResultModalToggle, router.query, toggleSubmitLoading]);
 
+  const handleSubmit = () => {
+    toggleSubmitLoading();
+
+    // const res = await getTypingHistoryAPI(typingHistory);
+    // TODO: 타이머 수정
+    setTimeout(() => {
+      toggleSubmitLoading();
+    }, 3000);
+  };
   const handleEndTyping = useCallback(
     async (input: string) => {
       resetTypingData();
@@ -97,17 +104,15 @@ export default function useActualShortTyping(originalTypings: ShortTypingType[])
       if (currentIdx < originalTypings.length - 1) {
         setCurrentIdx((prev) => prev + 1);
       } else {
-        // handleResultModalToggle();
         handleSubmit();
       }
     },
-    [currentIdx, handleSubmit, originalTypings.length, resetTypingData, saveTypingHistory, timePlay],
+    [currentIdx, originalTypings.length, resetTypingData, saveTypingHistory, timePlay],
   );
 
   const handleForceEndTyping = () => {
     timePause();
-    // handleResultModalToggle();
-    handleSubmit();
+    handlePenaltySubmit();
   };
 
   const handleExitModalClose = useCallback(() => {
@@ -117,9 +122,8 @@ export default function useActualShortTyping(originalTypings: ShortTypingType[])
 
   const handleResultModalOpen = useCallback(() => {
     handleExitModalToggle();
-    // handleResultModalToggle();
-    handleSubmit();
-  }, [handleExitModalToggle, handleSubmit]);
+    handlePenaltySubmit();
+  }, [handleExitModalToggle, handlePenaltySubmit]);
 
   const handleExitModalOpen = useCallback(() => {
     timePause();

@@ -127,6 +127,7 @@ export default function useCurrentTyping({
     [originalTyping, startTime, typingAccuracy, typingId, typingSpeed, typingWpm],
   );
 
+  // NOTE : 연습하기 데이터를 받아오는걸 여기서 처리하는게 맞는지?
   const handlePracticeSubmit = useCallback(
     async (resultContent: string) => {
       const typingHistory = generateTypingInfo(resultContent);
