@@ -78,9 +78,11 @@ export default function PracticeResultModal({
             </Flex>
           </ModalBody>
           <ModalFooter justifyContent='center' p='0' gap='17px'>
-            <Button w='174px' onClick={onAction}>
-              {actionLabel}
-            </Button>
+            {actionLabel !== '' && (
+              <Button w='174px' onClick={onAction}>
+                {actionLabel}
+              </Button>
+            )}
             <Link href='/'>
               <Button w='174px' variant='outline'>
                 메인화면으로 가기

@@ -90,6 +90,12 @@ export const getTypingHistoryAPI = async (typingHistory: TypingHistoryRequest) =
   return res.data.code;
 };
 
+export const examLongTypingAPI = async (language: string) => {
+  const res = await requestWithAuth.get(`/typing/exam/long?language=${language}`);
+
+  return res.data;
+};
+
 interface RegisterLongTextProps {
   title: string;
   content: string;
@@ -97,6 +103,12 @@ interface RegisterLongTextProps {
 }
 export const postRegisterLongTextAPI = async (data: RegisterLongTextProps): Promise<ApiResponse> => {
   const res = await requestWithAuth.post('/typing/register', data);
+
+  return res.data;
+};
+
+export const examPenaltiesAPI = async (language: string) => {
+  const res = await requestWithAuth.post(`/typing/exam/penalties?language=${language}`);
 
   return res.data;
 };

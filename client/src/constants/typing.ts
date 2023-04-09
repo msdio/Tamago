@@ -11,10 +11,13 @@ export const TYPING_MODE: Record<TypingMode, TypingMode> = {
   ACTUAL: 'ACTUAL',
 };
 
-export const ACTUAL_SHORT_TYPING_TIME_LIMIT = 240; // 5분
+export const ACTUAL_TYPING_TIME_LIMIT = {
+  LONG: 5 * 60 * 1000,
+  SHORT: 5 * 60 * 1000,
+};
 
 // Language Type으로 옮기는게 어떨까요?!
-const TYPING_TYPE: Record<string, string> = {
+export const TYPING_TYPE: Record<string, string> = {
   KOREAN: '한글',
   ENGLISH: '영어',
   JAVA: 'Java',
@@ -23,4 +26,10 @@ const TYPING_TYPE: Record<string, string> = {
   JAVASCRIPT: 'JavaScript',
 };
 
-export { TYPING_TYPE };
+export enum TYPING_STATE {
+  'DEFAULT' = 'd',
+  'CORRECT' = 'c',
+  'INCORRECT' = 'i',
+  'FOCUS' = 'f',
+  'EMPTY' = '',
+}

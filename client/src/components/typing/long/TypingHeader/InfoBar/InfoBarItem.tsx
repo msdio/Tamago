@@ -1,11 +1,4 @@
 import { Flex, Text } from '@chakra-ui/react';
-import styled from '@emotion/styled';
-
-const Wrapper = styled(Flex)`
-  &:not(:first-of-type) {
-    border-left: 1px solid #000;
-  }
-`;
 
 interface InfoBarItemProps {
   label: string;
@@ -14,7 +7,7 @@ interface InfoBarItemProps {
 
 function InfoBarItem({ label, content }: InfoBarItemProps) {
   return (
-    <Wrapper
+    <Flex
       minW='fit-content'
       gap='40px'
       justifyContent='space-between'
@@ -30,7 +23,7 @@ function InfoBarItem({ label, content }: InfoBarItemProps) {
       <Text fontFamily={'GangwonEduPower'} fontSize={20} fontWeight={900} mt='3px'>
         {content}
       </Text>
-    </Wrapper>
+    </Flex>
   );
 }
 

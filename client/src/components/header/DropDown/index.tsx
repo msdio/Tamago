@@ -5,12 +5,12 @@ import { fadeIn } from '@/constants/animations';
 import {
   ACTUAL_LONG_CHOICE_PATH,
   ACTUAL_SHORT_CHOICE_PATH,
-  PRACTICE_LONG_PATH,
+  PRACTICE_LONG_PATH_LIST,
   PRACTICE_SHORT_CHOICE_PATH,
 } from '@/constants/paths';
 
 const longTypingMenus = [
-  { menu: '연습타자', path: PRACTICE_LONG_PATH },
+  { menu: '연습타자', path: PRACTICE_LONG_PATH_LIST },
   { menu: '실전타자', path: ACTUAL_LONG_CHOICE_PATH },
 ];
 const shortTypingMenus = [

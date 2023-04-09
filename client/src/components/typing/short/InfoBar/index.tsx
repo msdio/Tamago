@@ -4,7 +4,7 @@ import IconButton from '@/components/common/IconButton';
 import { useContextShortTyping } from '@/components/typing/short/_hook/contextShortTyping';
 import GrassEllipse from '@/components/typing/short/InfoBar/GrassEllipse';
 import InfoBarItem from '@/components/typing/short/InfoBar/InfoBarItem';
-import { ACTUAL_SHORT_TYPING_TIME_LIMIT, TYPING_MODE } from '@/constants/typing';
+import { ACTUAL_TYPING_TIME_LIMIT, TYPING_MODE } from '@/constants/typing';
 import { Exit } from '@/icons/Exit';
 import type { TypingMode } from '@/types/typing';
 import { getSecondToMMSSFormat } from '@/utils/time';
@@ -22,7 +22,7 @@ export default function InfoBar({ onExit, mode }: InfoBarProps) {
   const timeTextValue =
     mode === TYPING_MODE.PRACTICE
       ? getSecondToMMSSFormat(typingTime)
-      : getSecondToMMSSFormat(ACTUAL_SHORT_TYPING_TIME_LIMIT - typingTime);
+      : getSecondToMMSSFormat(ACTUAL_TYPING_TIME_LIMIT.SHORT - typingTime);
 
   return (
     <>

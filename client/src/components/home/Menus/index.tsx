@@ -4,7 +4,7 @@ import { useRef } from 'react';
 
 import PrepareAlert from '@/components/common/PrepareAlert';
 import { fadeIn } from '@/constants/animations';
-import { PRACTICE_LONG_PATH, PRACTICE_SHORT_PATH } from '@/constants/paths';
+import { PRACTICE_LONG_PATH_LIST, PRACTICE_SHORT_PATH } from '@/constants/paths';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import useToggle from '@/hooks/useToggle';
 
@@ -35,7 +35,7 @@ export default function Menus() {
       </Text>
 
       <Flex marginTop='4.6875rem' w='100%' justifyContent='space-around'>
-        <Link href={PRACTICE_LONG_PATH}>
+        <Link href={PRACTICE_LONG_PATH_LIST}>
           <MenuCard language='kr' title='긴 글 연습' content='Lorem ipsum dolor sit amet, consectetu' />
         </Link>
         <Link href={`${PRACTICE_SHORT_PATH}?language=javascript`}>

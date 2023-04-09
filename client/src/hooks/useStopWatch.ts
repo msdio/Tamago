@@ -31,6 +31,7 @@ const useStopwatch = (): UseStopWatchReturns => {
   const [status, setStatus] = useState<'play' | 'stop' | 'pause'>('stop');
   const startTime = useRef<number | null>(null);
   const pauseTime = useRef<number | null>(null);
+  const pausedTime = useRef<number>(0);
 
   const totalMillisecond = time.minute * 60 * 1000 + time.second * 1000 + time.ms;
 
@@ -62,7 +63,10 @@ const useStopwatch = (): UseStopWatchReturns => {
     // play 눌렀을 때의 로직
     if (!startTime.current) startTime.current = Date.now();
     if (status === 'play') {
-      const now = new Date(Date.now() - startTime.current);
+      const dateNow = Date.now();
+      pausedTime.current += dateNow - (pauseTime.current ?? dateNow);
+      pauseTime.current = null;
+      const now = new Date(dateNow - startTime.current - pausedTime.current);
       playTimeout.current = setTimeout(() => {
         setTime({
           ...time,

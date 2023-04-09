@@ -1,17 +1,26 @@
 import { Flex } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 
+import IconButton from '@/components/common/IconButton';
 import PracticeLongLayout from '@/components/typing/long/Layout';
 import TypingDetailPagination from '@/components/typing/long/TypingDetailPagination';
-import TypingExit from '@/components/typing/long/TypingExit';
 import TypingLine from '@/components/typing/long/TypingLine';
+import { PRACTICE_LONG_PATH_LIST } from '@/constants/paths';
+import { Exit } from '@/icons/Exit';
 import type { LongTypingDetail } from '@/types/typing';
 import { slicedContentAndStrings } from '@/utils/typing';
 
 export default function LongContent({ content, currentPage, language, title, totalPage, typingId }: LongTypingDetail) {
+  const router = useRouter();
+
+  const handleExit = () => {
+    router.push(PRACTICE_LONG_PATH_LIST);
+  };
+
   return (
     <PracticeLongLayout>
       <Flex mb='21px' justifyContent='right'>
-        <TypingExit />
+        <IconButton icon={<Exit />} onAction={handleExit} />
       </Flex>
       <Flex
         h='550px'
