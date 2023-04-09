@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
-import { getTypingHistoryAPI } from '@/apis/typing';
+import { examPenaltiesAPI, getTypingHistoryAPI } from '@/apis/typing';
 import { userProfileState } from '@/atoms/userProfile';
 import Confirm from '@/components/common/Confirm';
 import PracticeResultModal from '@/components/common/ResultModal/practice-mode';
@@ -126,6 +126,12 @@ export default function ExamLongTyping({
     });
   };
 
+  const penaltisTyping = async () => {
+    try {
+      await examPenaltiesAPI(language);
+    } catch (error) {}
+  };
+
   /**
    * 처음 화면이 렌더링될 때 textarea로 포커싱되도록 한다.
    * textarea는 숨겨두었기 때문에 사용자가 보고 포커싱할 수 없다.
@@ -150,6 +156,7 @@ export default function ExamLongTyping({
     router.events.on('routeChangeStart', onRouteChange);
 
     if (penalty) {
+      penaltisTyping();
       router.replace(nextRoute);
       return cleanUpFunction;
     }

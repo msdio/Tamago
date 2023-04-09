@@ -104,3 +104,9 @@ export const postRegisterLongTextAPI = async (data: RegisterLongTextProps): Prom
 
   return res.data;
 };
+
+export const examPenaltiesAPI = async (language: string) => {
+  const res = await requestWithAuth.post(`/typing/exam/penalties?language=${language}`);
+
+  return res.data;
+};
