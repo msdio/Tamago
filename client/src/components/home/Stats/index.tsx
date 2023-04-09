@@ -2,8 +2,10 @@ import { Container, Flex, Image, Text } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import { useRef } from 'react';
 
+import { CustomAlert } from '@/components/common/Alert/index.stories';
 import { fadeIn } from '@/constants/animations';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
+import useToggle from '@/hooks/useToggle';
 import { RightArrowWithCircle } from '@/icons/RightArrowWithCircle';
 
 const StatCardShadow = styled.div`
@@ -47,6 +49,7 @@ const Badge = styled.div<{ trans: string }>`
 export default function Stats() {
   const observerRef = useRef<HTMLDivElement>(null);
   const animationTrigger = useIntersectionObserver({ ref: observerRef, threshold: 0.3 });
+  const [isModalOpen, toggleModalOpen] = useToggle();
 
   return (
     <Flex
@@ -84,7 +87,7 @@ export default function Stats() {
               </Text>
             </Flex>
 
-            <Flex>
+            <Flex onClick={toggleModalOpen}>
               <RightArrowWithCircle />
             </Flex>
 
@@ -123,6 +126,8 @@ export default function Stats() {
           <Image src='/images/home/graph-bar.png' alt='bar graph' w='10rem' position='absolute' bottom='0' right='0' />
         </Flex>
       </Container>
+
+      <CustomAlert header='준비중인 기능입니다!' isOpen={isModalOpen} onClose={toggleModalOpen} />
     </Flex>
   );
 }
