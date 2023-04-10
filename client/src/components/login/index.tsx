@@ -5,7 +5,7 @@ import AuthLayout from '@/components/common/AuthLayout';
 import type { InputType } from '@/components/login/Form';
 import LoginForm from '@/components/login/Form';
 import { MAIN_PATH } from '@/constants/paths';
-import { SUCCESS } from '@/constants/responseCode';
+import { ResponseCode } from '@/constants/responseCode';
 import type { ApiErrorResponse } from '@/types/apiResponse';
 
 function Login() {
@@ -19,7 +19,7 @@ function Login() {
     try {
       const data = await loginAPI({ email, password });
 
-      if (data.code === SUCCESS) {
+      if (data.code === ResponseCode.SUCCESS) {
         onSuccessLogin();
       } else {
         alert('로그인 실패');
