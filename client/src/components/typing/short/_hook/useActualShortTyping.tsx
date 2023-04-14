@@ -3,9 +3,11 @@ import { useCallback, useEffect } from 'react';
 import { useMemo, useRef, useState } from 'react';
 
 import type { ShortTypingType } from '@/apis/typing';
+import { postExamPenalty } from '@/apis/typing';
 import useCurrentTyping from '@/components/typing/short/_hook/useCurrentTyping';
 import { ACTUAL_TYPING_TIME_LIMIT } from '@/constants/typing';
 import useToggle from '@/hooks/useToggle';
+import type { LanguageType } from '@/types/language';
 import type {
   CurrentTypingActionType,
   CurrentTypingInfoType,
@@ -15,8 +17,9 @@ import type {
 import type { TypingHistoryType } from '@/types/typing';
 import { getTypingHistoryAverage } from '@/utils/typing';
 
-const usePracticeShortTyping = (originalTypings: ShortTypingType[]) => {
+export default function useActualShortTyping(originalTypings: ShortTypingType[]) {
   const [currentIdx, setCurrentIdx] = useState(0);
+  const [isSubmitLoading, toggleSubmitLoading] = useToggle();
   const router = useRouter();
 
   const {
@@ -67,6 +70,30 @@ const usePracticeShortTyping = (originalTypings: ShortTypingType[]) => {
     [currentIdx, originalTypings],
   );
 
+  const handlePenaltySubmit = useCallback(async () => {
+    const { language } = router.query;
+    if (language) {
+      toggleSubmitLoading();
+      await postExamPenalty(language as LanguageType);
+
+      // TODO: 타이머 수정
+      setTimeout(() => {
+        toggleSubmitLoading();
+      }, 3000);
+    }
+
+    handleResultModalToggle();
+  }, [handleResultModalToggle, router.query, toggleSubmitLoading]);
+
+  const handleSubmit = () => {
+    toggleSubmitLoading();
+
+    // const res = await getTypingHistoryAPI(typingHistory);
+    // TODO: 타이머 수정
+    setTimeout(() => {
+      toggleSubmitLoading();
+    }, 3000);
+  };
   const handleEndTyping = useCallback(
     async (input: string) => {
       resetTypingData();
@@ -77,15 +104,15 @@ const usePracticeShortTyping = (originalTypings: ShortTypingType[]) => {
       if (currentIdx < originalTypings.length - 1) {
         setCurrentIdx((prev) => prev + 1);
       } else {
-        handleResultModalToggle();
+        handleSubmit();
       }
     },
-    [currentIdx, handleResultModalToggle, originalTypings.length, resetTypingData, saveTypingHistory, timePlay],
+    [currentIdx, originalTypings.length, resetTypingData, saveTypingHistory, timePlay],
   );
 
   const handleForceEndTyping = () => {
     timePause();
-    handleResultModalToggle();
+    handlePenaltySubmit();
   };
 
   const handleExitModalClose = useCallback(() => {
@@ -95,8 +122,8 @@ const usePracticeShortTyping = (originalTypings: ShortTypingType[]) => {
 
   const handleResultModalOpen = useCallback(() => {
     handleExitModalToggle();
-    handleResultModalToggle();
-  }, [handleExitModalToggle, handleResultModalToggle]);
+    handlePenaltySubmit();
+  }, [handleExitModalToggle, handlePenaltySubmit]);
 
   const handleExitModalOpen = useCallback(() => {
     timePause();
@@ -154,7 +181,6 @@ const usePracticeShortTyping = (originalTypings: ShortTypingType[]) => {
     currentTypingActions,
     endGameValue,
     prevNextTypingInfo,
+    isSubmitLoading,
   };
-};
-
-export default usePracticeShortTyping;
+}
