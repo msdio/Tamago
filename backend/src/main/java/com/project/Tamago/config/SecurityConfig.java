@@ -68,6 +68,7 @@ public class SecurityConfig {
 			.antMatchers("/health").permitAll()
 			.antMatchers("/h2-console/**").permitAll()
 			.antMatchers("/typing/**").permitAll()
+			.antMatchers("/badge", "/badge2").permitAll()
 			.and()
 			.authorizeRequests()
 			.anyRequest().authenticated();
