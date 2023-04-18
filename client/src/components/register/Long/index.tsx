@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { useState } from 'react';
 
 import { postRegisterLongTextAPI } from '@/apis/typing';
-import { SUCCESS } from '@/constants/responseCode';
+import { RESPONSE_CODE } from '@/constants/responseCode';
 import type { ApiErrorResponse } from '@/types/apiResponse';
 
 export default function RegisterLong() {
@@ -30,7 +30,7 @@ export default function RegisterLong() {
         language: 'ENGLISH',
       });
 
-      if (data.code === SUCCESS) {
+      if (data.code === RESPONSE_CODE.SUCCESS) {
         alert('등록 성공!');
         window.location.replace('/');
       }

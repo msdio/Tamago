@@ -8,7 +8,7 @@ import FormOr from '@/components/common/FormOr';
 import RegexInput from '@/components/common/RegexInput';
 import EmailInput from '@/components/signup/Form/EmailInput';
 import { SIGNUP_COMPLETE_PATH } from '@/constants/paths';
-import { EMAIL_DUPLICATE, NICKNAME_DUPLICATE, SUCCESS } from '@/constants/responseCode';
+import { RESPONSE_CODE } from '@/constants/responseCode';
 import useRegexInputs from '@/hooks/useRegexInputs';
 import useToggle from '@/hooks/useToggle';
 import { GithubLogo } from '@/icons/GithubLogo';
@@ -58,9 +58,9 @@ export default function SignupForm() {
     try {
       const data = await emailDuplicateAPI(email.value);
 
-      if (data.code === SUCCESS) {
+      if (data.code === RESPONSE_CODE.SUCCESS) {
         setIsEmailDuplicated(false);
-      } else if (data.code === EMAIL_DUPLICATE) {
+      } else if (data.code === RESPONSE_CODE.EMAIL_DUPLICATE) {
         setIsEmailDuplicated(true);
       }
 
@@ -89,12 +89,12 @@ export default function SignupForm() {
     try {
       const data = await signupAPI({ nickname: name.value, email: email.value, password: password.value });
 
-      if (data.code === SUCCESS) {
+      if (data.code === RESPONSE_CODE.SUCCESS) {
         router.push(SIGNUP_COMPLETE_PATH);
-      } else if (data.code === EMAIL_DUPLICATE) {
+      } else if (data.code === RESPONSE_CODE.EMAIL_DUPLICATE) {
         setAlertMessage(data.description);
         toggleOn();
-      } else if (data.code === NICKNAME_DUPLICATE) {
+      } else if (data.code === RESPONSE_CODE.NICKNAME_DUPLICATE) {
         setAlertMessage(data.description);
         toggleOn();
       }
