@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 
 import type { ShortTypingResultType, TypingLanguageType } from '@/apis/typing';
-import { getShortTypingWritingsAPI } from '@/apis/typing';
+import { getExamShortTypingWritingsAPI } from '@/apis/typing';
 import CheckedLayout from '@/components/common/CheckedLayout';
 import ShortTypingProvider from '@/components/typing/short/_hook/contextShortTyping';
 import ActualShort from '@/components/typing/short/ActualShort';
@@ -24,12 +24,13 @@ export default function ActualShortPage() {
   const getTypingWritings = useCallback(async () => {
     if (language) {
       toggleLoading();
-      const { result } = await getShortTypingWritingsAPI(language as TypingLanguageType);
+      const { result } = await getExamShortTypingWritingsAPI(language as TypingLanguageType);
 
       setData(result);
       toggleLoading();
     }
   }, [language, toggleLoading]);
+
   useEffect(() => {
     getTypingWritings();
   }, [getTypingWritings]);

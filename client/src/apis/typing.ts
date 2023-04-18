@@ -1,10 +1,9 @@
 import { requestWithAuth, requestWithoutAuth } from '@/apis';
+import type { ErrorResponse } from '@/apis/error';
 import type { ApiResponse } from '@/types/apiResponse';
 import type { LanguageType } from '@/types/language';
-import type { TierLevels } from '@/types/tier';
 import type { LongTypingDetail, LongTypingItem } from '@/types/typing';
 import type { TypingMode } from '@/types/typing';
-import { getTierLevel } from '@/utils/tier';
 
 export interface ShortTypingType {
   typingId: number;
@@ -58,6 +57,16 @@ export const getShortTypingWritingsAPI = async (
   return res.data;
 };
 
+export const getExamShortTypingWritingsAPI = async (
+  language: TypingLanguageType,
+): Promise<{
+  result: ShortTypingResultType;
+}> => {
+  const res = await requestWithAuth.get('/typing/exam/short?language=' + language);
+
+  return res.data;
+};
+
 export const getLongTypingListAPI = async (page: number): Promise<LongTypingListResultType> => {
   const res = await requestWithoutAuth.get(`/typing/long?page=${page}`);
 
@@ -101,31 +110,31 @@ interface RegisterLongTextProps {
   content: string;
   language: LanguageType;
 }
+
 export const postRegisterLongTextAPI = async (data: RegisterLongTextProps): Promise<ApiResponse> => {
   const res = await requestWithAuth.post('/typing/register', data);
 
   return res.data;
 };
 
+export const postExamPenalty = async (language: LanguageType) => {
+  try {
+    const res = await requestWithAuth.post('/typing/exam/penalties?language=' + language);
+
+    return res.data;
+  } catch (error: unknown) {
+    const err = error as ErrorResponse;
+
+    if (err.code === 5000) {
+      return true;
+    }
+    throw error;
+  }
+};
+
+// TODO : 위아래 합치기
 export const examPenaltiesAPI = async (language: string) => {
   const res = await requestWithAuth.post(`/typing/exam/penalties?language=${language}`);
 
   return res.data;
-};
-
-export const getTierInfoAPI = async (): Promise<{
-  tier: TierLevels;
-  prevScore: number;
-  afterScore: number;
-}> => {
-  const prevScore = 900;
-  const afterScore = 1000;
-
-  const tier = getTierLevel(afterScore);
-
-  return {
-    tier,
-    prevScore,
-    afterScore,
-  };
 };

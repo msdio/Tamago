@@ -11,9 +11,8 @@ import {
   Text,
 } from '@chakra-ui/react';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { getTierInfoAPI } from '@/apis/typing';
 import IconButton from '@/components/common/IconButton';
 import PrepareAlert from '@/components/common/PrepareAlert';
 import ScoreInfo from '@/components/common/ResultModal/exam-mode/ScoreInfo';
@@ -30,10 +29,20 @@ interface ResultModalProps {
   onAction: () => void;
   actionLabel: string;
 
+  isLoading: boolean;
   mode: 'short' | 'long';
 }
 
-export default function ExamResultModal({ isOpen, result, endTime, onAction, actionLabel, mode }: ResultModalProps) {
+export default function ExamResultModal({
+  isOpen,
+  result,
+  endTime,
+  onAction,
+  actionLabel,
+  mode,
+  isLoading,
+}: ResultModalProps) {
+  // TODO : score을 밖에서 가져오도록 구현 필요
   const [isPrepareModalOpen, togglePrepareModal] = useToggle();
 
   const onBookmark = () => {
@@ -42,19 +51,6 @@ export default function ExamResultModal({ isOpen, result, endTime, onAction, act
 
   const [prevScore, setPrevScore] = useState<number | null>(null);
   const [afterScore, setAfterScore] = useState<number | null>(null);
-
-  const settingTierInfo = async () => {
-    const { prevScore, afterScore } = await getTierInfoAPI();
-
-    setTimeout(() => {
-      setPrevScore(prevScore);
-      setAfterScore(afterScore);
-    }, 1000);
-  };
-
-  useEffect(() => {
-    settingTierInfo();
-  }, []);
 
   return (
     <>
@@ -77,7 +73,7 @@ export default function ExamResultModal({ isOpen, result, endTime, onAction, act
 
           <ModalBody mt='32px' mb='50px' p={0}>
             <Flex gap='65px'>
-              <ScoreInfo afterScore={afterScore} prevScore={prevScore} />
+              <ScoreInfo isLoading={isLoading} afterScore={afterScore} prevScore={prevScore} />
               <Box w='264px' pt='32px'>
                 <InfoList {...result} />
               </Box>

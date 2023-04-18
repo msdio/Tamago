@@ -26,4 +26,15 @@ class SignupError extends Error {
   }
 }
 
+export class ErrorResponse extends Error {
+  constructor() {
+    super();
+    this.code = 500;
+    this.description = '서버가 응답하지 않습니다.';
+  }
+
+  code: number;
+  description: string;
+}
+
 export { EmailDuplicateError, NicknameDuplicateError, ServerError, SignupError };
