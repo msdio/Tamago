@@ -4,6 +4,10 @@ import { jumping, jumpingShadow } from '@/constants/animations';
 import { ScrollIndicator } from '@/icons/ScrollIndicator';
 
 export default function Landing() {
+  const scrollDown = () => {
+    window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+  };
+
   return (
     <Flex
       alignItems='center'
@@ -46,7 +50,7 @@ export default function Landing() {
           자신의 타자 속도를 공유하며 코딩에 대한 소소한 재미를 가지며 코드의 정확도를 높일 수 있습니다.
         </Text>
 
-        <Button size='md' mt='3.75rem'>
+        <Button size='md' mt='3.75rem' onClick={scrollDown} animation={'1s linear'}>
           연습하기
         </Button>
       </Flex>

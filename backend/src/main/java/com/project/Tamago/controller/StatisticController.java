@@ -4,17 +4,17 @@ import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.Tamago.dto.CustomResponse;
+import com.project.Tamago.common.annotation.Login;
+import com.project.Tamago.common.response.CustomResponse;
+import com.project.Tamago.dto.LoginResolverDto;
 import com.project.Tamago.dto.responseDto.DateAccuracyAverageResDto;
 import com.project.Tamago.dto.responseDto.DateWpmAverageResDto;
 import com.project.Tamago.dto.responseDto.StatisticsAllResDto;
 import com.project.Tamago.service.StatisticService;
-import com.project.Tamago.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,29 +24,26 @@ import lombok.RequiredArgsConstructor;
 public class StatisticController {
 
 	private final StatisticService statisticService;
-	private final UserService userService;
 
 	@GetMapping("/all")
-	public CustomResponse<StatisticsAllResDto> findUserStatistic(@RequestHeader("Authorization") String jwtToken) {
-		return new CustomResponse<>(statisticService.totalStatisticsAll(userService.getUserByJwtToken(jwtToken)));
+	public CustomResponse<StatisticsAllResDto> findUserStatistic(@Login LoginResolverDto loginResolverDto) {
+		return new CustomResponse<>(statisticService.totalStatisticsAll(loginResolverDto.getUserId()));
 	}
 
 	@GetMapping("/speed")
-	public CustomResponse<DateWpmAverageResDto> findDateAverageWpm(
-		@RequestHeader("Authorization") String jwtToken,
+	public CustomResponse<DateWpmAverageResDto> findDateAverageWpm(@Login LoginResolverDto loginResolverDto,
 		@RequestParam("startDay") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDay,
 		@RequestParam("endDay") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDay) {
 		return new CustomResponse<>(
-			statisticService.findWpmAverageByUser(userService.getUserByJwtToken(jwtToken), startDay, endDay));
+			statisticService.findWpmAverageByUser(loginResolverDto.getUserId(), startDay, endDay));
 	}
 
 	@GetMapping("/accuracy")
-	public CustomResponse<DateAccuracyAverageResDto> findDateAverageAccuracy(
-		@RequestHeader("Authorization") String jwtToken,
+	public CustomResponse<DateAccuracyAverageResDto> findDateAverageAccuracy(@Login LoginResolverDto loginResolverDto,
 		@RequestParam("startDay") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDay,
 		@RequestParam("endDay") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDay) {
 		return new CustomResponse<>(
-			statisticService.findAccuracyAverageByUser(userService.getUserByJwtToken(jwtToken), startDay, endDay));
+			statisticService.findAccuracyAverageByUser(loginResolverDto.getUserId(), startDay, endDay));
 	}
 
 }

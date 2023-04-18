@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import com.project.Tamago.constants.enums.Role;
+import com.project.Tamago.common.enums.Role;
 import com.project.Tamago.security.CustomOAuth2User;
 import com.project.Tamago.security.GoogleOAuth2User;
 import com.project.Tamago.security.KakaoOAuth2User;

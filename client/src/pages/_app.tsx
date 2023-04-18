@@ -1,22 +1,23 @@
-import '../styles/font.css';
+import '@/styles/font.css';
 
-import { ChakraProvider, Spacer } from '@chakra-ui/react';
+import { ChakraProvider, Hide, Show } from '@chakra-ui/react';
 import type { AppProps } from 'next/app';
+import { RecoilRoot } from 'recoil';
 
+import Hider from '@/components/common/Hider';
 import theme from '@/styles/theme';
-
-import { Footer } from '../components/footer';
-import { Header } from '../components/header';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
-      <div style={{ position: 'relative' }}>
-        <Header />
-        <Component {...pageProps} />
-        <Spacer />
-        <Footer />
-      </div>
+      <RecoilRoot>
+        <Show breakpoint='(max-width: 1199px)'>
+          <Hider />
+        </Show>
+        <Hide breakpoint='(max-width: 1199px)'>
+          <Component {...pageProps} />
+        </Hide>
+      </RecoilRoot>
     </ChakraProvider>
   );
 }

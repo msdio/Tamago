@@ -6,6 +6,7 @@ import { useState } from 'react';
 import Alert from '@/components/common/Alert';
 import AuthLayout from '@/components/common/AuthLayout';
 import RegexInput from '@/components/common/RegexInput';
+import { SIGNUP_TERM_PATH } from '@/constants/paths';
 import { EMAIL_REGEX } from '@/utils/regex';
 
 interface InquiryPwProps {
@@ -114,7 +115,7 @@ export default function InquiryPw({ handleNextStep }: InquiryPwProps) {
 
       <Flex gap='10px' justifyContent='center' mt='24px'>
         <Text color='gray.dark'>계정이 없으신가요?</Text>
-        <Link href='/signup'>
+        <Link href={SIGNUP_TERM_PATH}>
           <Text>회원가입하기</Text>
         </Link>
       </Flex>

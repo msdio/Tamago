@@ -4,6 +4,8 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +33,9 @@ public class UserControllerTest {
 	private MockMvc mockMvc;
 
 
-
 	@Test
 	@DisplayName("유저 정보 가져오기 성공")
-	@WithMockUser(username = "user", authorities = {"ROLE_USER"})
+	@WithMockUser(username = "1", authorities = {"ROLE_USER"})
 	public void findProfile() throws Exception {
 		// given
 		User user = User.builder()
@@ -43,11 +44,11 @@ public class UserControllerTest {
 			.nickname("test")
 			.password("1234")
 			.build();
-		doReturn(new ProfileResDto(user)).when(mockUserService).findProfileByJwtToken("test");
+		when(mockUserService.findProfileById(any())).thenReturn(new ProfileResDto(user));
+
 		// when
 		ResultActions resultActions = mockMvc.perform(get("/user/profile")
 			.contentType(MediaType.APPLICATION_JSON)
-			.header("Authorization", "test")
 		);
 		// then
 		resultActions.andExpect(status().isOk());

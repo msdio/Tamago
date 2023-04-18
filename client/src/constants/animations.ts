@@ -91,3 +91,46 @@ export const jumpingShadow = keyframes`
     transform: scale(1) translateX(1.5625rem);
   }
 `;
+
+export const speechBubbleShake = keyframes`
+  0% {  
+     transform: rotate(0deg);
+  }
+  50% {  
+    transform: rotate(-2deg);
+  }
+  100% {   
+    transform: rotate(0deg); 
+  }
+`;
+
+export const wobblyEgg = keyframes`
+   0% {  
+     transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(20deg);
+  }
+  50% {  
+    transform: rotate(0deg); 
+  }
+  75% {  
+    transform: rotate(-20deg);
+  }
+  100% {   
+    transform: rotate(0deg); 
+  }
+`;
+
+export const showScaleUp = keyframes`
+   0% {
+    transform: scale(0.8);
+   }
+   20% {
+    transform: scale(1.1);
+   }
+    100% {
+    transform: scale(1);
+
+    }
+`;
