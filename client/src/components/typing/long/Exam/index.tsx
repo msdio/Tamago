@@ -7,7 +7,7 @@ import { useRecoilValue } from 'recoil';
 import { examPenaltiesAPI, getTypingHistoryAPI } from '@/apis/typing';
 import { userProfileState } from '@/atoms/userProfile';
 import Confirm from '@/components/common/Confirm';
-import PracticeResultModal from '@/components/common/ResultModal/practice-mode';
+import ExamResultModal from '@/components/common/ResultModal/exam-mode';
 import LongLayout from '@/components/typing/long/Layout';
 import TypingHeader from '@/components/typing/long/TypingHeader';
 import TypingLine from '@/components/typing/long/TypingLine';
@@ -208,9 +208,9 @@ export default function ExamLongTyping({
       const prevComponents = userInfos.current[textareaLength - 1].components;
 
       userInfos.current[textareaLength - 1] = {
-        char: textarea[textareaLength - 1],
-        type: getCharType(textarea[textareaLength - 1]),
-        components: disassemble(textarea[textareaLength - 1]),
+        char: value[textareaLength - 1],
+        type: getCharType(value[textareaLength - 1]),
+        components: disassemble(value[textareaLength - 1]),
       };
 
       const currComponents = userInfos.current[textareaLength - 1].components;
@@ -319,8 +319,7 @@ export default function ExamLongTyping({
         actionLabel='그만하기'
         closeLabel='계속하기'
       />
-      <PracticeResultModal
-        title={`${title} (${currentPage}/${totalPage})`}
+      <ExamResultModal
         isOpen={isResultModalOpen}
         actionLabel='다시하기'
         onAction={onModalButtonClick}
@@ -331,6 +330,7 @@ export default function ExamLongTyping({
           typingWpm: typingWpm.current,
         }}
         endTime={new Date()}
+        mode='long'
       />
     </>
   );

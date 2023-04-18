@@ -59,12 +59,6 @@ export const getWrongKeys = (contentInfos: CharInfo[], typingInfos: CharInfo[]) 
     });
   });
 
-  for (const key in wrongKeys) {
-    if (wrongKeys[key].count === 0) {
-      delete wrongKeys[key];
-    }
-  }
-
   return wrongKeys;
 };
 
