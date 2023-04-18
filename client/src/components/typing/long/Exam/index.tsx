@@ -320,6 +320,7 @@ export default function ExamLongTyping({
         closeLabel='계속하기'
       />
       <ExamResultModal
+        isLoading={false}
         isOpen={isResultModalOpen}
         actionLabel='다시하기'
         onAction={onModalButtonClick}
