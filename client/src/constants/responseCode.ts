@@ -1,4 +1,6 @@
-const ResponseCode = {
+const RESPONSE_CODE = {
+  SERVER_ERROR: 500,
+
   SUCCESS: 1000,
 
   EXPIRED_JWT: 2000,
@@ -15,6 +17,6 @@ const ResponseCode = {
   USER_NOT_EXIST: 3003,
 };
 
-Object.freeze(ResponseCode);
+Object.freeze(RESPONSE_CODE);
 
-export { ResponseCode };
+export { RESPONSE_CODE };
