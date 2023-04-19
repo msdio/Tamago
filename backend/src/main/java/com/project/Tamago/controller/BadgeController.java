@@ -14,15 +14,14 @@ public class BadgeController {
 
 	@GetMapping("/badge")
 	@ResponseBody
-	public ResponseEntity<byte[]> getSvg(@RequestParam Integer level) {
+	public ResponseEntity<byte[]> getSvg(@RequestParam String userName) {
 
-		new BadgeView(3).getBadgeFileByte();
 		HttpHeaders header = new HttpHeaders();
 		header.add("Content-Type", "image/svg+xml");
 
 		return ResponseEntity.ok()
 			.headers(header)
-			.body(new BadgeView(level).getBadgeFileByte());
+			.body(new BadgeView(userName).getBadgeFileByte());
 	}
 
 }

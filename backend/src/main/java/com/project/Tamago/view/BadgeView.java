@@ -1,6 +1,7 @@
 package com.project.Tamago.view;
 
 import java.util.Map;
+import java.util.Random;
 
 public class BadgeView {
 
@@ -13,10 +14,11 @@ public class BadgeView {
 		4, Map.of("backgroundFillColor", "#E3EBFF", "fillColor", "#4E74D3"),
 		5, Map.of("backgroundFillColor", "#FFF3F5", "fillColor", "#FF6375")
 	);
-	
-	
-	public BadgeView(int level) {
-		badgeFileByte = makeView(level, "jonghyun", 444, 95, 10).getBytes();
+
+	public BadgeView(String userName) {
+		Random random = new Random();
+		badgeFileByte = makeView(random.nextInt(6), userName, random.nextInt(700), random.nextInt(100),
+			random.nextInt(100)).getBytes();
 	}
 
 	public byte[] getBadgeFileByte() {
@@ -28,17 +30,17 @@ public class BadgeView {
 		first(sb);
 		backgroundColor(level, sb);
 
-		if(level == 0)
+		if (level == 0)
 			zeroTierImage(sb);
-		if(level == 1)
+		if (level == 1)
 			firetTierImage(sb);
-		if(level == 2)
+		if (level == 2)
 			secondTierImage(sb);
-		if(level == 3)
+		if (level == 3)
 			thirdTierImage(sb);
-		if(level == 4)
+		if (level == 4)
 			fourthTierImage(sb);
-		if(level == 5)
+		if (level == 5)
 			fifTierImage(sb);
 
 		color2(level, sb);
