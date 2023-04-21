@@ -53,7 +53,7 @@ public class OAuthAttributes {
 			.email((String)kakaoAccount.get("email"))
 			.nameAttributeKey(userNameAttributeName)
 			.attributes(attributes)
-			.authorities(Collections.singleton(new SimpleGrantedAuthority(Role.USER.name())))
+			.authorities(Collections.singleton(new SimpleGrantedAuthority(Role.USER.getType())))
 			.name((String)properties.get("nickname"))
 			.build();
 	}

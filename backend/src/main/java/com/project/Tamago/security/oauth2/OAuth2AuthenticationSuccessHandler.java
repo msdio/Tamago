@@ -1,7 +1,6 @@
 package com.project.Tamago.security.oauth2;
 
 import java.io.IOException;
-import java.util.Optional;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +28,7 @@ public class OAuth2AuthenticationSuccessHandler extends SavedRequestAwareAuthent
 
 	private final UserRepository userRepository;
 	private final JwtTokenProvider jwtTokenProvider;
-	private final String URL = "https://typingmastergo.site/kakao-redirect?token=%s";
+	private final String URL = "https://typingmastergo.site/kakao-redirect?token=%s&userId=%s";
 
 	@Override
 	@Transactional
@@ -43,10 +42,8 @@ public class OAuth2AuthenticationSuccessHandler extends SavedRequestAwareAuthent
 		Authentication authentication,
 		CustomOAuth2User oAuth2User) throws IOException {
 
-		User user = userRepository.findByEmailAndProvider(oAuth2User.getEmail(),
-				oAuth2User.getOAuth2Id())
-			.orElseGet(() -> userRepository.save(
-				DataMapper.INSTANCE.toUser(oAuth2User, Role.USER, UUID.randomUUID().toString().substring(0, 10))));
+		User user = userRepository.findByEmailAndProvider(oAuth2User.getEmail(), oAuth2User.getOAuth2Id())
+			.orElseGet(() -> userRepository.save(getUserByOAuth2User(oAuth2User)));
 		((KakaoOAuth2User)authentication.getPrincipal()).setName(user.getId().toString());
 		response.getWriter().write(loginByOAuth2(authentication));
 	}
@@ -57,19 +54,20 @@ public class OAuth2AuthenticationSuccessHandler extends SavedRequestAwareAuthent
 	private void processRegisterOrLogin(HttpServletRequest request, HttpServletResponse response,
 		Authentication authentication,
 		CustomOAuth2User oAuth2User) throws IOException {
-		Optional<User> user = userRepository.findByEmailAndProvider(oAuth2User.getEmail(),
-			oAuth2User.getOAuth2Id());
+		User user = userRepository.findByEmailAndProvider(oAuth2User.getEmail(), oAuth2User.getOAuth2Id())
+			.orElseGet(() -> userRepository.save(getUserByOAuth2User(oAuth2User)));
 
-		if (user.isPresent()) {
-			redirect(request, response, loginByOAuth2(authentication));
-			return;
-		}
-		userRepository.save(DataMapper.INSTANCE.toUser(oAuth2User, Role.USER, UUID.randomUUID().toString().substring(0, 10)));
-		redirect(request, response, loginByOAuth2(authentication));
+		((KakaoOAuth2User)authentication.getPrincipal()).setName(user.getId().toString());
+		redirect(request, response, loginByOAuth2(authentication), user.getId());
 	}
 
-	private void redirect(HttpServletRequest request, HttpServletResponse response, String token) throws IOException {
-		String url = UriComponentsBuilder.fromUriString(String.format(URL, token))
+	private static User getUserByOAuth2User(CustomOAuth2User oAuth2User) {
+		return DataMapper.INSTANCE.toUser(oAuth2User, Role.USER, UUID.randomUUID().toString().substring(0, 10));
+	}
+
+	private void redirect(HttpServletRequest request, HttpServletResponse response, String token, Integer userId) throws
+		IOException {
+		String url = UriComponentsBuilder.fromUriString(String.format(URL, token, userId))
 			.build().toUriString();
 		getRedirectStrategy().sendRedirect(request, response, url);
 	}
