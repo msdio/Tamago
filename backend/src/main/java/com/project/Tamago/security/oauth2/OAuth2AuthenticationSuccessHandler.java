@@ -29,12 +29,14 @@ public class OAuth2AuthenticationSuccessHandler extends SavedRequestAwareAuthent
 
 	private final UserRepository userRepository;
 	private final JwtTokenProvider jwtTokenProvider;
+	private final String URL = "https://typingmastergo.site/kakao-redirect?token=%s";
 
 	@Override
 	@Transactional
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 		Authentication authentication) throws IOException {
-		processRegisterAndLogin(response, authentication, (CustomOAuth2User)authentication.getPrincipal());
+		// processRegisterAndLogin(response, authentication, (CustomOAuth2User)authentication.getPrincipal());
+		processRegisterOrLogin(request, response, authentication, (CustomOAuth2User)authentication.getPrincipal());
 	}
 
 	private void processRegisterAndLogin(HttpServletResponse response,
@@ -59,15 +61,15 @@ public class OAuth2AuthenticationSuccessHandler extends SavedRequestAwareAuthent
 			oAuth2User.getOAuth2Id());
 
 		if (user.isPresent()) {
-			response.getWriter().write(loginByOAuth2(authentication));
+			redirect(request, response, loginByOAuth2(authentication));
 			return;
 		}
 		userRepository.save(DataMapper.INSTANCE.toUser(oAuth2User, Role.USER, UUID.randomUUID().toString().substring(0, 10)));
-		redirect(request, response);
+		redirect(request, response, loginByOAuth2(authentication));
 	}
 
-	private void redirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String url = UriComponentsBuilder.fromUriString("")
+	private void redirect(HttpServletRequest request, HttpServletResponse response, String token) throws IOException {
+		String url = UriComponentsBuilder.fromUriString(String.format(URL, token))
 			.build().toUriString();
 		getRedirectStrategy().sendRedirect(request, response, url);
 	}
