@@ -60,7 +60,7 @@ export default function Stats() {
       opacity={animationTrigger ? 1 : 0}
       animation={animationTrigger ? `${fadeIn} 1s linear` : ''}
     >
-      <Container maxW='container.xl' py='6.9375rem' display='flex' gap='1.1875rem' justifyContent='space-evenly'>
+      <Container maxW='container.xl' py='6.9375rem' display='flex' gap='1.1875rem' justifyContent='space-between'>
         <Flex>
           <Flex
             w='48.25rem'
