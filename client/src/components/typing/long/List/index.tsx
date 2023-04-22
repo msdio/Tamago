@@ -81,7 +81,7 @@ export default function PracticeLongList({ currentPage, totalPage, typingList }:
                       href={`${PRACTICE_LONG_PATH_DETAIL}?typingId=${typingId}&pageNum=1&isTyping=true`}
                       onMouseOver={() => {
                         // todo: 긴 글 제목에 마우스 호버시 썸네일 표시
-                        console.log(thumbnail);
+                        // console.log(thumbnail);
                       }}
                     >
                       {title}
