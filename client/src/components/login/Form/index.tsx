@@ -1,5 +1,4 @@
-import { Box, Button, Flex, Text } from '@chakra-ui/react';
-import Image from 'next/image';
+import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 
 import { kakaoLoginAPI } from '@/apis/auth';
