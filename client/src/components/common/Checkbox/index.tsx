@@ -17,18 +17,18 @@ const CheckedIcon = () => {
 };
 
 interface CheckboxProps {
-  labelText?: string;
+  labeltext?: string;
 }
 
 export const CustomCheckbox = (props: UseCheckboxProps & CheckboxProps) => {
-  const { labelText } = props;
+  const { labeltext } = props;
   const { state, getCheckboxProps, getInputProps, getLabelProps, htmlProps } = useCheckbox(props);
   return (
     <FormLabel
       display='flex'
       alignItems='center'
       borderColor='gray.main'
-      gap={labelText ? '14px' : '0'}
+      gap={labeltext ? '14px' : '0'}
       cursor='pointer'
       m={0}
       {...htmlProps}
@@ -50,7 +50,7 @@ export const CustomCheckbox = (props: UseCheckboxProps & CheckboxProps) => {
         {state.isChecked && <CheckedIcon />}
       </Flex>
       <Text size='15px' {...getLabelProps()}>
-        {labelText}
+        {labeltext}
       </Text>
     </FormLabel>
   );

@@ -64,7 +64,7 @@ function LoginForm({ onLogin }: LoginFormProps) {
       </Box>
 
       <Flex w='full' justifyContent='space-between' mt='20px'>
-        <CustomCheckbox labelText='아이디 저장' />
+        <CustomCheckbox labeltext='아이디 저장' />
         <Flex gap='13px' fontSize='15px'>
           <Link href={INQUIRY_PW_PATH}>
             <Text color='gray.dark'>비밀번호 찾기</Text>
