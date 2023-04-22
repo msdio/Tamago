@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 
-import KakaoLogo from '/images/kakaotalk_btn.png';
 import { emailDuplicateAPI, signupAPI } from '@/apis/auth';
 import Alert from '@/components/common/Alert';
 import FormOr from '@/components/common/FormOr';
@@ -173,8 +172,7 @@ export default function SignupForm() {
         </Box>
         <Flex justifyContent='center' gap={4}>
           <Button bg='fff' border='0.6px solid' borderColor='gray.main' width='59px' height='59px' p='10px'>
-            {/* <GoogleLogo /> */}
-            <Image src={KakaoLogo} alt='kakao logo' />
+            <Image width={'49'} height={'49'} src='/images/kakaotalk_btn.png' alt='kakao logo' />
           </Button>
           <Button bg='fff' border='0.6px solid' borderColor='gray.main' width='59px' height='59px' p='10px'>
             <GithubLogo />

@@ -101,7 +101,6 @@ function LoginForm({ onLogin }: LoginFormProps) {
           }}
           onClick={onKakaoLogin}
         >
-          {/* <GoogleLogo /> */}
           <Image width={'49'} height={'49'} src='/images/kakaotalk_btn.png' alt='kakao logo' />
         </Button>
         <Button
