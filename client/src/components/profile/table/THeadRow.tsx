@@ -16,12 +16,12 @@ const RoundTableRow = styled(Th)`
 `;
 
 interface THeadRowProps {
-  minW?: string;
+  w?: string;
 }
 
-export default function THeadRow({ children, minW }: PropsWithChildren<THeadRowProps>) {
+export default function THeadRow({ children, w }: PropsWithChildren<THeadRowProps>) {
   return (
-    <RoundTableRow minW={minW}>
+    <RoundTableRow w={w}>
       <Text textStyle='text/regular'>{children}</Text>
     </RoundTableRow>
   );

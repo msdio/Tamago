@@ -55,7 +55,7 @@ export default function BattleField() {
           <Thead color='gray.dark'>
             <Tr>
               <THeadRow>모드</THeadRow>
-              <THeadRow minW='300px'>제목</THeadRow>
+              <THeadRow w='300px'>제목</THeadRow>
               <THeadRow>점수</THeadRow>
               <THeadRow>비율</THeadRow>
               <THeadRow>날짜</THeadRow>
