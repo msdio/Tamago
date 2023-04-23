@@ -41,4 +41,8 @@ public class LongTyping extends BaseTimeEntity {
 	private Integer viewCount;
 	@ColumnDefault("false")
 	private Boolean isRegistered;
+
+	public void updateViewCount() {
+		this.viewCount++;
+	}
 }

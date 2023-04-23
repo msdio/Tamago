@@ -15,5 +15,4 @@ public class Constant {
 	public static final int PRACTICE_SHORT_TYPING_SIZE = 30;
 	public static final int EXAM_SHORT_TYPING_SIZE = 10;
 
-
 }
