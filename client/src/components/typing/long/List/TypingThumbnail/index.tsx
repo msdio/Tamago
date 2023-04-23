@@ -15,7 +15,7 @@ export default function TypingThumbnail({ thumbnail, y, x }: TypingThumbnailProp
       backgroundColor={'white'}
       pos={'absolute'}
       left={x + 10}
-      top={y + 10}
+      top={`${y - 78}px`}
       zIndex={100}
     >
       {thumbnail}
