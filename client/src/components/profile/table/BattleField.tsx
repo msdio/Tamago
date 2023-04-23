@@ -1,4 +1,5 @@
 import { Box, Table, TableContainer, Tbody, Td, Text, Thead, Tr } from '@chakra-ui/react';
+import { useState } from 'react';
 
 import Pagination from '@/components/profile/table/Pagination';
 import THeadRow from '@/components/profile/table/THeadRow';
@@ -34,6 +35,8 @@ const TestData = [
 ];
 
 export default function BattleField() {
+  const [currentPage, setCurrentPage] = useState(1);
+
   return (
     <Box
       gap='28.29px'
@@ -71,7 +74,7 @@ export default function BattleField() {
           </Tbody>
         </Table>
       </TableContainer>
-      <Pagination totalPage={4} currentPage={1} />
+      <Pagination totalPage={4} currentPage={currentPage} onClick={(nextPage) => setCurrentPage(nextPage)} />
     </Box>
   );
 }
