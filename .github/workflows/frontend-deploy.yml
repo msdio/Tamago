@@ -3,9 +3,9 @@ name: Frontend-Deploy
 on:
   push:
     branches:
-      - 'main'
+      - "main"
     paths:
-      - 'client/**'
+      - "client/**"
 
 jobs:
   front-deploy:
@@ -31,7 +31,7 @@ jobs:
           touch .env
           echo NEXT_PUBLIC_SERVER_URL=${{ secrets.NEXT_PUBLIC_SERVER_URL }}\ >> .env
 
-      - name: Build with yarn
+      - name: Build Application
         run: |
           cd ./client
           yarn build
@@ -48,5 +48,5 @@ jobs:
           cd ./client
           aws s3 sync ./${{ secrets.BUILD_DIRECTORY }} ${{ secrets.AWS_S3_BUCKET_NAME }}
 
-      # - name: Invalidate Cache On CloudFront
-      #   run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
+      - name: Invalidate Cache On CloudFront
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
