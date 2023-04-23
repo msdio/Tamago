@@ -88,6 +88,7 @@ class LongTypingServiceTest {
 	@DisplayName("긴글 세부 조회 성공 테스트")
 	public void testFindLongTypingSuccess() {
 		// given
+		String ip = "localhost";
 		Integer longTypingId = 1;
 		Integer page = 2;
 		String content = "line 1\r\nline 2\r\nline 3\r\nline 4\r\nline 5\r\nline 6\r\nline 7\r\nline 8\r\nline 9\r\nline 10\r\nline 11\r\nline 12\r\nline 13\r\nline 14\r\nline 15\r\nline 16\r\nline 17\r\nline 18\r\nline 19\r\nline 20\r\nline 21\r\nline 22\r\nline 23\r\nline 24\r\nline 25\r\nline 26\r\nline 27\r\nline 28\r\nline 29\r\nline 30";
@@ -105,7 +106,7 @@ class LongTypingServiceTest {
 		when(longTypingRepository.findByIdAndTotalPageGreaterThanEqual(longTypingId, page)).thenReturn(Optional.of(longTyping));
 
 		// when
-		LongTypingDetailResDto actualLongTypingDetailResDto = longTypingService.findLongTyping(longTypingId, page);
+		LongTypingDetailResDto actualLongTypingDetailResDto = longTypingService.findLongTyping(ip,longTypingId, page);
 
 		// then
 		assertEquals(expectedPageContentDto.getContent(), actualLongTypingDetailResDto.getContent());
@@ -116,6 +117,7 @@ class LongTypingServiceTest {
 	@DisplayName("긴글 세부 조회 실패 테스트")
 	public void testFindLongTypingFail() {
 		// given
+		String ip = "localhost";
 		Integer longTypingId = 1;
 		Integer page = 2;
 		String content = "line 1\r\nline 2\r\nline 3\r\nline 4\r\nline 5\r\nline 6\r\nline 7\r\nline 8\r\nline 9\r\nline 10\r\nline 11\r\nline 12\r\nline 13\r\nline 14\r\nline 15\r\nline 16\r\nline 17\r\nline 18\r\nline 19\r\nline 20\r\nline 21\r\nline 22\r\nline 23\r\nline 24\r\nline 25\r\nline 26\r\nline 27\r\nline 28\r\nline 29\r\nline 30";
@@ -152,7 +154,7 @@ class LongTypingServiceTest {
 		when(longTypingRepository.findByIdAndTotalPageGreaterThanEqual(longTypingId, page)).thenReturn(Optional.of(longTyping));
 
 		// when
-		LongTypingDetailResDto actualLongTypingDetailResDto = longTypingService.findLongTyping(longTypingId, page);
+		LongTypingDetailResDto actualLongTypingDetailResDto = longTypingService.findLongTyping(ip,longTypingId, page);
 
 		// then
 		assertNotEquals(expectedPageContentDto.getContent(), actualLongTypingDetailResDto.getContent());
