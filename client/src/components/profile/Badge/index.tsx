@@ -1,5 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
-import styled from '@emotion/styled';
+import { Box, Center, Flex, Text } from '@chakra-ui/react';
 import Image from 'next/image';
 
 import { Tier } from '@/components/common/Tier';
@@ -9,30 +8,6 @@ import type { TierLevels } from '@/types/tier';
 interface BadgeProps {
   tier: TierLevels;
 }
-
-const TierWrapper = styled.div`
-  width: 114px;
-  text-align: center;
-
-  img {
-    margin: auto;
-  }
-`;
-
-const LevelWrapper = styled.div`
-  /* b {
-    font-family: 'GangwonEduPower';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 21px;
-    /* identical to box height */
-
-    text-align: center;
-
-    color: #000000;
-  } */
-`;
 
 export default function Badge({ tier }: BadgeProps) {
   const tier_info = TIER_INFO[tier];
@@ -49,17 +24,27 @@ export default function Badge({ tier }: BadgeProps) {
       bg='white/light'
       borderRadius='10px'
     >
-      <TierWrapper>
+      <Box width='114px' position='relative' height='fit-content'>
+        <Center position='absolute' bottom='-13px' w='full' zIndex={-1}>
+          <Image src='/images/bottom-shadow.svg' alt='tier shadow' width='96' height='19' />
+        </Center>
         <Tier level={tier} />
-        <Image src='/images/bottom-shadow.svg' alt='tier shadow' width='96' height='19' />
-      </TierWrapper>
+      </Box>
       <Box>
         <Flex gap='9px'>
           <Text textStyle='point/hd3'>Lv.{tier_info.level}</Text> <Text textStyle='text/medium'>{tier_info.label}</Text>
         </Flex>
-        <Box my='6px'>{userName}님</Box>
+        <Flex gap='5px' my='6px' alignItems='center'>
+          <Text textStyle='text/Text'>{userName}</Text>
+          <Text textStyle='text/medium'>님</Text>
+        </Flex>
 
-        <Box mt='7px'>상위 {tierRating}%</Box>
+        <Flex mt='7px' alignItems='center' gap='5px'>
+          <Text textStyle='text/Text'>상위</Text>
+          <Text textStyle='text/Text' color='primary.dark'>
+            {tierRating}%
+          </Text>
+        </Flex>
       </Box>
     </Flex>
   );
