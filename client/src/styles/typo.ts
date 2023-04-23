@@ -6,7 +6,35 @@ export const FONT_WEIGHT = {
   REGULAR: 400,
 };
 
-const textStyles = {
+type TextStylesType =
+  | 'button/medium'
+  | 'button/bold'
+  | 'button/regular'
+  | 'text/hd1x'
+  | 'text/hd2'
+  | 'text/hd3'
+  | 'text/hd4'
+  | 'text/Text'
+  | 'text/medium'
+  | 'text/subtitle'
+  | 'text/regular'
+  | 'text/small'
+  | 'navigation/medium'
+  | 'text/hover'
+  | 'point/hd1'
+  | 'point/hd2'
+  | 'point/hd3'
+  | 'point/hd4';
+
+const textStyles: Record<
+  TextStylesType,
+  {
+    fontFamily?: string;
+    fontSize: string;
+    fontWeight: number | string;
+    lineHeight: string;
+  }
+> = {
   'button/medium': {
     fontSize: '18px',
     fontWeight: FONT_WEIGHT.NORMAL,
