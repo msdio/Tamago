@@ -18,23 +18,23 @@ export default function Menus() {
   return (
     <Container
       maxW='container.xl'
-      h='80vh'
+      h='50.5625rem'
       py='6.9375rem'
       ref={observerRef}
       opacity={animationTrigger ? 1 : 0}
       animation={animationTrigger ? `${fadeIn} 1s linear` : ''}
     >
-      <Text fontSize='1.5625rem' marginBottom='.9375rem' marginLeft='1.375rem'>
+      <Text fontSize='1.5625rem' marginBottom='.9375rem' ml='.5rem'>
         About Tamago
       </Text>
-      <Text fontSize='2.25rem' fontWeight='bold'>
+      <Text fontSize='2.25rem' fontWeight='bold' ml='.5rem'>
         개발할 때 쓰이는 코드로
         <br />
         다양하게 타자 연습을
         <br />할 수 있어요.
       </Text>
 
-      <Flex marginTop='4.6875rem' w='100%' justifyContent='space-around'>
+      <Flex marginTop='4.6875rem' w='100%' justifyContent='space-between' ml='.5rem'>
         <Link href={PRACTICE_LONG_PATH_LIST}>
           <MenuCard language='kr' title='긴 글 연습' content='Lorem ipsum dolor sit amet, consectetu' />
         </Link>

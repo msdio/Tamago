@@ -33,18 +33,18 @@ export default function SignupTerms() {
 
   return (
     <Flex direction='column' w='full' gap='16px'>
-      <CustomCheckbox name='all' labelText='모두 동의합니다.' isChecked={allChecked} onChange={handleCheckboxChange} />
+      <CustomCheckbox name='all' labeltext='모두 동의합니다.' isChecked={allChecked} onChange={handleCheckboxChange} />
       <Divider borderColor='gray.main' />
       <CustomCheckbox
         name='age'
-        labelText='[필수] 만 14세 이상입니다.'
+        labeltext='[필수] 만 14세 이상입니다.'
         isChecked={age}
         onChange={handleCheckboxChange}
       />
       <Flex alignItems='center' justify='space-between'>
         <CustomCheckbox
           name='service'
-          labelText='[필수] 서비스 이용약관 동의'
+          labeltext='[필수] 서비스 이용약관 동의'
           isChecked={service}
           onChange={handleCheckboxChange}
         />
@@ -53,7 +53,7 @@ export default function SignupTerms() {
       <Flex alignItems='center' justify='space-between'>
         <CustomCheckbox
           name='privacy'
-          labelText='[필수] 서비스 이용약관 동의'
+          labeltext='[필수] 서비스 이용약관 동의'
           isChecked={privacy}
           onChange={handleCheckboxChange}
         />
@@ -62,7 +62,7 @@ export default function SignupTerms() {
       <Flex alignItems='center' justify='space-between'>
         <CustomCheckbox
           name='marketing'
-          labelText='[필수] 서비스 이용약관 동의'
+          labeltext='[필수] 서비스 이용약관 동의'
           isChecked={marketing}
           onChange={handleCheckboxChange}
         />

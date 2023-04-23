@@ -1,6 +1,7 @@
 import { Flex, Textarea } from '@chakra-ui/react';
 import { disassemble } from 'hangul-js';
 import { useRouter } from 'next/router';
+import type { KeyboardEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
@@ -211,6 +212,14 @@ export default function PracticeLongTyping({
     }
   };
 
+  const insertTab = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      typingStates.current = typingStates.current.slice(0, -1) + '  ' + TYPING_STATE.FOCUS;
+      setTextarea((prev) => prev + '  ');
+    }
+  };
+
   const handleExit = () => {
     router.push(PRACTICE_LONG_PATH_LIST);
   };
@@ -247,6 +256,7 @@ export default function PracticeLongTyping({
             onCopy={(e) => e.preventDefault()}
             onCut={(e) => e.preventDefault()}
             onPaste={(e) => e.preventDefault()}
+            onKeyDown={insertTab}
           />
           {slicedContentAndStrings(content, textarea, typingStates.current).map(
             ([originalLine, userLine, states], i) => (

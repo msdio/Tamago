@@ -21,5 +21,5 @@ const Template: ComponentStory<typeof CustomCheckbox> = (args) => {
 export const Checkbox: ComponentStory<typeof CustomCheckbox> = Template.bind({});
 
 Checkbox.args = {
-  labelText: '테스트 텍스트입니다',
+  labeltext: '테스트 텍스트입니다',
 };
