@@ -14,6 +14,7 @@ import {
   Tr,
 } from '@chakra-ui/react';
 import Link from 'next/link';
+import { useRef, useState } from 'react';
 
 import PracticeLongLayout from '@/components/typing/long/Layout';
 import { LONG_TYPING_TYPE } from '@/constants/language';
@@ -24,6 +25,7 @@ import { Search } from '@/icons/Search';
 import type { LongTypingItem } from '@/types/typing';
 
 import TypingListPagination from './TypingListPagination';
+import TypingThumbnail from './TypingThumbnail';
 
 interface PracticeLongListProps {
   currentPage: number;
@@ -32,6 +34,28 @@ interface PracticeLongListProps {
 }
 
 export default function PracticeLongList({ currentPage, totalPage, typingList }: PracticeLongListProps) {
+  const [currThumbnail, setCurrThumbnail] = useState<{ thumbnail: string; y: number; x: number }>();
+
+  const timeout = useRef(0);
+
+  const onMouseMove = (thumbnail: string) => {
+    return (e: React.MouseEvent<HTMLDivElement>) => {
+      clearTimeout(timeout.current);
+      if (thumbnail == currThumbnail?.thumbnail) {
+        setCurrThumbnail({ ...currThumbnail, y: e.pageY, x: e.pageX });
+        return;
+      }
+      timeout.current = window.setTimeout(() => {
+        setCurrThumbnail({ thumbnail, y: e.pageY, x: e.pageX });
+      }, 1000);
+    };
+  };
+
+  const onMouseLeave = () => {
+    clearTimeout(timeout.current);
+    setCurrThumbnail(undefined);
+  };
+
   return (
     <PracticeLongLayout>
       <Flex direction='column'>
@@ -76,14 +100,13 @@ export default function PracticeLongList({ currentPage, totalPage, typingList }:
               {typingList.map(({ language, thumbnail, title, totalPage, typingId, viewCount }: LongTypingItem) => (
                 <Tr key={typingId}>
                   <Td textAlign='center'>{typingId}</Td>
-                  <Td>
-                    <Link
-                      href={`${PRACTICE_LONG_PATH_DETAIL}?typingId=${typingId}&pageNum=1&isTyping=true`}
-                      onMouseOver={() => {
-                        // todo: 긴 글 제목에 마우스 호버시 썸네일 표시
-                        // console.log(thumbnail);
-                      }}
-                    >
+                  <Td
+                    pos='relative'
+                    overflow={'visible'}
+                    onMouseMove={onMouseMove(thumbnail)}
+                    onMouseLeave={onMouseLeave}
+                  >
+                    <Link href={`${PRACTICE_LONG_PATH_DETAIL}?typingId=${typingId}&pageNum=1&isTyping=true`}>
                       {title}
                     </Link>
                   </Td>
@@ -105,6 +128,7 @@ export default function PracticeLongList({ currentPage, totalPage, typingList }:
         </TableContainer>
         <TypingListPagination currentPage={currentPage} totalPage={totalPage} />
       </Flex>
+      {currThumbnail && <TypingThumbnail thumbnail={currThumbnail.thumbnail} y={currThumbnail.y} x={currThumbnail.x} />}
     </PracticeLongLayout>
   );
 }
