@@ -58,3 +58,13 @@ export const getUserProfileAPI = async (): Promise<UserProfile> => {
     return await Promise.reject(error);
   }
 };
+
+export const kakaoLoginAPI = () => {
+  location.replace(`${process.env.NEXT_PUBLIC_SERVER_URL}oauth2/authorization/kakao`);
+};
+
+export const userProfileAPI = async (id: number): Promise<ApiResponse> => {
+  const { data } = await requestWithAuth.get(USER_PROFILE, { params: { id } });
+
+  return data;
+};

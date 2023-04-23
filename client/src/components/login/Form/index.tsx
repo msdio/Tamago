@@ -1,13 +1,13 @@
-import { Box, Button, Flex, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 
+import { kakaoLoginAPI } from '@/apis/auth';
 import { CustomCheckbox } from '@/components/common/Checkbox';
 import FormOr from '@/components/common/FormOr';
 import RegexInput from '@/components/common/RegexInput';
 import { INQUIRY_PW_PATH, SIGNUP_TERM_PATH } from '@/constants/paths';
 import useRegexInputs from '@/hooks/useRegexInputs';
 import { GithubLogo } from '@/icons/GithubLogo';
-import { GoogleLogo } from '@/icons/GoogleLogo';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
 
 export type InputType = {
@@ -34,6 +34,10 @@ function LoginForm({ onLogin }: LoginFormProps) {
 
   const onSubmit = () => {
     onLogin({ email, password });
+  };
+
+  const onKakaoLogin = () => {
+    kakaoLoginAPI();
   };
 
   return (
@@ -94,8 +98,9 @@ function LoginForm({ onLogin }: LoginFormProps) {
           _hover={{
             bgColor: 'primary.light',
           }}
+          onClick={onKakaoLogin}
         >
-          <GoogleLogo />
+          <Image width={'49'} height={'49'} src='/images/kakaotalk_btn.png' alt='kakao logo' />
         </Button>
         <Button
           bg='fff'

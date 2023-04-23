@@ -1,4 +1,4 @@
-import { Box, Button, Flex, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, Flex, Image, useDisclosure } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 
@@ -12,7 +12,6 @@ import { RESPONSE_CODE } from '@/constants/responseCode';
 import useRegexInputs from '@/hooks/useRegexInputs';
 import useToggle from '@/hooks/useToggle';
 import { GithubLogo } from '@/icons/GithubLogo';
-import { GoogleLogo } from '@/icons/GoogleLogo';
 import type { ApiErrorResponse } from '@/types/apiResponse';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/utils/regex';
 
@@ -172,7 +171,7 @@ export default function SignupForm() {
         </Box>
         <Flex justifyContent='center' gap={4}>
           <Button bg='fff' border='0.6px solid' borderColor='gray.main' width='59px' height='59px' p='10px'>
-            <GoogleLogo />
+            <Image width={'49'} height={'49'} src='/images/kakaotalk_btn.png' alt='kakao logo' />
           </Button>
           <Button bg='fff' border='0.6px solid' borderColor='gray.main' width='59px' height='59px' p='10px'>
             <GithubLogo />
