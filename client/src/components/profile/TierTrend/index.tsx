@@ -23,15 +23,25 @@ export default function TierTrend({}) {
   const [selectTierTrend, setSelectTierTrend] = useState(TierTrendEnum.LONG);
 
   return (
-    <Box border='0.6px solid' borderColor='gray/main' bg='white/light' borderRadius='10px' w='516px'>
+    <Box border='0.6px solid' borderColor='gray.main' bg='white.light' borderRadius='10px' height='100%'>
       <Flex borderBottomColor='gray.main' padding='16px 26px' borderBottom='0.6px solid' justifyContent='space-between'>
         <Text as='h2' textStyle='text/hd4'>
           티어 추이
         </Text>
 
         <Flex gap='12px'>
-          <SelectTrend isSelected={selectTierTrend === TierTrendEnum.LONG}>긴 글</SelectTrend>
-          <SelectTrend isSelected={selectTierTrend === TierTrendEnum.SHORT}>짧은 글</SelectTrend>
+          <SelectTrend
+            isSelected={selectTierTrend === TierTrendEnum.LONG}
+            onClick={() => setSelectTierTrend(TierTrendEnum.LONG)}
+          >
+            긴 글
+          </SelectTrend>
+          <SelectTrend
+            isSelected={selectTierTrend === TierTrendEnum.SHORT}
+            onClick={() => setSelectTierTrend(TierTrendEnum.SHORT)}
+          >
+            짧은 글
+          </SelectTrend>
         </Flex>
       </Flex>
 

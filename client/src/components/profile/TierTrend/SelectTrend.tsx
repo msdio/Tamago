@@ -1,7 +1,11 @@
 import { Box } from '@chakra-ui/react';
 import type { PropsWithChildren } from 'react';
 
-export default function SelectTrend({ children, isSelected }: PropsWithChildren<{ isSelected: boolean }>) {
+interface SelectTrendProps {
+  onClick: () => void;
+  isSelected: boolean;
+}
+export default function SelectTrend({ children, onClick, isSelected }: PropsWithChildren<SelectTrendProps>) {
   return (
     <Box
       lineHeight='26px'
@@ -13,6 +17,8 @@ export default function SelectTrend({ children, isSelected }: PropsWithChildren<
       color={isSelected ? 'primary.dark' : 'gray.dark'}
       bg={isSelected ? 'white.light' : 'gray.bright'}
       textStyle='text/small'
+      cursor='pointer'
+      onClick={onClick}
     >
       {children}
     </Box>

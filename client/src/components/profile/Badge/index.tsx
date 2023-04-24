@@ -19,9 +19,9 @@ export default function Badge({ tier }: BadgeProps) {
       gap='28.29px'
       padding='30px'
       border='0.6px solid'
-      borderColor='gray/main'
+      borderColor='gray.main'
       w='fit-content'
-      bg='white/light'
+      bg='white.light'
       borderRadius='10px'
     >
       <Box width='114px' position='relative' height='fit-content'>

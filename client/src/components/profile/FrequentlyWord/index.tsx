@@ -1,6 +1,6 @@
 import { Box, Flex, Table, TableContainer, Tbody, Td, Text, Thead, Tr } from '@chakra-ui/react';
 
-import THeadRow from '@/components/profile/table/THeadRow';
+import THeadRow from '@/components/profile/Table/THeadRow';
 
 const TestData = [
   {
@@ -27,17 +27,24 @@ const TestData = [
 
 export default function FrequentlyWord() {
   return (
-    <Box w='442px'>
+    <>
       <Flex padding='16px 5px' alignItems='center' justifyContent='space-between'>
         <Text as='h2' textStyle='text/hd4'>
           자주틀리는 단어
         </Text>
 
-        <Text textStyle='text/medium' colorScheme='white' color='gray.dark' h='26px' w='fit-content'>
+        <Text textStyle='text/medium' colorScheme='white' color='gray.dark' h='26px' w='fit-content' cursor='pointer'>
           전체보기
         </Text>
       </Flex>
-      <Box border='0.6px solid' borderColor='gray/main' bg='white/light' borderRadius='10px' padding='21px 28px'>
+      <Box
+        border='0.6px solid'
+        borderColor='gray.main'
+        bg='white.light'
+        borderRadius='10px'
+        padding='21px 28px'
+        h='353px'
+      >
         <TableContainer>
           <Table>
             <Thead color='gray.dark'>
@@ -64,6 +71,6 @@ export default function FrequentlyWord() {
           </Table>
         </TableContainer>
       </Box>
-    </Box>
+    </>
   );
 }
