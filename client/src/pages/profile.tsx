@@ -1,4 +1,5 @@
 import { Box, Flex } from '@chakra-ui/react';
+import { useEffect } from 'react';
 
 import Footer from '@/components/footer';
 import Header from '@/components/header';
@@ -11,6 +12,11 @@ import TotalInfo from '@/components/profile/TotalInfo';
 import TypingStatistic from '@/components/profile/TypingStatistic';
 
 export default function Profile() {
+  useEffect(() => {
+    // getUserProfile();
+    // getAllStatistic();
+  }, []);
+
   return (
     <Box minW='1100px' bg='white.dark'>
       <Header />

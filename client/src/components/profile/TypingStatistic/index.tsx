@@ -1,36 +1,43 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
+import { getAccuracyStatistic, getSpeedStatistic } from '@/apis/statistic';
 import LineChart from '@/components/charts/LineChart';
+import { getDateMMDDFormat, getLastWeekDate } from '@/utils/time';
 
 enum TypingStatisticEnum {
   ACCURACY = '정확도 변화',
   SPEED = '타수 변화',
 }
 
-const CharTestData = [
-  {
-    '01.01': 79,
-    '01.02': 75,
-    '01.03': 70,
-    '01.04': 81,
-    '01.05': 79,
-    '01.06': 99,
-    '01.07': 61,
-  },
-  {
-    '01.01': 69,
-    '01.02': 71,
-    '01.03': 79,
-    '01.04': 83,
-    '01.05': 95,
-    '01.06': 84,
-    '01.07': 82,
-  },
-];
+type CharDataType = Record<string, number> | null;
 
 export default function TypingStatistic() {
   const [selectStatistic, setSelectStatistic] = useState(TypingStatisticEnum.ACCURACY);
+  const accuracyData = useRef(null);
+  const speedData = useRef(null);
+  const [chartData, setChartData] = useState<[CharDataType, CharDataType]>([null, null]);
+
+  const initSetting = async () => {
+    const startDay = getDateMMDDFormat(getLastWeekDate());
+    const endDay = getDateMMDDFormat(new Date());
+
+    speedData.current = await getSpeedStatistic({
+      startDay,
+      endDay,
+    });
+
+    accuracyData.current = await getAccuracyStatistic({
+      startDay,
+      endDay,
+    });
+
+    setChartData([accuracyData.current, speedData.current]);
+  };
+
+  useEffect(() => {
+    initSetting();
+  }, []);
 
   return (
     <>
@@ -70,7 +77,18 @@ export default function TypingStatistic() {
           </Text>
         </Flex>
 
-        <LineChart chartTitle='타자 통계' chartData={CharTestData} />
+        {chartData[0] && chartData[1] ? (
+          <Box>
+            <LineChart
+              chartTitle='타자 통계'
+              chartData={chartData as [Record<string, number>, Record<string, number>]}
+            />
+          </Box>
+        ) : (
+          <Flex justifyContent='center' alignItems='center' h='100%'>
+            <Text textStyle='text/medium'>데이터가 없습니다.</Text>
+          </Flex>
+        )}
       </Box>
     </>
   );
