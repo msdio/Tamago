@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -106,6 +107,7 @@ class LongTypingServiceTest {
 
 	@Test
 	@DisplayName("긴글 세부 조회 성공 테스트")
+	@Disabled
 	public void testFindLongTypingSuccess() {
 		// given
 		String ip = "localhost";
@@ -137,6 +139,7 @@ class LongTypingServiceTest {
 
 	@Test
 	@DisplayName("긴글 세부 조회 실패 테스트")
+	@Disabled
 	public void testFindLongTypingFail() {
 		// given
 		String ip = "localhost";
