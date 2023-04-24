@@ -1,5 +1,6 @@
 package com.project.Tamago.service;
 
+import static com.project.Tamago.common.Constant.*;
 import static com.project.Tamago.common.enums.ResponseCode.*;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public class LongTypingService {
 
 	@Transactional(readOnly = true)
 	public LongTypingResDto findLongTypings(int page, String sortBy) {
-		PageRequest pageRequest = PageRequest.of(page - 1, 20, SortOrder.getSort(sortBy));
+		PageRequest pageRequest = PageRequest.of(page - 1, ITEMS_PER_PAGE, SortOrder.getSort(sortBy));
 		Page<LongTyping> longTypingPage = longTypingRepository.findAll(pageRequest);
 		List<LongTypingDto> longTypings = longTypingPage.stream()
 			.map(DataMapper.INSTANCE::LongTypingToLongTypingResDto)

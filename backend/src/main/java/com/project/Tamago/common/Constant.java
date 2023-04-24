@@ -14,6 +14,7 @@ public class Constant {
 	public static final String SLACK_ALARM_FORMAT = "[SlackAlarm] %s";
 	public static final int PRACTICE_SHORT_TYPING_SIZE = 30;
 	public static final int EXAM_SHORT_TYPING_SIZE = 10;
-
+	public static final int ITEMS_PER_PAGE = 10;
+	public static final int LINES_PER_PAGE = 20;
 
 }

@@ -1,5 +1,7 @@
 package com.project.Tamago.util;
 
+import static com.project.Tamago.common.Constant.*;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -11,8 +13,6 @@ import com.project.Tamago.dto.ShortTypingDto;
 import com.project.Tamago.dto.mapper.TypingMapper;
 
 public class TypingUtil {
-
-	private static final int LINES_PER_PAGE = 20;
 
 	public static PageContentDto getPageContent(String content, Integer page) {
 		String[] contentLines = content.replaceAll("\r\n", "\n").split("\n");
