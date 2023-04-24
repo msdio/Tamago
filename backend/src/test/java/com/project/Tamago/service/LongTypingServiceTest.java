@@ -8,15 +8,23 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.test.context.support.WithMockUser;
 
 import com.project.Tamago.common.enums.Language;
@@ -46,6 +54,18 @@ class LongTypingServiceTest {
 	private UserRepository userRepository;
 	@MockBean
 	private UserService userService;
+
+	@Mock
+	RedisTemplate<String, String> redisTemplate;
+
+	@MockBean
+	private ValueOperations<String, String> valueOperations;
+
+	@BeforeEach
+	public void setUp() {
+		Mockito.when(redisTemplate.opsForValue()).thenReturn(valueOperations);
+		Mockito.doNothing().when(valueOperations).set(Mockito.anyString(), Mockito.anyString());
+	}
 
 	@Test
 	@DisplayName("긴글 목록 조회 테스트")
@@ -104,6 +124,8 @@ class LongTypingServiceTest {
 
 		PageContentDto expectedPageContentDto = new PageContentDto(2, "line 21\nline 22\nline 23\nline 24\nline 25\nline 26\nline 27\nline 28\nline 29\nline 30");
 		when(longTypingRepository.findByIdAndTotalPageGreaterThanEqual(longTypingId, page)).thenReturn(Optional.of(longTyping));
+		when(redisTemplate.opsForValue().get(any(String.class)))
+			.thenReturn("ON"); // mock the behavior of redisTemplate
 
 		// when
 		LongTypingDetailResDto actualLongTypingDetailResDto = longTypingService.findLongTyping(ip,longTypingId, page);
@@ -152,6 +174,8 @@ class LongTypingServiceTest {
 			+ "line 19\n"
 			+ "line 20");
 		when(longTypingRepository.findByIdAndTotalPageGreaterThanEqual(longTypingId, page)).thenReturn(Optional.of(longTyping));
+		when(redisTemplate.opsForValue().get(any(String.class)))
+			.thenReturn("ON"); // mock the behavior of redisTemplate
 
 		// when
 		LongTypingDetailResDto actualLongTypingDetailResDto = longTypingService.findLongTyping(ip,longTypingId, page);
