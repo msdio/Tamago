@@ -19,9 +19,10 @@ enum TierTrendEnum {
   SHORT = '짧은 글',
 }
 
-export default function TierTrend({}) {
+export default function TierTrend() {
   const [selectTierTrend, setSelectTierTrend] = useState(TierTrendEnum.LONG);
 
+  // TODO : API 연결 필요
   return (
     <Box border='0.6px solid' borderColor='gray.main' bg='white.light' borderRadius='10px' height='100%'>
       <Flex borderBottomColor='gray.main' padding='16px 26px' borderBottom='0.6px solid' justifyContent='space-between'>

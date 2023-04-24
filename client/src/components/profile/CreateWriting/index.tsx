@@ -30,6 +30,7 @@ const TestData = [
   },
 ];
 
+// TODO : API 연결 필요
 export default function CreateWriting() {
   const [currentPage, setCurrentPage] = useState(1);
 

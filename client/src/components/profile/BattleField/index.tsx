@@ -36,6 +36,7 @@ const TestData = [
 
 export default function BattleField() {
   const [currentPage, setCurrentPage] = useState(1);
+  // TODO : API 연결 필요
 
   return (
     <Box
