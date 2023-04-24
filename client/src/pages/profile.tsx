@@ -1,6 +1,7 @@
 import Footer from '@/components/footer';
 import Header from '@/components/header';
 import Badge from '@/components/profile/Badge';
+import FrequentlyWord from '@/components/profile/FrequentlyWord';
 import BattleField from '@/components/profile/table/BattleField';
 import CreateWriting from '@/components/profile/table/CreateWriting';
 import TierTrend from '@/components/profile/TierTrend';
@@ -15,6 +16,7 @@ export default function Profile() {
       <Badge tier={5} />
       <TierTrend />
       <TypingStatistic />
+      <FrequentlyWord />
       <Footer />
     </div>
   );
