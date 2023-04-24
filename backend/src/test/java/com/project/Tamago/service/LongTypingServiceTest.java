@@ -20,6 +20,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.test.context.support.WithMockUser;
 
 import com.project.Tamago.common.enums.Language;
+import com.project.Tamago.common.enums.SortOrder;
 import com.project.Tamago.domain.LongTyping;
 import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.PageContentDto;
@@ -78,7 +79,7 @@ class LongTypingServiceTest {
 			.collect(Collectors.toList());
 
 		// when
-		List<LongTypingDto> actualLongTypingDtos = longTypingService.findLongTypings(1).getLongTypings();
+		List<LongTypingDto> actualLongTypingDtos = longTypingService.findLongTypings(1, SortOrder.LATEST.getDesc()).getLongTypings();
 
 		// then
 		assertEquals(expectedLongTypingDtos, actualLongTypingDtos);

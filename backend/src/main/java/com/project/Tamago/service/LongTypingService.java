@@ -7,9 +7,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.Tamago.common.enums.SortOrder;
 import com.project.Tamago.domain.LongTyping;
 import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.mapper.DataMapper;
@@ -36,14 +38,14 @@ public class LongTypingService {
 	private final RegisterRepository registerRepository;
 
 	@Transactional(readOnly = true)
-	public LongTypingResDto findLongTypings(int page) {
-		PageRequest pageRequest = PageRequest.of(page - 1, 20);
+	public LongTypingResDto findLongTypings(int page, String sortBy) {
+		PageRequest pageRequest = PageRequest.of(page - 1, 20, SortOrder.getSort(sortBy));
 		Page<LongTyping> longTypingPage = longTypingRepository.findAll(pageRequest);
 		List<LongTypingDto> longTypings = longTypingPage.stream()
 			.map(DataMapper.INSTANCE::LongTypingToLongTypingResDto)
 			.collect(Collectors.toList());
-		int totalPage = longTypingPage.getTotalPages();
 
+		int totalPage = longTypingPage.getTotalPages();
 		return new LongTypingResDto(totalPage, longTypings);
 	}
 
