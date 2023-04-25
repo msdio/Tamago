@@ -59,8 +59,8 @@ function LoginForm({ onLogin }: LoginFormProps) {
           size='lg'
           name='password'
           type='password'
-          placeholder='8-12자 영문 + 숫자를 포함하여 입력해 주세요.'
-          errorMessage='8-12자 영문 + 숫자를 포함하여 입력해 주세요.'
+          placeholder='영문 대소문자, 특수문자(!@#~^*)를 포함해 8자리 이상 입력해야 합니다.'
+          errorMessage='영문 대소문자, 특수문자(!@#~^*)를 포함해 8자리 이상 입력해야 합니다.'
           value={password}
           isValid={isPasswordValid}
           onChange={handleInputChange}
