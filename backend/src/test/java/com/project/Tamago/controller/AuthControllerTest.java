@@ -45,8 +45,8 @@ public class AuthControllerTest {
 	public void join() throws Exception {
 		// given
 		JoinReqDto joinReqDto = JoinReqDto.builder()
-			.email("existing_email@example.com")
-			.password("password12")
+			.email("existingemail@example.com")
+			.password("Password123@")
 			.nickname("nickname").build();
 		// when
 		ResultActions resultActions = mockMvc.perform(post("/auth/join")
@@ -61,8 +61,8 @@ public class AuthControllerTest {
 	public void joinWithEmailDuplication() throws Exception {
 		// given
 		JoinReqDto joinReqDto = JoinReqDto.builder()
-			.email("existing_email@example.com")
-			.password("password12")
+			.email("existingemail@example.com")
+			.password("Password123@")
 			.nickname("nickname").build();
 
 		doThrow(new CustomException(USERS_EXISTS_EMAIL)).when(authService).join(joinReqDto);
@@ -80,8 +80,8 @@ public class AuthControllerTest {
 	public void joinWithNicknameDuplication() throws Exception {
 		// given
 		JoinReqDto joinReqDto = JoinReqDto.builder()
-			.email("existing_email@example.com")
-			.password("password12")
+			.email("existingemail@example.com")
+			.password("Password123@")
 			.nickname("nickname").build();
 		doThrow(new CustomException(USERS_EXISTS_NICKNAME)).when(authService).join(joinReqDto);
 		// when
@@ -99,7 +99,7 @@ public class AuthControllerTest {
 		// given
 		JoinReqDto joinReqDto = JoinReqDto.builder()
 			.email("invalidEmail")
-			.password("validEmail23")
+			.password("Password123@")
 			.nickname("nickname").build();
 		// when
 		ResultActions resultActions = mockMvc.perform(post("/auth/join")
