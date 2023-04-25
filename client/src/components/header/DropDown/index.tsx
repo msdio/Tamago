@@ -7,6 +7,7 @@ import {
   ACTUAL_SHORT_CHOICE_PATH,
   PRACTICE_LONG_PATH_LIST,
   PRACTICE_SHORT_CHOICE_PATH,
+  REGISTER_LONG,
 } from '@/constants/paths';
 
 const longTypingMenus = [
@@ -18,7 +19,7 @@ const shortTypingMenus = [
   { menu: '실전타자', path: ACTUAL_SHORT_CHOICE_PATH },
 ];
 const registerMenus = [
-  { menu: '긴글', path: 'register' },
+  { menu: '긴글', path: REGISTER_LONG },
   { menu: '짧은글', path: 'prepare' },
   { menu: '업로드', path: 'prepare' },
 ];

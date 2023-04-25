@@ -100,7 +100,7 @@ function LoginForm({ onLogin }: LoginFormProps) {
           }}
           onClick={onKakaoLogin}
         >
-          <Image width={'49'} height={'49'} src='/images/kakaotalk_btn.png' alt='kakao logo' />
+          <Image width='100%' height='100%' src='/images/kakaotalk_btn.png' alt='kakao logo' />
         </Button>
         <Button
           bg='fff'

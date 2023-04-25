@@ -23,3 +23,5 @@ export const PRACTICE_LONG_PATH_DETAIL = '/practice/long/detail';
 export const PRACTICE_SHORT_CHOICE_PATH = '/practice/short/choice';
 export const ACTUAL_LONG_CHOICE_PATH = '/actual/long/choice';
 export const ACTUAL_SHORT_CHOICE_PATH = '/actual/short/choice';
+
+export const REGISTER_LONG = '/register';
