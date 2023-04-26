@@ -130,7 +130,7 @@ class LongTypingServiceTest {
 			.thenReturn("ON"); // mock the behavior of redisTemplate
 
 		// when
-		LongTypingDetailResDto actualLongTypingDetailResDto = longTypingService.findLongTyping(ip,longTypingId, page);
+		LongTypingDetailResDto actualLongTypingDetailResDto = longTypingService.findLongTypingDetail(ip,longTypingId, page);
 
 		// then
 		assertEquals(expectedPageContentDto.getContent(), actualLongTypingDetailResDto.getContent());
@@ -181,7 +181,7 @@ class LongTypingServiceTest {
 			.thenReturn("ON"); // mock the behavior of redisTemplate
 
 		// when
-		LongTypingDetailResDto actualLongTypingDetailResDto = longTypingService.findLongTyping(ip,longTypingId, page);
+		LongTypingDetailResDto actualLongTypingDetailResDto = longTypingService.findLongTypingDetail(ip,longTypingId, page);
 
 		// then
 		assertNotEquals(expectedPageContentDto.getContent(), actualLongTypingDetailResDto.getContent());

@@ -53,7 +53,7 @@ public class LongTypingService {
 		return new LongTypingResDto(totalPage, longTypings);
 	}
 
-	public LongTypingDetailResDto findLongTyping(String ip, Integer longTypingId, int page) {
+	public LongTypingDetailResDto findLongTypingDetail(String ip, Integer longTypingId, int page) {
 		LongTyping longTyping = longTypingRepository.findByIdAndTotalPageGreaterThanEqual(longTypingId, page)
 			.orElseThrow(() -> new CustomException(LONG_TYPING_INFO_NOT_EXISTS));
 		modifyViewCount(ip, longTyping);

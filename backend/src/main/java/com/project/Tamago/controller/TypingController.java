@@ -53,9 +53,9 @@ public class TypingController {
 	}
 
 	@GetMapping("/long/detail")
-	public CustomResponse<LongTypingDetailResDto> findLongTyping(@Ip String ip, @RequestParam Integer longTypingId,
+	public CustomResponse<LongTypingDetailResDto> findLongTypingDetail(@Ip String ip, @RequestParam Integer longTypingId,
 		@RequestParam(required = false, defaultValue = "1") int page) {
-		return new CustomResponse<>(longTypingService.findLongTyping(ip, longTypingId, page));
+		return new CustomResponse<>(longTypingService.findLongTypingDetail(ip, longTypingId, page));
 	}
 
 	@PostMapping("/register")
