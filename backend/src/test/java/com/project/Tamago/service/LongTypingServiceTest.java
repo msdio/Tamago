@@ -79,7 +79,8 @@ class LongTypingServiceTest {
 			.collect(Collectors.toList());
 
 		// when
-		List<LongTypingDto> actualLongTypingDtos = longTypingService.findLongTypings(1, SortOrder.LATEST.getDesc()).getLongTypings();
+		List<LongTypingDto> actualLongTypingDtos = longTypingService.findLongTypings(1, "latest")
+			.getLongTypings();
 
 		// then
 		assertEquals(expectedLongTypingDtos, actualLongTypingDtos);
@@ -102,8 +103,10 @@ class LongTypingServiceTest {
 			.viewCount(100)
 			.build();
 
-		PageContentDto expectedPageContentDto = new PageContentDto(2, "line 21\nline 22\nline 23\nline 24\nline 25\nline 26\nline 27\nline 28\nline 29\nline 30");
-		when(longTypingRepository.findByIdAndTotalPageGreaterThanEqual(longTypingId, page)).thenReturn(Optional.of(longTyping));
+		PageContentDto expectedPageContentDto = new PageContentDto(2,
+			"line 21\nline 22\nline 23\nline 24\nline 25\nline 26\nline 27\nline 28\nline 29\nline 30");
+		when(longTypingRepository.findByIdAndTotalPageGreaterThanEqual(longTypingId, page)).thenReturn(
+			Optional.of(longTyping));
 
 		// when
 		LongTypingDetailResDto actualLongTypingDetailResDto = longTypingService.findLongTyping(longTypingId, page);
@@ -150,7 +153,8 @@ class LongTypingServiceTest {
 			+ "line 18\n"
 			+ "line 19\n"
 			+ "line 20");
-		when(longTypingRepository.findByIdAndTotalPageGreaterThanEqual(longTypingId, page)).thenReturn(Optional.of(longTyping));
+		when(longTypingRepository.findByIdAndTotalPageGreaterThanEqual(longTypingId, page)).thenReturn(
+			Optional.of(longTyping));
 
 		// when
 		LongTypingDetailResDto actualLongTypingDetailResDto = longTypingService.findLongTyping(longTypingId, page);
