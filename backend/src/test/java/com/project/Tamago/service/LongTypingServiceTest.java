@@ -75,7 +75,7 @@ class LongTypingServiceTest {
 
 		List<LongTyping> longTypings = Arrays.asList(longTyping1, longTyping2);
 		Page<LongTyping> longTypingsPage = new PageImpl<>(longTypings);
-		when(SortOrder.getSort("latest")).thenReturn(new LatestSortFactory().getSort());
+		when(sortOrder.getSort("latest")).thenReturn(new LatestSortFactory().getSort());
 		when(longTypingRepository.findAll(any(PageRequest.class))).thenReturn(longTypingsPage);
 
 		List<LongTypingDto> expectedLongTypingDtos = longTypings.stream()

@@ -13,9 +13,9 @@ import com.project.Tamago.common.sort.CustomSortFactory;
 public class SortOrder {
 
 	@Autowired
-	private static List<CustomSortFactory> customSorts;
+	private List<CustomSortFactory> customSorts;
 
-	public static Sort getSort(String sortBy) {
+	public Sort getSort(String sortBy) {
 		return customSorts.stream()
 			.filter(customSort -> customSort.isAdapted(sortBy))
 			.findAny()
