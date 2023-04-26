@@ -21,6 +21,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 
 import com.project.Tamago.common.enums.Language;
 import com.project.Tamago.common.enums.SortOrder;
+import com.project.Tamago.common.sort.LatestSortFactory;
 import com.project.Tamago.domain.LongTyping;
 import com.project.Tamago.domain.User;
 import com.project.Tamago.dto.PageContentDto;
@@ -48,6 +49,9 @@ class LongTypingServiceTest {
 	@MockBean
 	private UserService userService;
 
+	@MockBean
+	private SortOrder sortOrder;
+
 	@Test
 	@DisplayName("긴글 목록 조회 테스트")
 	public void testFindLongTypings() {
@@ -71,7 +75,7 @@ class LongTypingServiceTest {
 
 		List<LongTyping> longTypings = Arrays.asList(longTyping1, longTyping2);
 		Page<LongTyping> longTypingsPage = new PageImpl<>(longTypings);
-
+		when(SortOrder.getSort("latest")).thenReturn(new LatestSortFactory().getSort());
 		when(longTypingRepository.findAll(any(PageRequest.class))).thenReturn(longTypingsPage);
 
 		List<LongTypingDto> expectedLongTypingDtos = longTypings.stream()
