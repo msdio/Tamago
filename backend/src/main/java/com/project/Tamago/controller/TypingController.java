@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.Tamago.common.annotation.Ip;
 import com.project.Tamago.common.annotation.Login;
 import com.project.Tamago.common.enums.Language;
 import com.project.Tamago.common.response.CustomResponse;
@@ -52,9 +53,9 @@ public class TypingController {
 	}
 
 	@GetMapping("/long/detail")
-	public CustomResponse<LongTypingDetailResDto> findLongTyping(@RequestParam Integer longTypingId,
+	public CustomResponse<LongTypingDetailResDto> findLongTypingDetail(@Ip String ip, @RequestParam Integer longTypingId,
 		@RequestParam(required = false, defaultValue = "1") int page) {
-		return new CustomResponse<>(longTypingService.findLongTyping(longTypingId, page));
+		return new CustomResponse<>(longTypingService.findLongTypingDetail(ip, longTypingId, page));
 	}
 
 	@PostMapping("/register")
