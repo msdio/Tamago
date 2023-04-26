@@ -13,6 +13,6 @@ public class OldestSortFactory implements CustomSortFactory {
 
 	@Override
 	public boolean isAdapted(String value) {
-		return value.equals("latest");
+		return value.equals("oldest");
 	}
 }
