@@ -1,5 +1,4 @@
 import { Box, Center, Flex, Text } from '@chakra-ui/react';
-import Image from 'next/image';
 
 import { Tier } from '@/components/common/Tier';
 import { TIER_INFO } from '@/constants/tierInfo';
@@ -26,7 +25,7 @@ export default function Badge({ tier }: BadgeProps) {
     >
       <Box width='114px' position='relative' height='fit-content'>
         <Center position='absolute' bottom='-13px' w='full' zIndex={-1}>
-          <Image src='/images/bottom-shadow.svg' alt='tier shadow' width='96' height='19' />
+          {/* <Image src='/images/bottom-shadow.svg' alt='tier shadow' width='96' height='19' /> */}
         </Center>
         <Tier level={tier} />
       </Box>
