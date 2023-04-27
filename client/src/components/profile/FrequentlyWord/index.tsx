@@ -1,6 +1,6 @@
 import { Box, Flex, Table, TableContainer, Tbody, Td, Text, Thead, Tr } from '@chakra-ui/react';
 
-import THeadRow from '@/components/profile/Table/THeadRow';
+import THeadRow from '@/components/profile/table/THeadRow';
 
 const TestData = [
   {

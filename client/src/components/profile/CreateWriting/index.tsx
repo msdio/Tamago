@@ -1,8 +1,8 @@
 import { Box, Center, Flex, Table, TableContainer, Tbody, Td, Text, Thead, Tr } from '@chakra-ui/react';
 import { useState } from 'react';
 
-import Pagination from '@/components/profile/Table/Pagination';
-import THeadRow from '@/components/profile/Table/THeadRow';
+import Pagination from '@/components/profile/table/Pagination';
+import THeadRow from '@/components/profile/table/THeadRow';
 import DeleteIcon from '@/icons/Delete';
 import EditIcon from '@/icons/Edit';
 
