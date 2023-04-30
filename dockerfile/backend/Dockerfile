@@ -15,6 +15,6 @@ RUN chmod +x gradlew
 RUN ./gradlew build -x test
 WORKDIR /root/app/backend/build/libs
 
-CMD [ "java", "-jar", "Tamago-0.0.1-SNAPSHOT.jar"]
+CMD [ "java", "-jar", "tamago-0.0.1-SNAPSHOT.jar"]
 
 EXPOSE 9000
