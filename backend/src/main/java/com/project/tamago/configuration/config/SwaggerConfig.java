@@ -44,7 +44,7 @@ public class SwaggerConfig {
 			.securityContexts(Collections.singletonList(securityContext()))
 			.securitySchemes(List.of(apiKey()))
 			.select()
-			.apis(RequestHandlerSelectors.basePackage("com.project.Tamago"))
+			.apis(RequestHandlerSelectors.basePackage("com.project.tamago"))
 			.paths(PathSelectors.any())
 			.build()
 			.useDefaultResponseMessages(false);
