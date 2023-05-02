@@ -41,9 +41,11 @@ public class LongTypingService {
 	private final RegisterRepository registerRepository;
 	private final RedisTemplate<String, Object> redisTemplate;
 
+	private final SortOrder sortOrder;
+
 	@Transactional(readOnly = true)
 	public LongTypingResDto findLongTypings(int page, String sortBy) {
-		PageRequest pageRequest = PageRequest.of(page - 1, ITEMS_PER_PAGE, SortOrder.getSort(sortBy));
+		PageRequest pageRequest = PageRequest.of(page - 1, ITEMS_PER_PAGE, sortOrder.getSort(sortBy));
 		Page<LongTyping> longTypingPage = longTypingRepository.findAll(pageRequest);
 		List<LongTypingDto> longTypings = longTypingPage.stream()
 			.map(DataMapper.INSTANCE::LongTypingToLongTypingResDto)

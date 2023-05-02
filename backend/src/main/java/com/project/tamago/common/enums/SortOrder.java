@@ -1,31 +1,25 @@
 package com.project.tamago.common.enums;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Component;
 
-import lombok.Getter;
+import com.project.Tamago.common.exception.CustomException;
+import com.project.Tamago.common.sort.CustomSortFactory;
 
-@Getter
-public enum SortOrder {
-	LATEST("latest"),
-	OLDEST("oldest"),
-	VIEW_COUNT("viewCount");
+@Component
+public class SortOrder {
 
-	private final String desc;
+	@Autowired
+	private List<CustomSortFactory> customSorts;
 
-	SortOrder(String desc) {
-		this.desc = desc;
-	}
-
-	public static Sort getSort(String sortBy) {
-		if (LATEST.desc.equals(sortBy)) {
-			return Sort.by("createdDate").descending().and(Sort.by("updatedDate").descending());
-		}
-		if (OLDEST.desc.equals(sortBy)) {
-			return Sort.by("createdDate").ascending().and(Sort.by("updatedDate").ascending());
-		}
-		if (VIEW_COUNT.desc.equals(sortBy)) {
-			return Sort.by("viewCount").descending().and(Sort.by("updatedDate").descending());
-		}
-		throw new IllegalArgumentException("Invalid sortBy parameter: " + sortBy);
+	public Sort getSort(String sortBy) {
+		return customSorts.stream()
+			.filter(customSort -> customSort.isAdapted(sortBy))
+			.findAny()
+			.orElseThrow(() -> new CustomException(ResponseCode.NOT_FOUND_SORT))
+			.getSort();
 	}
 }

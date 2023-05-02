@@ -25,6 +25,8 @@ public enum ResponseCode {
 	LONG_TYPING_INFO_NOT_EXISTS(4001, "해당 긴 글이 존재하지 않습니다."),
 	CURRENT_PAGE_NOT_EXISTS(4002, "연습한 페이지가 없습니다"),
 	TIER_NOT_FOUND(5000, "티어 정보를 찾을 수 없습니다"),
+
+	NOT_FOUND_SORT(5001, "이 인자로 정렬할 수 없습니다"),
 	;
 
 	private final int code;
