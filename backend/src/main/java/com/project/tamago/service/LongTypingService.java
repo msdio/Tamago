@@ -1,5 +1,6 @@
 package com.project.tamago.service;
 
+import static com.project.tamago.common.Constant.*;
 import static com.project.tamago.common.enums.ResponseCode.*;
 
 import java.time.Duration;
@@ -12,13 +13,14 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.tamago.common.enums.SortOrder;
+import com.project.tamago.common.exception.CustomException;
 import com.project.tamago.domain.LongTyping;
 import com.project.tamago.domain.User;
+import com.project.tamago.dto.LongTypingDto;
 import com.project.tamago.dto.mapper.DataMapper;
 import com.project.tamago.dto.requestDto.LongTypingReqDto;
 import com.project.tamago.dto.responseDto.LongTypingDetailResDto;
-import com.project.tamago.dto.LongTypingDto;
-import com.project.tamago.common.exception.CustomException;
 import com.project.tamago.dto.responseDto.LongTypingResDto;
 import com.project.tamago.repository.LongTypingRepository;
 import com.project.tamago.repository.RegisterRepository;
@@ -40,14 +42,14 @@ public class LongTypingService {
 	private final RedisTemplate<String, Object> redisTemplate;
 
 	@Transactional(readOnly = true)
-	public LongTypingResDto findLongTypings(int page) {
-		PageRequest pageRequest = PageRequest.of(page - 1, 20);
+	public LongTypingResDto findLongTypings(int page, String sortBy) {
+		PageRequest pageRequest = PageRequest.of(page - 1, ITEMS_PER_PAGE, SortOrder.getSort(sortBy));
 		Page<LongTyping> longTypingPage = longTypingRepository.findAll(pageRequest);
 		List<LongTypingDto> longTypings = longTypingPage.stream()
 			.map(DataMapper.INSTANCE::LongTypingToLongTypingResDto)
 			.collect(Collectors.toList());
-		int totalPage = longTypingPage.getTotalPages();
 
+		int totalPage = longTypingPage.getTotalPages();
 		return new LongTypingResDto(totalPage, longTypings);
 	}
 

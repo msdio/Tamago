@@ -14,16 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.tamago.common.annotation.Ip;
 import com.project.tamago.common.annotation.Login;
 import com.project.tamago.common.enums.Language;
-import com.project.tamago.common.response.CustomResponse;
+import com.project.tamago.common.enums.ResponseCode;
+import com.project.tamago.common.exception.CustomException;
 import com.project.tamago.common.exception.InvalidParameterException;
+import com.project.tamago.common.response.CustomResponse;
 import com.project.tamago.dto.LoginResolverDto;
+import com.project.tamago.dto.requestDto.LongTypingReqDto;
 import com.project.tamago.dto.responseDto.LongTypingDetailResDto;
 import com.project.tamago.dto.responseDto.LongTypingResDto;
 import com.project.tamago.dto.responseDto.ShortTypingListResDto;
-import com.project.tamago.common.exception.CustomException;
-import com.project.tamago.common.enums.ResponseCode;
-import com.project.tamago.dto.requestDto.LongTypingReqDto;
-
 import com.project.tamago.service.LongTypingService;
 import com.project.tamago.service.ShortTypingService;
 
@@ -48,12 +47,14 @@ public class TypingController {
 
 	@GetMapping("/long")
 	public CustomResponse<LongTypingResDto> findLongTypings(
-		@RequestParam(required = false, defaultValue = "1") int page) {
-		return new CustomResponse<>(longTypingService.findLongTypings(page));
+		@RequestParam(required = false, defaultValue = "1") int page,
+		@RequestParam(required = false, defaultValue = "latest") String sortBy) {
+		return new CustomResponse<>(longTypingService.findLongTypings(page, sortBy));
 	}
 
 	@GetMapping("/long/detail")
-	public CustomResponse<LongTypingDetailResDto> findLongTypingDetail(@Ip String ip, @RequestParam Integer longTypingId,
+	public CustomResponse<LongTypingDetailResDto> findLongTypingDetail(@Ip String ip,
+		@RequestParam Integer longTypingId,
 		@RequestParam(required = false, defaultValue = "1") int page) {
 		return new CustomResponse<>(longTypingService.findLongTypingDetail(ip, longTypingId, page));
 	}

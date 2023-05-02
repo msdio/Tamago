@@ -26,13 +26,14 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.test.context.support.WithMockUser;
 
 import com.project.tamago.common.enums.Language;
+import com.project.tamago.common.enums.SortOrder;
 import com.project.tamago.domain.LongTyping;
 import com.project.tamago.domain.User;
+import com.project.tamago.dto.LongTypingDto;
 import com.project.tamago.dto.PageContentDto;
 import com.project.tamago.dto.mapper.DataMapper;
 import com.project.tamago.dto.requestDto.LongTypingReqDto;
 import com.project.tamago.dto.responseDto.LongTypingDetailResDto;
-import com.project.tamago.dto.LongTypingDto;
 import com.project.tamago.repository.LongTypingRepository;
 import com.project.tamago.repository.RegisterRepository;
 import com.project.tamago.repository.UserRepository;
@@ -96,7 +97,8 @@ class LongTypingServiceTest {
 			.collect(Collectors.toList());
 
 		// when
-		List<LongTypingDto> actualLongTypingDtos = longTypingService.findLongTypings(1).getLongTypings();
+		List<LongTypingDto> actualLongTypingDtos = longTypingService.findLongTypings(1, SortOrder.LATEST.getDesc())
+			.getLongTypings();
 
 		// then
 		assertEquals(expectedLongTypingDtos, actualLongTypingDtos);
@@ -121,13 +123,16 @@ class LongTypingServiceTest {
 			.viewCount(100)
 			.build();
 
-		PageContentDto expectedPageContentDto = new PageContentDto(2, "line 21\nline 22\nline 23\nline 24\nline 25\nline 26\nline 27\nline 28\nline 29\nline 30");
-		when(longTypingRepository.findByIdAndTotalPageGreaterThanEqual(longTypingId, page)).thenReturn(Optional.of(longTyping));
+		PageContentDto expectedPageContentDto = new PageContentDto(2,
+			"line 21\nline 22\nline 23\nline 24\nline 25\nline 26\nline 27\nline 28\nline 29\nline 30");
+		when(longTypingRepository.findByIdAndTotalPageGreaterThanEqual(longTypingId, page)).thenReturn(
+			Optional.of(longTyping));
 		when(redisTemplate.opsForValue().get(any(String.class)))
 			.thenReturn("ON"); // mock the behavior of redisTemplate
 
 		// when
-		LongTypingDetailResDto actualLongTypingDetailResDto = longTypingService.findLongTypingDetail(ip,longTypingId, page);
+		LongTypingDetailResDto actualLongTypingDetailResDto = longTypingService.findLongTypingDetail(ip, longTypingId,
+			page);
 
 		// then
 		assertEquals(expectedPageContentDto.getContent(), actualLongTypingDetailResDto.getContent());
@@ -173,12 +178,14 @@ class LongTypingServiceTest {
 			+ "line 18\n"
 			+ "line 19\n"
 			+ "line 20");
-		when(longTypingRepository.findByIdAndTotalPageGreaterThanEqual(longTypingId, page)).thenReturn(Optional.of(longTyping));
+		when(longTypingRepository.findByIdAndTotalPageGreaterThanEqual(longTypingId, page)).thenReturn(
+			Optional.of(longTyping));
 		when(redisTemplate.opsForValue().get(any(String.class)))
 			.thenReturn("ON"); // mock the behavior of redisTemplate
 
 		// when
-		LongTypingDetailResDto actualLongTypingDetailResDto = longTypingService.findLongTypingDetail(ip,longTypingId, page);
+		LongTypingDetailResDto actualLongTypingDetailResDto = longTypingService.findLongTypingDetail(ip, longTypingId,
+			page);
 
 		// then
 		assertNotEquals(expectedPageContentDto.getContent(), actualLongTypingDetailResDto.getContent());
