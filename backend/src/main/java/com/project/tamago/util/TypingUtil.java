@@ -1,5 +1,7 @@
 package com.project.tamago.util;
 
+import static com.project.tamago.common.Constant.*;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -12,8 +14,6 @@ import com.project.tamago.dto.mapper.TypingMapper;
 
 public class TypingUtil {
 
-	private static final int LINES_PER_PAGE = 20;
-
 	public static PageContentDto getPageContent(String content, Integer page) {
 		String[] contentLines = content.replaceAll("\r\n", "\n").split("\n");
 		int startIndex = (page - 1) * LINES_PER_PAGE;
@@ -23,8 +23,8 @@ public class TypingUtil {
 	}
 
 	public static PageContentDto getPageContent(String content) {
-		int totalPages = (int) Math.ceil((double) content.split("\r\n").length / LINES_PER_PAGE);
-		int randomPage = (int) (Math.random() * totalPages) + 1;
+		int totalPages = (int)Math.ceil((double)content.split("\r\n").length / LINES_PER_PAGE);
+		int randomPage = (int)(Math.random() * totalPages) + 1;
 		return getPageContent(content, randomPage);
 	}
 
