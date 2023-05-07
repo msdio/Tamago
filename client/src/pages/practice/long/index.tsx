@@ -14,8 +14,8 @@ export default function PracticeLongPage() {
     null,
   );
 
-  const getLongTypingList = async (page: number) => {
-    const { result } = await getLongTypingListAPI(page);
+  const getLongTypingList = async ({ page, sortBy }: { page: number; sortBy?: string }) => {
+    const { result } = await getLongTypingListAPI({ page, sortBy });
 
     const { totalPage, longTypings } = result as { totalPage: number; longTypings: LongTypingItem[] };
 
@@ -26,9 +26,10 @@ export default function PracticeLongPage() {
     if (!router.isReady) {
       return;
     }
-    const { page } = router.query as { page: string };
+    const { page, sortBy } = router.query as { page: string; sortBy?: string };
 
-    getLongTypingList(Number.isNaN(Number(page)) ? 1 : Number(page));
+    const pageNumber = isNaN(Number(page)) ? 1 : Number(page);
+    getLongTypingList({ page: pageNumber, sortBy });
   }, [router.isReady, router.asPath]);
 
   if (!router.isReady || !data) {

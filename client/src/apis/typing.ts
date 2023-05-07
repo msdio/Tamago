@@ -67,8 +67,14 @@ export const getExamShortTypingWritingsAPI = async (
   return res.data;
 };
 
-export const getLongTypingListAPI = async (page: number): Promise<LongTypingListResultType> => {
-  const res = await requestWithoutAuth.get(`/typing/long?page=${page}`);
+export const getLongTypingListAPI = async ({
+  page,
+  sortBy,
+}: {
+  page: number;
+  sortBy?: string;
+}): Promise<LongTypingListResultType> => {
+  const res = await requestWithoutAuth.get(`/typing/long?page=${page}${sortBy ? '&sortBy=' + sortBy : ''}`);
 
   return res.data;
 };
