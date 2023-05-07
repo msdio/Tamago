@@ -1,4 +1,4 @@
-import { Flex, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
+import { Flex, Menu, MenuButton, MenuDivider, MenuItem, MenuList } from '@chakra-ui/react';
 import Link from 'next/link';
 
 import { PRACTICE_LONG_PATH_LIST } from '@/constants/paths';
@@ -22,17 +22,36 @@ const sortByItems = [
 export default function SortBy() {
   return (
     <Menu>
-      <MenuButton w={'96px'} h={'34px'} border={'0.6px solid #101010'} borderRadius={16} bg={'#fafafa'}>
+      <MenuButton
+        fontWeight={'500'}
+        w={'96px'}
+        h={'34px'}
+        border={'0.6px solid #101010'}
+        borderRadius={16}
+        bg={'background.white'}
+      >
         <Flex alignItems={'center'} justify={'center'} gap={'15px'}>
-          <b>정렬</b>
+          정렬
           <UpDownArrow />
         </Flex>
       </MenuButton>
-      <MenuList>
-        {sortByItems.map((item, index) => (
-          <Link key={index} href={item.path}>
-            <MenuItem>{item.label}</MenuItem>
-          </Link>
+      <MenuList p={0} minW={0} w={'96px'} border={'0.6px solid #101010'} borderRadius={16} bg={'background.white'}>
+        {sortByItems.map((item, index, items) => (
+          <>
+            <Link key={index} href={item.path}>
+              <MenuItem
+                _hover={{ color: 'primary.dark' }}
+                fontWeight={'500'}
+                w={'fit-content'}
+                bg={'background.white'}
+                p={0}
+                m={'15px 18px'}
+              >
+                {item.label}
+              </MenuItem>
+            </Link>
+            {index !== items.length - 1 && <MenuDivider />}
+          </>
         ))}
       </MenuList>
     </Menu>
