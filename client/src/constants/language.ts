@@ -9,19 +9,19 @@ import type {
 } from '@/types/language';
 import { getRandomProgrammingLanguage } from '@/utils/language';
 
-export const NATION_LANGUAGE: Record<string, NationLanguageType> = {
+export const NATION_LANGUAGE: Record<NationLanguageType, NationLanguageType> = {
   KOREAN: 'KOREAN',
   ENGLISH: 'ENGLISH',
 };
 
-export const PROGRAMMING_LANGUAGE: Record<string, ProgrammingLanguageType> = {
+export const PROGRAMMING_LANGUAGE: Record<ProgrammingLanguageType, ProgrammingLanguageType> = {
   JAVASCRIPT: 'JAVASCRIPT',
   PYTHON: 'PYTHON',
   JAVA: 'JAVA',
   C: 'C',
 };
 
-export const LONG_TYPING_TYPE: Record<string, string> = {
+export const LONG_TYPING_TYPE: Record<LanguageType, string> = {
   KOREAN: '한글',
   ENGLISH: '영어',
   JAVA: 'Java',
@@ -29,6 +29,7 @@ export const LONG_TYPING_TYPE: Record<string, string> = {
   JAVASCRIPT: 'JavaScript',
   C: 'C',
 };
+
 export const SELECT_LANGUAGE_VALUE: Record<string, SelectLanguageType> = {
   KOREAN: 'KOREAN',
   ENGLISH: 'ENGLISH',
