@@ -24,6 +24,7 @@ import { BookmarkOff } from '@/icons/Heart';
 import { Search } from '@/icons/Search';
 import type { LongTypingItem } from '@/types/typing';
 
+import SortBy from './SortBy';
 import TypingListPagination from './TypingListPagination';
 import TypingThumbnail from './TypingThumbnail';
 
@@ -89,11 +90,13 @@ export default function PracticeLongList({ currentPage, totalPage, typingList }:
                 <Th textAlign='center' width='9%'>
                   번호
                 </Th>
-                <Th width='50%'>제목명</Th>
-                <Th width='9%'>타입</Th>
-                <Th width='9%'>페이지 수</Th>
-                <Th width='9%'>조회수</Th>
-                <Th width='14%'></Th>
+                <Th width='42%'>제목명</Th>
+                <Th width='12%'>타입</Th>
+                <Th width='12%'>페이지 수</Th>
+                <Th width='12%'>조회수</Th>
+                <Th width='12%'>
+                  <SortBy />
+                </Th>
               </Tr>
             </Thead>
             <Tbody>

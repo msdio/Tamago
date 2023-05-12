@@ -2,6 +2,7 @@ import { requestWithAuth, requestWithoutAuth } from '@/apis';
 import type { ErrorResponse } from '@/apis/error';
 import type { ApiResponse } from '@/types/apiResponse';
 import type { LanguageType } from '@/types/language';
+import type { SortBy } from '@/types/longTyping';
 import type { LongTypingDetail, LongTypingItem } from '@/types/typing';
 import type { TypingMode } from '@/types/typing';
 
@@ -67,8 +68,14 @@ export const getExamShortTypingWritingsAPI = async (
   return res.data;
 };
 
-export const getLongTypingListAPI = async (page: number): Promise<LongTypingListResultType> => {
-  const res = await requestWithoutAuth.get(`/typing/long?page=${page}`);
+export const getLongTypingListAPI = async ({
+  page,
+  sortBy,
+}: {
+  page: number;
+  sortBy?: SortBy;
+}): Promise<LongTypingListResultType> => {
+  const res = await requestWithoutAuth.get(`/typing/long?page=${page}${sortBy ? '&sortBy=' + sortBy : ''}`);
 
   return res.data;
 };
